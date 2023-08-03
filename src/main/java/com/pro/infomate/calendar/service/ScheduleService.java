@@ -1,11 +1,9 @@
 package com.pro.infomate.calendar.service;
 
-import com.prev.clndr.dto.CalendarDTO;
-import com.prev.clndr.dto.ScheduleDTO;
-import com.prev.clndr.entity.Calendar;
-import com.prev.clndr.entity.Participant;
-import com.prev.clndr.entity.Schedule;
-import com.prev.clndr.repository.ScheduleRepository;
+import com.pro.infomate.calendar.dto.ScheduleDTO;
+import com.pro.infomate.calendar.entity.Participant;
+import com.pro.infomate.calendar.entity.Schedule;
+import com.pro.infomate.calendar.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

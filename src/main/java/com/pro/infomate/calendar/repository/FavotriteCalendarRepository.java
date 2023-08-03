@@ -1,7 +1,8 @@
 package com.pro.infomate.calendar.repository;
 
-import com.prev.clndr.dto.FavoriteCalendarDTO;
-import com.prev.clndr.entity.FavoriteCalendar;
+
+import com.pro.infomate.calendar.dto.FavoriteCalendarDTO;
+import com.pro.infomate.calendar.entity.FavoriteCalendar;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

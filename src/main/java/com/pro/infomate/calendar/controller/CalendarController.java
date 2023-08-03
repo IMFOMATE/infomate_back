@@ -2,6 +2,7 @@ package com.pro.infomate.calendar.controller;
 
 
 import com.pro.infomate.calendar.common.ResponseDTO;
+import com.pro.infomate.calendar.dto.ApprovalStatus;
 import com.pro.infomate.calendar.dto.CalendarDTO;
 import com.pro.infomate.calendar.service.CalendarService;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/calendar")
@@ -123,7 +123,7 @@ public class CalendarController {
 
     @GetMapping("/openFollowerCalendar")
     public ResponseEntity<ResponseDTO> findOpenCalendarList(){
-        Integer userId;
+        Integer userId = null;
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK.value())
