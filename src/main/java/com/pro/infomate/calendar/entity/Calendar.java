@@ -31,7 +31,8 @@ public class Calendar {
     @Column(name = "INDEX")
     private int index;
 
-//   private User refUser; 사용자
+    @Column(name = "USER_ID")
+    private Integer userId; //수정요망
 
     @Column(name = "DEFAULT")
     private Boolean defaultCalendar;

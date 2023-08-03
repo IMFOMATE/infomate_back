@@ -14,7 +14,7 @@ public class FavoriteCalendarDTO {
 
     private int id;
     private CalendarDTO refCalendar;
-//    private User refUser;
+    private Integer userId; //수정요망
     private LocalDateTime requestDate;
     private ApprovalStatus approvalStatus;
     private String labelColor;

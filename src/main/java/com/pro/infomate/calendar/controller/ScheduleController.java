@@ -65,7 +65,7 @@ public class ScheduleController {
 
     @GetMapping("/findScheduleSearch")
     public ResponseEntity<ResponseDTO> findScheduleSearch(String keyword){
-        Integer userId;
+        Integer userId = 1;
         List<ScheduleDTO> scheduleList = scheduleService.findScheduleSearch(keyword, userId);
 
         return ResponseEntity.ok()

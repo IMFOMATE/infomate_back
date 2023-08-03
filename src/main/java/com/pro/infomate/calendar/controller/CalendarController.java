@@ -61,8 +61,8 @@ public class CalendarController {
                         .build());
     }
     @PutMapping("/updateDafault/{calendarId}")
-    public ResponseEntity<ResponseDTO> updateDefaultByCalendar(@PathVariable Integer calendarId){
-        calendarService.updateDefaultCalender(calendarId, null); // userId 수정 요망
+    public ResponseEntity<ResponseDTO> updateDefaultByCalendar(@PathVariable Integer calendarId, @RequestParam Integer userId){
+        calendarService.updateDefaultCalender(calendarId, userId); // userId 수정 요망
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK.value())
@@ -102,7 +102,7 @@ public class CalendarController {
     }
 
     @GetMapping("/followCalendar")
-    public ResponseEntity<ResponseDTO> findAllByUserId(Integer userId){
+    public ResponseEntity<ResponseDTO> findAllByUserId(@RequestParam Integer userId){
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder().status(HttpStatus.OK.value())
@@ -122,8 +122,7 @@ public class CalendarController {
     }
 
     @GetMapping("/openFollowerCalendar")
-    public ResponseEntity<ResponseDTO> findOpenCalendarList(){
-        Integer userId = null;
+    public ResponseEntity<ResponseDTO> findOpenCalendarList(@RequestParam Integer userId){
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK.value())

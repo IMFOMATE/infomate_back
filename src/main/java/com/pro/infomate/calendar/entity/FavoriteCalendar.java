@@ -24,6 +24,8 @@ public class FavoriteCalendar {
     private Calendar refCalendar;
 
 //    private User refUser;
+    private Integer userId; //수정요망
+
 
     @Column(name = "REQUEST_DATE")
     private LocalDateTime requestDate;

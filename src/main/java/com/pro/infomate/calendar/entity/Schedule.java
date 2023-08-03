@@ -19,6 +19,9 @@ public class Schedule {
     @Column(name = "ID")
     private int id;
 
+    @Column(name = "USER_ID")
+    private Integer userId; //수정요망
+
     @Column(name = "SUBJECT")
     private String subject;
 

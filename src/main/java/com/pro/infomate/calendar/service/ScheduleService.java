@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,7 +58,8 @@ public class ScheduleService {
     }
 
     public List<ScheduleDTO> findScheduleSearch(String keyword, Integer userId) {
-        List<Schedule> scheduleList = scheduleRepository.findScheduleSearch(keyword, userId);
+//        List<Schedule> scheduleList = scheduleRepository.findScheduleSearch(keyword, userId);
+        List<Schedule> scheduleList = new ArrayList<>();
         return scheduleList.stream()
                 .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
                 .collect(Collectors.toList());

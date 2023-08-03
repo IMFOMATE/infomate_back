@@ -14,6 +14,7 @@ import java.util.List;
 public class ScheduleDTO {
 
     private int id;
+    private Integer userId; //수정요망
     private String subject;
     private LocalDateTime startDate;
     private LocalDateTime endDate;

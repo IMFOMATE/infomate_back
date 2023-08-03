@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 @ToString
 @Builder
 public class ResponseDTO {
+
     private int status;
 
     private String message;
@@ -19,8 +20,8 @@ public class ResponseDTO {
     public ResponseDTO() {
     }
 
-    public ResponseDTO(HttpStatus status, String message, Object data) {
-        this.status = status.value();
+    public ResponseDTO(int status, String message, Object data) {
+        this.status = status;
         this.message = message;
         this.data = data;
     }
