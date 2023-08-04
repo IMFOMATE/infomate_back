@@ -2,6 +2,7 @@ package com.pro.infomate.calendar.controller;
 
 import com.pro.infomate.calendar.common.ResponseDTO;
 import com.pro.infomate.calendar.dto.ScheduleDTO;
+import com.pro.infomate.calendar.entity.Schedule;
 import com.pro.infomate.calendar.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,7 @@ public class ScheduleController {
                         .build());
     }
 
+    // test success
     @GetMapping("/{scheduleId}")
     public ResponseEntity<ResponseDTO> findById(@PathVariable Integer scheduleId){
         ScheduleDTO schedule = scheduleService.findById(scheduleId);
@@ -42,9 +44,10 @@ public class ScheduleController {
                         .build());
     }
 
-    @PatchMapping("/{scheduleId}")
-    public ResponseEntity<ResponseDTO> updateById(@PathVariable Integer scheduleId, ScheduleDTO schedule){
-        scheduleService.updateById(scheduleId, schedule);
+    // test success
+    @PatchMapping("/update")
+    public ResponseEntity<ResponseDTO> updateById(@RequestBody ScheduleDTO schedule){
+        scheduleService.updateById(schedule);
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK.value())
@@ -76,4 +79,14 @@ public class ScheduleController {
                         .build());
     }
 
+
+    @PostMapping("/regist")
+    public ResponseEntity<ResponseDTO> insertSchedule(@RequestBody ScheduleDTO scheduleDTO){
+        return ResponseEntity.ok()
+                .body(ResponseDTO.builder()
+                        .status(HttpStatus.OK.value())
+                        .message("success")
+                        .data(scheduleService.insertSchedule(scheduleDTO))
+                        .build());
+    }
 }

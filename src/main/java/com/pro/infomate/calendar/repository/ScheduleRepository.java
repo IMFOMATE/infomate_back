@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
-    List<Schedule> findAllByRefCalendarId(Integer calendarId);
+//    List<Schedule> findAllByRefCalendarId(Integer calendarId);
 
 //    @Query(value = "SELECT sc2 " +
 //                    "FROM Schedule sc2 " +
@@ -19,7 +19,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
 //                           "WHERE c.userID = :userId " +
 //                           "GROUP BY sc.endDate)"
 //    )
-    List<Schedule> findRecentScheduleByUserId(Integer userId);
+//    List<Schedule> findRecentScheduleByUserId(Integer userId);
 
 //    @Query(value = "SELECT sc " +
 //            "FROM Schedule sc " +

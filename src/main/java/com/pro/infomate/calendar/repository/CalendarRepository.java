@@ -8,12 +8,13 @@ import java.util.List;
 
 public interface CalendarRepository extends JpaRepository<Calendar, Integer> {
 
-    Calendar findByUserIdAndDefaultCalendar(Integer userId, boolean isTrue);
+    Calendar findByMemberCodeAndDefaultCalendar(Integer userId, boolean isTrue);
 
 //    @Query(value = "SELECT c FROM Calendar c WHERE NOT c.userId = :userId AND c.openStatus = true")
 //    List<Calendar> findByOpenCalendar(Integer userId);
 
 
-    List<Calendar> findByUserIdNotAndOpenStatus(Integer userId, boolean openStatus);
+    List<Calendar> findByMemberCodeNotAndOpenStatus(Integer userId, boolean openStatus);
 
+    List<Calendar> findByMemberCode(int memberId);
 }

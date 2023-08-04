@@ -14,17 +14,17 @@ import java.util.List;
 public class ScheduleDTO {
 
     private int id;
-    private Integer userId; //수정요망
-    private String subject;
+    private String title;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private String content;
     private String address;
-    private List<ParticipantDTO> participantList;
+//    private List<ParticipantDTO> participantList;
     private Boolean allDay;
     private Boolean corpSchdl;
     private Boolean repeat;
     private Boolean important;
-    private CalendarDTO refCalendar;
+    private int refCalendar;
+    private CalendarDTO Calendar;
 
 }

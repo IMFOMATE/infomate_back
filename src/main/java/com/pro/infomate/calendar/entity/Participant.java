@@ -10,16 +10,16 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Entity
-@Table(name = "")
+@Table(name = "TBL_PARTICIPANT")
+@IdClass(ParticipantPK.class)
 public class Participant {
 
     @Id
-    @Column(name = "ID")
-    private int id;
-
-    //    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "REF_SCHDL")
+    @OneToOne
+    @JoinColumn(name = "REF_SCHDL_ID")
     private Schedule schedule;
+
+    @Id
+    @Column(name = "REF_MEMBER_CODE")
+    private int memberCode;
 }

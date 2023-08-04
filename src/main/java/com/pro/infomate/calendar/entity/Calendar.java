@@ -4,22 +4,33 @@ package com.pro.infomate.calendar.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString
 @Entity
-@Table(name = "")
+@ToString
+@Builder
+@Table(name = "TBL_CLNDR")
+@SequenceGenerator(
+        name = "SEQ_TBL_CLNDR_GEN",
+        sequenceName = "SEQ_TBL_CLNDR_CLNDR_CODE",
+        initialValue = 1, allocationSize = 1
+)
 public class Calendar {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "CLNDR_CODE")
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "SEQ_TBL_CLNDR_GEN"
+    )
     private int id;
 
-    @Column(name = "NAME")
+    @Column(name = "CLNDR_NAME")
     private String name;
 
     @Column(name = "OPEN_STATUS")
@@ -28,29 +39,25 @@ public class Calendar {
     @Column(name = "LABEL_COLOR")
     private String labelColor;
 
-    @Column(name = "INDEX")
-    private int index;
+    @Column(name = "INDEX_NUM")
+    private int indexNo;
 
-    @Column(name = "USER_ID")
-    private Integer userId; //수정요망
+    @Column(name = "REF_MEMBER_CODE")
+    private int memberCode; //수정요망
 
-    @Column(name = "GROUP_CODE")
-    private Integer groupCode;
-
-    @Column(name = "DEFAULT")
+    @Column(name = "DEFAULT_SELC")
     private Boolean defaultCalendar;
 
     @Column(name = "DPRMT_CODE")
-    private Integer departmentCode;
+    private String departmentCode;
 
-    @OneToMany
-    @JoinColumn(name = "REF_FAVORITE_CLNDR")
-    private List<FavoriteCalendar> refFavoriteCalendarList;
+    @Column(name = "CREATE_DATE")
+    private LocalDateTime createDate;
 
-    @OneToMany
-    @JoinColumn(name = "REF_SCHDL")
-    private List<Schedule> refScheduleList;
-
-
+    @OneToMany(mappedBy = "calendar", fetch = FetchType.LAZY, targetEntity = FavoriteCalendar.class)
+    private List<FavoriteCalendar> favoriteCalendar;
+//
+    @OneToMany(mappedBy = "calendar", fetch = FetchType.LAZY,targetEntity = Schedule.class)
+    private List<Schedule> schedule;
 
 }

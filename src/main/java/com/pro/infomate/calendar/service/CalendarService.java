@@ -3,11 +3,15 @@ package com.pro.infomate.calendar.service;
 import com.pro.infomate.calendar.dto.ApprovalStatus;
 import com.pro.infomate.calendar.dto.CalendarDTO;
 import com.pro.infomate.calendar.dto.FavoriteCalendarDTO;
+import com.pro.infomate.calendar.dto.ScheduleDTO;
 import com.pro.infomate.calendar.entity.Calendar;
 import com.pro.infomate.calendar.entity.FavoriteCalendar;
+import com.pro.infomate.calendar.entity.Schedule;
 import com.pro.infomate.calendar.repository.CalendarRepository;
 import com.pro.infomate.calendar.repository.FavotriteCalendarRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,31 +21,40 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CalendarService {
 
     private final CalendarRepository calendarRepository;
     private final FavotriteCalendarRepository favotriteCalendarRepository;
     private final ModelMapper modelMapper;
 
-    public List<CalendarDTO> findAll() {
-        return calendarRepository.findAll()
-                .stream().map(calendar -> modelMapper.map(calendar, CalendarDTO.class))
-                .collect(Collectors.toList());
+    public List<CalendarDTO> findAll(int memberId) {
+        log.info("[CalendarService](findAll) memberId : {} ",memberId);
+        List<Calendar> calendarList = calendarRepository.findByMemberCode(memberId);
+        log.info("[CalendarService](findAll) calendarList : {} ",calendarList);
+        List<CalendarDTO> calendarDTOList = calendarList.stream().map(calendar -> modelMapper.map(calendar, CalendarDTO.class)).collect(Collectors.toList());
+        log.info("[CalendarService](findAll) calendarDTOList : {} ",calendarDTOList);
+
+        return calendarDTOList;
     }
 
     public CalendarDTO findById(Integer calendarId) {
-        return modelMapper.map(calendarRepository.findById(calendarId), CalendarDTO.class);
-    }
+        log.info("[CalendarService](findById) calendarId : {} ",calendarId);
 
+        Calendar calendar = calendarRepository.findById(calendarId).get();
+        log.info("[CalendarService](findById) calendar : {} ",calendar);
 
-    public List<FavoriteCalendarDTO> findAllByFavoriteCalendar(Integer favoriteId){
-        return favotriteCalendarRepository.findAllByRefCalendarId(favoriteId)
-                .stream().map(favoriteCalendar -> modelMapper.map(favoriteCalendar, FavoriteCalendarDTO.class))
-                .collect(Collectors.toList());
-    }
+        List<Schedule> scheduleList = calendar.getSchedule();
+        log.info("[CalendarService](findById) scheduleList : {} ",scheduleList);
 
-    public List<FavoriteCalendarDTO> findAllByUserId(Integer userId) {
-        return favotriteCalendarRepository.findAllByUserId(userId);
+        CalendarDTO calendarDTO = modelMapper.map(calendar, CalendarDTO.class);
+        log.info("[CalendarService](findById) calendarDTO : {} ",calendarDTO);
+
+        calendarDTO.setRefScheduleList(scheduleList.stream()
+                .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
+                .collect(Collectors.toList()));
+
+        return calendarDTO;
     }
 
     @Transactional
@@ -53,16 +66,18 @@ public class CalendarService {
 
     @Transactional
     public void updateById(Integer calendarId, CalendarDTO calendar) {
+        log.info("[CalendarService](updateById) calendar : {}",calendar);
         Calendar entityCalendar = calendarRepository.findById(calendarId).get();
+        log.info("[CalendarService](updateById) entityCalendar : {}",entityCalendar);
         entityCalendar.setName(calendar.getName());
         entityCalendar.setOpenStatus(calendar.getOpenStatus());
         entityCalendar.setLabelColor(calendar.getLabelColor());
-        entityCalendar.setIndex(calendar.getIndex());
+        entityCalendar.setIndexNo(calendar.getIndexNo());
     }
 
     @Transactional
     public void updateDefaultCalender(Integer calendarId, Integer userId){
-        Calendar prevDefaultCalendar = calendarRepository.findByUserIdAndDefaultCalendar(userId, true);
+        Calendar prevDefaultCalendar = calendarRepository.findByMemberCodeAndDefaultCalendar(userId, true);
         prevDefaultCalendar.setDefaultCalendar(false);
 
         Calendar afterDefaultCalendar = calendarRepository.findById(calendarId).get();
@@ -74,22 +89,22 @@ public class CalendarService {
         calendarRepository.deleteById(calendarId);
     }
 
-    public void updateApprovalStatusById(Integer favoriteId, ApprovalStatus status) {
-        FavoriteCalendar favoriteCalendar = favotriteCalendarRepository.findById(favoriteId).get();
-        favoriteCalendar.setApprovalStatus(status);
-
-    }
-
-    @Transactional
-    public void deleteFavoriteCalendarById(Integer favoriteId) {
-        favotriteCalendarRepository.deleteById(favoriteId);
-    }
 
     public List<CalendarDTO> openCalendarList(Integer userId) {
 //        List<Calendar> calendarList = calendarRepository.findByOpenCalendar(userId);
-        List<Calendar> calendarList = calendarRepository.findByUserIdNotAndOpenStatus(userId, true);
+        List<Calendar> calendarList = calendarRepository.findByMemberCodeNotAndOpenStatus(userId, true);
+        log.info("[CalendarService](updateById) calendarList : {}",calendarList);
         return calendarList.stream()
-                .map(calendar -> modelMapper.map(calendar, CalendarDTO.class))
+                .map(calendar -> {
+                    List<ScheduleDTO> scheduleDTOList =
+                            calendar.getSchedule().stream()
+                            .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
+                             .collect(Collectors.toList());
+
+                   CalendarDTO calendarDTO = modelMapper.map(calendar, CalendarDTO.class);
+                   calendarDTO.setRefScheduleList(scheduleDTOList);
+                   return calendarDTO;
+                })
                 .collect(Collectors.toList());
     }
 }
