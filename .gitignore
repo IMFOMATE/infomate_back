@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### application-local ###
+/src/main/resources/application-local.yml

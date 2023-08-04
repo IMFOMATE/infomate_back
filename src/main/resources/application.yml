@@ -31,6 +31,10 @@ spring:
         default-page-size: 10 #?? ??? ??
         max-page-size: 50 # ?? ??? ??
 
+  profiles:
+    active: local
+
+
 #jwt:
 #  secret:
 

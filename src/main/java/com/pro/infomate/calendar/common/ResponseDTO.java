@@ -17,12 +17,4 @@ public class ResponseDTO {
 
     private Object data;
 
-    public ResponseDTO() {
-    }
-
-    public ResponseDTO(int status, String message, Object data) {
-        this.status = status;
-        this.message = message;
-        this.data = data;
-    }
 }

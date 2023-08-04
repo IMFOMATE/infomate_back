@@ -23,7 +23,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-
         // 개발용 퍼미션
         http.csrf().disable().authorizeHttpRequests()
                 .antMatchers("*").permitAll();
