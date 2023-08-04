@@ -19,8 +19,8 @@ public class CalendarDTO {
     private String labelColor;
     private int index;
 
-//    private User refUser; 사용자
     private Integer userId; //수정요망
+    private Integer groupCode;
 
     private Integer departmentCode;
     private Boolean defaultCalendar;

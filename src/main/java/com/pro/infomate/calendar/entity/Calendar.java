@@ -34,6 +34,9 @@ public class Calendar {
     @Column(name = "USER_ID")
     private Integer userId; //수정요망
 
+    @Column(name = "GROUP_CODE")
+    private Integer groupCode;
+
     @Column(name = "DEFAULT")
     private Boolean defaultCalendar;
 

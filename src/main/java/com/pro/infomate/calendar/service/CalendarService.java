@@ -60,6 +60,7 @@ public class CalendarService {
         entityCalendar.setIndex(calendar.getIndex());
     }
 
+    @Transactional
     public void updateDefaultCalender(Integer calendarId, Integer userId){
         Calendar prevDefaultCalendar = calendarRepository.findByUserIdAndDefaultCalendar(userId, true);
         prevDefaultCalendar.setDefaultCalendar(false);
@@ -68,6 +69,7 @@ public class CalendarService {
         afterDefaultCalendar.setDefaultCalendar(true);
     }
 
+    @Transactional
     public void deleteById(Integer calendarId) {
         calendarRepository.deleteById(calendarId);
     }
@@ -78,6 +80,7 @@ public class CalendarService {
 
     }
 
+    @Transactional
     public void deleteFavoriteCalendarById(Integer favoriteId) {
         favotriteCalendarRepository.deleteById(favoriteId);
     }
