@@ -20,7 +20,7 @@ public class CalendarDTO {
     private String labelColor;
     private int indexNo;
 
-    private int memberCode; //수정요망
+    private int memberCode;
 
     private String departmentCode;
     private Boolean defaultCalendar;

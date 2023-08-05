@@ -2,11 +2,9 @@ package com.pro.infomate.calendar.controller;
 
 
 import com.pro.infomate.calendar.common.ResponseDTO;
-import com.pro.infomate.calendar.dto.ApprovalStatus;
 import com.pro.infomate.calendar.dto.CalendarDTO;
 import com.pro.infomate.calendar.service.CalendarService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +24,8 @@ public class CalendarController {
     // test success
     @GetMapping("/list/{memberId}")
     public ResponseEntity<ResponseDTO> findAll(@PathVariable int memberId){
+        log.info("[CalendarController](findAll) memberId : {}",memberId);
+
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK.value())
@@ -37,6 +37,7 @@ public class CalendarController {
     // test success
     @GetMapping("/{calendarId}")
     public ResponseEntity<ResponseDTO> findById(@PathVariable Integer calendarId){
+        log.info("[CalendarController](findById) calendarId : {}",calendarId);
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
@@ -49,8 +50,12 @@ public class CalendarController {
     // test success
     @PostMapping("/regist")
     public ResponseEntity<ResponseDTO> saveByCalendar(@RequestBody CalendarDTO calendar){
-        log.info(calendar.toString());
+        log.info("[CalendarController](saveByCalendar) calendar : {}",calendar);
+
         calendar.setCreateDate(LocalDateTime.now());
+
+        log.info("[CalendarController](saveByCalendar) calendar : {}",calendar);
+
         calendarService.saveByCalendar(calendar);
 
         return ResponseEntity.ok()
@@ -61,9 +66,12 @@ public class CalendarController {
     }
 
     // test success
-    @PatchMapping("/update/{calendarId}")
-    public ResponseEntity<ResponseDTO> updateByCalendar(@PathVariable Integer calendarId, @RequestBody CalendarDTO calendar){
-        calendarService.updateById(calendarId, calendar);
+    @PatchMapping("/update")
+    public ResponseEntity<ResponseDTO> updateByCalendar(@RequestBody CalendarDTO calendar){
+
+        log.info("[CalendarController](updateByCalendar) calendar : {}",calendar);
+
+        calendarService.updateById(calendar);
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
@@ -71,9 +79,12 @@ public class CalendarController {
                         .message("success")
                         .build());
     }
-    @PutMapping("/updateDafault/{calendarId}")
-    public ResponseEntity<ResponseDTO> updateDefaultByCalendar(@PathVariable Integer calendarId, @RequestParam Integer userId){
-        calendarService.updateDefaultCalender(calendarId, userId); // userId 수정 요망
+
+    // test success
+    @PatchMapping("/updateDafault")
+    public ResponseEntity<ResponseDTO> updateDefaultByCalendar(@RequestBody CalendarDTO calendarDTO){
+        log.info("[CalendarController](updateDefaultByCalendar) calendarDTO: {} ",calendarDTO);
+        calendarService.updateDefaultCalender(calendarDTO); // userId 수정 요망
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK.value())

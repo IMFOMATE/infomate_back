@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Setter
 @Getter
-@Builder
 @Entity
 @Table(name = "TBL_SCHDL")
 @SequenceGenerator(

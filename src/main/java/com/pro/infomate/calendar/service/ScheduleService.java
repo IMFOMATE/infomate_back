@@ -2,10 +2,10 @@ package com.pro.infomate.calendar.service;
 
 import com.pro.infomate.calendar.dto.ScheduleDTO;
 import com.pro.infomate.calendar.entity.Calendar;
-import com.pro.infomate.calendar.entity.Participant;
 import com.pro.infomate.calendar.entity.Schedule;
 import com.pro.infomate.calendar.repository.CalendarRepository;
 import com.pro.infomate.calendar.repository.ScheduleRepository;
+import com.pro.infomate.exception.NotFindDataException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,21 +34,21 @@ public class ScheduleService {
     }
 
     public ScheduleDTO findById(Integer scheduleId){
-        Schedule schedule = scheduleRepository.findById(scheduleId).get();
-        return modelMapper.map(schedule, ScheduleDTO.class);
+        Optional<Schedule> schedule = scheduleRepository.findById(scheduleId);
+        return schedule.map(value -> modelMapper.map(value, ScheduleDTO.class)).orElse(null);
     }
 
     public void updateById(ScheduleDTO schedule) {
         log.info("[ScheduleService](updateById) schedule : {}",schedule);
 
-        Schedule entitySchedule = scheduleRepository.findById(schedule.getId()).get();
+        Optional<Schedule> entitySchedule = scheduleRepository.findById(schedule.getId());
         log.info("[ScheduleService](updateById) entitySchedule : {}",entitySchedule);
-
-        entitySchedule.setTitle(schedule.getTitle());
-        entitySchedule.setStartDate(schedule.getStartDate());
-        entitySchedule.setEndDate(schedule.getEndDate());
-        entitySchedule.setContent(schedule.getContent());
-        entitySchedule.setAddress(schedule.getAddress());
+        if(entitySchedule.isEmpty()) throw new NotFindDataException("DB를 찾을 수 없습니다.");
+        entitySchedule.get().setTitle(schedule.getTitle());
+        entitySchedule.get().setStartDate(schedule.getStartDate());
+        entitySchedule.get().setEndDate(schedule.getEndDate());
+        entitySchedule.get().setContent(schedule.getContent());
+        entitySchedule.get().setAddress(schedule.getAddress());
 
 //        entitySchedule.setParticipantList(
 //                schedule.getParticipantList()
@@ -55,12 +56,12 @@ public class ScheduleService {
 //                        .map(participant -> modelMapper.map(participant, Participant.class))
 //                        .collect(Collectors.toList()));
 
-        entitySchedule.setCorpSchdl(schedule.getCorpSchdl());
-        entitySchedule.setRepeat(schedule.getRepeat());
-        entitySchedule.setImportant(schedule.getImportant());
-        entitySchedule.setAllDay(schedule.getAllDay());
+        entitySchedule.get().setCorpSchdl(schedule.getCorpSchdl());
+        entitySchedule.get().setRepeat(schedule.getRepeat());
+        entitySchedule.get().setImportant(schedule.getImportant());
+        entitySchedule.get().setAllDay(schedule.getAllDay());
 
-        scheduleRepository.save(entitySchedule);
+        scheduleRepository.save(entitySchedule.get());
     }
 
     public void deleteById(Integer scheduleId) {
@@ -79,7 +80,7 @@ public class ScheduleService {
     public Object insertSchedule(ScheduleDTO scheduleDTO) {
         log.info("[ScheduleService](insertSchedule) scheduleDTO : {}",scheduleDTO);
         Schedule schedule = modelMapper.map(scheduleDTO, Schedule.class);
-        Calendar calendar = calendarRepository.findById(scheduleDTO.getRefCalendar()).get();
+//        Calendar calendar = calendarRepository.findById(scheduleDTO.getRefCalendar()).get();
 //        schedule.setRefCalendar(calendar);
         log.info("[ScheduleService](insertSchedule) schedule : {}",schedule);
         return scheduleRepository.save(schedule);

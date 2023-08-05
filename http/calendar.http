@@ -9,24 +9,34 @@ Content-Type: application/json
   "openStatus" : true,
   "labelColor" : "FFFFFF",
   "indexNo" : 1,
-  "userId" : 2,
+  "memberCode" : 2,
   "departmentCode" : "123",
   "defaultCalendar" : true
 }
 
 ### 캘린더 업데이트
-PATCH http://localhost:8091/calendar/update/4
+PATCH http://localhost:8091/calendar/update
 Accept: */*
 Content-Type: application/json
 
 {
-  "name": "캘린더02",
+  "id" : 29,
+  "name": "캘린더02변경",
   "openStatus" : true,
   "labelColor" : "111111",
   "indexNo" : 1,
-  "userId" : 2,
+  "memberCode" : 2,
   "departmentCode" : "123",
   "defaultCalendar" : true
+}
+### 기본 캘린더 변경
+PATCH http://localhost:8091/calendar/updateDafault
+Accept: */*
+Content-Type: application/json
+
+{
+  "id" : 27,
+  "memberCode" : 2
 }
 
 ### 캘린더 리스트

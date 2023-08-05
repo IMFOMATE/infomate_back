@@ -13,7 +13,6 @@ import java.util.List;
 @Getter
 @ToString
 @Entity
-@Builder
 @Table(name = "TBL_FVRT_CLNDR")
 @SequenceGenerator(
         name = "SEQ_TBL_FVRT_CLNDR_GEN",
@@ -34,7 +33,7 @@ public class FavoriteCalendar {
     private int refCalendar;
 
     @Column(name = "REF_MEMBER_CODE")
-    private int memberCode; //수정요망
+    private int memberCode;
 
 
     @Column(name = "REQUEST_DATE")

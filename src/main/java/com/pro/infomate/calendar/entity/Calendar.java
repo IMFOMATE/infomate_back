@@ -13,7 +13,6 @@ import java.util.List;
 @Getter
 @Entity
 @ToString
-@Builder
 @Table(name = "TBL_CLNDR")
 @SequenceGenerator(
         name = "SEQ_TBL_CLNDR_GEN",
@@ -43,7 +42,7 @@ public class Calendar {
     private int indexNo;
 
     @Column(name = "REF_MEMBER_CODE")
-    private int memberCode; //수정요망
+    private int memberCode;
 
     @Column(name = "DEFAULT_SELC")
     private Boolean defaultCalendar;
