@@ -2,10 +2,7 @@ package com.pro.infomate.board.dto;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,4 +25,14 @@ public class Comment {
 
     @Column(name = "MEMBER_CODE")
     private int memberCode;
+
+
+    @ManyToOne
+    @JoinColumn(name = "BOARD_CODE")
+    private Board boardCode;
+
+    // 빨간줄떠서 주석처리
+//    @OneToMany
+//    @JoinColumn(name = "MEMBER_CODE")
+//    private List<Member> memberCode;
 }

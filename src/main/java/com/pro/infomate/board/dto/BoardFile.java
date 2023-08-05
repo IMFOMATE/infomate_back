@@ -2,10 +2,7 @@ package com.pro.infomate.board.dto;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,4 +25,12 @@ public class BoardFile {
 
     @Column(name = "FILE_ORIGINAL")
     private String fileOriginal;
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "BOARD_CODE")
+    private Board boardCode;
+
+
 }

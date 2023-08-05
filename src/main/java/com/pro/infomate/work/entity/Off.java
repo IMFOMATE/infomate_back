@@ -2,11 +2,10 @@ package com.pro.infomate.work.entity;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.lang.reflect.Member;
 import java.sql.Timestamp;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,7 +32,12 @@ public class Off {
     @Column(name = "OFF_REASON")
     private String offReason;
 
-    @Column(name = "MEMBER_CODE")
-    private int memberCode;
+//    @Column(name = "MEMBER_CODE")
+//    private int memberCode;
+
+    // 빨간줄떠서 주석처리
+//    @OneToMany
+//    @JoinColumn(name = "MEMBER_CODE")
+//    private List<Member> memberCode;
 
 }

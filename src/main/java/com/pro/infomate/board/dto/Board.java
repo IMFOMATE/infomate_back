@@ -2,10 +2,9 @@ package com.pro.infomate.board.dto;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.lang.reflect.Member;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,5 +24,8 @@ public class Board {
 
     @Column(name = "REF_BOARD")
     private int refBoard;
+
+
+
 
 }

@@ -2,12 +2,11 @@ package com.pro.infomate.work.entity;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.lang.reflect.Member;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,6 +33,11 @@ public class Work {
     @Column(name = "WORK_STATUS")
     private String workStatus;
 
-    @Column(name = "MEMBER_CODE")
-    private int memberCode;
+//    @Column(name = "MEMBER_CODE")
+//    private int memberCode;
+
+    // 빨간줄떠서 주석처리
+//    @OneToMany
+//    @JoinColumn(name = "MEMBER_CODE")
+//    private List<Member> memberCode;
 }
