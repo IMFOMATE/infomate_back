@@ -1,11 +1,9 @@
-package com.pro.infomate.board.dto;
+package com.pro.infomate.board.entity;
 
 import lombok.*;
 
 import javax.persistence.*;
-import java.lang.reflect.Member;
 import java.sql.Timestamp;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor

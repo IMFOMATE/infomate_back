@@ -1,4 +1,4 @@
-package com.pro.infomate.board.dto;
+package com.pro.infomate.board.entity;
 
 import lombok.*;
 
