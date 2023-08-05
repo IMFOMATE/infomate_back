@@ -2,34 +2,42 @@ package com.pro.infomate.calendar.controller;
 
 
 import com.pro.infomate.calendar.common.ResponseDTO;
-import com.pro.infomate.calendar.dto.ApprovalStatus;
 import com.pro.infomate.calendar.dto.CalendarDTO;
 import com.pro.infomate.calendar.service.CalendarService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 
 @RestController
 @RequestMapping("/calendar")
 @RequiredArgsConstructor
+@Slf4j
 public class CalendarController {
 
     private final CalendarService calendarService;
 
-    @GetMapping("/list")
-    public ResponseEntity<ResponseDTO> findAll(){
+    // test success
+    @GetMapping("/list/{memberId}")
+    public ResponseEntity<ResponseDTO> findAll(@PathVariable int memberId){
+        log.info("[CalendarController](findAll) memberId : {}",memberId);
+
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK.value())
                         .message("success")
-                        .data(calendarService.findAll())
+                        .data(calendarService.findAll(memberId))
                         .build());
     }
 
+    // test success
     @GetMapping("/{calendarId}")
     public ResponseEntity<ResponseDTO> findById(@PathVariable Integer calendarId){
+        log.info("[CalendarController](findById) calendarId : {}",calendarId);
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
@@ -39,8 +47,15 @@ public class CalendarController {
                         .build());
     }
 
+    // test success
     @PostMapping("/regist")
-    public ResponseEntity<ResponseDTO> saveByCalendar(CalendarDTO calendar){
+    public ResponseEntity<ResponseDTO> saveByCalendar(@RequestBody CalendarDTO calendar){
+        log.info("[CalendarController](saveByCalendar) calendar : {}",calendar);
+
+        calendar.setCreateDate(LocalDateTime.now());
+
+        log.info("[CalendarController](saveByCalendar) calendar : {}",calendar);
+
         calendarService.saveByCalendar(calendar);
 
         return ResponseEntity.ok()
@@ -50,9 +65,13 @@ public class CalendarController {
                         .build());
     }
 
-    @PatchMapping("/update/{calendarId}")
-    public ResponseEntity<ResponseDTO> updateByCalendar(@PathVariable Integer calendarId, CalendarDTO calendar){
-        calendarService.updateById(calendarId, calendar);
+    // test success
+    @PatchMapping("/update")
+    public ResponseEntity<ResponseDTO> updateByCalendar(@RequestBody CalendarDTO calendar){
+
+        log.info("[CalendarController](updateByCalendar) calendar : {}",calendar);
+
+        calendarService.updateById(calendar);
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
@@ -60,9 +79,12 @@ public class CalendarController {
                         .message("success")
                         .build());
     }
-    @PutMapping("/updateDafault/{calendarId}")
-    public ResponseEntity<ResponseDTO> updateDefaultByCalendar(@PathVariable Integer calendarId, @RequestParam Integer userId){
-        calendarService.updateDefaultCalender(calendarId, userId); // userId 수정 요망
+
+    // test success
+    @PatchMapping("/updateDafault")
+    public ResponseEntity<ResponseDTO> updateDefaultByCalendar(@RequestBody CalendarDTO calendarDTO){
+        log.info("[CalendarController](updateDefaultByCalendar) calendarDTO: {} ",calendarDTO);
+        calendarService.updateDefaultCalender(calendarDTO); // userId 수정 요망
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK.value())
@@ -70,6 +92,7 @@ public class CalendarController {
                         .build());
     }
 
+    // test successs
     @DeleteMapping("/delete/{calendarId}")
     public ResponseEntity<ResponseDTO> deleteByCalendar(@PathVariable Integer calendarId){
         calendarService.deleteById(calendarId);
@@ -80,54 +103,5 @@ public class CalendarController {
                         .build());
     }
 
-    @GetMapping("/followerList")
-    public ResponseEntity<ResponseDTO> findAllByFollwerList(Integer favoriteId){
 
-        return ResponseEntity.ok()
-                .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
-                        .message("success")
-                        .data(calendarService.findAllByFavoriteCalendar(favoriteId))
-                        .build());
-    }
-
-    @PatchMapping("/follower/{favoriteId}")
-    public ResponseEntity<ResponseDTO> updateApprovalStatus(@PathVariable Integer favoriteId, ApprovalStatus status){
-        calendarService.updateApprovalStatusById(favoriteId, status);
-        return ResponseEntity.ok()
-                .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
-                        .message("success")
-                        .build());
-    }
-
-    @GetMapping("/followCalendar")
-    public ResponseEntity<ResponseDTO> findAllByUserId(@RequestParam Integer userId){
-
-        return ResponseEntity.ok()
-                .body(ResponseDTO.builder().status(HttpStatus.OK.value())
-                        .message("success")
-                        .data(calendarService.findAllByUserId(userId))
-                        .build());
-    }
-
-    @DeleteMapping("/DeleteFollowCalendar/{favoriteId}")
-    public ResponseEntity<ResponseDTO> deleteFollowCalendar(@PathVariable Integer favoriteId){
-        calendarService.deleteFavoriteCalendarById(favoriteId);
-        return ResponseEntity.ok()
-                .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
-                        .message("success")
-                        .build());
-    }
-
-    @GetMapping("/openFollowerCalendar")
-    public ResponseEntity<ResponseDTO> findOpenCalendarList(@RequestParam Integer userId){
-        return ResponseEntity.ok()
-                .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
-                        .message("success")
-                        .data(calendarService.openCalendarList(userId))
-                        .build());
-    }
 }

@@ -1,0 +1,44 @@
+### 일정 모두 조회
+GET http://localhost:8091/schedule/all
+
+### 일정 상세 조회
+GET http://localhost:8091/schedule/1
+
+### 일정 삭제
+DELETE http://localhost:8091/schedule/25
+
+### 일정 등록
+POST http://localhost:8091/schedule/regist
+Accept: */*
+Content-Type: application/json
+
+{
+  "title": "제목",
+  "startDate": "2023-04-04T12:19:15",
+  "endDate": "2023-08-04T12:19:15",
+  "content": "내용내용",
+  "address": "주소주소",
+  "allDay" : true,
+  "corpSchdl": false,
+  "repeat": false,
+  "important": false,
+  "refCalendar": 5
+}
+
+### 일정 수정
+PATCH http://localhost:8091/schedule/update
+Accept: */*
+Content-Type: application/json
+
+{
+  "id" : 25,
+  "title": "제목12111",
+  "startDate": "2023-04-05T12:19:15",
+  "endDate": "2023-08-05T12:19:15",
+  "content": "내용내용",
+  "address": "주소주소",
+  "allDay" : true,
+  "corpSchdl": true,
+  "repeat": true,
+  "important": false
+}

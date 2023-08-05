@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface FavotriteCalendarRepository extends JpaRepository<FavoriteCalendar, Integer> {
-    List<FavoriteCalendar> findAllByRefCalendarId(Integer favoriteId);
+    List<FavoriteCalendar> findAllByRefCalendar(Integer favoriteId);
 
-    List<FavoriteCalendarDTO> findAllByUserId(Integer userId);
+    List<FavoriteCalendarDTO> findAllByMemberCode(Integer userId);
 }

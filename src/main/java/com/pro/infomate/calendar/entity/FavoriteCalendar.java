@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,25 +13,33 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 @Entity
-@Table(name = "")
+@Table(name = "TBL_FVRT_CLNDR")
+@SequenceGenerator(
+        name = "SEQ_TBL_FVRT_CLNDR_GEN",
+        sequenceName = "SEQ_TBL_FVRT_CLNDR_FVRT_CLNDR_ID",
+        initialValue = 1, allocationSize = 1
+)
 public class FavoriteCalendar {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "FVRT_CLNDR_ID")
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "SEQ_TBL_FVRT_CLNDR_GEN"
+    )
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "REF_CLNDR")
-    private Calendar refCalendar;
+    @Column(name = "REF_CLDNR_ID")
+    private int refCalendar;
 
-//    private User refUser;
-    private Integer userId; //수정요망
+    @Column(name = "REF_MEMBER_CODE")
+    private int memberCode;
 
 
     @Column(name = "REQUEST_DATE")
     private LocalDateTime requestDate;
 
-    @Column(name = "APPROVALSTAUTS")
+    @Column(name = "APPROVAL_STATUS")
     @Enumerated(EnumType.STRING)
     private ApprovalStatus approvalStatus;
 
@@ -38,6 +47,11 @@ public class FavoriteCalendar {
     private String labelColor;
 
 
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Calendar.class)
+    @JoinColumn(name = "REF_CLDNR_ID", insertable = false, updatable = false)
+    private Calendar calendar;
 
-
+    //    @ManyToOne
+//    @JoinColumn(name = "REF_MEMBER_CODE")
+//    private int member;
 }

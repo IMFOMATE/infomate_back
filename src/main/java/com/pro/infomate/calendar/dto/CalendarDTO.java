@@ -3,6 +3,7 @@ package com.pro.infomate.calendar.dto;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @NoArgsConstructor
@@ -17,13 +18,13 @@ public class CalendarDTO {
     private String name;
     private Boolean openStatus;
     private String labelColor;
-    private int index;
+    private int indexNo;
 
-    private Integer userId; //수정요망
-    private Integer groupCode;
+    private int memberCode;
 
-    private Integer departmentCode;
+    private String departmentCode;
     private Boolean defaultCalendar;
-    private List<FavoriteCalendarDTO> refFavoriteCalendarList;
+    private LocalDateTime createDate;
+    private List<FavoriteCalendarDTO> favoriteCalendar;
     private List<ScheduleDTO> refScheduleList;
 }

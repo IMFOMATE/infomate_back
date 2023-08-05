@@ -4,26 +4,30 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Setter
 @Getter
-@ToString
 @Entity
-@Table(name = "")
+@Table(name = "TBL_SCHDL")
+@SequenceGenerator(
+        name = "SEQ_TBL_SCHDL_GEN",
+        sequenceName = "SEQ_TBL_SCHDL_SCHDL_ID",
+        initialValue = 1, allocationSize = 1
+)
 public class Schedule {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "SCHDL_ID")
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "SEQ_TBL_SCHDL_GEN"
+    )
     private int id;
 
-    @Column(name = "USER_ID")
-    private Integer userId; //수정요망
-
-    @Column(name = "SUBJECT")
-    private String subject;
+    @Column(name = "TITLE")
+    private String title;
 
     @Column(name = "START_DATE")
     private LocalDateTime startDate;
@@ -34,17 +38,13 @@ public class Schedule {
     @Column(name = "CONTENT")
     private String content;
 
-    @Column(name = "ADDRRESS")
+    @Column(name = "ADDRESS")
     private String address;
-
-    @OneToMany
-    @JoinColumn(name = "REF_PARTICIPANT")
-    private List<Participant> participantList;
 
     @Column(name = "ALL_DAY")
     private Boolean allDay;
 
-    @Column(name = "CORP_SCHDL")
+    @Column(name = "COPR_SCHDL")
     private Boolean corpSchdl;
 
     @Column(name = "REPEAT")
@@ -53,8 +53,13 @@ public class Schedule {
     @Column(name = "IMPORTANT")
     private Boolean important;
 
-    @ManyToOne
-    @JoinColumn(name = "REF_CLNDR", updatable = false)
-    private Calendar refCalendar;
+//    @OneToMany
+//    private List<Participant> participantList;
 
+    @Column(name = "REF_CLNDR_ID")
+    private int refCalendar;
+
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Calendar.class)
+    @JoinColumn(name = "REF_CLNDR_ID",updatable = false, insertable = false)
+    private Calendar calendar;
 }
