@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@Transactional
+//@Transactional
 class DocumentTest {
 
   @Autowired
@@ -30,6 +30,12 @@ class DocumentTest {
     Member member = memberRepository.findById(2L).orElseThrow();
 
     Vacation vacation = new Vacation("fff", LocalDateTime.now(),LocalDateTime.now(),"df");
+    vacation.setTitle("ff");
+    vacation.setCreatedDate(LocalDateTime.now());
+    vacation.setContent("fdff");
+    vacation.setDocumentStatus(DocumentStatus.WAITING);
+    vacation.setCoDept("asdf");
+    vacation.setMember(member);
 
     documentRepository.save(vacation);
 

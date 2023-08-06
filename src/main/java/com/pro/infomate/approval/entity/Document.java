@@ -15,14 +15,14 @@ import java.util.List;
 @Entity
 @Table(name = "TBL_DOCUMENT")
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "DOCUMENT_KIND")
+@DiscriminatorColumn(name = "DOCUMENT_KIND", discriminatorType = DiscriminatorType.STRING)
 @SequenceGenerator(
         name = "DOCUMENT_ID_GENERATOR",
         sequenceName = "SEQ_TBL_DOCUMENT_DOCUMENT_ID",
         initialValue = 1,
         allocationSize = 1
 )
-public class Document {
+public abstract class Document {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DOCUMENT_ID_GENERATOR")
