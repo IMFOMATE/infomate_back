@@ -2,6 +2,7 @@ package com.pro.infomate.calendar.controller;
 
 import com.pro.infomate.calendar.common.ResponseDTO;
 import com.pro.infomate.calendar.dto.ApprovalStatus;
+import com.pro.infomate.calendar.dto.FavoriteCalendarDTO;
 import com.pro.infomate.calendar.service.CalendarService;
 import com.pro.infomate.calendar.service.FavoriteCalendarService;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/calendar/favorite/")
+@RequestMapping("/calendar/favorite")
 @RequiredArgsConstructor
 @Slf4j
 public class FavoriteCalendarController {
@@ -31,9 +32,9 @@ public class FavoriteCalendarController {
                         .build());
     }
 
-    @PatchMapping("/follower/{favoriteId}")
-    public ResponseEntity<ResponseDTO> updateApprovalStatus(@PathVariable Integer favoriteId, ApprovalStatus status){
-        favoriteCalendarService.updateApprovalStatusById(favoriteId, status);
+    @PatchMapping("/follower")
+    public ResponseEntity<ResponseDTO> updateApprovalStatus(@RequestBody FavoriteCalendarDTO favoriteCalendarDTO){
+        favoriteCalendarService.updateApprovalStatusById(favoriteCalendarDTO);
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK.value())
@@ -41,8 +42,8 @@ public class FavoriteCalendarController {
                         .build());
     }
 
-    @GetMapping("/followCalendar")
-    public ResponseEntity<ResponseDTO> findAllByUserId(@RequestParam Integer userId){
+    @GetMapping("/followCalendar/{userId}")
+    public ResponseEntity<ResponseDTO> findAllByUserId(@PathVariable Integer userId){
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder().status(HttpStatus.OK.value())
@@ -51,6 +52,20 @@ public class FavoriteCalendarController {
                         .build());
     }
 
+    // test success
+    @PostMapping
+    public ResponseEntity<ResponseDTO> saveFollowCalendar(@RequestBody FavoriteCalendarDTO favoriteCalendarDTO){
+        log.info("[FavoriteCalendarController](saveFollowCalendar) favoriteCalendarDTO : {}", favoriteCalendarDTO);
+        return ResponseEntity.ok()
+                .body(ResponseDTO.builder()
+                        .status(HttpStatus.OK.value())
+                        .message("success")
+                        .data(favoriteCalendarService.saveFollowCalendar(favoriteCalendarDTO))
+                        .build());
+    }
+
+
+    // test success
     @DeleteMapping("/DeleteFollowCalendar/{favoriteId}")
     public ResponseEntity<ResponseDTO> deleteFollowCalendar(@PathVariable Integer favoriteId){
         favoriteCalendarService.deleteFavoriteCalendarById(favoriteId);
@@ -61,13 +76,5 @@ public class FavoriteCalendarController {
                         .build());
     }
 
-    @GetMapping("/openFollowerCalendar")
-    public ResponseEntity<ResponseDTO> findOpenCalendarList(@RequestParam Integer userId){
-        return ResponseEntity.ok()
-                .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
-                        .message("success")
-                        .data(calendarService.openCalendarList(userId))
-                        .build());
-    }
+
 }

@@ -22,7 +22,7 @@ public class CalendarDTO {
 
     private int memberCode;
 
-    private String departmentCode;
+    private Integer departmentCode;
     private Boolean defaultCalendar;
     private LocalDateTime createDate;
     private List<FavoriteCalendarDTO> favoriteCalendar;

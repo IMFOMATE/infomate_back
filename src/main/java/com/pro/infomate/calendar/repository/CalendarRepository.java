@@ -15,7 +15,7 @@ public interface CalendarRepository extends JpaRepository<Calendar, Integer> {
 //    List<Calendar> findByOpenCalendar(Integer userId);
 
 
-    List<Calendar> findByMemberCodeNotAndOpenStatus(Integer userId, boolean openStatus);
+    List<Calendar> findByDepartmentCodeAndOpenStatus(Integer departmentCode, boolean openStatus);
 
     List<Calendar> findByMemberCode(int memberCode);
 }

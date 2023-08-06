@@ -2,7 +2,6 @@ package com.pro.infomate.calendar.entity;
 
 import lombok.*;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
 @AllArgsConstructor

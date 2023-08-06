@@ -20,27 +20,31 @@ Accept: */*
 Content-Type: application/json
 
 {
-  "id" : 29,
+  "id" : 42,
   "name": "캘린더02변경",
   "openStatus" : true,
   "labelColor" : "111111",
   "indexNo" : 1,
   "memberCode" : 2,
-  "departmentCode" : "123",
+  "departmentCode" : 123,
   "defaultCalendar" : true
 }
+
 ### 기본 캘린더 변경
 PATCH http://localhost:8091/calendar/updateDafault
 Accept: */*
 Content-Type: application/json
 
 {
-  "id" : 27,
+  "id" : 42,
   "memberCode" : 2
 }
 
 ### 캘린더 리스트
 GET http://localhost:8091/calendar/list/2
+
+### 팔로우 가능 캐린더 리스트
+GET http://localhost:8091/calendar/openCalendarList
 
 ### 캘린더 상세 조회 한개 조회
 GET http://localhost:8091/calendar/5

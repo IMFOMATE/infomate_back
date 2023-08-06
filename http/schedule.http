@@ -31,8 +31,8 @@ Accept: */*
 Content-Type: application/json
 
 {
-  "id" : 25,
-  "title": "제목12111",
+  "id" : 45,
+  "title": "1231231",
   "startDate": "2023-04-05T12:19:15",
   "endDate": "2023-08-05T12:19:15",
   "content": "내용내용",

@@ -48,7 +48,7 @@ public class Calendar {
     private Boolean defaultCalendar;
 
     @Column(name = "DPRMT_CODE")
-    private String departmentCode;
+    private Integer departmentCode;
 
     @Column(name = "CREATE_DATE")
     private LocalDateTime createDate;
