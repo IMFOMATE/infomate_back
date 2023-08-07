@@ -1,0 +1,54 @@
+
+### 캘린더 등록
+POST http://localhost:8091/calendar/regist
+Accept: */*
+Content-Type: application/json
+
+{
+  "name": "캘린더01",
+  "openStatus" : true,
+  "labelColor" : "FFFFFF",
+  "indexNo" : 1,
+  "memberCode" : 2,
+  "departmentCode" : "123",
+  "defaultCalendar" : true
+}
+
+### 캘린더 업데이트
+PATCH http://localhost:8091/calendar/update
+Accept: */*
+Content-Type: application/json
+
+{
+  "id" : 42,
+  "name": "캘린더02변경",
+  "openStatus" : true,
+  "labelColor" : "111111",
+  "indexNo" : 1,
+  "memberCode" : 2,
+  "departmentCode" : 123,
+  "defaultCalendar" : true
+}
+
+### 기본 캘린더 변경
+PATCH http://localhost:8091/calendar/updateDafault
+Accept: */*
+Content-Type: application/json
+
+{
+  "id" : 42,
+  "memberCode" : 2
+}
+
+### 캘린더 리스트
+GET http://localhost:8091/calendar/list/2
+
+### 팔로우 가능 캐린더 리스트
+GET http://localhost:8091/calendar/openCalendarList
+
+### 캘린더 상세 조회 한개 조회
+GET http://localhost:8091/calendar/5
+
+### 캘린더 삭제
+DELETE http://localhost:8091/calendar/delete/5
+
