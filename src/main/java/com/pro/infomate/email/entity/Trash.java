@@ -1,4 +1,4 @@
-package com.pro.infomate.addressbook.entity;
+package com.pro.infomate.email.entity;
 
 import lombok.*;
 

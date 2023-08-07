@@ -1,6 +1,5 @@
-package com.pro.infomate.addressbook.repository;
+package com.pro.infomate.email.repository;
 
-import com.pro.infomate.addressbook.entity.PhotoFile;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PhoneFileRepository extends JpaRepository<PhotoFile, Integer> {

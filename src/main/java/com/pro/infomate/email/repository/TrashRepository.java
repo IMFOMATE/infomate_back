@@ -1,4 +1,4 @@
-package com.pro.infomate.addressbook.repository;
+package com.pro.infomate.email.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

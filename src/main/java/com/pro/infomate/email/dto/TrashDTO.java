@@ -1,4 +1,4 @@
-package com.pro.infomate.addressbook.dto;
+package com.pro.infomate.email.dto;
 
 import lombok.*;
 
