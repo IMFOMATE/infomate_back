@@ -9,15 +9,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Setter
 @Getter
-@Builder
 @ToString
 public class FavoriteCalendarDTO {
 
     private int id;
 
-    private int refCalendar;
-
-    private int memberCode; //수정요망
+    private int memberCode;
 
     private LocalDateTime requestDate;
 
@@ -25,6 +22,8 @@ public class FavoriteCalendarDTO {
 
     private String labelColor;
 
-    private Calendar calendar;
+    private int refCalendar;
+
+    private CalendarDTO calendar;
 
 }
