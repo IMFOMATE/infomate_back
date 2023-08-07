@@ -1,11 +1,12 @@
 package com.pro.infomate.member.entity;
 
 import lombok.*;
+import com.pro.infomate.approval.entity.Approval;
+import com.pro.infomate.approval.entity.DocMemberRef;
+import com.pro.infomate.approval.entity.Document;
+import javax.persistence.*;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.sql.Timestamp;
 
 @Entity
@@ -62,4 +63,19 @@ public class Member {
 
     @Column(name = "MEMBER_OFF")
     private int memberOff;
+
+
+
+
+  @OneToMany(mappedBy = "member")
+  private List<DocMemberRef> memberRefList;
+
+  @OneToMany(mappedBy = "member")
+  private List<Approval> approvalList;
+
+  @OneToMany(mappedBy = "member")
+  private List<Document> documentList;
+
+
+
 }

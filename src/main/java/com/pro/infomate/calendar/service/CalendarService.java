@@ -1,6 +1,7 @@
 package com.pro.infomate.calendar.service;
 
 import com.pro.infomate.calendar.dto.CalendarDTO;
+import com.pro.infomate.calendar.dto.FavoriteCalendarDTO;
 import com.pro.infomate.calendar.dto.ScheduleDTO;
 import com.pro.infomate.calendar.entity.Calendar;
 import com.pro.infomate.calendar.entity.Schedule;
@@ -33,9 +34,27 @@ public class CalendarService {
         log.info("[CalendarService](findAll) calendarList : {} ",calendarList);
 
         List<CalendarDTO> calendarDTOList = calendarList.stream()
-                .map(calendar -> modelMapper.map(calendar, CalendarDTO.class))
-                .collect(Collectors.toList());
-        log.info("[CalendarService](findAll) calendarDTOList : {} ",calendarDTOList);
+                .map(calendar -> modelMapper.map(calendar,CalendarDTO.class))
+                .map(calendarDTO -> {
+                    calendarDTO.setFavoriteCalendar(null);
+                    return calendarDTO;
+                }).collect(Collectors.toList());
+//        List<CalendarDTO> calendarDTOList = calendarList.stream()
+//                .map(calendar -> {
+//                    List<FavoriteCalendarDTO> favoriteCalendarDTOList =
+//                            calendar.getFavoriteCalendar().stream()
+//                                    .map(favoriteCalendar -> modelMapper.map(favoriteCalendar, FavoriteCalendarDTO.class))
+//                                    .collect(Collectors.toList());
+//                    List<ScheduleDTO> scheduleDTOList = calendar.getSchedule()
+//                            .stream().map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
+//                            .collect(Collectors.toList());
+//                    CalendarDTO calendarDTO = modelMapper.map(calendar, CalendarDTO.class);
+//                    calendarDTO.setFavoriteCalendar(favoriteCalendarDTOList);
+//                    calendarDTO.setRefScheduleList(scheduleDTOList);
+//                   return calendarDTO;
+//                })
+//                .collect(Collectors.toList());
+//        log.info("[CalendarService](findAll) calendarDTOList : {} ",calendarDTOList);
 
         return calendarDTOList;
     }

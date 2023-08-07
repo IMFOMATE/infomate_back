@@ -1,7 +1,6 @@
 package com.pro.infomate.calendar.controller;
 
 import com.pro.infomate.calendar.common.ResponseDTO;
-import com.pro.infomate.calendar.dto.ApprovalStatus;
 import com.pro.infomate.calendar.dto.FavoriteCalendarDTO;
 import com.pro.infomate.calendar.service.CalendarService;
 import com.pro.infomate.calendar.service.FavoriteCalendarService;
@@ -21,17 +20,20 @@ public class FavoriteCalendarController {
 
     private final FavoriteCalendarService favoriteCalendarService;
 
-    @GetMapping("/followerList/")
-    public ResponseEntity<ResponseDTO> findAllByFollwerList(Integer favoriteId){
+
+    // test success
+    @GetMapping("/followerList/{memberCode}")
+    public ResponseEntity<ResponseDTO> findAllByFollwerList(@PathVariable Integer memberCode){
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK.value())
                         .message("success")
-                        .data(favoriteCalendarService.findAllByFavoriteCalendar(favoriteId))
+                        .data(favoriteCalendarService.findAllByFavoriteCalendar(memberCode))
                         .build());
     }
 
+    // test success
     @PatchMapping("/follower")
     public ResponseEntity<ResponseDTO> updateApprovalStatus(@RequestBody FavoriteCalendarDTO favoriteCalendarDTO){
         favoriteCalendarService.updateApprovalStatusById(favoriteCalendarDTO);
@@ -42,18 +44,18 @@ public class FavoriteCalendarController {
                         .build());
     }
 
-    @GetMapping("/followCalendar/{userId}")
-    public ResponseEntity<ResponseDTO> findAllByUserId(@PathVariable Integer userId){
+    @GetMapping("/follow/{memberCode}")
+    public ResponseEntity<ResponseDTO> findAllByMemberCode(@PathVariable Integer memberCode){
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder().status(HttpStatus.OK.value())
                         .message("success")
-                        .data(favoriteCalendarService.findAllByUserId(userId))
+                        .data(favoriteCalendarService.findAllByMemberCode(memberCode))
                         .build());
     }
 
     // test success
-    @PostMapping
+    @PostMapping("/follwer/regist")
     public ResponseEntity<ResponseDTO> saveFollowCalendar(@RequestBody FavoriteCalendarDTO favoriteCalendarDTO){
         log.info("[FavoriteCalendarController](saveFollowCalendar) favoriteCalendarDTO : {}", favoriteCalendarDTO);
         return ResponseEntity.ok()

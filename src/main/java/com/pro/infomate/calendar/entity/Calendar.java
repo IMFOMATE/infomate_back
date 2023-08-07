@@ -55,7 +55,7 @@ public class Calendar {
 
     @OneToMany(mappedBy = "calendar", fetch = FetchType.LAZY, targetEntity = FavoriteCalendar.class)
     private List<FavoriteCalendar> favoriteCalendar;
-//
+
     @OneToMany(mappedBy = "calendar", fetch = FetchType.LAZY,targetEntity = Schedule.class)
     private List<Schedule> schedule;
 
