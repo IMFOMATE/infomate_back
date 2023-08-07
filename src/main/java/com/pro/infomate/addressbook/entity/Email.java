@@ -41,4 +41,7 @@ public class Email {
 
     @Column(name = "MAIL_TITLE")
     private String mailTitle;
+
+    @Column(name = "MAIL_LIKE")
+    private char mailLike;
 }
