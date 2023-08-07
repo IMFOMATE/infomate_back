@@ -60,12 +60,16 @@ public abstract class Document {
   //편의 메소드
   public void addFile(DocumentFile file){
     fileList.add(file);
-    file.setDocument(this);
+    if(file.getDocument() != this){
+      file.setDocument(this);
+    }
   }
 
   public void addApproval(Approval approval){
     approvalList.add(approval);
-    approval.setDocument(this);
+    if(approval.getDocument() != this ){
+      approval.setDocument(this);
+    }
   }
 
   public void AddMember(Member member){
@@ -74,7 +78,10 @@ public abstract class Document {
     }
 
     this.member = member;
-    member.getDocumentList().add(this);
+
+    if(!member.getDocumentList().contains(this)) {
+      member.getDocumentList().add(this);
+    }
   }
 
 
