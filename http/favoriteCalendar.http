@@ -1,0 +1,27 @@
+### 캘린더 팔로우 등록
+POST http://localhost:8091/calendar/favorite/
+Accept: */*
+Content-Type: application/json
+
+{
+  "refCalendar" : 29,
+  "memberCode" : 2,
+  "requestDate" : "2023-08-06T10:19:15",
+  "approvalStatus" : "WAIT",
+  "labelColor" : "FFFFFF"
+}
+
+### 캘린더 팔로우 상태 변경
+PATCH http://localhost:8091/calendar/favorite/follower
+Accept: */*
+Content-Type: application/json
+
+{
+  "id" : 1,
+  "approvalStatus" : "APPROVAL"
+}
+
+
+
+### 캘린더 팔로우 삭제
+DELETE http://localhost:8091/calendar/favorite/DeleteFollowCalendar/2

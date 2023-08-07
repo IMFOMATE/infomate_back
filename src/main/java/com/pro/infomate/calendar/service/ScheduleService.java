@@ -1,7 +1,6 @@
 package com.pro.infomate.calendar.service;
 
 import com.pro.infomate.calendar.dto.ScheduleDTO;
-import com.pro.infomate.calendar.entity.Calendar;
 import com.pro.infomate.calendar.entity.Schedule;
 import com.pro.infomate.calendar.repository.CalendarRepository;
 import com.pro.infomate.calendar.repository.ScheduleRepository;
@@ -27,7 +26,6 @@ public class ScheduleService {
     private final CalendarRepository calendarRepository;
 
     public List<ScheduleDTO> findAllScheduleByCalendarId(Integer calendarId) {
-//        return scheduleRepository.findAllByRefCalendarId(calendarId)
         return scheduleRepository.findAll()
                 .stream().map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
                 .collect(Collectors.toList());
@@ -38,32 +36,33 @@ public class ScheduleService {
         return schedule.map(value -> modelMapper.map(value, ScheduleDTO.class)).orElse(null);
     }
 
+    @Transactional
     public void updateById(ScheduleDTO schedule) {
         log.info("[ScheduleService](updateById) schedule : {}",schedule);
 
         Optional<Schedule> entitySchedule = scheduleRepository.findById(schedule.getId());
         log.info("[ScheduleService](updateById) entitySchedule : {}",entitySchedule);
-        if(entitySchedule.isEmpty()) throw new NotFindDataException("DB를 찾을 수 없습니다.");
+
+        if(entitySchedule.isEmpty()) throw new NotFindDataException("일정을 찾을 수 없습니다.");
+
         entitySchedule.get().setTitle(schedule.getTitle());
         entitySchedule.get().setStartDate(schedule.getStartDate());
         entitySchedule.get().setEndDate(schedule.getEndDate());
         entitySchedule.get().setContent(schedule.getContent());
         entitySchedule.get().setAddress(schedule.getAddress());
+        entitySchedule.get().setCorpSchdl(schedule.getCorpSchdl());
+        entitySchedule.get().setRepeat(schedule.getRepeat());
+        entitySchedule.get().setImportant(schedule.getImportant());
+        entitySchedule.get().setAllDay(schedule.getAllDay());
 
 //        entitySchedule.setParticipantList(
 //                schedule.getParticipantList()
 //                        stream()
 //                        .map(participant -> modelMapper.map(participant, Participant.class))
 //                        .collect(Collectors.toList()));
-
-        entitySchedule.get().setCorpSchdl(schedule.getCorpSchdl());
-        entitySchedule.get().setRepeat(schedule.getRepeat());
-        entitySchedule.get().setImportant(schedule.getImportant());
-        entitySchedule.get().setAllDay(schedule.getAllDay());
-
-        scheduleRepository.save(entitySchedule.get());
     }
 
+    @Transactional
     public void deleteById(Integer scheduleId) {
         scheduleRepository.deleteById(scheduleId);
     }

@@ -21,7 +21,7 @@ public class CalendarController {
 
     private final CalendarService calendarService;
 
-    // test success
+    // test success 팀, 회사전체 캘린더 추가 예정
     @GetMapping("/list/{memberId}")
     public ResponseEntity<ResponseDTO> findAll(@PathVariable int memberId){
         log.info("[CalendarController](findAll) memberId : {}",memberId);
@@ -103,5 +103,16 @@ public class CalendarController {
                         .build());
     }
 
+
+    // test success
+    @GetMapping("/openCalendarList")
+    public ResponseEntity<ResponseDTO> findOpenCalendarList(){
+        return ResponseEntity.ok()
+                .body(ResponseDTO.builder()
+                        .status(HttpStatus.OK.value())
+                        .message("success")
+                        .data(calendarService.openCalendarList())
+                        .build());
+    }
 
 }

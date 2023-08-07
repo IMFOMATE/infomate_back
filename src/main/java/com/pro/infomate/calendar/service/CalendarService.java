@@ -53,8 +53,7 @@ public class CalendarService {
         log.info("[CalendarService](findById) calendarDTO : {} ",calendarDTO);
 
         calendarDTO.setRefScheduleList(scheduleList.stream()
-                .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
-                .collect(Collectors.toList()));
+                .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class)).collect(Collectors.toList()));
 
         return calendarDTO;
     }
@@ -69,8 +68,8 @@ public class CalendarService {
             log.info("[CalendarService](saveByCalendar) calendar : {}", calendar);
 
             defaultCalendar.get().setDefaultCalendar(false);
-            calendarRepository.save(defaultCalendar.get());
 
+//            calendarRepository.save(defaultCalendar.get());
         }
 
         Calendar entityCalendar = modelMapper.map(calendar, Calendar.class);
@@ -92,8 +91,8 @@ public class CalendarService {
         entityCalendar.get().setOpenStatus(calendar.getOpenStatus());
         entityCalendar.get().setLabelColor(calendar.getLabelColor());
         entityCalendar.get().setIndexNo(calendar.getIndexNo());
+        entityCalendar.get().setDepartmentCode(calendar.getDepartmentCode());
 
-        calendarRepository.save(entityCalendar.get());
     }
 
     @Transactional
@@ -106,7 +105,6 @@ public class CalendarService {
 
         prevDefaultCalendar.get().setDefaultCalendar(false);
 
-        calendarRepository.save(prevDefaultCalendar.get());
 
         Optional<Calendar> afterDefaultCalendar = calendarRepository.findById(calendarDTO.getId());
         if(afterDefaultCalendar.isEmpty()) throw new NotFindDataException("수정할 캘린더를 찾을 수 없습니다.");
@@ -115,7 +113,6 @@ public class CalendarService {
 
         afterDefaultCalendar.get().setDefaultCalendar(true);
 
-        calendarRepository.save(afterDefaultCalendar.get());
     }
 
     @Transactional
@@ -127,10 +124,10 @@ public class CalendarService {
     }
 
 
-    public List<CalendarDTO> openCalendarList(Integer userId) {
-//        List<Calendar> calendarList = calendarRepository.findByOpenCalendar(userId);
-        List<Calendar> calendarList = calendarRepository.findByMemberCodeNotAndOpenStatus(userId, true);
-        log.info("[CalendarService](updateById) calendarList : {}",calendarList);
+    public List<CalendarDTO> openCalendarList() {
+
+        List<Calendar> calendarList = calendarRepository.findByDepartmentCodeAndOpenStatus(null ,true);
+        log.info("[CalendarService](openCalendarList) calendarList : {}",calendarList);
 
         if(calendarList.size() == 0 ) return null;
 

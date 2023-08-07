@@ -1,5 +1,6 @@
 package com.pro.infomate.calendar.dto;
 
+import com.pro.infomate.calendar.entity.Calendar;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -13,10 +14,17 @@ import java.time.LocalDateTime;
 public class FavoriteCalendarDTO {
 
     private int id;
-    private CalendarDTO refCalendar;
-    private Integer userId; //수정요망
+
+    private int refCalendar;
+
+    private int memberCode; //수정요망
+
     private LocalDateTime requestDate;
+
     private ApprovalStatus approvalStatus;
+
     private String labelColor;
+
+    private Calendar calendar;
 
 }

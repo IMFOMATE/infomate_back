@@ -2,9 +2,6 @@ package com.pro.infomate.calendar.repository;
 
 import com.pro.infomate.calendar.entity.Schedule;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-
-import java.util.List;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
 //    List<Schedule> findAllByRefCalendarId(Integer calendarId);

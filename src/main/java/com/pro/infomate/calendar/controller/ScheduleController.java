@@ -2,7 +2,6 @@ package com.pro.infomate.calendar.controller;
 
 import com.pro.infomate.calendar.common.ResponseDTO;
 import com.pro.infomate.calendar.dto.ScheduleDTO;
-import com.pro.infomate.calendar.entity.Schedule;
 import com.pro.infomate.calendar.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -96,6 +95,9 @@ public class ScheduleController {
     @PostMapping("/regist")
     public ResponseEntity<ResponseDTO> insertSchedule(@RequestBody ScheduleDTO scheduleDTO){
         log.info("[ScheduleController](insertSchedule) scheduleDTO : {} ", scheduleDTO);
+
+//        TestService testService = new TestService();
+//        testService.testInsertApi(scheduleDTO);
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()

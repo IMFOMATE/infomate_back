@@ -17,7 +17,6 @@ import java.util.Set;
 public class SwaggerConfig {
 
     // http://localhost:port/swagger-ui/index.html
-
     private ApiInfo swaggerInfo(){
         return new ApiInfoBuilder()
                 .title("INFOMATE API")
