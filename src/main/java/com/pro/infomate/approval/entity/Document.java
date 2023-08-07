@@ -43,8 +43,8 @@ public class Document {
   @Lob
   private String content;
 
-  @Column(name = "CO_DEPT")
-  private String coDept;
+  @Column(name = "DOCUMENT_KIND", insertable = false, updatable = false)
+  private String documentKind;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "MEMBER_CODE")
