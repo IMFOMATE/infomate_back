@@ -30,7 +30,7 @@ class DocumentTest {
     Member member = memberRepository.findById(2L).orElseThrow();
 
     Vacation vacation = new Vacation("fff", LocalDateTime.now(),LocalDateTime.now(),"df");
-    vacation.setTitle("ff");
+    vacation.setTitle("ffs");
     vacation.setCreatedDate(LocalDateTime.now());
     vacation.setContent("fdff");
     vacation.setDocumentStatus(DocumentStatus.WAITING);
