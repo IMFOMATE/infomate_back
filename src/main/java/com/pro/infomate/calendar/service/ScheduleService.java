@@ -26,8 +26,12 @@ public class ScheduleService {
     private final CalendarRepository calendarRepository;
 
     public List<ScheduleDTO> findAllScheduleByCalendarId(Integer calendarId) {
-        return scheduleRepository.findAll()
-                .stream().map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
+        return scheduleRepository.findAll().stream()
+                .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
+                .map(scheduleDTO -> {
+                    scheduleDTO.setCalendar(null);
+                    return scheduleDTO;
+                })
                 .collect(Collectors.toList());
     }
 

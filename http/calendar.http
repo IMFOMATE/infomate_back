@@ -43,7 +43,7 @@ Content-Type: application/json
 ### 캘린더 리스트
 GET http://localhost:8091/calendar/list/2
 
-### 팔로우 가능 캐린더 리스트
+### 팔로우 가능 캘린더 리스트
 GET http://localhost:8091/calendar/openCalendarList
 
 ### 캘린더 상세 조회 한개 조회

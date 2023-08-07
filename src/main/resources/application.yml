@@ -19,8 +19,8 @@ spring:
     generate-ddl: false
     show-sql: true
     database: oracle
-    #    hibernate:
-    #      ddl-auto: create
+#        hibernate:
+#          ddl-auto: create
     properties:
       hibernate:
         format_sql: true

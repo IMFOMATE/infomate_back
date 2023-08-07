@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Setter
 @Getter
-@Builder
+//@Builder
 @ToString
 public class ScheduleDTO {
 
