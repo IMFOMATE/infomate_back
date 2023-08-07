@@ -8,8 +8,8 @@ import org.springframework.data.repository.query.Param;
 import javax.print.Doc;
 import java.util.List;
 
-public interface DocumentRepository extends JpaRepository<Document, Long> {
+public interface DocumentRepository<T extends Document> extends JpaRepository<T, Long> {
 
-    List<Document> findByDocumentKindEquals(String kind);
+//    List<Document> findByDocumentKindEquals(String kind);
 
 }
