@@ -44,4 +44,5 @@ public class Email {
 
     @Column(name = "MAIL_LIKE")
     private char mailLike;
+
 }
