@@ -1,0 +1,9 @@
+CREATE USER C##INFOMATE IDENTIFIED by INFOMATE;
+
+GRANT connect, resource to C##INFOMATE;
+
+ALTER user C##INFOMATE quota 1024m on system;
+
+ALTER user C##INFOMATE quota 1024m on USERS;
+
+COMMIT ;
