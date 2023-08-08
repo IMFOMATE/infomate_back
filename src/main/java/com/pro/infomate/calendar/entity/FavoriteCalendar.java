@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Entity
-@ToString
 @Table(name = "TBL_FVRT_CLNDR")
 @SequenceGenerator(
         name = "SEQ_TBL_FVRT_CLNDR_GEN",
@@ -53,4 +52,15 @@ public class FavoriteCalendar {
 //    private int member;
 
 
+    @Override
+    public String toString() {
+        return "FavoriteCalendar{" +
+                "id=" + id +
+                ", refCalendar=" + refCalendar +
+                ", memberCode=" + memberCode +
+                ", requestDate=" + requestDate +
+                ", approvalStatus=" + approvalStatus +
+                ", labelColor='" + labelColor + '\'' +
+                '}';
+    }
 }

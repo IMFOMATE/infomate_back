@@ -34,7 +34,6 @@ spring:
   profiles:
     active: local
 
-
 #jwt:
 #  secret:
 
