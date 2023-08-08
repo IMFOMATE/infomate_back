@@ -23,11 +23,21 @@ public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
     private final ModelMapper modelMapper;
-    private final CalendarRepository calendarRepository;
 
-    public List<ScheduleDTO> findAllScheduleByCalendarId(Integer calendarId) {
-        return scheduleRepository.findAll()
-                .stream().map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
+    public List<ScheduleDTO> findAllScheduleByCalendarByMemberCode(Integer memberCode) {
+
+        List<Schedule> scheduleList = scheduleRepository.findAllScheduleByCalendarByMemberCode(memberCode);
+
+        log.info("[ScheduleService](updateById) scheduleList : {}", scheduleList);
+
+        if(scheduleList.isEmpty() || scheduleList.size() == 0) throw new NotFindDataException("데이터를 찾을 수 없습니다.");
+
+        return scheduleList.stream()
+                .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
+                .map(scheduleDTO -> {
+                    scheduleDTO.setCalendar(null);
+                    return scheduleDTO;
+                })
                 .collect(Collectors.toList());
     }
 

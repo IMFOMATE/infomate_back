@@ -2,8 +2,20 @@ package com.pro.infomate.calendar.repository;
 
 import com.pro.infomate.calendar.entity.Schedule;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
+
+    @Query(value = "SELECT s " +
+                     "FROM Schedule s " +
+                    "WHERE s.refCalendar IN (SELECT c.id " +
+                                              "FROM Calendar c " +
+                                             "WHERE c.memberCode = :memberCode)")
+    List<Schedule> findAllScheduleByCalendarByMemberCode(int memberCode);
+
 //    List<Schedule> findAllByRefCalendarId(Integer calendarId);
 
 //    @Query(value = "SELECT sc2 " +

@@ -6,11 +6,10 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Setter
 @Getter
-@ToString
 @Entity
 @Table(name = "TBL_FVRT_CLNDR")
 @SequenceGenerator(
@@ -34,7 +33,6 @@ public class FavoriteCalendar {
     @Column(name = "REF_MEMBER_CODE")
     private int memberCode;
 
-
     @Column(name = "REQUEST_DATE")
     private LocalDateTime requestDate;
 
@@ -45,12 +43,24 @@ public class FavoriteCalendar {
     @Column(name = "LABEL_COLOR")
     private String labelColor;
 
-
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Calendar.class)
     @JoinColumn(name = "REF_CLDNR_ID", insertable = false, updatable = false)
     private Calendar calendar;
-
-    //    @ManyToOne
+//
+//        @ManyToOne
 //    @JoinColumn(name = "REF_MEMBER_CODE")
 //    private int member;
+
+
+    @Override
+    public String toString() {
+        return "FavoriteCalendar{" +
+                "id=" + id +
+                ", refCalendar=" + refCalendar +
+                ", memberCode=" + memberCode +
+                ", requestDate=" + requestDate +
+                ", approvalStatus=" + approvalStatus +
+                ", labelColor='" + labelColor + '\'' +
+                '}';
+    }
 }

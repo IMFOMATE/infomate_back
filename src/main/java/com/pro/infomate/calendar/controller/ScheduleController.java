@@ -20,13 +20,15 @@ public class ScheduleController {
 
     private final ScheduleService scheduleService;
 
+//    private final TestService testService;
+
     // test success
     // 조건 추가 예정
-    @GetMapping("/all") // 월,주,일 단위 출력(?)예정
-    public ResponseEntity<ResponseDTO>findAllSchedule(Integer calendarId){
-        log.info("[ScheduleController](findAllSchedule) calendarId : {} ", calendarId);
+    @GetMapping("/all/{memberCode}") // 월,주,일 단위 출력(?)예정 , 회사, 부서 일정 추가 예정
+    public ResponseEntity<ResponseDTO>findAllSchedule(@PathVariable Integer memberCode){
+        log.info("[ScheduleController](findAllSchedule) memberCode : {} ", memberCode);
 
-        List<ScheduleDTO> scheduleList = scheduleService.findAllScheduleByCalendarId(calendarId);
+        List<ScheduleDTO> scheduleList = scheduleService.findAllScheduleByCalendarByMemberCode(memberCode);
         log.info("[ScheduleController](findAllSchedule) scheduleList : {} ", scheduleList);
 
         return ResponseEntity.ok()
@@ -96,7 +98,6 @@ public class ScheduleController {
     public ResponseEntity<ResponseDTO> insertSchedule(@RequestBody ScheduleDTO scheduleDTO){
         log.info("[ScheduleController](insertSchedule) scheduleDTO : {} ", scheduleDTO);
 
-//        TestService testService = new TestService();
 //        testService.testInsertApi(scheduleDTO);
 
         return ResponseEntity.ok()

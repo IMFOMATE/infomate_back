@@ -12,7 +12,6 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-@ToString
 @Table(name = "TBL_CLNDR")
 @SequenceGenerator(
         name = "SEQ_TBL_CLNDR_GEN",
@@ -55,8 +54,23 @@ public class Calendar {
 
     @OneToMany(mappedBy = "calendar", fetch = FetchType.LAZY, targetEntity = FavoriteCalendar.class)
     private List<FavoriteCalendar> favoriteCalendar;
-//
+
     @OneToMany(mappedBy = "calendar", fetch = FetchType.LAZY,targetEntity = Schedule.class)
     private List<Schedule> schedule;
 
+
+    @Override
+    public String toString() {
+        return "Calendar{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", openStatus=" + openStatus +
+                ", labelColor='" + labelColor + '\'' +
+                ", indexNo=" + indexNo +
+                ", memberCode=" + memberCode +
+                ", defaultCalendar=" + defaultCalendar +
+                ", departmentCode=" + departmentCode +
+                ", createDate=" + createDate +
+                '}';
+    }
 }

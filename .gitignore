@@ -36,3 +36,4 @@ build/
 src/main/resources/application-local.yml
 src/main/java/com/pro/infomate/calendar/test
 pom-dev.xml
+

@@ -62,4 +62,21 @@ public class Schedule {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Calendar.class)
     @JoinColumn(name = "REF_CLNDR_ID",updatable = false, insertable = false)
     private Calendar calendar;
+
+    @Override
+    public String toString() {
+        return "Schedule{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", content='" + content + '\'' +
+                ", address='" + address + '\'' +
+                ", allDay=" + allDay +
+                ", corpSchdl=" + corpSchdl +
+                ", repeat=" + repeat +
+                ", important=" + important +
+                ", refCalendar=" + refCalendar +
+                '}';
+    }
 }
