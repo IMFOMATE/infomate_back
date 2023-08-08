@@ -1,5 +1,5 @@
 ### 일정 모두 조회
-GET http://localhost:8091/schedule/all
+GET http://localhost:8091/schedule/all/2
 
 ### 일정 상세 조회
 GET http://localhost:8091/schedule/1
