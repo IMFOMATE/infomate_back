@@ -107,4 +107,16 @@ public class ScheduleController {
                         .data(scheduleService.insertSchedule(scheduleDTO))
                         .build());
     }
+
+    @GetMapping("/dashboardDay/{memberCode}")
+    public ResponseEntity<ResponseDTO> reminder(@PathVariable int memberCode){
+
+
+        return ResponseEntity.ok()
+                .body(ResponseDTO.builder()
+                        .status(HttpStatus.OK.value())
+                        .message("success")
+                        .data(scheduleService.reminder(memberCode))
+                        .build());
+    }
 }
