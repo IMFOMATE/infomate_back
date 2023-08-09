@@ -5,6 +5,7 @@ import com.pro.infomate.calendar.dto.CalendarSummaryDTO;
 import com.pro.infomate.calendar.dto.FavoriteCalendarDTO;
 import com.pro.infomate.calendar.dto.ScheduleDTO;
 import com.pro.infomate.calendar.entity.Calendar;
+import com.pro.infomate.calendar.entity.CalendarSummary;
 import com.pro.infomate.calendar.entity.Schedule;
 import com.pro.infomate.calendar.repository.CalendarRepository;
 import com.pro.infomate.calendar.repository.FavotriteCalendarRepository;
@@ -13,11 +14,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -178,10 +182,32 @@ public class CalendarService {
 
         log.info("[CalendarService](findSummaryCalendar) memberCode : {}", memberCode);
 
-        // 월의 마지막날 일정 갯수 표시
+        // 월의 일별 일정 갯수 표시
+        List<CalendarSummaryDTO> scheduleList = calendarRepository.findAllByDaysCount(memberCode, LocalDate.now())
+                .stream().map(objects -> CalendarSummaryDTO.builder()
+                        .amount((Long) objects[0])
+                        .day(((LocalDateTime) objects[1]).toLocalDate())
+                        .build())
+                .collect(Collectors.toList());
 
+        log.info("[CalendarService](findSummaryCalendar) scheduleList : {}", scheduleList);
 
+        return scheduleList;
+    }
 
-        return null;
+    public List<CalendarDTO> myCalendarList(int memberCode) {
+
+        List<Calendar> calendarList =
+                calendarRepository.findAllByMemberCodeAndDepartmentCode(memberCode, null, Sort.by(Sort.Direction.ASC, "indexNo"));
+
+        return calendarList.stream()
+                .map(calendar -> modelMapper.map(calendar, CalendarDTO.class))
+                .map(calendarDTO -> {
+                    calendarDTO.setFavoriteCalendar(null);
+                    calendarDTO.setRefScheduleList(null);
+                    return calendarDTO;
+                })
+                .collect(Collectors.toList());
+
     }
 }

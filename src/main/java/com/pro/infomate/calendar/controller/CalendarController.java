@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 
 @RestController
@@ -35,6 +36,19 @@ public class CalendarController {
                         .data(calendarService.findAll(memberId))
                         .build());
     }
+
+    @GetMapping("/mylist/{memberCode}")
+    public ResponseEntity<ResponseDTO> myCalendarList(@PathVariable int memberCode){
+        log.info("[CalendarController](myCalendarList) memberCode : {}",memberCode);
+
+        return ResponseEntity.ok()
+                .body(ResponseDTO.builder()
+                        .status(HttpStatus.OK.value())
+                        .message("success")
+                        .data(calendarService.myCalendarList(memberCode))
+                        .build());
+    }
+
 
     // test success
     @GetMapping("/{calendarId}")
@@ -119,6 +133,7 @@ public class CalendarController {
                         .build());
     }
 
+    // test success
     @GetMapping("/summary/{memberCode}")
     public ResponseEntity<ResponseDTO> findSummaryCalendar(@PathVariable int memberCode){
 
