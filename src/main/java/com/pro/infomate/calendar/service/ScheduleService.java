@@ -11,6 +11,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -93,5 +96,26 @@ public class ScheduleService {
 //        schedule.setRefCalendar(calendar);
         log.info("[ScheduleService](insertSchedule) schedule : {}",schedule);
         return scheduleRepository.save(schedule);
+    }
+
+    public List<ScheduleDTO> reminder(int memberCode) {
+
+        LocalDate today = LocalDate.now();
+
+        log.info("[ScheduleService](reminder) today : {}",today);
+
+        List<Schedule> scheduleList =
+                scheduleRepository.findAllByEndDateBetweenThree(memberCode, today.atStartOfDay(), today.plusDays(2)
+                        .atTime(LocalTime.MAX));
+
+        log.info("[ScheduleService](reminder) scheduleList : {}",scheduleList);
+
+        return scheduleList.stream()
+                .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
+                .map(scheduleDTO -> {
+                    scheduleDTO.setCalendar(null);
+                    return scheduleDTO;
+                })
+                .collect(Collectors.toList());
     }
 }

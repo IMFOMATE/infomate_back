@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 
 @RestController
@@ -37,6 +36,7 @@ public class CalendarController {
                         .build());
     }
 
+    // test success
     @GetMapping("/mylist/{memberCode}")
     public ResponseEntity<ResponseDTO> myCalendarList(@PathVariable int memberCode){
         log.info("[CalendarController](myCalendarList) memberCode : {}",memberCode);
@@ -108,7 +108,7 @@ public class CalendarController {
                         .build());
     }
 
-    // test successs
+    // test success
     @DeleteMapping("/delete/{calendarId}")
     public ResponseEntity<ResponseDTO> deleteByCalendar(@PathVariable Integer calendarId){
         log.info("[CalendarController](findSummaryCalendar) calendarId : ", calendarId);

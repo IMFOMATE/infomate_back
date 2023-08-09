@@ -55,3 +55,5 @@ GET http://localhost:8091/calendar/5
 ### 캘린더 삭제
 DELETE http://localhost:8091/calendar/delete/5
 
+### 대시보드 용 일별 일정 개수 표시
+GET http://localhost:8091/calendar/summary/2
