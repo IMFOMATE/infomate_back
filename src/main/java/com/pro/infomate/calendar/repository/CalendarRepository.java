@@ -33,7 +33,7 @@ public interface CalendarRepository extends JpaRepository<Calendar, Integer> {
                       "AND SUBSTR(s.endDate, 1, 7)  = SUBSTR(:localDate, 1, 7)  " +
                       "AND c.memberCode = :memberCode " +
                        "OR c.departmentCode = 0 " +
-                       "OR c.departmentCode IN (SELECT m.memberCode " +
+                       "OR c.departmentCode IN (SELECT m.memberCode " +  // membercode 수정예정 departmentCode
                                                  "FROM Member m " +
                                                 "WHERE m.memberCode = :memberCode) " +
                                                 "GROUP BY TRUNC(s.endDate)")

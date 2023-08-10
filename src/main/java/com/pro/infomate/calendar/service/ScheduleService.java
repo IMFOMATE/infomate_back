@@ -118,4 +118,21 @@ public class ScheduleService {
                 })
                 .collect(Collectors.toList());
     }
+
+    public List<ScheduleDTO> findAllScheduleSearch(int memberCode, String keyword){
+//        List<Schedule> scheduleList = scheduleRepository.findAllBySubjectAndContentSearch(memberCode, keyword);
+
+//        log.info("[ScheduleService](reminder) scheduleList : {}", scheduleList);
+
+//        return scheduleList.stream()
+//                .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
+//                .map(scheduleDTO -> {
+//                    scheduleDTO.setCalendar(null);
+//                    return scheduleDTO;
+//                })
+//                .collect(Collectors.toList());
+
+        return null;
+
+    }
 }
