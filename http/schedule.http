@@ -46,3 +46,7 @@ Content-Type: application/json
 
 ### 대쉬보드용 리마인더
 GET http://localhost:8091/schedule/dashboardDay/2
+
+
+### 일정 검색
+GET http://localhost:8091/schedule/findScheduleSearch/1?keyword=123

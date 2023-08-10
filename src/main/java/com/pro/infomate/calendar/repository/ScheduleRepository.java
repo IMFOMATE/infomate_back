@@ -27,6 +27,20 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
 
 
 
+//    @Query(value = "SELECT s "+
+//                     "FROM Schedule s " +
+//                     "JOIN Calendar c " +
+//                    "WHERE c.memberCode = :memberCode " +
+//                      "AND c.departmentCode IS NULL " +
+//                       "OR c.departmentCode = 0 " +
+//                       "OR c.departmentCode IN (SELECT m.memberCode " +
+//                                                 "FROM Member m " +
+//                                                "WHERE m.memberCode = :memberCode) " +
+//                      "AND Schedule.title LIKE '%' || :keyword || '%' " +
+//                       "OR Schedule.content LIKE '%' || :keyword || '%' " +
+//                    "ORDER BY s.endDate DESC")
+//    List<Schedule> findAllBySubjectAndContentSearch(int memberCode, String Keyword);
+
 //    List<Schedule> findAllByRefCalendarId(Integer calendarId);
 
 //    @Query(value = "SELECT sc2 " +
