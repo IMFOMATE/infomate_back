@@ -23,6 +23,7 @@ public class PaymentList {
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DOCUMENT_ID_GENERATOR")
   @Column(name = "PAYMENT_CODE")
   private Long paymentCode;
+
   @Column(name = "PAYMENT_DATE")
   private LocalDateTime paymentDate;
 
@@ -31,10 +32,13 @@ public class PaymentList {
 
   @Column(name = "PAYMENT_PRICE")
   private int paymentPrice;
+
   @Column(name = "PAYMENT_CONTENT")
   private String paymentContent;
+
   @Column(name = "REMARKS")
   private String remarks;
+
   @Column(name = "PAYMENT_REASON")
   private String paymentReason;
 
