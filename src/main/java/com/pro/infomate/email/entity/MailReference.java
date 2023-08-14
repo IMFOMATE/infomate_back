@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 
+@Entity
+@Table(name = "TBL_REFERENCE")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,7 +28,7 @@ public class MailReference {
 
     @ManyToOne
     @JoinColumn(name = "MAIL_CODE", nullable = false)
-    private Member mail;
+    private Email mail;
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_CODE", nullable = false)
