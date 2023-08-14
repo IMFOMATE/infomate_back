@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @ToString
 public class CalendarSummaryDTO {
 
-    private int amount;
+    private Long amount;
 
     private LocalDate day;
 
