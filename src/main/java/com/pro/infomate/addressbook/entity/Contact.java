@@ -1,5 +1,6 @@
 package com.pro.infomate.addressbook.entity;
 
+import com.pro.infomate.member.entity.Member;
 import lombok.*;
 
 import javax.persistence.*;
