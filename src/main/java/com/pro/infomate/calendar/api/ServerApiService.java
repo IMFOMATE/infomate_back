@@ -55,11 +55,11 @@
 //        webClient.post()
 //                .contentType(MediaType.APPLICATION_JSON)
 //                .bodyValue().retrieve().bodyToMono(CalendarAlertDTO.class).block();
-<<<<<<< HEAD
-    }
-=======
+
+
+
 //    }
->>>>>>> giwon
+
 //    public void testApproval(ApprovalDTO approvalDTO){
 //        String uri = SECOND_SERVER_PROTOCOL + "://" + SECOND_SERVER_HOST + ":" + SECOND_SERVER_POST + "/approval/insert";
 //        log.info("[TestService](testApproval) uri : {}",uri);
@@ -74,8 +74,7 @@
 //
 //    }
 
-<<<<<<< HEAD
-}
-=======
+
+
+
 //}
->>>>>>> giwon
