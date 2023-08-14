@@ -3,6 +3,7 @@ package com.pro.infomate.calendar.controller;
 
 import com.pro.infomate.calendar.common.ResponseDTO;
 import com.pro.infomate.calendar.dto.CalendarDTO;
+import com.pro.infomate.calendar.dto.CalendarSummaryDTO;
 import com.pro.infomate.calendar.service.CalendarService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @RestController
@@ -33,6 +35,20 @@ public class CalendarController {
                         .data(calendarService.findAll(memberId))
                         .build());
     }
+
+    // test success
+    @GetMapping("/mylist/{memberCode}")
+    public ResponseEntity<ResponseDTO> myCalendarList(@PathVariable int memberCode){
+        log.info("[CalendarController](myCalendarList) memberCode : {}",memberCode);
+
+        return ResponseEntity.ok()
+                .body(ResponseDTO.builder()
+                        .status(HttpStatus.OK.value())
+                        .message("success")
+                        .data(calendarService.myCalendarList(memberCode))
+                        .build());
+    }
+
 
     // test success
     @GetMapping("/{calendarId}")
@@ -92,9 +108,11 @@ public class CalendarController {
                         .build());
     }
 
-    // test successs
+    // test success
     @DeleteMapping("/delete/{calendarId}")
     public ResponseEntity<ResponseDTO> deleteByCalendar(@PathVariable Integer calendarId){
+        log.info("[CalendarController](findSummaryCalendar) calendarId : ", calendarId);
+
         calendarService.deleteById(calendarId);
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
@@ -112,6 +130,25 @@ public class CalendarController {
                         .status(HttpStatus.OK.value())
                         .message("success")
                         .data(calendarService.openCalendarList())
+                        .build());
+    }
+
+    // test success
+    @GetMapping("/summary/{memberCode}")
+    public ResponseEntity<ResponseDTO> findSummaryCalendar(@PathVariable int memberCode){
+
+        log.info("[CalendarController](findSummaryCalendar) memberCode : ", memberCode);
+
+        List<CalendarSummaryDTO> calendarSummaryDTOList =
+                calendarService.findSummaryCalendar(memberCode);
+
+        log.info("[CalendarController](findSummaryCalendar) calendarSummaryDTOList : ", calendarSummaryDTOList);
+
+        return ResponseEntity.ok()
+                .body(ResponseDTO.builder()
+                        .status(HttpStatus.OK.value())
+                        .message("success")
+                        .data(calendarSummaryDTOList)
                         .build());
     }
 

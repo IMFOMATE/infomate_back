@@ -19,7 +19,10 @@ public class Payment extends Document{
 
   public void addPaymentList(PaymentList paymentList){
     this.paymentList.add(paymentList);
-    paymentList.setDocument(this);
+
+    if(paymentList.getDocument() != this){
+      paymentList.setDocument(this);
+    }
   }
 
 }

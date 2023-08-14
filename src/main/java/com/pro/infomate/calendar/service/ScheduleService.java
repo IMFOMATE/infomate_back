@@ -11,6 +11,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,10 +26,16 @@ public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
     private final ModelMapper modelMapper;
-    private final CalendarRepository calendarRepository;
 
-    public List<ScheduleDTO> findAllScheduleByCalendarId(Integer calendarId) {
-        return scheduleRepository.findAll().stream()
+    public List<ScheduleDTO> findAllScheduleByCalendarByMemberCode(Integer memberCode) {
+
+        List<Schedule> scheduleList = scheduleRepository.findAllScheduleByCalendarByMemberCode(memberCode);
+
+        log.info("[ScheduleService](updateById) scheduleList : {}", scheduleList);
+
+        if(scheduleList.isEmpty() || scheduleList.size() == 0) throw new NotFindDataException("데이터를 찾을 수 없습니다.");
+
+        return scheduleList.stream()
                 .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
                 .map(scheduleDTO -> {
                     scheduleDTO.setCalendar(null);
@@ -87,5 +96,43 @@ public class ScheduleService {
 //        schedule.setRefCalendar(calendar);
         log.info("[ScheduleService](insertSchedule) schedule : {}",schedule);
         return scheduleRepository.save(schedule);
+    }
+
+    public List<ScheduleDTO> reminder(int memberCode) {
+
+        LocalDate today = LocalDate.now();
+
+        log.info("[ScheduleService](reminder) today : {}",today);
+
+        List<Schedule> scheduleList =
+                scheduleRepository.findAllByEndDateBetweenThree(memberCode, today.atStartOfDay(), today.plusDays(2)
+                        .atTime(LocalTime.MAX));
+
+        log.info("[ScheduleService](reminder) scheduleList : {}",scheduleList);
+
+        return scheduleList.stream()
+                .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
+                .map(scheduleDTO -> {
+                    scheduleDTO.setCalendar(null);
+                    return scheduleDTO;
+                })
+                .collect(Collectors.toList());
+    }
+
+    public List<ScheduleDTO> findAllScheduleSearch(int memberCode, String keyword){
+//        List<Schedule> scheduleList = scheduleRepository.findAllBySubjectAndContentSearch(memberCode, keyword);
+
+//        log.info("[ScheduleService](reminder) scheduleList : {}", scheduleList);
+
+//        return scheduleList.stream()
+//                .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
+//                .map(scheduleDTO -> {
+//                    scheduleDTO.setCalendar(null);
+//                    return scheduleDTO;
+//                })
+//                .collect(Collectors.toList());
+
+        return null;
+
     }
 }

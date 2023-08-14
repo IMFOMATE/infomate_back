@@ -1,5 +1,6 @@
 package com.pro.infomate.email.entity;
 
+import com.pro.infomate.member.entity.Member;
 import lombok.*;
 
 import javax.persistence.*;
