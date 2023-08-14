@@ -49,10 +49,10 @@ class DocumentTest {
 
     for (Document document : documents) {
       if(document instanceof Vacation){
-        System.out.println("((Vacation) document).getReason() = " + ((Vacation) document).getReason());
+        System.out.println((Vacation)document);
       }
       if(document instanceof Draft){
-        System.out.println("((Vacation) document).getCoDept() = " + ((Draft) document).getCoDept());
+        System.out.println("((Draft) document).getCoDept() = " + ((Draft) document).getDocumentStatus());
       }
     }
     // When
