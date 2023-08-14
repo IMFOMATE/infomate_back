@@ -16,9 +16,16 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @ToString
+@SequenceGenerator(
+        name = "MEMBER_CODE_GENERATOR",
+        sequenceName = "SEQ_TBL_MEMBER_MEMBER_CODE",
+        initialValue = 1,
+        allocationSize = 1
+)
 public class Member {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_CODE_GENERATOR")
     @Column(name = "MEMBER_CODE")
     private int memberCode;
 
@@ -63,7 +70,6 @@ public class Member {
 
     @Column(name = "MEMBER_OFF")
     private int memberOff;
-
 
 
 
