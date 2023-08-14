@@ -13,13 +13,13 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class ServerApiService {
 
-    @Value("${second.server.host}")
+//    @Value("${second.server.host}")
     private String SECOND_SERVER_HOST;
 
-    @Value("${second.server.port}")
+//    @Value("${second.server.port}")
     private String SECOND_SERVER_POST;
 
-    @Value("${second.server.protocol}")
+//    @Value("${second.server.protocol}")
     private String SECOND_SERVER_PROTOCOL;
 
     private final RestTemplate restTemplate;
