@@ -1,6 +1,7 @@
 package com.pro.infomate.approval.entity;
 
 import com.pro.infomate.approval.repository.DocumentRepository;
+import com.pro.infomate.approval.repository.VacationRepository;
 import com.pro.infomate.member.entity.Member;
 import com.pro.infomate.member.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -12,12 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-@Commit
+//@Commit
 class DocumentTest {
 
   @Autowired
@@ -44,10 +46,14 @@ class DocumentTest {
 //    List<Document> documents = documentRepository.findByDocumentKindEquals("vacation");
 
     List<Document> documents = documentRepository.findAll();
+
     for (Document document : documents) {
-      System.out.println("document.getTitle() = " + document.getTitle());
-      System.out.println("document.getContent() = " + document.getContent());
-      System.out.println("document.getDocumentKind() = " + document.getDocumentKind());
+      if(document instanceof Vacation){
+        System.out.println("((Vacation) document).getReason() = " + ((Vacation) document).getReason());
+      }
+      if(document instanceof Draft){
+        System.out.println("((Vacation) document).getCoDept() = " + ((Draft) document).getCoDept());
+      }
     }
     // When
 

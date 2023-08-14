@@ -1,10 +1,8 @@
 package com.pro.infomate.calendar.controller;
 
-import com.pro.infomate.calendar.api.ServerApiService;
 import com.pro.infomate.calendar.common.ResponseDTO;
 import com.pro.infomate.calendar.dto.ScheduleDTO;
 import com.pro.infomate.calendar.service.ScheduleService;
-import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,7 +20,7 @@ public class ScheduleController {
 
     private final ScheduleService scheduleService;
 
-    private final ServerApiService serverApiService;
+//    private final ServerApiService serverApiService;
 
     // test success
     // 조건 추가 예정
@@ -101,7 +99,7 @@ public class ScheduleController {
     public ResponseEntity<ResponseDTO> insertSchedule(@RequestBody ScheduleDTO scheduleDTO){
         log.info("[ScheduleController](insertSchedule) scheduleDTO : {} ", scheduleDTO);
 
-        serverApiService.scheduleInsertApi(scheduleDTO);
+//        serverApiService.scheduleInsertApi(scheduleDTO);
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
