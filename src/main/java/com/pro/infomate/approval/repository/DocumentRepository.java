@@ -18,9 +18,7 @@ public interface DocumentRepository<T extends Document> extends JpaRepository<T,
   
   //3. 임시저장상태의 문서 최신순으로 조회
 
-
   //4. 문서 저장
 
-  //5.
 
 }

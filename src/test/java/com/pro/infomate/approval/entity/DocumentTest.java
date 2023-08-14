@@ -1,5 +1,7 @@
 package com.pro.infomate.approval.entity;
 
+import com.pro.infomate.approval.dto.DocFileDTO;
+import com.pro.infomate.approval.dto.PaymentDTO;
 import com.pro.infomate.approval.repository.DocumentRepository;
 import com.pro.infomate.member.entity.Member;
 import com.pro.infomate.member.repository.MemberRepository;
@@ -54,9 +56,9 @@ class DocumentTest {
       }
     }
     // When
-
     // Then
 
   }
+
 
 }
