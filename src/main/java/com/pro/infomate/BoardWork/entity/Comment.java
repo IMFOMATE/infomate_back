@@ -1,5 +1,6 @@
-package com.pro.infomate.board.entity;
+package com.pro.infomate.BoardWork.entity;
 
+import com.pro.infomate.member.entity.Member;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,8 +32,7 @@ public class Comment {
     @JoinColumn(name = "BOARD_CODE")
     private Board boardCode;
 
-    // 빨간줄떠서 주석처리
-//    @OneToMany
-//    @JoinColumn(name = "MEMBER_CODE")
-//    private List<Member> memberCode;
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_CODE")
+    private Member member;
 }

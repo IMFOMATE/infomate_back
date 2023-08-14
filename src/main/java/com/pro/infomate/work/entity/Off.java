@@ -32,12 +32,11 @@ public class Off {
     @Column(name = "OFF_REASON")
     private String offReason;
 
-//    @Column(name = "MEMBER_CODE")
-//    private int memberCode;
+    @Column(name = "MEMBER_CODE")
+    private int memberCode;
 
-    // 빨간줄떠서 주석처리
-//    @OneToMany
+//    @ManyToOne
 //    @JoinColumn(name = "MEMBER_CODE")
-//    private List<Member> memberCode;
+//    private Member memberCode;
 
 }

@@ -1,4 +1,4 @@
-package com.pro.infomate.board.entity;
+package com.pro.infomate.BoardWork.entity;
 
 import lombok.*;
 
@@ -44,8 +44,7 @@ public class Post {
     @JoinColumn(name = "BOARD_CODE")
     private Board boardCode;
 
-    // 빨간줄떠서 주석처리
 //    @OneToMany
 //    @JoinColumn(name = "MEMBER_CODE")
-//    private List<Member> memberCode;
+//    private Member memberCode;
 }

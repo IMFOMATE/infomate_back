@@ -1,8 +1,6 @@
-package com.pro.infomate.board.dto;
+package com.pro.infomate.BoardWork.dto;
 
 import lombok.*;
-
-import javax.persistence.Column;
 
 @NoArgsConstructor
 @AllArgsConstructor

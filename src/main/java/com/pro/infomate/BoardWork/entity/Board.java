@@ -1,10 +1,8 @@
-package com.pro.infomate.board.entity;
+package com.pro.infomate.BoardWork.entity;
 
 import lombok.*;
 
 import javax.persistence.*;
-import java.lang.reflect.Member;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor

@@ -33,11 +33,10 @@ public class Work {
     @Column(name = "WORK_STATUS")
     private String workStatus;
 
-//    @Column(name = "MEMBER_CODE")
-//    private int memberCode;
+    @Column(name = "MEMBER_CODE")
+    private int memberCode;
 
-    // 빨간줄떠서 주석처리
 //    @OneToMany
 //    @JoinColumn(name = "MEMBER_CODE")
-//    private List<Member> memberCode;
+//    private Member memberCode;
 }
