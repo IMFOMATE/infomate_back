@@ -2,7 +2,6 @@ package com.pro.infomate.calendar.controller;
 
 import com.pro.infomate.calendar.common.ResponseDTO;
 import com.pro.infomate.calendar.dto.FavoriteCalendarDTO;
-import com.pro.infomate.calendar.service.CalendarService;
 import com.pro.infomate.calendar.service.FavoriteCalendarService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,10 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class FavoriteCalendarController {
 
-    private final CalendarService calendarService;
-
     private final FavoriteCalendarService favoriteCalendarService;
-
 
     // test success
     @GetMapping("/followerList/{memberCode}")
@@ -44,8 +40,10 @@ public class FavoriteCalendarController {
                         .build());
     }
 
+    // test success
     @GetMapping("/follow/{memberCode}")
     public ResponseEntity<ResponseDTO> findAllByMemberCode(@PathVariable Integer memberCode){
+        log.info("[FavoriteCalendarController](findAllByMemberCode) memberCode : {}", memberCode);
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder().status(HttpStatus.OK.value())
@@ -58,6 +56,7 @@ public class FavoriteCalendarController {
     @PostMapping("/follwer/regist")
     public ResponseEntity<ResponseDTO> saveFollowCalendar(@RequestBody FavoriteCalendarDTO favoriteCalendarDTO){
         log.info("[FavoriteCalendarController](saveFollowCalendar) favoriteCalendarDTO : {}", favoriteCalendarDTO);
+
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK.value())
@@ -70,7 +69,10 @@ public class FavoriteCalendarController {
     // test success
     @DeleteMapping("/DeleteFollowCalendar/{favoriteId}")
     public ResponseEntity<ResponseDTO> deleteFollowCalendar(@PathVariable Integer favoriteId){
+        log.info("[FavoriteCalendarController](saveFollowCalendar) deleteFollowCalendar : {}", favoriteId);
+
         favoriteCalendarService.deleteFavoriteCalendarById(favoriteId);
+
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK.value())

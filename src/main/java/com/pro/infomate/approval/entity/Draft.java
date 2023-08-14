@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Entity
 @Table(name = "TBL_DRAFT")
-@DiscriminatorValue("draft")
+@DiscriminatorValue("Draft")
 public class Draft extends Document{
 
     @Column(name = "CO_DEPT")

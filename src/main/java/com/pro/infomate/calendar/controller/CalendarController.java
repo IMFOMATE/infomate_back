@@ -37,6 +37,20 @@ public class CalendarController {
     }
 
     // test success
+    @GetMapping("/mylist/{memberCode}")
+    public ResponseEntity<ResponseDTO> myCalendarList(@PathVariable int memberCode){
+        log.info("[CalendarController](myCalendarList) memberCode : {}",memberCode);
+
+        return ResponseEntity.ok()
+                .body(ResponseDTO.builder()
+                        .status(HttpStatus.OK.value())
+                        .message("success")
+                        .data(calendarService.myCalendarList(memberCode))
+                        .build());
+    }
+
+
+    // test success
     @GetMapping("/{calendarId}")
     public ResponseEntity<ResponseDTO> findById(@PathVariable Integer calendarId){
         log.info("[CalendarController](findById) calendarId : {}",calendarId);
@@ -94,7 +108,7 @@ public class CalendarController {
                         .build());
     }
 
-    // test successs
+    // test success
     @DeleteMapping("/delete/{calendarId}")
     public ResponseEntity<ResponseDTO> deleteByCalendar(@PathVariable Integer calendarId){
         log.info("[CalendarController](findSummaryCalendar) calendarId : ", calendarId);
@@ -119,6 +133,7 @@ public class CalendarController {
                         .build());
     }
 
+    // test success
     @GetMapping("/summary/{memberCode}")
     public ResponseEntity<ResponseDTO> findSummaryCalendar(@PathVariable int memberCode){
 
