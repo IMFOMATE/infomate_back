@@ -1,7 +1,6 @@
 package com.pro.infomate.approval.entity;
 
 import com.pro.infomate.approval.repository.DocumentRepository;
-import com.pro.infomate.approval.repository.VacationRepository;
 import com.pro.infomate.member.entity.Member;
 import com.pro.infomate.member.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -13,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 

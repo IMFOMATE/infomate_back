@@ -13,9 +13,9 @@
 //@Slf4j
 //public class ServerApiService {
 //
-////    @Value("${second.server.host}")
-////    private String SECOND_SERVER_HOST;
-////
+//    @Value("${second.server.host}")
+//    private String SECOND_SERVER_HOST;
+//
 //    @Value("${second.server.port}")
 //    private String SECOND_SERVER_POST;
 //
@@ -29,45 +29,45 @@
 //    }
 //
 //    public void scheduleInsertApi(ScheduleDTO scheduleDTO){
-////        String uri = SECOND_SERVER_PROTOCOL + "://" + SECOND_SERVER_HOST + ":" + SECOND_SERVER_POST + "/calendar/alert";
-////        log.info("[TestService](testInsertApi) uri : {}",uri);
-////
-////        restTemplate.exchange(
-////                uri,
-////                HttpMethod.POST,
-////                ResponseEntity.ok().body(CalendarAlertDTO.builder()
-////                        .scheduleId(scheduleDTO.getId())
-////                        .scheduleTitle(scheduleDTO.getTitle())
-////                        .memberCode(2)
-////                        .calendarName("")
-////                        .endDate(scheduleDTO.getEndDate())
-////                        .important(scheduleDTO.getImportant())
-////                        .build()),
-//////                String.class
-////                ScheduleDTO.class
-////        );
+//        String uri = SECOND_SERVER_PROTOCOL + "://" + SECOND_SERVER_HOST + ":" + SECOND_SERVER_POST + "/calendar/alert";
+//        log.info("[TestService](testInsertApi) uri : {}",uri);
 //
+//        restTemplate.exchange(
+//                uri,
+//                HttpMethod.POST,
+//                ResponseEntity.ok().body(CalendarAlertDTO.builder()
+//                        .scheduleId(scheduleDTO.getId())
+//                        .scheduleTitle(scheduleDTO.getTitle())
+//                        .memberCode(2)
+//                        .calendarName("")
+//                        .endDate(scheduleDTO.getEndDate())
+//                        .important(scheduleDTO.getImportant())
+//                        .build()),
+//                String.class
+//                ScheduleDTO.class
+//        );
+
+
+//        WebClient webClient = WebClient.builder()
+//                .baseUrl()
+//                .build();
 //
-////        WebClient webClient = WebClient.builder()
-////                .baseUrl()
-////                .build();
-////
-////        webClient.post()
-////                .contentType(MediaType.APPLICATION_JSON)
-////                .bodyValue().retrieve().bodyToMono(CalendarAlertDTO.class).block();
+//        webClient.post()
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .bodyValue().retrieve().bodyToMono(CalendarAlertDTO.class).block();
+    }
+//    public void testApproval(ApprovalDTO approvalDTO){
+//        String uri = SECOND_SERVER_PROTOCOL + "://" + SECOND_SERVER_HOST + ":" + SECOND_SERVER_POST + "/approval/insert";
+//        log.info("[TestService](testApproval) uri : {}",uri);
+//
+//        restTemplate.exchange(
+//                uri,
+//                HttpMethod.POST,
+//                ResponseEntity.ok().body(approvalDTO),
+//                ApprovalDTO.class
+//                String.class
+//        );
+//
 //    }
-////    public void testApproval(ApprovalDTO approvalDTO){
-////        String uri = SECOND_SERVER_PROTOCOL + "://" + SECOND_SERVER_HOST + ":" + SECOND_SERVER_POST + "/approval/insert";
-////        log.info("[TestService](testApproval) uri : {}",uri);
-////
-////        restTemplate.exchange(
-////                uri,
-////                HttpMethod.POST,
-////                ResponseEntity.ok().body(approvalDTO),
-////                ApprovalDTO.class
-////                String.class
-////        );
-////
-////    }
-//
-//}
+
+}
