@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
@@ -35,7 +36,6 @@ public class DocumentDTO {
 
     private List<ApprovalDTO> approvalList;
 
-    @Builder
     public DocumentDTO(Long id, String title, LocalDateTime createdDate, DocumentStatus documentStatus, String content, String documentKind, List<DocFileDTO> fileList, List<ApprovalDTO> approvalList) {
         this.id = id;
         this.title = title;
