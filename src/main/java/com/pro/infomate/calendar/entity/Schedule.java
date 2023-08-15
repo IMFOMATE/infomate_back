@@ -1,6 +1,7 @@
 package com.pro.infomate.calendar.entity;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Entity
 @Table(name = "TBL_SCHDL")
+@DynamicUpdate
 @SequenceGenerator(
         name = "SEQ_TBL_SCHDL_GEN",
         sequenceName = "SEQ_TBL_SCHDL_SCHDL_ID",
@@ -62,6 +64,8 @@ public class Schedule {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Calendar.class)
     @JoinColumn(name = "REF_CLNDR_ID",updatable = false, insertable = false)
     private Calendar calendar;
+
+
 
     @Override
     public String toString() {

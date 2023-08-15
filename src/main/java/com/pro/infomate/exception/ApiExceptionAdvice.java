@@ -13,5 +13,11 @@ public class ApiExceptionAdvice {
         return ResponseEntity.status(HttpStatus.NO_CONTENT)
                 .body(new Response(HttpStatus.NO_CONTENT,"fail", e.getMessage()));
     }
+
+    @ExceptionHandler(NotAuthenticationServer.class)
+    public ResponseEntity<Response> notAuthenticationServer(NotAuthenticationServer e){
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .body(new Response(HttpStatus.NO_CONTENT,"fail",e.getMessage()));
+    }
     
 }

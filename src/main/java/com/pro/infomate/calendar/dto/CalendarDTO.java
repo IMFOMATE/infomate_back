@@ -8,9 +8,8 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
 @Getter
-//@Builder
+@Setter
 @ToString
 public class CalendarDTO {
 

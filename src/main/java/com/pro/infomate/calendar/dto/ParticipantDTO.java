@@ -5,8 +5,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
 @Builder
+@Setter
 @ToString
 public class ParticipantDTO {
 

@@ -7,8 +7,9 @@ import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
+@Builder
+@Setter
 @ToString
 public class FavoriteCalendarDTO {
 
