@@ -109,8 +109,8 @@ public class CalendarController {
     }
 
     // test success
-    @DeleteMapping("/delete/{calendarId}")
-    public ResponseEntity<ResponseDTO> deleteByCalendar(@PathVariable Integer calendarId){
+    @DeleteMapping("/delete/")
+    public ResponseEntity<ResponseDTO> deleteByCalendar(@RequestBody List<Integer> calendarId){
         log.info("[CalendarController](findSummaryCalendar) calendarId : ", calendarId);
 
         calendarService.deleteById(calendarId);
