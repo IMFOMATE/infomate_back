@@ -57,6 +57,7 @@ public class Schedule {
     private Boolean important;
 
     @OneToMany
+    @JoinColumn(name = "REF_SCHDL_ID")
     private List<Participant> participantList;
 
     @Column(name = "REF_CLNDR_ID")

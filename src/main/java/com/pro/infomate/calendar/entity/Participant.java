@@ -4,6 +4,7 @@ import com.pro.infomate.member.entity.Member;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,13 +16,20 @@ import javax.persistence.*;
 @IdClass(ParticipantPK.class)
 public class Participant {
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "REF_SCHDL_ID")
-    private Schedule schedule;
+    public Participant(int scheduleCode, int memberCode) {
+        this.scheduleCode = scheduleCode;
+        this.memberCode = memberCode;
+    }
 
     @Id
-    @OneToOne
-    @JoinColumn(name = "REF_MEMBER_CODE")
+    @Column(name = "REF_SCHDL_ID")
+    private int scheduleCode;
+
+    @Id
+    @Column(name = "REF_MEMBER_CODE")
+    private int memberCode;
+
+    @ManyToOne
+    @JoinColumn(name = "REF_MEMBER_CODE", insertable = false, updatable = false)
     private Member member;
 }

@@ -21,7 +21,7 @@ public class CalendarDTO {
     private int indexNo;
 
     private int memberCode;
-    private MemberDTO refMember;
+    private MemberDTO member;
 
     private Integer departmentCode;
     private Boolean defaultCalendar;

@@ -75,10 +75,6 @@ public class Member {
     @Column(name = "MEMBER_OFF")
     private int memberOff;
 
-
-    @OneToOne
-    private Participant participant;
-
     @OneToMany(mappedBy = "member")
     private List<DocMemberRef> memberRefList;
 
@@ -94,5 +90,7 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Calendar> calendarList;
 
+    @OneToMany(mappedBy = "member")
+    private List<Participant> participantList;
 
 }

@@ -11,7 +11,7 @@ import java.io.Serializable;
 @ToString
 public class ParticipantPK implements Serializable {
 
-    private int schedule;
+    private int scheduleCode;
 
-    private int member;
+    private int memberCode;
 }
