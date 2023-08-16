@@ -5,6 +5,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -55,8 +56,8 @@ public class Schedule {
     @Column(name = "IMPORTANT")
     private Boolean important;
 
-//    @OneToMany
-//    private List<Participant> participantList;
+    @OneToMany
+    private List<Participant> participantList;
 
     @Column(name = "REF_CLNDR_ID")
     private int refCalendar;

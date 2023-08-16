@@ -1,6 +1,7 @@
 package com.pro.infomate.calendar.entity;
 
 import com.pro.infomate.calendar.dto.ApprovalStatus;
+import com.pro.infomate.member.entity.Member;
 import lombok.*;
 
 import javax.persistence.*;
@@ -46,10 +47,10 @@ public class FavoriteCalendar {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Calendar.class)
     @JoinColumn(name = "REF_CLDNR_ID", insertable = false, updatable = false)
     private Calendar calendar;
-//
-//        @ManyToOne
-//    @JoinColumn(name = "REF_MEMBER_CODE")
-//    private int member;
+
+    @ManyToOne
+    @JoinColumn(name = "REF_MEMBER_CODE", insertable = false, updatable = false)
+    private Member member;
 
 
     @Override

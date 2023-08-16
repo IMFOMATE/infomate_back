@@ -1,5 +1,9 @@
 package com.pro.infomate.member.entity;
 
+import com.pro.infomate.calendar.entity.Calendar;
+import com.pro.infomate.calendar.entity.FavoriteCalendar;
+import com.pro.infomate.calendar.entity.Participant;
+import io.github.classgraph.PackageInfo;
 import lombok.*;
 import com.pro.infomate.approval.entity.Approval;
 import com.pro.infomate.approval.entity.DocMemberRef;
@@ -72,16 +76,23 @@ public class Member {
     private int memberOff;
 
 
+    @OneToOne
+    private Participant participant;
 
-  @OneToMany(mappedBy = "member")
-  private List<DocMemberRef> memberRefList;
+    @OneToMany(mappedBy = "member")
+    private List<DocMemberRef> memberRefList;
 
-  @OneToMany(mappedBy = "member")
-  private List<Approval> approvalList;
+    @OneToMany(mappedBy = "member")
+    private List<Approval> approvalList;
 
-  @OneToMany(mappedBy = "member")
-  private List<Document> documentList;
+    @OneToMany(mappedBy = "member")
+    private List<Document> documentList;
 
+    @OneToMany(mappedBy = "member")
+    private List<FavoriteCalendar> favoriteCalendarList;
+
+    @OneToMany(mappedBy = "member")
+    private List<Calendar> calendarList;
 
 
 }

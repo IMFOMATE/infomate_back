@@ -1,6 +1,7 @@
 package com.pro.infomate.calendar.dto;
 
 
+import com.pro.infomate.member.dto.MemberDTO;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,7 @@ public class CalendarDTO {
     private int indexNo;
 
     private int memberCode;
+    private MemberDTO refMember;
 
     private Integer departmentCode;
     private Boolean defaultCalendar;

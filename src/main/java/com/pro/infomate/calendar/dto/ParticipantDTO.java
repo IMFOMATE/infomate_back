@@ -1,5 +1,6 @@
 package com.pro.infomate.calendar.dto;
 
+import com.pro.infomate.member.dto.MemberDTO;
 import lombok.*;
 
 @AllArgsConstructor
@@ -10,7 +11,7 @@ import lombok.*;
 @ToString
 public class ParticipantDTO {
 
-    private int id;
-//    private User user;
+    private MemberDTO member;
+
     private ScheduleDTO schedule;
 }
