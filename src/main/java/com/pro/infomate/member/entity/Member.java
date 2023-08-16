@@ -1,7 +1,7 @@
 package com.pro.infomate.member.entity;
 
 import com.pro.infomate.approval.entity.Approval;
-import com.pro.infomate.approval.entity.DocMemberRef;
+import com.pro.infomate.approval.entity.DocRef;
 import com.pro.infomate.approval.entity.Document;
 import lombok.*;
 
@@ -37,7 +37,7 @@ public class Member {
 
 
   @OneToMany(mappedBy = "member")
-  private List<DocMemberRef> memberRefList;
+  private List<DocRef> memberRefList;
 
   @OneToMany(mappedBy = "member")
   private List<Approval> approvalList;

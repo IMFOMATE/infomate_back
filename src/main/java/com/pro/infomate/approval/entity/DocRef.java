@@ -17,7 +17,7 @@ import javax.persistence.*;
         initialValue = 1,
         allocationSize = 1
 )
-public class DocMemberRef {
+public class DocRef {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "REF_CODE_GENERATOR")
@@ -32,6 +32,9 @@ public class DocMemberRef {
   @JoinColumn(name = "MEMBER_CODE")
   private Member member;
 
-
-
+  @Builder
+  public DocRef(Document document, Member member) {
+    this.document = document;
+    this.member = member;
+  }
 }
