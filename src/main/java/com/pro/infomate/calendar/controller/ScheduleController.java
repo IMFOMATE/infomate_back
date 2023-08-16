@@ -1,8 +1,8 @@
 package com.pro.infomate.calendar.controller;
 
-import com.pro.infomate.calendar.common.ResponseDTO;
 import com.pro.infomate.calendar.dto.ScheduleDTO;
 import com.pro.infomate.calendar.service.ScheduleService;
+import com.pro.infomate.common.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -33,7 +33,7 @@ public class ScheduleController {
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("success")
                         .data(scheduleList)
                         .build());
@@ -49,7 +49,7 @@ public class ScheduleController {
 
         return ResponseEntity.ok()
                     .body(ResponseDTO.builder()
-                            .status(HttpStatus.OK.value())
+                            .status(HttpStatus.OK)
                             .message("success")
                             .data(schedule)
                             .build());
@@ -62,7 +62,7 @@ public class ScheduleController {
         scheduleService.updateById(scheduleDTO);
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("update_success")
                         .build());
     }
@@ -74,7 +74,7 @@ public class ScheduleController {
         scheduleService.deleteById(scheduleId);
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("delete_success")
                         .build());
     }
@@ -87,7 +87,7 @@ public class ScheduleController {
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("success")
 //                        .data(scheduleList)
                         .build());
@@ -102,7 +102,7 @@ public class ScheduleController {
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("success")
                         .data(scheduleService.insertSchedule(scheduleDTO))
                         .build());
@@ -113,7 +113,7 @@ public class ScheduleController {
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("success")
                         .data(scheduleService.reminder(memberCode))
                         .build());

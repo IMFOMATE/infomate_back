@@ -1,8 +1,8 @@
 package com.pro.infomate.calendar.controller;
 
-import com.pro.infomate.calendar.common.ResponseDTO;
 import com.pro.infomate.calendar.dto.FavoriteCalendarDTO;
 import com.pro.infomate.calendar.service.FavoriteCalendarService;
+import com.pro.infomate.common.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,7 +25,7 @@ public class FavoriteCalendarController {
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("success")
                         .data(favoriteCalendarService.findAllByFavoriteCalendar(memberCode))
                         .build());
@@ -37,7 +37,7 @@ public class FavoriteCalendarController {
         favoriteCalendarService.updateApprovalStatusById(favoriteCalendarDTO);
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("success")
                         .build());
     }
@@ -48,7 +48,7 @@ public class FavoriteCalendarController {
         log.info("[FavoriteCalendarController](findAllByMemberCode) memberCode : {}", memberCode);
 
         return ResponseEntity.ok()
-                .body(ResponseDTO.builder().status(HttpStatus.OK.value())
+                .body(ResponseDTO.builder().status(HttpStatus.OK)
                         .message("success")
                         .data(favoriteCalendarService.findAllByMemberCode(memberCode))
                         .build());
@@ -61,7 +61,7 @@ public class FavoriteCalendarController {
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("success")
                         .data(favoriteCalendarService.saveFollowCalendar(favoriteCalendarDTO))
                         .build());
@@ -77,7 +77,7 @@ public class FavoriteCalendarController {
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("success")
                         .build());
     }
