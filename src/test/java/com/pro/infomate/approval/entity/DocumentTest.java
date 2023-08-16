@@ -22,7 +22,7 @@ class DocumentTest {
   MemberRepository memberRepository;
 
   @Autowired
-  DocumentRepository documentRepository;
+  DocumentRepository<Document> documentRepository;
 
   @Test
   @DisplayName("document test")
@@ -52,12 +52,15 @@ class DocumentTest {
 //      }
 //    }
 
-    List<Vacation> vacation = documentRepository.findByDocuments("vacation");
+    List<Document> vacation = documentRepository.findByDocuments("vacation");
 
-    vacation.forEach(v -> System.out.println("v.getContent() = " + v.getCreatedDate()));
+    System.out.println("vacation = " + vacation);
+
+    }
+
+
 
 
   }
 
 
-}

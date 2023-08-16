@@ -1,10 +1,7 @@
 package com.pro.infomate.approval.dto;
 
 import com.pro.infomate.approval.entity.DocumentStatus;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotBlank;
@@ -14,6 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString(callSuper = true)
 public class PaymentDTO extends DocumentDTO{
 
     @NotBlank

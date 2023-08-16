@@ -1,9 +1,9 @@
 package com.pro.infomate.approval.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pro.infomate.approval.entity.DocumentStatus;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.validation.constraints.Future;
@@ -14,15 +14,19 @@ import java.util.List;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@ToString(callSuper = true)
 public class VacationDTO extends DocumentDTO{
 
     @NotBlank
     private String sort;
 
     @NotBlank
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime startDate;
 
     @NotBlank
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime endDate;
 
     @NotBlank

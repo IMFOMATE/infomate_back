@@ -27,6 +27,8 @@ public class Member {
   @Column(name = "MEMBER_CODE")
   private Long memberCode;
 
+  @Column(name = "MEMBER_ID")
+  private String memberId;
   //나머지는 만들어주세요 FK도 연결하셔야해요
 
 

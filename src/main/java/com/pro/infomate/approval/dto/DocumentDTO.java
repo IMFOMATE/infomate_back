@@ -1,11 +1,10 @@
 package com.pro.infomate.approval.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pro.infomate.approval.entity.DocumentStatus;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
@@ -16,6 +15,7 @@ import java.util.List;
 @Setter
 @Getter
 @NoArgsConstructor
+@ToString
 public class DocumentDTO {
 
     private Long id;
@@ -24,6 +24,7 @@ public class DocumentDTO {
     @Size(min = 5, max = 100)
     private String title;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime createdDate;
 
     private DocumentStatus documentStatus;

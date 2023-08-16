@@ -1,0 +1,2 @@
+### 결재문서 상세 조회
+GET http://localhost:8989/document/5
