@@ -13,5 +13,5 @@ public class ParticipantPK implements Serializable {
 
     private int schedule;
 
-    private int memberCode;
+    private int member;
 }

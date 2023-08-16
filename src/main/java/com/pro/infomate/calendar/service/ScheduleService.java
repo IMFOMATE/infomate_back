@@ -76,8 +76,8 @@ public class ScheduleService {
     }
 
     @Transactional
-    public void deleteById(Integer scheduleId) {
-        scheduleRepository.deleteById(scheduleId);
+    public void deleteById(List<Integer> scheduleId) {
+        scheduleRepository.deleteAllById(scheduleId);
     }
 
     public List<ScheduleDTO> findScheduleSearch(String keyword, Integer userId) {
@@ -118,12 +118,12 @@ public class ScheduleService {
                 })
                 .collect(Collectors.toList());
     }
-
-    public List<ScheduleDTO> findAllScheduleSearch(int memberCode, String keyword){
+// member 엔티티 완료 된 후 수정
+//    public List<ScheduleDTO> findAllScheduleSearch(int memberCode, String keyword){
 //        List<Schedule> scheduleList = scheduleRepository.findAllBySubjectAndContentSearch(memberCode, keyword);
-
+//
 //        log.info("[ScheduleService](reminder) scheduleList : {}", scheduleList);
-
+//
 //        return scheduleList.stream()
 //                .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
 //                .map(scheduleDTO -> {
@@ -131,8 +131,8 @@ public class ScheduleService {
 //                    return scheduleDTO;
 //                })
 //                .collect(Collectors.toList());
-
-        return null;
-
-    }
+//
+//        return null;
+//
+//    }
 }

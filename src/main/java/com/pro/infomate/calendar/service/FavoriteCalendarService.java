@@ -71,15 +71,13 @@ public class FavoriteCalendarService {
 
         if(favoriteCalendar.isEmpty()) throw new NotFindDataException("캘린더를 찾을 수 없습니다.");
 
-
-
         favoriteCalendar.get().setApprovalStatus(favoriteCalendarDTO.getApprovalStatus());
 
     }
 
     @Transactional
-    public void deleteFavoriteCalendarById(Integer favoriteId) {
-        favotriteCalendarRepository.deleteById(favoriteId);
+    public void deleteFavoriteCalendarById(List<Integer> favoriteId) {
+        favotriteCalendarRepository.deleteAllById(favoriteId);
     }
 
     @Transactional

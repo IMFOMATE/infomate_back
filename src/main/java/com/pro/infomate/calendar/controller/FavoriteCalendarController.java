@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/calendar/favorite")
 @RequiredArgsConstructor
@@ -67,8 +69,8 @@ public class FavoriteCalendarController {
 
 
     // test success
-    @DeleteMapping("/DeleteFollowCalendar/{favoriteId}")
-    public ResponseEntity<ResponseDTO> deleteFollowCalendar(@PathVariable Integer favoriteId){
+    @DeleteMapping("/DeleteFollowCalendar")
+    public ResponseEntity<ResponseDTO> deleteFollowCalendar(@RequestBody List<Integer> favoriteId){
         log.info("[FavoriteCalendarController](saveFollowCalendar) deleteFollowCalendar : {}", favoriteId);
 
         favoriteCalendarService.deleteFavoriteCalendarById(favoriteId);

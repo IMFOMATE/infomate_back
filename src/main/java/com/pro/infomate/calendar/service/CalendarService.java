@@ -48,22 +48,7 @@ public class CalendarService {
                     return calendarDTO;
                 }).collect(Collectors.toList());
 
-//        List<CalendarDTO> calendarDTOList = calendarList.stream()
-//                .map(calendar -> {
-//                    List<FavoriteCalendarDTO> favoriteCalendarDTOList =
-//                            calendar.getFavoriteCalendar().stream()
-//                                    .map(favoriteCalendar -> modelMapper.map(favoriteCalendar, FavoriteCalendarDTO.class))
-//                                    .collect(Collectors.toList());
-//                    List<ScheduleDTO> scheduleDTOList = calendar.getSchedule()
-//                            .stream().map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
-//                            .collect(Collectors.toList());
-//                    CalendarDTO calendarDTO = modelMapper.map(calendar, CalendarDTO.class);
-//                    calendarDTO.setFavoriteCalendar(favoriteCalendarDTOList);
-//                    calendarDTO.setRefScheduleList(scheduleDTOList);
-//                   return calendarDTO;
-//                })
-//                .collect(Collectors.toList());
-//        log.info("[CalendarService](findAll) calendarDTOList : {} ",calendarDTOList);
+        log.info("[CalendarService](findAll) calendarDTOList : {} ",calendarDTOList);
 
         return calendarDTOList;
     }
@@ -85,6 +70,8 @@ public class CalendarService {
         calendarDTO.setRefScheduleList(scheduleList.stream()
                 .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class)).collect(Collectors.toList()));
 
+        log.info("[CalendarService](findById) calendarDTOReMapping : {} ",calendarDTO);
+
         return calendarDTO;
     }
 
@@ -95,7 +82,7 @@ public class CalendarService {
 
             if(defaultCalendar.isEmpty()) throw new NotFindDataException("기본 캘린더를 찾을 수 없습니다");
 
-            log.info("[CalendarService](saveByCalendar) calendar : {}", calendar);
+            log.info("[CalendarService](saveByCalendar) DefaultCalendar : {}", calendar);
 
             defaultCalendar.get().setDefaultCalendar(false);
 
@@ -121,7 +108,6 @@ public class CalendarService {
         entityCalendar.get().setLabelColor(calendar.getLabelColor());
         entityCalendar.get().setIndexNo(calendar.getIndexNo());
         entityCalendar.get().setDepartmentCode(calendar.getDepartmentCode());
-
     }
 
     @Transactional
@@ -145,11 +131,11 @@ public class CalendarService {
     }
 
     @Transactional
-    public void deleteById(Integer calendarId) {
+    public void deleteById(List<Integer> calendarId) {
 
         log.info("[CalendarService](deleteById) scheduleDTOList : {}",calendarId);
 
-        calendarRepository.deleteById(calendarId);
+        calendarRepository.deleteAllById(calendarId);
     }
 
 
@@ -206,8 +192,7 @@ public class CalendarService {
                     calendarDTO.setFavoriteCalendar(null);
                     calendarDTO.setRefScheduleList(null);
                     return calendarDTO;
-                })
-                .collect(Collectors.toList());
+                }).collect(Collectors.toList());
 
     }
 }
