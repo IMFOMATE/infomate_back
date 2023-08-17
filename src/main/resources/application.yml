@@ -28,8 +28,8 @@ spring:
   data:
     web:
       pageable:
-        default-page-size: 10 #?? ??? ??
-        max-page-size: 50 # ?? ??? ??
+        default-page-size: 10 #페이지 사이즈(default)
+        max-page-size: 50 # max 사이즈
 
   profiles:
     active: local
@@ -42,7 +42,6 @@ logging:
     root: info
 
 image:
-  #  ???? ??
   add-resource-locations: classpath:/static/productimgs/
   add-resource-handler: /productimgs/**
 

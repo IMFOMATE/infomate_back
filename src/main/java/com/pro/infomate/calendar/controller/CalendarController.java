@@ -1,10 +1,10 @@
 package com.pro.infomate.calendar.controller;
 
 
-import com.pro.infomate.calendar.common.ResponseDTO;
 import com.pro.infomate.calendar.dto.CalendarDTO;
 import com.pro.infomate.calendar.dto.CalendarSummaryDTO;
 import com.pro.infomate.calendar.service.CalendarService;
+import com.pro.infomate.common.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -30,7 +30,7 @@ public class CalendarController {
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("success")
                         .data(calendarService.findAll(memberId))
                         .build());
@@ -43,7 +43,7 @@ public class CalendarController {
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("success")
                         .data(calendarService.myCalendarList(memberCode))
                         .build());
@@ -57,7 +57,7 @@ public class CalendarController {
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("success")
                         .data(calendarService.findById(calendarId))
                         .build());
@@ -76,7 +76,7 @@ public class CalendarController {
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("success")
                         .build());
     }
@@ -91,7 +91,7 @@ public class CalendarController {
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("success")
                         .build());
     }
@@ -103,20 +103,20 @@ public class CalendarController {
         calendarService.updateDefaultCalender(calendarDTO); // userId 수정 요망
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("success")
                         .build());
     }
 
     // test success
-    @DeleteMapping("/delete/{calendarId}")
-    public ResponseEntity<ResponseDTO> deleteByCalendar(@PathVariable Integer calendarId){
+    @DeleteMapping("/delete/")
+    public ResponseEntity<ResponseDTO> deleteByCalendar(@RequestBody List<Integer> calendarId){
         log.info("[CalendarController](findSummaryCalendar) calendarId : ", calendarId);
 
         calendarService.deleteById(calendarId);
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("success")
                         .build());
     }
@@ -127,7 +127,7 @@ public class CalendarController {
     public ResponseEntity<ResponseDTO> findOpenCalendarList(){
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("success")
                         .data(calendarService.openCalendarList())
                         .build());
@@ -146,7 +146,7 @@ public class CalendarController {
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("success")
                         .data(calendarSummaryDTOList)
                         .build());

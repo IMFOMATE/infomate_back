@@ -1,8 +1,8 @@
 package com.pro.infomate.calendar.controller;
 
-import com.pro.infomate.calendar.common.ResponseDTO;
 import com.pro.infomate.calendar.dto.ScheduleDTO;
 import com.pro.infomate.calendar.service.ScheduleService;
+import com.pro.infomate.common.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -33,7 +33,7 @@ public class ScheduleController {
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("success")
                         .data(scheduleList)
                         .build());
@@ -49,7 +49,7 @@ public class ScheduleController {
 
         return ResponseEntity.ok()
                     .body(ResponseDTO.builder()
-                            .status(HttpStatus.OK.value())
+                            .status(HttpStatus.OK)
                             .message("success")
                             .data(schedule)
                             .build());
@@ -62,19 +62,19 @@ public class ScheduleController {
         scheduleService.updateById(scheduleDTO);
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("update_success")
                         .build());
     }
 
     // test success
-    @DeleteMapping("/{scheduleId}")
-    public ResponseEntity<ResponseDTO> deleteById(@PathVariable Integer scheduleId){
+    @DeleteMapping("/delete")
+    public ResponseEntity<ResponseDTO> deleteById(@RequestBody List<Integer> scheduleId){
         log.info("[ScheduleController](deleteById) scheduleId : {} ", scheduleId);
         scheduleService.deleteById(scheduleId);
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("delete_success")
                         .build());
     }
@@ -83,14 +83,13 @@ public class ScheduleController {
     // test join 부섴드 조인 오류
     @GetMapping("/findScheduleSearch/{memberCode}")
     public ResponseEntity<ResponseDTO> findScheduleSearch(@PathVariable Integer memberCode, @RequestParam String keyword){
-        Integer userId = 1;
-        List<ScheduleDTO> scheduleList = scheduleService.findAllScheduleSearch(memberCode, keyword);
+//        List<ScheduleDTO> scheduleList = scheduleService.findAllScheduleSearch(memberCode, keyword);
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("success")
-                        .data(scheduleList)
+//                        .data(scheduleList)
                         .build());
     }
 
@@ -103,18 +102,18 @@ public class ScheduleController {
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("success")
                         .data(scheduleService.insertSchedule(scheduleDTO))
                         .build());
     }
 
-    @GetMapping("/dashboardDay/{memberCode}")
+    @GetMapping("/reminder/{memberCode}")
     public ResponseEntity<ResponseDTO> reminder(@PathVariable int memberCode){
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.OK)
                         .message("success")
                         .data(scheduleService.reminder(memberCode))
                         .build());

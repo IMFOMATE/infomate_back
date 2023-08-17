@@ -1,19 +1,15 @@
 package com.pro.infomate.approval.entity;
 
 import com.pro.infomate.approval.repository.DocumentRepository;
-import com.pro.infomate.approval.repository.VacationRepository;
 import com.pro.infomate.member.entity.Member;
 import com.pro.infomate.member.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -45,20 +41,23 @@ class DocumentTest {
 
 //    List<Document> documents = documentRepository.findByDocumentKindEquals("vacation");
 
-    List<Document> documents = documentRepository.findAll();
+//    List<Document> documents = documentRepository.findAll();
+//
+//    for (Document document : documents) {
+//      if(document instanceof Vacation){
+//        System.out.println((Vacation)document);
+//      }
+//      if(document instanceof Draft){
+//        System.out.println("((Draft) document).getCoDept() = " + ((Draft) document).getDocumentStatus());
+//      }
+//    }
 
-    for (Document document : documents) {
-      if(document instanceof Vacation){
-        System.out.println("((Vacation) document).getReason() = " + ((Vacation) document).getReason());
-      }
-      if(document instanceof Draft){
-        System.out.println("((Vacation) document).getCoDept() = " + ((Draft) document).getCoDept());
-      }
-    }
-    // When
+    List<Vacation> vacation = documentRepository.findByDocuments("vacation");
 
-    // Then
+    vacation.forEach(v -> System.out.println("v.getContent() = " + v.getCreatedDate()));
+
 
   }
+
 
 }

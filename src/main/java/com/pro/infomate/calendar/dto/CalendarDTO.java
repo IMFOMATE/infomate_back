@@ -1,6 +1,7 @@
 package com.pro.infomate.calendar.dto;
 
 
+import com.pro.infomate.member.dto.MemberDTO;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -8,9 +9,8 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
 @Getter
-//@Builder
+@Setter
 @ToString
 public class CalendarDTO {
 
@@ -21,6 +21,7 @@ public class CalendarDTO {
     private int indexNo;
 
     private int memberCode;
+    private MemberDTO member;
 
     private Integer departmentCode;
     private Boolean defaultCalendar;
