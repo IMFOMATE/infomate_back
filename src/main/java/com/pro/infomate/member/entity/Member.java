@@ -6,6 +6,7 @@ import com.pro.infomate.approval.entity.Document;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -35,15 +36,17 @@ public class Member {
 
 
 
+  @Column(name = "MEMBER_OFF")
+  private int memberOff;
 
   @OneToMany(mappedBy = "member")
-  private List<DocRef> memberRefList;
+  private List<DocRef> memberRefList = new ArrayList<>();
 
   @OneToMany(mappedBy = "member")
-  private List<Approval> approvalList;
+  private List<Approval> approvalList = new ArrayList<>();
 
   @OneToMany(mappedBy = "member")
-  private List<Document> documentList;
+  private List<Document> documentList = new ArrayList<>();
 
 
 

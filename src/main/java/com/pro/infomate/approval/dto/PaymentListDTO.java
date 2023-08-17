@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class PaymentListDTO {
 
     @NotBlank
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime paymentDate;
 
     @NotBlank

@@ -21,7 +21,7 @@ public class ApprovalDTO {
 
     private String comment;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime approvalDate;
 
     private int order;

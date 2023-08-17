@@ -22,11 +22,12 @@ public class VacationDTO extends DocumentDTO{
     private String sort;
 
     @NotBlank
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime startDate;
 
     @NotBlank
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+
     private LocalDateTime endDate;
 
     @NotBlank

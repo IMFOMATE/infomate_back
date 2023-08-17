@@ -11,7 +11,6 @@ public interface DocumentFileRepository extends JpaRepository<DocumentFile, Long
 
     // 2. 첨부파일 조회
 
-
     // 3. 파일 다운로드
 
 }

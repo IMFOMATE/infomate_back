@@ -1,2 +1,16 @@
 ### 결재문서 상세 조회
-GET http://localhost:8989/document/5
+GET http://localhost:8989/document/22
+
+### 문서
+POST http://localhost:8989/document/regist/vacation
+Accept: */*
+Content-Type: application/json
+
+{
+  "title": "휴가승인바랍니다",
+  "createdDate": "2023-08-17 12:30:00",
+  "sort": "연차",
+  "startDate": "2023-09-12 09:00:00",
+  "endDate": "2023-09-13 09:00:00",
+  "reason": "연장"
+}

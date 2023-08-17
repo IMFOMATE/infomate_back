@@ -13,5 +13,11 @@ public class ApiExceptionAdvice {
         return ResponseEntity.status(HttpStatus.NO_CONTENT)
                 .body(new Response(HttpStatus.NO_CONTENT,"fail", e.getMessage()));
     }
+
+    @ExceptionHandler(NotEnoughDateException.class)
+    public ResponseEntity<Response> notEnoughDataException(NotEnoughDateException e){
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
+                .body(new Response(HttpStatus.NOT_ACCEPTABLE,"fail", e.getMessage()));
+    }
     
 }

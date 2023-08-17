@@ -72,7 +72,7 @@ public abstract class Document {
     }
   }
 
-  public void AddMember(Member member){
+  public void addMember(Member member){
     if(this.member != null){
       this.member.getDocumentList().remove(this);
     }

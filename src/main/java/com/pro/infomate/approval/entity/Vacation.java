@@ -1,6 +1,7 @@
 package com.pro.infomate.approval.entity;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "TBL_VACATION")
 @DiscriminatorValue("vacation")
+@DynamicInsert
 public class Vacation extends Document{
 
   @Column(name = "VACATION_SORT")
