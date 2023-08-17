@@ -1,5 +1,7 @@
 package com.pro.infomate.approval.entity;
 
+import com.pro.infomate.approval.dto.response.DocumentDetailResponse;
+import com.pro.infomate.approval.service.visitor.DocumentVisitor;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,5 +27,8 @@ public class Payment extends Document{
       paymentList.setDocument(this);
     }
   }
-
+  @Override
+  public DocumentDetailResponse accept(DocumentVisitor<DocumentDetailResponse> visitor) {
+    return visitor.visit(this);
+  }
 }

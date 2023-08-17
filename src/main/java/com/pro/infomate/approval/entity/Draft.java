@@ -1,5 +1,7 @@
 package com.pro.infomate.approval.entity;
 
+import com.pro.infomate.approval.dto.response.DocumentDetailResponse;
+import com.pro.infomate.approval.service.visitor.DocumentVisitor;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -18,5 +20,10 @@ public class Draft extends Document{
 
     @Column(name = "CO_DEPT")
     private String coDept;
+
+    @Override
+    public DocumentDetailResponse accept(DocumentVisitor<DocumentDetailResponse> visitor) {
+        return visitor.visit(this);
+    }
 
 }

@@ -30,8 +30,17 @@ public class Member {
 
   @Column(name = "MEMBER_ID")
   private String memberId;
-  //나머지는 만들어주세요 FK도 연결하셔야해요
 
+  @Column(name = "MEMBER_NAME")
+  private String memberName;
+
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "DEPT_CODE")
+  private Department department;
+
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "RANK_CODE")
+  private Rank rank;
 
 
 

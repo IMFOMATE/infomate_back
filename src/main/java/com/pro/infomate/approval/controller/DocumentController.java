@@ -2,7 +2,6 @@ package com.pro.infomate.approval.controller;
 
 import com.pro.infomate.approval.dto.DraftDTO;
 import com.pro.infomate.approval.dto.PaymentDTO;
-import com.pro.infomate.approval.dto.PaymentListDTO;
 import com.pro.infomate.approval.dto.VacationDTO;
 import com.pro.infomate.approval.service.DocumentService;
 import com.pro.infomate.calendar.common.ResponseDTO;
@@ -10,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -21,9 +19,9 @@ public class DocumentController {
 
   private final DocumentService documentService;
 
-  // 전체 문서
+  // 문서세부내용
   @GetMapping("/{documentId}")
-  public ResponseEntity<ResponseDTO> findAll(@PathVariable long documentId){
+  public ResponseEntity<ResponseDTO> documentDetail(@PathVariable long documentId){
     log.info("documentId = {}",documentId);
 
     return ResponseEntity.ok()

@@ -1,13 +1,14 @@
 package com.pro.infomate.approval.service;
 
 import com.pro.infomate.approval.dto.*;
-import com.pro.infomate.approval.entity.Document;
-import com.pro.infomate.approval.entity.Draft;
-import com.pro.infomate.approval.entity.Payment;
-import com.pro.infomate.approval.entity.Vacation;
+import com.pro.infomate.approval.dto.response.*;
+import com.pro.infomate.approval.entity.*;
 import com.pro.infomate.approval.repository.DocumentRepository;
+import com.pro.infomate.approval.service.visitor.DocumentToDTOVisitor;
+import com.pro.infomate.approval.service.visitor.DocumentVisitor;
 import com.pro.infomate.exception.NotEnoughDateException;
 import com.pro.infomate.exception.NotFindDataException;
+import com.pro.infomate.member.entity.Department;
 import com.pro.infomate.member.entity.Member;
 import com.pro.infomate.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,10 +35,12 @@ public class DocumentService {
 
   private final MemberRepository memberRepository;
 
+  private final DocumentToDTOVisitor visitor;
+
   private final ModelMapper modelMapper;
 
 
-  
+
   //1. 휴가문서 등록
   @Transactional
   public VacationDTO vacationSave(long memberCode, VacationDTO vacationDTO){
@@ -89,19 +94,30 @@ public class DocumentService {
 
 
   //2. 문서 세부
-  public DocumentDTO findById(long DocumentId) {
+  public DocumentDetailResponse findById(long documentId) {
 
-    Document document = documentRepository.findById(DocumentId).orElseThrow(() -> new NotFindDataException("해당문서가 없습니다."));
-    return mapDocumentToDTO(document);
+//    Document document = documentRepository.findById(documentId).orElseThrow(() -> new NotFindDataException("해당문서가 없습니다."));
+//    return mapDocumentToDTO(document);
+
+    Document document = documentRepository.findById(documentId)
+            .orElseThrow(() -> new NotFindDataException("해당문서가 없습니다."));
+
+    return document.accept(visitor);
   }
 
-  private DocumentDTO mapDocumentToDTO(Document document) {
+
+
+
+
+
+
+  private DocumentDetailResponse mapDocumentToDTO(Document document) {
     if (document instanceof Vacation) {
-      return modelMapper.map((Vacation) document, VacationDTO.class);
+      return modelMapper.map((Vacation) document, VacationResponse.class);
     } else if (document instanceof Payment) {
-      return modelMapper.map((Payment) document, PaymentDTO.class);
+      return modelMapper.map((Payment) document, PaymentResponse.class);
     } else if (document instanceof Draft) {
-      return modelMapper.map((Draft) document, DraftDTO.class);
+      return modelMapper.map((Draft) document, DraftResponse.class);
       // 다른 문서 유형에 대한 처리 추가 가능
     } else {
       throw new IllegalArgumentException("지원하지 않는 문서 유형입니다.");

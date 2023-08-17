@@ -1,7 +1,7 @@
 ### 결재문서 상세 조회
 GET http://localhost:8989/document/22
 
-### 문서
+### 문서 등록
 POST http://localhost:8989/document/regist/vacation
 Accept: */*
 Content-Type: application/json
@@ -14,3 +14,4 @@ Content-Type: application/json
   "endDate": "2023-09-13 09:00:00",
   "reason": "연장"
 }
+

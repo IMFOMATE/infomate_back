@@ -3,6 +3,7 @@ package com.pro.infomate.approval.repository;
 import com.pro.infomate.approval.entity.Document;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -30,6 +31,10 @@ public interface DocumentRepository<T extends Document> extends JpaRepository<T,
         )
     and TD.DOCUMENT_STATUS='WAITING';
   * */
+
+  @Override
+  @EntityGraph(attributePaths = {"member", })
+  Optional<T> findById(Long aLong);
 
 
   @Query("select d from Document d where d.documentKind in (:type)")

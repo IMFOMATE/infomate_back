@@ -2,6 +2,7 @@ package com.pro.infomate.approval.service;
 
 import com.pro.infomate.approval.dto.DocumentDTO;
 import com.pro.infomate.approval.dto.VacationDTO;
+import com.pro.infomate.approval.dto.response.DocumentDetailResponse;
 import com.pro.infomate.approval.entity.Document;
 import com.pro.infomate.approval.entity.DocumentStatus;
 import com.pro.infomate.approval.entity.Vacation;
@@ -35,8 +36,6 @@ class DocumentServiceTest {
   @Commit
   void insert() {
 
-
-
     VacationDTO vacationDTO = VacationDTO.builder()
             .title("휴가 승인바랍니다")
             .createdDate(LocalDateTime.now())
@@ -51,7 +50,12 @@ class DocumentServiceTest {
     VacationDTO vacation = documentService.vacationSave(2, vacationDTO);
 
     Vacation vacation1 = documentRepository.findById(vacation.getId()).orElseThrow();
-
+  }
+  
+  @Test
+  @DisplayName("세부내용")
+  void 세부내용() {
+    DocumentDetailResponse result = documentService.findById(28);
 
   }
 

@@ -1,8 +1,10 @@
 package com.pro.infomate.approval.dto;
 
+import com.pro.infomate.approval.dto.response.ApprovalResponse;
+import com.pro.infomate.approval.dto.response.DocFileResponse;
+import com.pro.infomate.approval.dto.response.PaymentListResponse;
 import com.pro.infomate.approval.entity.DocumentStatus;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
@@ -15,10 +17,11 @@ import java.util.List;
 public class PaymentDTO extends DocumentDTO{
 
     @NotBlank
-    private List<PaymentListDTO> paymentList;
+    private List<PaymentListResponse> paymentList;
 
     @Builder
-    public PaymentDTO(Long id, String title, LocalDateTime createdDate, DocumentStatus documentStatus, String content, String documentKind, List<DocFileDTO> fileList, List<ApprovalDTO> approvalList, List<PaymentListDTO> paymentList) {
+
+    public PaymentDTO(Long id, String title, LocalDateTime createdDate, DocumentStatus documentStatus, String content, String documentKind, List<DocFileResponse> fileList, List<ApprovalResponse> approvalList, List<PaymentListResponse> paymentList) {
         super(id, title, createdDate, documentStatus, content, documentKind, fileList, approvalList);
         this.paymentList = paymentList;
     }

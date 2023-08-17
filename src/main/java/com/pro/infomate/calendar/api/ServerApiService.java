@@ -74,7 +74,7 @@ public class ServerApiService {
 
 //    }
 
-//    public void testApproval(ApprovalDTO approvalDTO){
+//    public void testApproval(ApprovalResponse approvalDTO){
 //        String uri = SECOND_SERVER_PROTOCOL + "://" + SECOND_SERVER_HOST + ":" + SECOND_SERVER_POST + "/approval/insert";
 //        log.info("[TestService](testApproval) uri : {}",uri);
 //
@@ -82,7 +82,7 @@ public class ServerApiService {
 //                uri,
 //                HttpMethod.POST,
 //                ResponseEntity.ok().body(approvalDTO),
-//                ApprovalDTO.class
+//                ApprovalResponse.class
 //                String.class
 //        );
 //

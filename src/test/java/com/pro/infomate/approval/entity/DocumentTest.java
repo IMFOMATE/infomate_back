@@ -36,20 +36,20 @@ class DocumentTest {
     // Given
     Member member = memberRepository.findById(2L).orElseThrow();
 
-    Draft draft = new Draft("경영지원");
-    draft.setTitle("협조부탁드립니다.");
-    draft.setCreatedDate(LocalDateTime.now());
-    draft.setContent("이러한 내용으로 협조 부탁드립니다.");
-    draft.setDocumentStatus(DocumentStatus.WAITING);
-    draft.setMember(member);
+//    Draft draft = new Draft("경영지원");
+//    draft.setTitle("협조부탁드립니다.");
+//    draft.setCreatedDate(LocalDateTime.now());
+//    draft.setContent("이러한 내용으로 협조 부탁드립니다.");
+//    draft.setDocumentStatus(DocumentStatus.WAITING);
+//    draft.setMember(member);
 
-    Draft save = documentRepository.save(draft);
+    Document document = documentRepository.findById(28L).orElseThrow();
 
     Member refMember = memberRepository.findById(22L).orElseThrow();
+    System.out.println("refMember = " + refMember);
 
-
-    DocRef docRef = DocRef.builder().document(save).member(refMember).build();
-
+    DocRef docRef = DocRef.builder().document(document).member(refMember).build();
+//
     docRefRepository.save(docRef);
 
 //    List<Document> documents = documentRepository.findByDocumentKindEquals("vacation");
@@ -68,6 +68,25 @@ class DocumentTest {
     List<Document> vacation = documentRepository.findByDocuments("vacation");
 
     System.out.println("vacation = " + vacation);
+
+    }
+
+    @Test
+    @DisplayName("참조문서")
+    void 참조문서리스트() {
+
+      Member member = memberRepository.findById(22L).orElseThrow();
+      
+//      member.getMemberRefList().forEach(docRef -> {
+//        Document document = docRef.getDocument();
+//        System.out.println("document.getContent() = " + document.getContent());
+//      });
+
+      List<DocRef> result = docRefRepository.findByMember(member);
+      
+      result.forEach(r -> {
+        System.out.println("r.getDocument().getTitle() = " + r.getDocument().getTitle());
+      });
 
     }
 
