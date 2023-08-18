@@ -1,2 +1,22 @@
 ### 주소록 조회
-GET http://localhost:8091/addressBook/contact/1
+GET http://localhost:8989/addressBook/contact/2
+
+### 주소록 등록
+POST http://localhost:8989/addressBook/contact
+Accept: */*
+Content-Type: application/json
+
+{
+  "company": "좋은회사",
+  "department": "좋은부서",
+  "contactName": "아무나",
+  "contactPhone": "010-1234-5679",
+  "contactEmail": "qwe@naver.com",
+  "companyPhone": "회사전화",
+  "companyAddress": "회사 주소",
+  "memo": "ㅁㄷ홈ㅈㅁㅈㄹ",
+  "memberCode": 2
+}
+
+### 주소록 업데이트
+POST

@@ -14,7 +14,7 @@ import javax.persistence.*;
 @ToString
 @SequenceGenerator(
         name = "SEQ_TBL_CONTACT_GENERATOR",
-        sequenceName = "SEQ_TBL_CONTACT_CODE",
+        sequenceName = "SEQ_TBL_CONTACT_CONTACT_CODE",
         initialValue = 1, allocationSize = 1
 )
 public class Contact {
@@ -51,7 +51,7 @@ public class Contact {
     @Column(name = "MEMO")
     private String memo;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "MEMBER_CODE", nullable = false)
     private Member member;
 

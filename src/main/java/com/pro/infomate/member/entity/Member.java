@@ -1,5 +1,6 @@
 package com.pro.infomate.member.entity;
 
+import com.pro.infomate.addressbook.entity.Contact;
 import com.pro.infomate.approval.entity.Approval;
 import com.pro.infomate.approval.entity.DocMemberRef;
 import com.pro.infomate.approval.entity.Document;
@@ -29,7 +30,8 @@ public class Member {
 
   //나머지는 만들어주세요 FK도 연결하셔야해요
 
-
+  @OneToMany(mappedBy = "member")
+  private List<Contact> contactList;
 
 
 
