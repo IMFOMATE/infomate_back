@@ -1,6 +1,7 @@
 package com.pro.infomate.calendar.entity;
 
 
+import com.pro.infomate.member.entity.Member;
 import lombok.*;
 
 import javax.persistence.*;
@@ -58,6 +59,9 @@ public class Calendar {
     @OneToMany(mappedBy = "calendar", fetch = FetchType.LAZY,targetEntity = Schedule.class)
     private List<Schedule> schedule;
 
+    @ManyToOne
+    @JoinColumn(name = "REF_MEMBER_CODE",insertable = false ,updatable = false)
+    private Member member;
 
     @Override
     public String toString() {
