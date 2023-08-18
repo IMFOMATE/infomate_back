@@ -17,16 +17,16 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class ServerApiService {
 
-//    @Value("${second.server.host}")
+    //    @Value("${second.server.host}")
     private String SECOND_SERVER_HOST;
 
-//    @Value("${second.server.port}")
+    //    @Value("${second.server.port}")
     private String SECOND_SERVER_POST;
 
-//    @Value("${second.server.protocol}")
+    //    @Value("${second.server.protocol}")
     private String SECOND_SERVER_PROTOCOL;
 
-//    @Value("${second.server.api-token}")
+    //    @Value("${second.server.api-token}")
     private String SECOND_SERVER_API_TOKEN;
 
     private final RestTemplate restTemplate;
@@ -52,8 +52,16 @@ public class ServerApiService {
                                 .important(scheduleDTO.getImportant())
                                 .build()),
 //                String.class
-//                ScheduleDTO.class
-//        );
+                ScheduleDTO.class
+        );
+    }
+
+    @GetMapping("/server/userinfo")
+    @ResponseBody
+    public TokenDTO getUserInfo(@RequestBody TokenDTO tokenDTO){
+        if(!tokenDTO.getJwt().equals(SECOND_SERVER_API_TOKEN)) throw new NotAuthenticationServer("허용되지 않는 서버 입니다.");
+        return TokenDTO.builder().build();
+    }
 
 
 //        WebClient webClient = WebClient.builder()
@@ -63,7 +71,11 @@ public class ServerApiService {
 //        webClient.post()
 //                .contentType(MediaType.APPLICATION_JSON)
 //                .bodyValue().retrieve().bodyToMono(CalendarAlertDTO.class).block();
+
+
+
 //    }
+
 //    public void testApproval(ApprovalDTO approvalDTO){
 //        String uri = SECOND_SERVER_PROTOCOL + "://" + SECOND_SERVER_HOST + ":" + SECOND_SERVER_POST + "/approval/insert";
 //        log.info("[TestService](testApproval) uri : {}",uri);

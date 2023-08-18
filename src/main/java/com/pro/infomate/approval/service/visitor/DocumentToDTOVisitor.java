@@ -97,9 +97,6 @@ public class DocumentToDTOVisitor implements DocumentVisitor<DocumentDetailRespo
                     .build()
             ).collect(Collectors.toList());
 
-
-
-
     return PaymentResponse.builder()
             .id(payment.getId())
             .title(payment.getTitle())
