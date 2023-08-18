@@ -20,6 +20,7 @@ import java.util.List;
 @Table(name = "TBL_VACATION")
 @DiscriminatorValue("vacation")
 @DynamicInsert
+@ToString(callSuper = true)
 public class Vacation extends Document{
 
   @Column(name = "VACATION_SORT")

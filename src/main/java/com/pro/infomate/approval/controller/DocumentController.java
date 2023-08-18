@@ -3,6 +3,9 @@ package com.pro.infomate.approval.controller;
 import com.pro.infomate.approval.dto.DraftDTO;
 import com.pro.infomate.approval.dto.PaymentDTO;
 import com.pro.infomate.approval.dto.VacationDTO;
+import com.pro.infomate.approval.dto.request.DraftRequest;
+import com.pro.infomate.approval.dto.request.PaymentRequest;
+import com.pro.infomate.approval.dto.request.VacationRequest;
 import com.pro.infomate.approval.service.DocumentService;
 import com.pro.infomate.calendar.common.ResponseDTO;
 import lombok.RequiredArgsConstructor;
@@ -35,12 +38,12 @@ public class DocumentController {
 
   // 휴가 문서 등록
   @PostMapping("/regist/vacation")
-  public ResponseEntity<ResponseDTO> vacationRegist(@RequestBody VacationDTO vacationDTO){
+  public ResponseEntity<ResponseDTO> vacationRegist(@RequestBody VacationRequest vacationRequest){
 
     //일단은 code로 사용
-    int memberCode = 2;
+    int memberCode = 22;
 
-    documentService.vacationSave(memberCode, vacationDTO);
+    documentService.vacationSave(memberCode, vacationRequest);
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
@@ -51,12 +54,12 @@ public class DocumentController {
 
   // 기안 문서 등록
   @PostMapping("/regist/draft")
-  public ResponseEntity<ResponseDTO> draftRegist(@RequestBody DraftDTO draftDTO){
+  public ResponseEntity<ResponseDTO> draftRegist(@RequestBody DraftRequest draftRequest){
 
     //일단은 code로 사용
     int memberCode = 2;
 
-    documentService.draftSave(memberCode, draftDTO);
+    documentService.draftSave(memberCode, draftRequest);
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
@@ -67,12 +70,12 @@ public class DocumentController {
 
   // 지출결의서 등록
   @PostMapping("/regist/payment")
-  public ResponseEntity<ResponseDTO> paymentRegist(@RequestBody PaymentDTO paymentDTO){
+  public ResponseEntity<ResponseDTO> paymentRegist(@RequestBody PaymentRequest paymentRequest){
 
     //일단은 code로 사용
     int memberCode = 2;
 
-    documentService.paymentSave(memberCode, paymentDTO);
+    documentService.paymentSave(memberCode, paymentRequest);
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()

@@ -12,6 +12,7 @@ Content-Type: application/json
   "sort": "연차",
   "startDate": "2023-09-12 09:00:00",
   "endDate": "2023-09-13 09:00:00",
-  "reason": "연장"
+  "emergency" : "N",
+  "reason" : "쓰고싶엇거"
 }
 

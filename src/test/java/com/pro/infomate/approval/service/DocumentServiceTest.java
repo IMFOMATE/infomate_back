@@ -2,7 +2,9 @@ package com.pro.infomate.approval.service;
 
 import com.pro.infomate.approval.dto.DocumentDTO;
 import com.pro.infomate.approval.dto.VacationDTO;
+import com.pro.infomate.approval.dto.request.VacationRequest;
 import com.pro.infomate.approval.dto.response.DocumentDetailResponse;
+import com.pro.infomate.approval.dto.response.VacationResponse;
 import com.pro.infomate.approval.entity.Document;
 import com.pro.infomate.approval.entity.DocumentStatus;
 import com.pro.infomate.approval.entity.Vacation;
@@ -18,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,23 +36,23 @@ class DocumentServiceTest {
 
   @Test
   @DisplayName("insert")
-  @Commit
+//  @Commit
   void insert() {
-
-    VacationDTO vacationDTO = VacationDTO.builder()
+    List<Long> ref = new ArrayList<>();
+    ref.add(2L);
+    ref.add(43L);
+    VacationRequest vacationDTO = VacationRequest.builder()
+            .refList(ref)
             .title("휴가 승인바랍니다")
-            .createdDate(LocalDateTime.now())
-//            .documentStatus(DocumentStatus.WAITING)
-            .fileList(new ArrayList<>())
             .approvalList(new ArrayList<>())
             .sort("연차")
             .startDate(LocalDateTime.of(2023,9,10,0,0))
             .endDate(LocalDateTime.of(2023,9,11,0,0))
             .reason("휴가쓸래...").build();
+//
+    VacationResponse vacation = documentService.vacationSave(22, vacationDTO);
+    System.out.println("vacation = " + vacation);
 
-    VacationDTO vacation = documentService.vacationSave(2, vacationDTO);
-
-    Vacation vacation1 = documentRepository.findById(vacation.getId()).orElseThrow();
   }
   
   @Test

@@ -25,6 +25,7 @@ import java.util.List;
         initialValue = 1,
         allocationSize = 1
 )
+@ToString
 public abstract class Document {
 
   @Id

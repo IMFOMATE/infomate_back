@@ -1,14 +1,15 @@
 package com.pro.infomate.approval.service;
 
 import com.pro.infomate.approval.dto.*;
+import com.pro.infomate.approval.dto.request.DraftRequest;
+import com.pro.infomate.approval.dto.request.PaymentRequest;
+import com.pro.infomate.approval.dto.request.VacationRequest;
 import com.pro.infomate.approval.dto.response.*;
 import com.pro.infomate.approval.entity.*;
 import com.pro.infomate.approval.repository.DocumentRepository;
 import com.pro.infomate.approval.service.visitor.DocumentToDTOVisitor;
-import com.pro.infomate.approval.service.visitor.DocumentVisitor;
 import com.pro.infomate.exception.NotEnoughDateException;
 import com.pro.infomate.exception.NotFindDataException;
-import com.pro.infomate.member.entity.Department;
 import com.pro.infomate.member.entity.Member;
 import com.pro.infomate.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +44,7 @@ public class DocumentService {
 
   //1. 휴가문서 등록
   @Transactional
-  public VacationDTO vacationSave(long memberCode, VacationDTO vacationDTO){
+  public VacationResponse vacationSave(long memberCode, VacationRequest vacationRequest){
 
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
 
@@ -51,49 +52,74 @@ public class DocumentService {
       throw new NotEnoughDateException("휴가일수가 부족합니다.");
     }
 
-    Vacation vacation = modelMapper.map(vacationDTO, Vacation.class);
+    Vacation vacation = modelMapper.map(vacationRequest, Vacation.class);
     vacation.addMember(member);
+    Vacation save = vacationDocumentRepository.save(vacation);
 
-    // 기안리스트 insert 해야함.
-    // 참조자 insert 해야함
+    // 참조자
+    if(vacationRequest.getRefList().size() > 0){
+      List<Member> memberList = memberRepository.findByMemberCodeIn(vacationRequest.getRefList());
+      List<DocRef> refList = memberList.stream().map(m -> DocRef.builder().document(save).member(m).build()).collect(Collectors.toList());
+      save.setRefList(refList);
+    }
 
-    return modelMapper.map(vacationDocumentRepository.save(vacation), VacationDTO.class);
+    // 기안 리스트
+
+
+    return modelMapper.map(save, VacationResponse.class);
 
   }
 
   //2. 기안서 등록
   @Transactional
-  public DraftDTO draftSave(long memberCode, DraftDTO draftDTO){
+  public DraftResponse draftSave(long memberCode, DraftRequest draftRequest){
 
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
 
-    Draft draft = modelMapper.map(draftDTO, Draft.class);
+    Draft draft = modelMapper.map(draftRequest, Draft.class);
 
-    // 기안리스트 insert 해야함.
-    // 참조자 insert 해야함
+    Draft save = draftDocumentRepository.save(draft);
 
-    return modelMapper.map(draftDocumentRepository.save(draft), DraftDTO.class);
+    // 참조자
+    if(draftRequest.getRefList().size() > 0){
+      List<Member> memberList = memberRepository.findByMemberCodeIn(draftRequest.getRefList());
+      List<DocRef> refList = memberList.stream().map(m -> DocRef.builder().document(save).member(m).build()).collect(Collectors.toList());
+      save.setRefList(refList);
+    }
+
+    // 기안 리스트
+
+
+
+    return modelMapper.map(save, DraftResponse.class);
 
   }
 
   //3. 지출결의서 등록
   @Transactional
-  public PaymentDTO paymentSave(long memberCode, PaymentDTO paymentDTO){
+  public PaymentResponse paymentSave(long memberCode, PaymentRequest paymentRequest){
 
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
 
-    Payment payment = modelMapper.map(paymentDTO, Payment.class);
+    Payment payment = modelMapper.map(paymentRequest, Payment.class);
 
-    // 기안리스트 insert 해야함.
-    // 참조자 insert 해야함
+    Payment save = paymentDocumentRepository.save(payment);
 
-    return modelMapper.map(paymentDocumentRepository.save(payment), PaymentDTO.class);
+    // 참조자
+    if(paymentRequest.getRefList().size() > 0){
+      List<Member> memberList = memberRepository.findByMemberCodeIn(paymentRequest.getRefList());
+      List<DocRef> refList = memberList.stream().map(m -> DocRef.builder().document(save).member(m).build()).collect(Collectors.toList());
+      save.setRefList(refList);
+    }
+
+    // 기안 리스트
+
+    return modelMapper.map(save, PaymentResponse.class);
 
   }
 
 
-
-  //2. 문서 세부
+  //4. 문서 세부
   public DocumentDetailResponse findById(long documentId) {
 
 //    Document document = documentRepository.findById(documentId).orElseThrow(() -> new NotFindDataException("해당문서가 없습니다."));

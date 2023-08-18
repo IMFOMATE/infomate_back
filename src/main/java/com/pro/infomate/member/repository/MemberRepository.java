@@ -12,5 +12,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
   @EntityGraph(attributePaths = {"department", "rank"})
   Member findByMemberId(long memberId);
 
+  List<Member> findByMemberCodeIn(List<Long> ids);
+
   Member findByMemberCode(Long memberCode);
 }
