@@ -1,11 +1,12 @@
 package com.pro.infomate.member.entity;
 
 import com.pro.infomate.approval.entity.Approval;
-import com.pro.infomate.approval.entity.DocMemberRef;
+import com.pro.infomate.approval.entity.DocRef;
 import com.pro.infomate.approval.entity.Document;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import java.sql.Timestamp;
@@ -57,33 +58,33 @@ public class Member {
     @Column(name = "MEMBER_ADDRESS")
     private String memberAddress;
 
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "DEPT_CODE")
-  private Department department;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "DEPT_CODE")
+    private Department department;
 
     @Column(name = "HIRE_DATE")
     private Timestamp hireDate;
 
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "RANK_CODE")
-  private Rank rank;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "RANK_CODE")
+    private Rank rank;
 
 
     @Column(name = "MEMBER_PIC")
     private String memberPic;
 
 
-  @Column(name = "MEMBER_OFF")
-  private int memberOff;
+    @Column(name = "MEMBER_OFF")
+    private int memberOff;
 
-  @OneToMany(mappedBy = "member")
-  private List<DocRef> memberRefList = new ArrayList<>();
+    @OneToMany(mappedBy = "member")
+    private List<DocRef> memberRefList = new ArrayList<>();
 
-  @OneToMany(mappedBy = "member")
-  private List<Approval> approvalList = new ArrayList<>();
+    @OneToMany(mappedBy = "member")
+    private List<Approval> approvalList = new ArrayList<>();
 
-  @OneToMany(mappedBy = "member")
-  private List<Document> documentList = new ArrayList<>();
+    @OneToMany(mappedBy = "member")
+    private List<Document> documentList = new ArrayList<>();
 
 
 

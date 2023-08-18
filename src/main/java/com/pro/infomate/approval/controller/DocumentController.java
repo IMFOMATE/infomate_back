@@ -1,13 +1,11 @@
 package com.pro.infomate.approval.controller;
 
-import com.pro.infomate.approval.dto.DraftDTO;
-import com.pro.infomate.approval.dto.PaymentDTO;
-import com.pro.infomate.approval.dto.VacationDTO;
+
 import com.pro.infomate.approval.dto.request.DraftRequest;
 import com.pro.infomate.approval.dto.request.PaymentRequest;
 import com.pro.infomate.approval.dto.request.VacationRequest;
 import com.pro.infomate.approval.service.DocumentService;
-import com.pro.infomate.calendar.common.ResponseDTO;
+import com.pro.infomate.common.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -29,7 +27,7 @@ public class DocumentController {
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
-                    .status(HttpStatus.OK.value())
+                    .status(HttpStatus.OK)
                     .message("success")
                     .data(documentService.findById(documentId))
                     .build());
@@ -47,7 +45,7 @@ public class DocumentController {
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
-                    .status(HttpStatus.OK.value())
+                    .status(HttpStatus.OK)
                     .message("success")
                     .build());
   }
@@ -63,7 +61,7 @@ public class DocumentController {
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
-                    .status(HttpStatus.OK.value())
+                    .status(HttpStatus.OK)
                     .message("success")
                     .build());
   }
@@ -79,7 +77,7 @@ public class DocumentController {
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
-                    .status(HttpStatus.OK.value())
+                    .status(HttpStatus.OK)
                     .message("success")
                     .build());
   }

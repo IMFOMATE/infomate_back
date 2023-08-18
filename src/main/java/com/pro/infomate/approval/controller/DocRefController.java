@@ -2,7 +2,7 @@ package com.pro.infomate.approval.controller;
 
 import com.pro.infomate.approval.dto.DocumentDTO;
 import com.pro.infomate.approval.service.DocRefService;
-import com.pro.infomate.calendar.common.ResponseDTO;
+import com.pro.infomate.common.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +28,7 @@ public class DocRefController {
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
-                    .status(HttpStatus.OK.value())
+                    .status(HttpStatus.OK)
                     .message("success")
                     .data(docRefService.refDocList(memberCode))
                     .build());
