@@ -2,10 +2,8 @@ package com.pro.infomate.approval.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pro.infomate.approval.entity.DocumentStatus;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.querydsl.core.annotations.QueryProjection;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -14,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @NoArgsConstructor
+@ToString
 public class DocumentListResponse {
 
   private Long id; // 문서코드
@@ -32,11 +31,13 @@ public class DocumentListResponse {
   private String documentKind; // 문서종류
 
   @Builder
-  public DocumentListResponse(Long id, String title, DocumentStatus documentStatus, String emergency, LocalDateTime createdDate) {
+  @QueryProjection
+  public DocumentListResponse(Long id, String title, DocumentStatus documentStatus, String emergency, LocalDateTime createdDate, String documentKind) {
     this.id = id;
     this.title = title;
     this.documentStatus = documentStatus;
     this.emergency = emergency;
     this.createdDate = createdDate;
+    this.documentKind = documentKind;
   }
 }

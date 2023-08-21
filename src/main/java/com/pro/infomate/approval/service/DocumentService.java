@@ -1,11 +1,13 @@
 package com.pro.infomate.approval.service;
 
 import com.pro.infomate.approval.dto.*;
+import com.pro.infomate.approval.dto.request.ApprovalRequest;
 import com.pro.infomate.approval.dto.request.DraftRequest;
 import com.pro.infomate.approval.dto.request.PaymentRequest;
 import com.pro.infomate.approval.dto.request.VacationRequest;
 import com.pro.infomate.approval.dto.response.*;
 import com.pro.infomate.approval.entity.*;
+import com.pro.infomate.approval.repository.ApprovalRepository;
 import com.pro.infomate.approval.repository.DocumentRepository;
 import com.pro.infomate.approval.service.visitor.DocumentToDTOVisitor;
 import com.pro.infomate.exception.NotEnoughDateException;
@@ -29,22 +31,21 @@ public class DocumentService {
   private final DocumentRepository<Document> documentRepository;
 
   private final DocumentRepository<Vacation> vacationDocumentRepository;
-
   private final DocumentRepository<Payment> paymentDocumentRepository;
-
   private final DocumentRepository<Draft> draftDocumentRepository;
 
   private final MemberRepository memberRepository;
+
+  private final ApprovalRepository approvalRepository;
 
   private final DocumentToDTOVisitor visitor;
 
   private final ModelMapper modelMapper;
 
 
-
   //1. 휴가문서 등록
   @Transactional
-  public VacationResponse vacationSave(long memberCode, VacationRequest vacationRequest){
+  public VacationResponse vacationSave(int memberCode, VacationRequest vacationRequest){
 
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
 
@@ -64,7 +65,12 @@ public class DocumentService {
     }
 
     // 기안 리스트
+    vacationRequest.getApprovalList().forEach(list -> {
+      Member byMemberId = memberRepository.findByMemberId(list.getId());
+      Approval approval = Approval.builder().order(list.getOrder()).member(byMemberId).build();
 
+      approvalRepository.save(approval);
+    });
 
     return modelMapper.map(save, VacationResponse.class);
 
@@ -72,7 +78,7 @@ public class DocumentService {
 
   //2. 기안서 등록
   @Transactional
-  public DraftResponse draftSave(long memberCode, DraftRequest draftRequest){
+  public DraftResponse draftSave(int memberCode, DraftRequest draftRequest){
 
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
 
@@ -97,7 +103,7 @@ public class DocumentService {
 
   //3. 지출결의서 등록
   @Transactional
-  public PaymentResponse paymentSave(long memberCode, PaymentRequest paymentRequest){
+  public PaymentResponse paymentSave(int memberCode, PaymentRequest paymentRequest){
 
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
 

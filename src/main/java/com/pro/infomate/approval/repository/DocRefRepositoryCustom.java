@@ -4,9 +4,7 @@ import com.pro.infomate.approval.dto.response.DocumentListResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
+public interface DocRefRepositoryCustom {
 
-public interface DocumentRepositoryCustom {
-
-  Page<DocumentListResponse> findByDeptDoc(int memberCode, Pageable pageable);
+  Page<DocumentListResponse> refPagingList(int memberCode, Pageable pageable);
 }

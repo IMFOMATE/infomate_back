@@ -24,7 +24,7 @@ public class DocRefController {
   public ResponseEntity<ResponseDTO> findAll(){
 
     //멤버코드를 Auth로 받아오기
-    long memberCode = 22;
+    int memberCode = 22;
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()

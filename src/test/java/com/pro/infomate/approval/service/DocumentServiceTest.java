@@ -38,9 +38,9 @@ class DocumentServiceTest {
   @DisplayName("insert")
 //  @Commit
   void insert() {
-    List<Long> ref = new ArrayList<>();
-    ref.add(2L);
-    ref.add(43L);
+    List<Integer> ref = new ArrayList<>();
+    ref.add(2);
+    ref.add(43);
     VacationRequest vacationDTO = VacationRequest.builder()
             .refList(ref)
             .title("휴가 승인바랍니다")

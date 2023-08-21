@@ -17,7 +17,7 @@ public class DraftRequest extends DocumentRequest{
   private String coDept;
 
   @Builder
-  public DraftRequest(@NotBlank @Size(min = 5, max = 100) String title, String content, String emergency, List<Long> refList, List<ApprovalRequest> approvalList, String coDept) {
+  public DraftRequest(@NotBlank @Size(min = 5, max = 100) String title, String content, String emergency, List<Integer> refList, List<ApprovalRequest> approvalList, String coDept) {
     super(title, content, emergency, refList, approvalList);
     this.coDept = coDept;
   }

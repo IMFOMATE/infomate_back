@@ -3,6 +3,7 @@ package com.pro.infomate.approval.entity;
 import com.pro.infomate.approval.dto.response.DocumentDetailResponse;
 import com.pro.infomate.approval.service.visitor.DocumentVisitor;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "TBL_PAYMENT")
+@DynamicInsert
 @DiscriminatorValue("payment")
 public class Payment extends Document{
 

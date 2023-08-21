@@ -29,16 +29,15 @@ public class DocRefService {
 
   }
 
-  public List<DocumentListResponse> refDocList(long memberCode){
+  public List<DocumentListResponse> refDocList(int memberCode){
     Member member = memberRepository.findById(memberCode).orElseThrow();
 
-    List<DocRef> refs = docRefRepository.findByMember(member);
+    List<DocRef> refs = docRefRepository.findTop5ByMemberOrderByDocumentDesc(member);
 
     return refs.stream()
             .map(DocRef::getDocument)
             .map((element) -> modelMapper.map(element, DocumentListResponse.class))
             .collect(Collectors.toList());
-
   }
 
 

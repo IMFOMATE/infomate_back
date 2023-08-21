@@ -14,6 +14,6 @@ import java.time.LocalDateTime;
 @ToString
 public class ApprovalRequest {
   
-  private Long id; // 멤버 코드
+  private int id; // 멤버 코드
   private int order; // 결재 순서
 }

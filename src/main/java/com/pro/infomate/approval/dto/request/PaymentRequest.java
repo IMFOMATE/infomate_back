@@ -18,7 +18,7 @@ public class PaymentRequest extends DocumentRequest {
   private List<PaymentListRequest> paymentList;
 
   @Builder
-  public PaymentRequest(@NotBlank @Size(min = 5, max = 100) String title, String content, String emergency, List<Long> refList, List<ApprovalRequest> approvalList, List<PaymentListRequest> paymentList) {
+  public PaymentRequest(@NotBlank @Size(min = 5, max = 100) String title, String content, String emergency, List<Integer> refList, List<ApprovalRequest> approvalList, List<PaymentListRequest> paymentList) {
     super(title, content, emergency, refList, approvalList);
     this.paymentList = paymentList;
   }

@@ -2,6 +2,7 @@ package com.pro.infomate.approval.entity;
 
 import com.pro.infomate.member.entity.Member;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "TBL_APPROVAL")
+@DynamicInsert
 @SequenceGenerator(
         name = "APPROVAL_ID_GENERATOR",
         sequenceName = "SEQ_TBL_APPROVAL_APPROVAL_ID",
@@ -38,11 +40,15 @@ public class Approval {
   @Column(name = "APPROVAL_ORDER")
   private int order;
 
-
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "MEMBER_CODE")
   private Member member;
 
 
+  @Builder
+  public Approval(int order, Member member){
+    this.order = order;
+    this.member = member;
+  }
 
 }
