@@ -1,5 +1,5 @@
 ### 결재문서 상세 조회
-GET http://localhost:8989/document/22
+GET http://localhost:8989/document/56
 
 ### 문서 등록
 POST http://localhost:8989/document/regist/vacation
@@ -13,6 +13,38 @@ Content-Type: application/json
   "startDate": "2023-09-12 09:00:00",
   "endDate": "2023-09-13 09:00:00",
   "emergency" : "N",
-  "reason" : "쓰고싶엇거"
+  "reason" : "쓰고싶엇거",
+  "refList": [
+    43
+  ],
+  "approvalList": [
+    {
+      "id": 2,
+      "order": 1
+    }
+  ]
+}
+
+### 문서 등록
+POST http://localhost:8989/document/regist/draft
+Accept: */*
+Content-Type: application/json
+
+{
+  "title": "업무보고드립니다.",
+  "content": "이러저러해서 이러저러함",
+  "emergency": "N",
+  "refList": [],
+  "approvalList": [
+    {
+      "id": 2,
+      "order": 2
+    },
+    {
+      "id": 43,
+      "order": 1
+    }
+
+  ]
 }
 

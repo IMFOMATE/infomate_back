@@ -1,9 +1,6 @@
 package com.pro.infomate.approval.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -13,6 +10,7 @@ import java.util.List;
 @Setter
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class DocumentRequest {
 
   @NotBlank

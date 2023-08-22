@@ -73,21 +73,21 @@ class DocumentTest {
 
     @Test
     @DisplayName("참조문서")
+    @Commit
     void 참조문서리스트() {
 
       Member member = memberRepository.findById(22).orElseThrow();
-      
-//      member.getMemberRefList().forEach(docRef -> {
-//        Document document = docRef.getDocument();
-//        System.out.println("document.getContent() = " + document.getContent());
-//      });
+
+      member.getMemberRefList().forEach(docRef -> {
+        Document document = docRef.getDocument();
+        System.out.println("document.getContent() = " + document.getContent());
+      });
 
       List<DocRef> result = docRefRepository.findTop5ByMemberOrderByDocumentDesc(member);
-      
+
       result.forEach(r -> {
         System.out.println("r.getDocument().getTitle() = " + r.getDocument().getTitle());
       });
-
     }
 
 

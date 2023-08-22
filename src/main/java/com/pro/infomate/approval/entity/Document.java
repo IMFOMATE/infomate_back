@@ -57,13 +57,13 @@ public abstract class Document {
   @JoinColumn(name = "MEMBER_CODE")
   private Member member;
 
-  @OneToMany(mappedBy = "document", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "document", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<DocumentFile> fileList = new ArrayList<>();
 
-  @OneToMany(mappedBy = "document", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "document", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<Approval> approvalList = new ArrayList<>();
 
-  @OneToMany(mappedBy = "document", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "document", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<DocRef> refList= new ArrayList<>();
 
 

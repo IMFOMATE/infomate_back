@@ -55,7 +55,7 @@ public class DocumentController {
   public ResponseEntity<ResponseDTO> draftRegist(@RequestBody DraftRequest draftRequest){
 
     //일단은 code로 사용
-    int memberCode = 2;
+    int memberCode = 22;
 
     documentService.draftSave(memberCode, draftRequest);
 

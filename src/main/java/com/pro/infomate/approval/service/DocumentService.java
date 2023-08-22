@@ -8,7 +8,9 @@ import com.pro.infomate.approval.dto.request.VacationRequest;
 import com.pro.infomate.approval.dto.response.*;
 import com.pro.infomate.approval.entity.*;
 import com.pro.infomate.approval.repository.ApprovalRepository;
+import com.pro.infomate.approval.repository.DocRefRepository;
 import com.pro.infomate.approval.repository.DocumentRepository;
+import com.pro.infomate.approval.repository.PaymentListRepository;
 import com.pro.infomate.approval.service.visitor.DocumentToDTOVisitor;
 import com.pro.infomate.exception.NotEnoughDateException;
 import com.pro.infomate.exception.NotFindDataException;
@@ -37,6 +39,9 @@ public class DocumentService {
   private final MemberRepository memberRepository;
 
   private final ApprovalRepository approvalRepository;
+  private final DocRefRepository docRefRepository;
+
+  private final PaymentListRepository paymentListRepository;
 
   private final DocumentToDTOVisitor visitor;
 
@@ -57,17 +62,22 @@ public class DocumentService {
     vacation.addMember(member);
     Vacation save = vacationDocumentRepository.save(vacation);
 
+    System.out.println("vacation = " + vacation.getId());
+
     // 참조자
     if(vacationRequest.getRefList().size() > 0){
       List<Member> memberList = memberRepository.findByMemberCodeIn(vacationRequest.getRefList());
-      List<DocRef> refList = memberList.stream().map(m -> DocRef.builder().document(save).member(m).build()).collect(Collectors.toList());
-      save.setRefList(refList);
+
+      memberList.forEach(m->{
+        DocRef ref = DocRef.builder().document(save).member(m).build();
+        docRefRepository.save(ref);
+      });
     }
 
     // 기안 리스트
     vacationRequest.getApprovalList().forEach(list -> {
-      Member byMemberId = memberRepository.findByMemberId(list.getId());
-      Approval approval = Approval.builder().order(list.getOrder()).member(byMemberId).build();
+      Member byMemberId = memberRepository.findByMemberCode(list.getId());
+      Approval approval = Approval.builder().order(list.getOrder()).member(byMemberId).document(save).build();
 
       approvalRepository.save(approval);
     });
@@ -83,19 +93,27 @@ public class DocumentService {
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
 
     Draft draft = modelMapper.map(draftRequest, Draft.class);
+    draft.addMember(member);
 
     Draft save = draftDocumentRepository.save(draft);
 
     // 참조자
     if(draftRequest.getRefList().size() > 0){
       List<Member> memberList = memberRepository.findByMemberCodeIn(draftRequest.getRefList());
-      List<DocRef> refList = memberList.stream().map(m -> DocRef.builder().document(save).member(m).build()).collect(Collectors.toList());
-      save.setRefList(refList);
+
+      memberList.forEach(m->{
+        DocRef ref = DocRef.builder().document(save).member(m).build();
+        docRefRepository.save(ref);
+      });
     }
 
     // 기안 리스트
+    draftRequest.getApprovalList().forEach(list -> {
+      Member byMemberId = memberRepository.findByMemberCode(list.getId());
+      Approval approval = Approval.builder().order(list.getOrder()).member(byMemberId).document(save).build();
 
-
+      approvalRepository.save(approval);
+    });
 
     return modelMapper.map(save, DraftResponse.class);
 
@@ -108,28 +126,47 @@ public class DocumentService {
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
 
     Payment payment = modelMapper.map(paymentRequest, Payment.class);
-
+    payment.addMember(member);
     Payment save = paymentDocumentRepository.save(payment);
 
     // 참조자
     if(paymentRequest.getRefList().size() > 0){
       List<Member> memberList = memberRepository.findByMemberCodeIn(paymentRequest.getRefList());
-      List<DocRef> refList = memberList.stream().map(m -> DocRef.builder().document(save).member(m).build()).collect(Collectors.toList());
-      save.setRefList(refList);
+      memberList.forEach(m->{
+        DocRef ref = DocRef.builder().document(save).member(m).build();
+        docRefRepository.save(ref);
+      });
     }
 
-    // 기안 리스트
+  // 기안 리스트
+    paymentRequest.getApprovalList().forEach(list -> {
+      Member byMemberId = memberRepository.findByMemberCode(list.getId());
+      Approval approval = Approval.builder().order(list.getOrder()).member(byMemberId).document(save).build();
 
+      approvalRepository.save(approval);
+    });
+    
+    //지출 리스트 저장
+    paymentRequest.getPaymentList().forEach(list -> {
+
+      PaymentList paymentList = PaymentList.builder()
+              .paymentContent(list.getPaymentContent())
+              .paymentDate(list.getPaymentDate())
+              .paymentPrice(list.getPaymentPrice())
+              .paymentSort(list.getPaymentSort())
+              .remarks(list.getRemarks())
+              .document(save)
+              .build();
+      paymentListRepository.save(paymentList);
+    });
+    
     return modelMapper.map(save, PaymentResponse.class);
-
   }
 
 
   //4. 문서 세부
+  @Transactional
   public DocumentDetailResponse findById(long documentId) {
-
-//    Document document = documentRepository.findById(documentId).orElseThrow(() -> new NotFindDataException("해당문서가 없습니다."));
-//    return mapDocumentToDTO(document);
 
     Document document = documentRepository.findById(documentId)
             .orElseThrow(() -> new NotFindDataException("해당문서가 없습니다."));

@@ -12,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString(callSuper = true)
+@NoArgsConstructor
 public class VacationRequest extends DocumentRequest{
 
   @NotBlank
