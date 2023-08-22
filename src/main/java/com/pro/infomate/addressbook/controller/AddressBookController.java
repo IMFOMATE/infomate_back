@@ -34,7 +34,7 @@ public class AddressBookController {
 
     }
 
-    @PostMapping("/contact")
+    @PostMapping("/addContact")
     public ResponseEntity<ResponseDTO> registAddressBook(@RequestBody ContactDTO contact) {
 
         log.info("contact ====================={} " , contact);
@@ -42,8 +42,10 @@ public class AddressBookController {
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.CREATED.value())
                         .message("success")
                         .build());
     }
+
+
 }

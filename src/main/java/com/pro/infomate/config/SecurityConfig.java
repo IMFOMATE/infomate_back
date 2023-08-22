@@ -23,11 +23,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         // 개발용 퍼미션
-        http.csrf().disable().authorizeHttpRequests()
-                .antMatchers("*").permitAll();
+        http.cors().and().csrf().disable().authorizeHttpRequests()
+                .anyRequest().permitAll();
 
         // 개발 cors 설정
-        http.cors().disable();
 
 //        http.sessionManagement()
 //            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

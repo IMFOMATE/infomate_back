@@ -2,7 +2,7 @@
 GET http://localhost:8989/addressBook/contact/2
 
 ### 주소록 등록
-POST http://localhost:8989/addressBook/contact
+POST http://localhost:8989/addressBook/addContact
 Accept: */*
 Content-Type: application/json
 
