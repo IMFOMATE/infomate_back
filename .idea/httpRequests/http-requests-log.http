@@ -1,3 +1,12 @@
+GET http://localhost:8989/department/treeview
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-08-25T005243.200.json
+
+###
+
 GET http://localhost:8989/calendar/list/2
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
@@ -573,137 +582,6 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 }
 
 <> 2023-08-16T171654.400.json
-
-###
-
-DELETE http://localhost:8091/schedule
-Accept: */*
-Content-Type: application/json
-Content-Length: 21
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "id": [102,103]
-}
-
-<> 2023-08-16T171607.404.json
-
-###
-
-DELETE http://localhost:8091/schedule
-Accept: */*
-Content-Type: application/json
-Content-Length: 21
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "id": [102,103]
-}
-
-<> 2023-08-16T171501.404.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-16T171450.200.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-14T232607.200.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-14T232221.200.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-14T232119.200.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-14T231953.200.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-14T231840.200.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-14T231546.500.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-14T231444.200.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-14T231356.200.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-14T231218.200.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-14T230725.200.json
 
 ###
 
