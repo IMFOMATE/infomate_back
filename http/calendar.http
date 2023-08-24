@@ -41,7 +41,7 @@ Content-Type: application/json
 }
 
 ### 캘린더 리스트
-GET http://localhost:8091/calendar/list/2
+GET http://localhost:8989/calendar/list/2
 
 ### 일정 등록용 캘린더 리스트 조회
 GET http://localhost:8091/calendar/mylist/2

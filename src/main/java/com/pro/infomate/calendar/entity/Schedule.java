@@ -1,5 +1,6 @@
 package com.pro.infomate.calendar.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -33,9 +34,11 @@ public class Schedule {
     private String title;
 
     @Column(name = "START_DATE")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-ddTHH:mm:ss")
     private LocalDateTime startDate;
 
     @Column(name = "END_DATE")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-ddTHH:mm:ss")
     private LocalDateTime endDate;
 
     @Column(name = "CONTENT")

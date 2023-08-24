@@ -1,6 +1,7 @@
 package com.pro.infomate.calendar.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pro.infomate.member.dto.MemberDTO;
 import lombok.*;
 
@@ -25,6 +26,7 @@ public class CalendarDTO {
 
     private Integer departmentCode;
     private Boolean defaultCalendar;
+
     private LocalDateTime createDate;
     private List<FavoriteCalendarDTO> favoriteCalendar;
     private List<ScheduleDTO> refScheduleList;
