@@ -7,6 +7,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -22,16 +25,20 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        // 개발용 퍼미션
-        http.csrf().disable().authorizeHttpRequests()
-                .antMatchers("*").permitAll();
 
-        // 개발 cors 설정
-        http.cors().disable();
+        //  개발용 cors 허용
+        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
+
+        // 개발용 csrf 허용
+        http.csrf();
+
 
 //        http.sessionManagement()
 //            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         return http.build();
     }
+
+
+
 }

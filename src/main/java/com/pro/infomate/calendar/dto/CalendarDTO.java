@@ -1,6 +1,7 @@
 package com.pro.infomate.calendar.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pro.infomate.member.dto.MemberDTO;
 import lombok.*;
 
