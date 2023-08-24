@@ -1,8 +1,10 @@
-package com.pro.infomate.member.entity;
+package com.pro.infomate.department.entity;
 
+import com.pro.infomate.member.entity.Member;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,9 +23,11 @@ public class Department {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEPT_CODE_GENERATOR")
   @Column(name = "DEPT_CODE")
-  private Long deptCode;
+  private int deptCode;
 
   @Column(name = "DEPT_NAME")
   private String deptName;
+  @OneToMany(mappedBy = "department")
+  private List<Member> members;
 
 }

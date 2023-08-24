@@ -74,4 +74,21 @@ class DocumentRepositoryTest {
 
   }
 
+  @Test
+  @DisplayName("querdsl")
+  void findPendingApprovalsForMember() {
+    List<Document> result = documentRepository.findApprovalsDocument(2);
+
+    assertThat(result.size()).isEqualTo(2);
+//    assertThat(result.get(0).getId()).isEqualTo(56);
+  }
+
+  @Test
+  @DisplayName("select")
+  void select() {
+    Document document = documentRepository.findById(56L).orElseThrow();
+
+    document.getApprovalList().forEach(d-> System.out.println("d.getId() = " + d.getId()));
+  }
+
 }

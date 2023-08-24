@@ -3,6 +3,7 @@ package com.pro.infomate.member.entity;
 import com.pro.infomate.approval.entity.Approval;
 import com.pro.infomate.approval.entity.DocRef;
 import com.pro.infomate.approval.entity.Document;
+import com.pro.infomate.department.entity.Department;
 import lombok.*;
 
 import javax.persistence.*;
@@ -58,7 +59,7 @@ public class Member {
     @Column(name = "MEMBER_ADDRESS")
     private String memberAddress;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DEPT_CODE")
     private Department department;
 
@@ -68,7 +69,6 @@ public class Member {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "RANK_CODE")
     private Rank rank;
-
 
     @Column(name = "MEMBER_PIC")
     private String memberPic;

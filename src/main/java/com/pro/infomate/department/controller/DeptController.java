@@ -1,8 +1,7 @@
-package com.pro.infomate.approval.controller;
+package com.pro.infomate.department.controller;
 
-import com.pro.infomate.approval.dto.DocumentDTO;
-import com.pro.infomate.approval.service.DocRefService;
 import com.pro.infomate.common.ResponseDTO;
+import com.pro.infomate.department.service.DepartmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,27 +9,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/ref")
+@RequestMapping("/department")
 @RequiredArgsConstructor
-public class DocRefController {
+public class DeptController {
 
-  private final DocRefService docRefService;
+  private final DepartmentService departmentService;
 
-  //참조 문서 조회
-  @GetMapping
-  public ResponseEntity<ResponseDTO> findRefList(){
+  @GetMapping("/treeview")
+  public ResponseEntity<ResponseDTO> deptTreeView(){
 
-    //멤버코드를 Auth로 받아오기
-    int memberCode = 22;
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
                     .status(HttpStatus.OK)
                     .message("success")
-                    .data(docRefService.refDocList(memberCode))
+                    .data(departmentService.deptTreeViewList())
                     .build());
   }
 }

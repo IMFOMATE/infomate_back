@@ -29,6 +29,7 @@ public class DocRefService {
 
   }
 
+  // 참조문서 5개 조회
   public List<DocumentListResponse> refDocList(int memberCode){
     Member member = memberRepository.findById(memberCode).orElseThrow();
 
@@ -40,5 +41,6 @@ public class DocRefService {
             .collect(Collectors.toList());
   }
 
+  // 페이징 참조문서 조회
 
 }

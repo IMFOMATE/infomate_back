@@ -1,17 +1,14 @@
 package com.pro.infomate.approval.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.pro.infomate.approval.dto.DocumentDTO;
+import com.pro.infomate.approval.dto.response.*;
 import com.pro.infomate.approval.entity.*;
-import com.pro.infomate.member.entity.Department;
-import com.pro.infomate.member.entity.Member;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter

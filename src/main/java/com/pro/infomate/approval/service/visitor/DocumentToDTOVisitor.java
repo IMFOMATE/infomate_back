@@ -2,6 +2,7 @@ package com.pro.infomate.approval.service.visitor;
 
 import com.pro.infomate.approval.dto.response.*;
 import com.pro.infomate.approval.entity.*;
+import com.pro.infomate.approval.dto.response.VacationResponse;
 import com.pro.infomate.member.entity.Member;
 import org.springframework.stereotype.Component;
 

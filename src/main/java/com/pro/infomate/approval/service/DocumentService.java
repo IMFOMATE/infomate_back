@@ -1,7 +1,5 @@
 package com.pro.infomate.approval.service;
 
-import com.pro.infomate.approval.dto.*;
-import com.pro.infomate.approval.dto.request.ApprovalRequest;
 import com.pro.infomate.approval.dto.request.DraftRequest;
 import com.pro.infomate.approval.dto.request.PaymentRequest;
 import com.pro.infomate.approval.dto.request.VacationRequest;
@@ -12,6 +10,7 @@ import com.pro.infomate.approval.repository.DocRefRepository;
 import com.pro.infomate.approval.repository.DocumentRepository;
 import com.pro.infomate.approval.repository.PaymentListRepository;
 import com.pro.infomate.approval.service.visitor.DocumentToDTOVisitor;
+import com.pro.infomate.approval.dto.response.VacationResponse;
 import com.pro.infomate.exception.NotEnoughDateException;
 import com.pro.infomate.exception.NotFindDataException;
 import com.pro.infomate.member.entity.Member;
@@ -22,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service

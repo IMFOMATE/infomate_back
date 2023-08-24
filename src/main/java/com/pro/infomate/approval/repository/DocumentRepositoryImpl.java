@@ -2,11 +2,14 @@ package com.pro.infomate.approval.repository;
 
 import com.pro.infomate.approval.dto.response.DocumentListResponse;
 import com.pro.infomate.approval.dto.response.QDocumentListResponse;
+import com.pro.infomate.approval.entity.Document;
 import com.pro.infomate.approval.entity.DocumentStatus;
+import com.pro.infomate.approval.entity.QApproval;
 import com.pro.infomate.approval.entity.QDocument;
 import com.pro.infomate.member.entity.QDepartment;
 import com.pro.infomate.member.entity.QMember;
 import com.querydsl.core.types.SubQueryExpression;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -16,7 +19,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
+import static com.pro.infomate.approval.entity.QApproval.*;
 import static com.pro.infomate.approval.entity.QDocument.*;
 import static com.pro.infomate.member.entity.QDepartment.*;
 import static com.pro.infomate.member.entity.QMember.*;
@@ -66,4 +71,18 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
     
     return new PageImpl<>(content,pageable, count);
   }
+
+  @Override
+  public List<Document> findApprovalsDocument(int memberCode) {
+    BooleanExpression approvalConditions = approval.member.memberCode.eq(memberCode)
+            .and(approval.approvalDate.isNull());
+
+    return queryFactory
+            .select(document)
+            .from(approval)
+            .join(approval.document, document)
+            .where(approvalConditions)
+            .fetch();
+  }
+
 }

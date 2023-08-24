@@ -27,6 +27,7 @@ public interface DocumentRepository<T extends Document> extends JpaRepository<T,
   Optional<T> findById(Long aLong);
 
 
+
   @Query("select d from Document d where d.documentKind in (:type)")
   List<Document> findByDocuments(@Param("type") String type);
 

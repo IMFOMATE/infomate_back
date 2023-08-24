@@ -2,12 +2,7 @@ package com.pro.infomate.approval.repository;
 
 import com.pro.infomate.approval.dto.response.DocumentListResponse;
 import com.pro.infomate.approval.dto.response.QDocumentListResponse;
-import com.pro.infomate.approval.entity.*;
-import com.pro.infomate.approval.entity.QDocRef;
-import com.pro.infomate.approval.entity.QDocument;
-import com.pro.infomate.approval.entity.QDraft;
-import com.pro.infomate.approval.entity.QPayment;
-import com.pro.infomate.approval.entity.QVacation;
+
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -30,11 +25,6 @@ public class DocRefRepositoryImpl implements DocRefRepositoryCustom {
 
   @Override
   public Page<DocumentListResponse> refPagingList(int memberCode, Pageable pageable) {
-    QDocRef docRef = QDocRef.docRef;
-    QDocument document = QDocument.document;
-    QDraft draft = QDraft.draft;  // Assuming you have a QEntity for Draft
-    QPayment payment = QPayment.payment;  // Assuming you have a QEntity for Payment
-    QVacation vacation = QVacation.vacation;
 
     List<DocumentListResponse> content = queryFactory.select(
                     new QDocumentListResponse(
