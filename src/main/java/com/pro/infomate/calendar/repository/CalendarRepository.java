@@ -1,23 +1,20 @@
 package com.pro.infomate.calendar.repository;
 
 
-import com.pro.infomate.calendar.dto.CalendarSummaryDTO;
 import com.pro.infomate.calendar.entity.Calendar;
-import com.pro.infomate.calendar.entity.CalendarSummary;
-import com.pro.infomate.calendar.entity.Schedule;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public interface CalendarRepository extends JpaRepository<Calendar, Integer> {
 
-    Optional<Calendar> findByMemberCodeAndDefaultCalendar(Integer userId, boolean isTrue);
+    Optional<Calendar> findByMemberCodeAndDefaultCalendar(Integer memberCoode, Boolean defaultCalendar);
+
+    Optional<Calendar> findFirstByMemberCode(int memberCode, Sort sort);
 
     List<Calendar> findByDepartmentCodeAndOpenStatus(Integer departmentCode, boolean openStatus);
 

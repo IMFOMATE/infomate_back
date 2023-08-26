@@ -2,6 +2,8 @@ package com.pro.infomate.calendar.entity;
 
 import com.pro.infomate.member.entity.Member;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,6 +14,8 @@ import java.util.List;
 @Setter
 @ToString
 @Entity
+@DynamicUpdate
+@DynamicInsert
 @Table(name = "TBL_PARTICIPANT")
 @IdClass(ParticipantPK.class)
 public class Participant {

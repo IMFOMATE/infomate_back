@@ -40,7 +40,7 @@ public class ScheduleController {
     }
 
     // test success
-    @GetMapping("/{scheduleId}")
+    @GetMapping("/{scheduleId}") // api 연동 확인
     public ResponseEntity<ResponseDTO> findById(@PathVariable Integer scheduleId){
         log.info("[ScheduleController](findById) scheduleId : {} ", scheduleId);
 
@@ -55,8 +55,8 @@ public class ScheduleController {
                             .build());
     }
 
-    // test success
-    @PatchMapping("/update")
+
+    @PatchMapping("/update") // api 연동 확인
     public ResponseEntity<ResponseDTO> updateById(@RequestBody ScheduleDTO scheduleDTO){
         log.info("[ScheduleController](updateById) scheduleDTO : {} ", scheduleDTO);
         scheduleService.updateById(scheduleDTO);

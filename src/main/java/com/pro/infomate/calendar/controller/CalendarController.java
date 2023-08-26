@@ -7,7 +7,9 @@ import com.pro.infomate.calendar.service.CalendarService;
 import com.pro.infomate.common.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +26,9 @@ public class CalendarController {
     private final CalendarService calendarService;
 
     // test success 팀, 회사전체 캘린더 추가 예정
-    @GetMapping("/list/{memberId}")
+
+    @GetMapping(value = "/list/{memberId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     public ResponseEntity<ResponseDTO> findAll(@PathVariable int memberId){
         log.info("[CalendarController](findAll) memberId : {}",memberId);
 
