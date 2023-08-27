@@ -67,8 +67,8 @@ public class CalendarController {
                         .build());
     }
 
-    // test success
-    @PostMapping("/regist")
+
+    @PostMapping("/regist") // api 연동 확인
     public ResponseEntity<ResponseDTO> saveByCalendar(@RequestBody CalendarDTO calendar){
         log.info("[CalendarController](saveByCalendar) calendar : {}",calendar);
 
@@ -85,8 +85,8 @@ public class CalendarController {
                         .build());
     }
 
-    // test success
-    @PatchMapping("/update")
+
+    @PatchMapping("/update") // api 연동 확인
     public ResponseEntity<ResponseDTO> updateByCalendar(@RequestBody CalendarDTO calendar){
 
         log.info("[CalendarController](updateByCalendar) calendar : {}",calendar);
@@ -100,8 +100,7 @@ public class CalendarController {
                         .build());
     }
 
-    // test success
-    @PatchMapping("/updateDafault")
+    @PatchMapping("/updateDafault") // api 연동 확인
     public ResponseEntity<ResponseDTO> updateDefaultByCalendar(@RequestBody CalendarDTO calendarDTO){
         log.info("[CalendarController](updateDefaultByCalendar) calendarDTO: {} ",calendarDTO);
         calendarService.updateDefaultCalender(calendarDTO); // userId 수정 요망
@@ -112,12 +111,12 @@ public class CalendarController {
                         .build());
     }
 
-    // test success
-    @DeleteMapping("/delete/")
-    public ResponseEntity<ResponseDTO> deleteByCalendar(@RequestBody List<Integer> calendarId){
-        log.info("[CalendarController](findSummaryCalendar) calendarId : ", calendarId);
+    @DeleteMapping("/delete") // api 연동 확인
+    public ResponseEntity<ResponseDTO> deleteByCalendar(@RequestBody List<Integer> calendarList){
+        log.info("[CalendarController](deleteByCalendar) calendarList : ", calendarList);
 
-        calendarService.deleteById(calendarId);
+        calendarService.deleteById(calendarList);
+
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)

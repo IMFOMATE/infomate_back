@@ -9,6 +9,7 @@ import com.pro.infomate.calendar.entity.CalendarSummary;
 import com.pro.infomate.calendar.entity.Schedule;
 import com.pro.infomate.calendar.repository.CalendarRepository;
 import com.pro.infomate.calendar.repository.FavotriteCalendarRepository;
+import com.pro.infomate.calendar.repository.ScheduleRepository;
 import com.pro.infomate.exception.NotFindDataException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,7 @@ import java.util.stream.Collectors;
 public class CalendarService {
 
     private final CalendarRepository calendarRepository;
+    private final ScheduleRepository scheduleRepository;
     private final FavotriteCalendarRepository favotriteCalendarRepository;
     private final ModelMapper modelMapper;
 
@@ -150,11 +152,24 @@ public class CalendarService {
     }
 
     @Transactional
-    public void deleteById(List<Integer> calendarId) {
+    public void deleteById(List<Integer> calendarList) {
 
-        log.info("[CalendarService](deleteById) scheduleDTOList : {}",calendarId);
+        int memberCode = 2; // 삭제 예정
 
-        calendarRepository.deleteAllById(calendarId);
+        log.info("[CalendarService](deleteById) calendarList : {}", calendarList);
+
+        calendarList.forEach(item ->{
+            log.info("[CalendarService](deleteById) item : {}", item);
+            scheduleRepository.deleteAllByRefCalendar(item);
+            calendarRepository.deleteById(item);
+        });
+
+        Optional<Calendar> defaultCalendar = calendarRepository.findByMemberCodeAndDefaultCalendar(memberCode, true);
+        if(defaultCalendar.isEmpty()){
+            Optional<Calendar> findFirstCalendar = calendarRepository.findFirstByMemberCode(memberCode, Sort.by("indexNo").ascending());
+            findFirstCalendar.get().setDefaultCalendar(true);
+        }
+
     }
 
 

@@ -86,6 +86,7 @@ public class Schedule {
         if(scheduleDTO.getCorpSchdl() != null) this.corpSchdl = scheduleDTO.getCorpSchdl();
         if(scheduleDTO.getRepeat() != null) this.repeat = scheduleDTO.getRepeat();
         if(scheduleDTO.getImportant() != null) this.important = scheduleDTO.getImportant();
+        if(scheduleDTO.getRefCalendar() != null) this.refCalendar = scheduleDTO.getRefCalendar();
     }
 
     @Override

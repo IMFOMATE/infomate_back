@@ -36,7 +36,7 @@ public class ScheduleDTO {
     private Boolean important;
 
     private List<ParticipantDTO> participantList;
-    private int refCalendar;
+    private Integer refCalendar;
     private CalendarDTO Calendar;
 
 }

@@ -39,7 +39,6 @@ public class ScheduleController {
                         .build());
     }
 
-    // test success
     @GetMapping("/{scheduleId}") // api 연동 확인
     public ResponseEntity<ResponseDTO> findById(@PathVariable Integer scheduleId){
         log.info("[ScheduleController](findById) scheduleId : {} ", scheduleId);
