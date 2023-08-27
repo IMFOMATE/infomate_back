@@ -31,19 +31,23 @@ class DocRefRepositoryTest {
 
 
   @Test
-  @DisplayName("test")
+  @DisplayName("문서참조")
   void test() {
     Document document = documentRepository.findById(28L).orElseThrow();
     List<DocRef> refList = document.getRefList();
 //    refList.forEach(l -> l.getMember());
     List<DocRef> result = docRefRepository.findByDocument(document);
 //
-    result.forEach(rf -> {
-      int memberCode = rf.getMember().getMemberCode();
 
-      Member ss = memberRepository.findByMemberCode(memberCode);
-      ss.getRank().getRankName();
-    });
+  }
+
+  @Test
+  @DisplayName("top5")
+  void top5() {
+    Member member = memberRepository.findById(22).orElseThrow();
+    List<DocRef> result = docRefRepository.findTop5ByMemberOrderByDocumentDesc(member);
+
+    result.forEach(docRef -> System.out.println("docRef.getDocument() = " + docRef.getDocument().getId()));
 
   }
   
@@ -51,12 +55,13 @@ class DocRefRepositoryTest {
   @Test
   @DisplayName("testquery")
   void paging() {
-    int memberCode =22;
+    int memberCode =2;
 
     PageRequest pageRequest = PageRequest.of(0, 5);
 
     Page<DocumentListResponse> documentListResponses = docRefRepository.refPagingList(memberCode, pageRequest);
-    System.out.println("documentListResponses = " + documentListResponses.getTotalPages());
+    System.out.println("Total = " + documentListResponses.getTotalPages());
+    System.out.println("documentListResponses.getTotalElements() = " + documentListResponses.getTotalElements());
      documentListResponses.getContent().forEach(System.out::println);
     System.out.println("documentListResponses = " + documentListResponses.getSize());
 

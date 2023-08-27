@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -22,6 +23,9 @@ public class Draft extends Document{
 
     @Column(name = "CO_DEPT")
     private String coDept;
+
+    @Column(name = "START_DATE")
+    private LocalDateTime startDate;
 
     @Override
     public DocumentDetailResponse accept(DocumentVisitor<DocumentDetailResponse> visitor) {

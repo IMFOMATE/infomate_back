@@ -58,6 +58,7 @@ public class DepartmentService {
               .data(TreeViewResponse.TreeDTO.builder()
                       .fileType("person")
                       .rank(member.getRank().getRankName())
+                      .profile(member.getMemberPic())
                       .build())
               .build();
       memberNodes.add(memberNode);

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,24 +27,24 @@ class ApprovalRepositoryTest {
 
 
   @Test
-@DisplayName("top1")
-void top1() {
+  @DisplayName("top1")
+  void top1() {
+    int memberCode =2;
 
-    int memberCode =43;
-    List<Document> documents = documentRepository.findApprovalsDocument(memberCode);
+    List<Document> result = documentRepository.findCredit(memberCode);
 
-    List<Document> approvedDocuments = documents.stream()
-            .map(document -> approvalRepository.findTopByDocumentAndApprovalDateIsNullOrderByOrderAsc(document))
-            .filter(approval -> approval != null && approval.getMember().getMemberCode() == memberCode)
-            .map(Approval::getDocument)
-            .collect(Collectors.toList());
+    result.forEach(d->{
+      System.out.println("d. = " + d.getId());
+      System.out.println("d. = " + d.getCreatedDate());
+    });
 
-    assertThat(approvedDocuments.size()).isEqualTo(0);
-    // Given
-    // When
+  }
 
-  // Then
-	
-}
+  @Test
+  @DisplayName("top1")
+  void top1Test(){
+
+
+  }
 
 }

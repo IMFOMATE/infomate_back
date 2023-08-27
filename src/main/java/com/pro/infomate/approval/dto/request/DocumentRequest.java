@@ -9,8 +9,8 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class DocumentRequest {
 
   @NotBlank
@@ -18,6 +18,7 @@ public class DocumentRequest {
   private String title; //제목
 
   private String content; // 문서 내용
+
   private String emergency; // 긴급여부
 
   private List<Integer> refList; // 참조자 멤버목록(코드만)

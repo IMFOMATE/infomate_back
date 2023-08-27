@@ -31,6 +31,7 @@ public class VacationRequest extends DocumentRequest{
   private String reason;
 
   @Builder
+
   public VacationRequest(@NotBlank @Size(min = 5, max = 100) String title, String content, String emergency, List<Integer> refList, List<ApprovalRequest> approvalList, String sort, LocalDateTime startDate, LocalDateTime endDate, String reason) {
     super(title, content, emergency, refList, approvalList);
     this.sort = sort;

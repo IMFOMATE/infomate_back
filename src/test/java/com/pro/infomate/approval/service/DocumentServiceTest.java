@@ -41,7 +41,7 @@ class DocumentServiceTest {
             .endDate(LocalDateTime.of(2023,9,11,0,0))
             .reason("휴가쓸래...").build();
 //
-    VacationResponse vacation = documentService.vacationSave(22, vacationDTO);
+    VacationResponse vacation = documentService.vacationSave(22, vacationDTO,null);
     System.out.println("vacation = " + vacation);
 
   }

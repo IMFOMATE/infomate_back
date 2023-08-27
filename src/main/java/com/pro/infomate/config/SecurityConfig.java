@@ -11,6 +11,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
+
 @Configuration
 @EnableWebSecurity
 //@RequiredArgsConstructor
@@ -32,13 +34,25 @@ public class SecurityConfig {
         // 개발용 csrf 허용
         http.csrf();
 
-
 //        http.sessionManagement()
 //            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         return http.build();
     }
 
-
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource(){
+//        CorsConfiguration configuration = new CorsConfiguration();
+//
+//        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+//        configuration.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE"));
+//        configuration.setAllowedHeaders(Arrays.asList("Access-Control-Allow-Origin", "Content-type"
+//                , "Access-Control-Allow-Headers", "Authorization"
+//                , "X-Requested-With"));
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//
+//        return source;
+//    }
 
 }

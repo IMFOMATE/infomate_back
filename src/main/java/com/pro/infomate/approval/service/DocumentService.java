@@ -1,5 +1,7 @@
 package com.pro.infomate.approval.service;
 
+import com.pro.infomate.approval.dto.DocumentDTO;
+import com.pro.infomate.approval.dto.request.DocumentRequest;
 import com.pro.infomate.approval.dto.request.DraftRequest;
 import com.pro.infomate.approval.dto.request.PaymentRequest;
 import com.pro.infomate.approval.dto.request.VacationRequest;
@@ -17,10 +19,14 @@ import com.pro.infomate.member.entity.Member;
 import com.pro.infomate.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -48,7 +54,7 @@ public class DocumentService {
 
   //1. 휴가문서 등록
   @Transactional
-  public VacationResponse vacationSave(int memberCode, VacationRequest vacationRequest){
+  public VacationResponse vacationSave(int memberCode, VacationRequest vacationRequest, String temp){
 
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
 
@@ -58,6 +64,11 @@ public class DocumentService {
 
     Vacation vacation = modelMapper.map(vacationRequest, Vacation.class);
     vacation.addMember(member);
+
+    if(temp != null){
+      vacation.setDocumentStatus(DocumentStatus.TEMPORARY);
+    }
+
     Vacation save = vacationDocumentRepository.save(vacation);
 
     System.out.println("vacation = " + vacation.getId());
@@ -86,12 +97,16 @@ public class DocumentService {
 
   //2. 기안서 등록
   @Transactional
-  public DraftResponse draftSave(int memberCode, DraftRequest draftRequest){
+  public DraftResponse draftSave(int memberCode, DraftRequest draftRequest, String temp){
 
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
 
     Draft draft = modelMapper.map(draftRequest, Draft.class);
     draft.addMember(member);
+
+    if(temp != null){
+      draft.setDocumentStatus(DocumentStatus.TEMPORARY);
+    }
 
     Draft save = draftDocumentRepository.save(draft);
 
@@ -119,12 +134,17 @@ public class DocumentService {
 
   //3. 지출결의서 등록
   @Transactional
-  public PaymentResponse paymentSave(int memberCode, PaymentRequest paymentRequest){
+  public PaymentResponse paymentSave(int memberCode, PaymentRequest paymentRequest, String temp){
 
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
 
     Payment payment = modelMapper.map(paymentRequest, Payment.class);
     payment.addMember(member);
+
+    if(temp != null){
+      payment.setDocumentStatus(DocumentStatus.TEMPORARY);
+    }
+
     Payment save = paymentDocumentRepository.save(payment);
 
     // 참조자
@@ -173,8 +193,51 @@ public class DocumentService {
   }
 
 
+  //5. 문서 리스트 top 5개
+  public ApprovalHomeResponse top5List(int memberCode){
+    Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
+    //일단...
+    PageRequest pageRequest = PageRequest.of(0, 5);
+
+    //내 기안문서
+    List<Document> approvalList = documentRepository.findTop5ByMemberOrderByCreatedDateDesc(member);
+
+    //내 참조문서
+    Page<DocumentListResponse> refList = docRefRepository.refPagingList(memberCode, pageRequest);
+
+    //내 결재 대기문서
+    List<Document> creditList = documentRepository.findCredit(memberCode);
+
+    return ApprovalHomeResponse
+            .builder()
+            .approvalList(approvalList.stream().map(DocumentListResponse::new).collect(Collectors.toList()))
+            .refList(refList.getContent())
+            .creditList(creditList.stream().map(DocumentListResponse::new).collect(Collectors.toList()))
+            .build();
+  }
 
 
+  //6. 기안문서 페이징
+  public Page<Document> approvalList(int memberCode, Pageable pageable){
+
+    Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
+
+    return documentRepository.findByMember(member, pageable);
+
+  }
+
+
+  // 임시저장문서
+  @Transactional
+  public void update(DocumentRequest documentRequest){
+
+  }
+
+  // 문서삭제
+  @Transactional
+  public void deleteDocument(long documentId){
+    documentRepository.deleteById(documentId);
+  }
 
 
 

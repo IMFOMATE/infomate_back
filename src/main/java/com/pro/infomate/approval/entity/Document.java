@@ -25,7 +25,6 @@ import java.util.List;
         initialValue = 1,
         allocationSize = 1
 )
-@ToString
 public abstract class Document {
 
   @Id
@@ -49,6 +48,9 @@ public abstract class Document {
 
   @Column(name = "EMERGENCY")
   private String emergency;
+
+  @Column(name="TEMP_STATUS")
+  private String tempStatus;
 
   @Column(name = "DOCUMENT_KIND", insertable = false, updatable = false)
   private String documentKind;
@@ -105,3 +107,4 @@ public abstract class Document {
 
 
 }
+

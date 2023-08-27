@@ -23,6 +23,7 @@ public class DocumentToDTOVisitor implements DocumentVisitor<DocumentDetailRespo
             .map(approval -> {
               Member approvalMember = approval.getMember();
               return ApprovalResponse.builder()
+                      .memberCode(approvalMember.getMemberCode())
                       .rankName(approvalMember.getRank().getRankName())
                       .memberName(approvalMember.getMemberName())
                       .comment(approval.getComment())
@@ -133,6 +134,7 @@ public class DocumentToDTOVisitor implements DocumentVisitor<DocumentDetailRespo
             .documentKind(draft.getDocumentKind())
             .refList(refList)
             .coDept(draft.getCoDept())
+            .startDate(draft.getStartDate())
             .build();
   }
 }

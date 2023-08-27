@@ -14,6 +14,9 @@ public interface DocumentRepositoryCustom {
 
   List<Document> findApprovalsDocument(int memberCode);
 
+  public List<Document> findCredit(int memberCode);
+
+  public Page<Document> findCreditWithPaging(int memberCode, Pageable pageable);
 
 
-}
+  }

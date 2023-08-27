@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 @ToString
 public class ApprovalResponse {
 
+    private int memberCode;
+
     private String memberName;
 
     private String rankName;
@@ -25,7 +27,8 @@ public class ApprovalResponse {
     private int order;
 
     @Builder
-    public ApprovalResponse(String memberName, String rankName, String comment, LocalDateTime approvalDate, int order) {
+    public ApprovalResponse(int memberCode,String memberName, String rankName, String comment, LocalDateTime approvalDate, int order) {
+        this.memberCode = memberCode;
         this.memberName = memberName;
         this.rankName = rankName;
         this.comment = comment;
