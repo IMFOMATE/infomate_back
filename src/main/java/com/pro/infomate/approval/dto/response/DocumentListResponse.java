@@ -1,6 +1,7 @@
 package com.pro.infomate.approval.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.pro.infomate.approval.entity.Document;
 import com.pro.infomate.approval.entity.DocumentStatus;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
@@ -21,7 +22,7 @@ public class DocumentListResponse {
   @Size(min = 5, max = 100)
   private String title; // 제목
 
-  private DocumentStatus documentStatus; // 결재 상태
+  private DocumentStatus status; // 결재 상태
 
   private String emergency; // 긴급여부
 
@@ -35,9 +36,19 @@ public class DocumentListResponse {
   public DocumentListResponse(Long id, String title, DocumentStatus documentStatus, String emergency, LocalDateTime createdDate, String documentKind) {
     this.id = id;
     this.title = title;
-    this.documentStatus = documentStatus;
+    this.status = documentStatus;
     this.emergency = emergency;
     this.createdDate = createdDate;
     this.documentKind = documentKind;
   }
+
+  public DocumentListResponse(Document document){
+    this.id = document.getId();
+    this.title = document.getTitle();
+    this.status = document.getDocumentStatus();
+    this.emergency = document.getEmergency();
+    this.createdDate = document.getCreatedDate();
+    this.documentKind = document.getDocumentKind();
+  }
+
 }

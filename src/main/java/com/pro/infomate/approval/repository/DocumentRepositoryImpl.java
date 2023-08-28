@@ -2,16 +2,10 @@ package com.pro.infomate.approval.repository;
 
 import com.pro.infomate.approval.dto.response.DocumentListResponse;
 import com.pro.infomate.approval.dto.response.QDocumentListResponse;
-import com.pro.infomate.approval.entity.Document;
-import com.pro.infomate.approval.entity.DocumentStatus;
-import com.pro.infomate.approval.entity.QApproval;
-import com.pro.infomate.approval.entity.QDocument;
-import com.pro.infomate.member.entity.QDepartment;
-import com.pro.infomate.member.entity.QMember;
+import com.pro.infomate.approval.entity.*;
 import com.querydsl.core.types.SubQueryExpression;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
-import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,7 +13,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 import static com.pro.infomate.approval.entity.QApproval.*;
 import static com.pro.infomate.approval.entity.QDocument.*;
@@ -72,6 +67,7 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
     return new PageImpl<>(content,pageable, count);
   }
 
+
   @Override
   public List<Document> findApprovalsDocument(int memberCode) {
     BooleanExpression approvalConditions = approval.member.memberCode.eq(memberCode)
@@ -84,5 +80,41 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
             .where(approvalConditions)
             .fetch();
   }
+
+  //결재대기
+  public List<Document> findCredit(int memberCode) {
+    List<Approval> approvals = queryFactory
+            .selectFrom(approval)
+            .leftJoin(approval.member)
+            .leftJoin(approval.document, document).fetchJoin()
+            .where(approval.approvalDate.isNull()
+                    .and(approval.member.memberCode.eq(memberCode)))
+//            .orderBy(approval.document.createdDate.desc())
+            .limit(5)
+            .fetch();
+
+    return approvals.stream()
+            .map(Approval::getDocument)
+            .collect(Collectors.toList());
+  }
+
+  //페이징 결재대기
+  public Page<Document> findCreditWithPaging(int memberCode, Pageable pageable) {
+    List<Approval> approvals = queryFactory
+            .selectFrom(approval)
+            .leftJoin(approval.member)
+            .leftJoin(approval.document, document).fetchJoin()
+            .where(approval.approvalDate.isNull()
+                    .and(approval.member.memberCode.eq(memberCode)))
+//            .orderBy(approval.document.createdDate.desc())
+            .fetch();
+
+    List<Document> documents = approvals.stream()
+            .map(Approval::getDocument)
+            .collect(Collectors.toList());
+
+    return new PageImpl<>(documents, pageable, documents.size());
+  }
+
 
 }

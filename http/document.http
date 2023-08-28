@@ -1,3 +1,8 @@
+### main
+GET http://localhost:8989/document/main
+Accept: */*
+
+
 ### 결재문서 상세 조회
 GET http://localhost:8989/document/56
 
@@ -44,7 +49,6 @@ Content-Type: application/json
       "id": 43,
       "order": 1
     }
-
   ]
 }
 

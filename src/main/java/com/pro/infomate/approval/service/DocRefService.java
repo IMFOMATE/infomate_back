@@ -30,7 +30,7 @@ public class DocRefService {
   }
 
   // 참조문서 5개 조회
-  public List<DocumentListResponse> refDocList(int memberCode){
+  public List<DocumentListResponse> refDocTop5List(int memberCode){
     Member member = memberRepository.findById(memberCode).orElseThrow();
 
     List<DocRef> refs = docRefRepository.findTop5ByMemberOrderByDocumentDesc(member);
@@ -42,5 +42,7 @@ public class DocRefService {
   }
 
   // 페이징 참조문서 조회
+
+
 
 }

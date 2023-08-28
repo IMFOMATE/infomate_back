@@ -19,7 +19,7 @@ public class DocRefController {
 
   private final DocRefService docRefService;
 
-  //참조 문서 조회
+  //참조 문서 5개
   @GetMapping
   public ResponseEntity<ResponseDTO> findRefList(){
 
@@ -30,7 +30,7 @@ public class DocRefController {
             .body(ResponseDTO.builder()
                     .status(HttpStatus.OK)
                     .message("success")
-                    .data(docRefService.refDocList(memberCode))
+                    .data(docRefService.refDocTop5List(memberCode))
                     .build());
   }
 }

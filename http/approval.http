@@ -1,3 +1,15 @@
 ### 결재 대기문서 조회
 GET http://localhost:8989/approval
 
+### 승인 상태 변경
+PATCH http://localhost:8989/approval/approve
+Accept: */*
+Content-Type: application/json
+
+{
+  "documentCode": 47,
+  "memberCode": 2,
+  "comment": "확인했습니다"
+}
+
+

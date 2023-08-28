@@ -18,6 +18,8 @@ public interface ApprovalRepository extends JpaRepository<Approval, Long>, Appro
   Approval findTopByDocumentAndApprovalDateIsNullOrderByOrderAsc(Document document);
 
 
+
+
 //  Approval findByApproval(long id);
 
 
