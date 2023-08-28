@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -47,9 +46,14 @@ public class FavoriteCalendarService {
                     calendarDTO.setMember(null);
                     calendarDTO.setFavoriteCalendar(null);
                     calendarDTO.setScheduleList(null);
+                    favoriteCalendarDTO.setCalendar(calendarDTO);
 
-                    favoriteCalendarDTO.setCalendar(null);
-                    favoriteCalendarDTO.setMember(null);
+                    MemberDTO memberDTO = new MemberDTO();
+                    memberDTO.setMemberName(favoriteCalendarDTO.getMember().getMemberName());
+                    memberDTO.setMemberNo(favoriteCalendarDTO.getMember().getMemberNo());
+                    favoriteCalendarDTO.setMember(memberDTO);
+
+
                     return favoriteCalendarDTO;
                 })
                 .collect(Collectors.toList());
@@ -80,13 +84,15 @@ public class FavoriteCalendarService {
     }
 
     @Transactional
-    public void updateApprovalStatusById(FavoriteCalendarDTO favoriteCalendarDTO) {
-        Optional<FavoriteCalendar> favoriteCalendar = favotriteCalendarRepository.findById(favoriteCalendarDTO.getId());
+    public void updateApprovalStatusById(List<FavoriteCalendarDTO> favoriteList) {
 
-        if(favoriteCalendar.isEmpty()) throw new NotFindDataException("캘린더를 찾을 수 없습니다.");
+        favoriteList.stream().forEach(favorite -> {
+            Optional<FavoriteCalendar> favoriteCalendar = favotriteCalendarRepository.findById(favorite.getId());
 
-        favoriteCalendar.get().setApprovalStatus(favoriteCalendarDTO.getApprovalStatus());
+            if(favoriteCalendar.isEmpty()) throw new NotFindDataException("캘린더를 찾을 수 없습니다.");
 
+            favoriteCalendar.get().setApprovalStatus(favorite.getApprovalStatus());
+        });
     }
 
     @Transactional

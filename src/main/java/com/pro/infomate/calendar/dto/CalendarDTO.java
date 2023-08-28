@@ -2,10 +2,8 @@ package com.pro.infomate.calendar.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.pro.infomate.calendar.entity.Schedule;
 import com.pro.infomate.member.dto.MemberDTO;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.List;

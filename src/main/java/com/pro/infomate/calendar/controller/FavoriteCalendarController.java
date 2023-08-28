@@ -19,8 +19,8 @@ public class FavoriteCalendarController {
 
     private final FavoriteCalendarService favoriteCalendarService;
 
-    // test success
-    @GetMapping("/followerList/{memberCode}")
+
+    @GetMapping("/followerList/{memberCode}") // api 연동 확인
     public ResponseEntity<ResponseDTO> findAllByFollwerList(@PathVariable Integer memberCode){
 
         return ResponseEntity.ok()
@@ -31,18 +31,20 @@ public class FavoriteCalendarController {
                         .build());
     }
 
-    // test success
-    @PatchMapping("/follower")
-    public ResponseEntity<ResponseDTO> updateApprovalStatus(@RequestBody FavoriteCalendarDTO favoriteCalendarDTO){
-        favoriteCalendarService.updateApprovalStatusById(favoriteCalendarDTO);
+
+    @PatchMapping("/follower") // api 연동 확인
+    public ResponseEntity<ResponseDTO> updateApprovalStatus(@RequestBody List<FavoriteCalendarDTO> favoriteList){
+        log.info("[FavoriteCalendarController](updateApprovalStatus) favoriteIdList : {}", favoriteList);
+
+        favoriteCalendarService.updateApprovalStatusById(favoriteList);
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
-                        .message("success")
+                        .message("정상적으로 수정되었습니다.")
                         .build());
     }
 
-    // test success
+
     @GetMapping("/follow/{memberCode}") // api 연동 확인
     public ResponseEntity<ResponseDTO> findAllByMemberCode(@PathVariable Integer memberCode){
         log.info("[FavoriteCalendarController](findAllByMemberCode) memberCode : {}", memberCode);
@@ -54,7 +56,7 @@ public class FavoriteCalendarController {
                         .build());
     }
 
-    // test success
+
     @PostMapping("/follwer/regist") // api 연동 확인
     public ResponseEntity<ResponseDTO> saveFollowCalendar(@RequestBody List<FavoriteCalendarDTO> favoriteCalendarDTO){
         log.info("[FavoriteCalendarController](saveFollowCalendar) favoriteCalendarDTO : {}", favoriteCalendarDTO);
@@ -62,13 +64,13 @@ public class FavoriteCalendarController {
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
-                        .message("success")
+                        .message("성공적으로 등록되었습니다.")
                         .build());
     }
 
 
-    // test success
-    @DeleteMapping("/DeleteFollowCalendar")
+
+    @DeleteMapping("/DeleteFollowCalendar") // api 연동 확인
     public ResponseEntity<ResponseDTO> deleteFollowCalendar(@RequestBody List<Integer> favoriteId){
         log.info("[FavoriteCalendarController](saveFollowCalendar) deleteFollowCalendar : {}", favoriteId);
 
@@ -77,7 +79,7 @@ public class FavoriteCalendarController {
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
-                        .message("success")
+                        .message("정상적으로 삭제 되었습니다.")
                         .build());
     }
 

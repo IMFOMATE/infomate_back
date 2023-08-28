@@ -1,16 +1,10 @@
 package com.pro.infomate.calendar.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.pro.infomate.calendar.dto.CalendarDTO;
-import com.pro.infomate.calendar.dto.ParticipantDTO;
+
 import com.pro.infomate.calendar.dto.ScheduleDTO;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.boot.context.properties.bind.DefaultValue;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;

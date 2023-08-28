@@ -28,8 +28,6 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-
         //  개발용 cors 허용
         http.cors().configurationSource(request -> {
             CorsConfiguration config =  new CorsConfiguration();

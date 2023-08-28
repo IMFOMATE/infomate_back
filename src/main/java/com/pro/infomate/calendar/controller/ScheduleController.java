@@ -22,22 +22,23 @@ public class ScheduleController {
 
 //    private final ServerApiService serverApiService;
 
-    // test success
-    // 조건 추가 예정
-    @GetMapping("/all/{memberCode}") // 월,주,일 단위 출력(?)예정 , 회사, 부서 일정 추가 예정
-    public ResponseEntity<ResponseDTO>findAllSchedule(@PathVariable Integer memberCode){
-        log.info("[ScheduleController](findAllSchedule) memberCode : {} ", memberCode);
 
-        List<ScheduleDTO> scheduleList = scheduleService.findAllScheduleByCalendarByMemberCode(memberCode);
-        log.info("[ScheduleController](findAllSchedule) scheduleList : {} ", scheduleList);
 
-        return ResponseEntity.ok()
-                .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK)
-                        .message("success")
-                        .data(scheduleList)
-                        .build());
-    }
+// 안씀
+//    @GetMapping("/all/{memberCode}") // 월,주,일 단위 출력(?)예정 , 회사, 부서 일정 추가 예정
+//    public ResponseEntity<ResponseDTO>findAllSchedule(@PathVariable Integer memberCode){
+//        log.info("[ScheduleController](findAllSchedule) memberCode : {} ", memberCode);
+//
+//        List<ScheduleDTO> scheduleList = scheduleService.findAllScheduleByCalendarByMemberCode(memberCode);
+//        log.info("[ScheduleController](findAllSchedule) scheduleList : {} ", scheduleList);
+//
+//        return ResponseEntity.ok()
+//                .body(ResponseDTO.builder()
+//                        .status(HttpStatus.OK)
+//                        .message("success")
+//                        .data(scheduleList)
+//                        .build());
+//    }
 
     @GetMapping("/{scheduleId}") // api 연동 확인
     public ResponseEntity<ResponseDTO> findById(@PathVariable Integer scheduleId){
@@ -62,19 +63,19 @@ public class ScheduleController {
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
-                        .message("update_success")
+                        .message("정상적으로 수정되었습니다.")
                         .build());
     }
 
-    // test success
-    @DeleteMapping("/delete")
+
+    @DeleteMapping("/delete") // api 연동 확인
     public ResponseEntity<ResponseDTO> deleteById(@RequestBody List<Integer> scheduleId){
         log.info("[ScheduleController](deleteById) scheduleId : {} ", scheduleId);
         scheduleService.deleteById(scheduleId);
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
-                        .message("delete_success")
+                        .message("정상적으로 삭제 되었습니다.")
                         .build());
     }
 
@@ -92,8 +93,8 @@ public class ScheduleController {
                         .build());
     }
 
-    // test success
-    @PostMapping("/regist")
+
+    @PostMapping("/regist") // api 연동 확인
     public ResponseEntity<ResponseDTO> insertSchedule(@RequestBody ScheduleDTO scheduleDTO){
         log.info("[ScheduleController](insertSchedule) scheduleDTO : {} ", scheduleDTO);
 
@@ -102,7 +103,7 @@ public class ScheduleController {
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
-                        .message("success")
+                        .message("정상적으로 수정 되었습니다.")
                         .data(scheduleService.insertSchedule(scheduleDTO))
                         .build());
     }

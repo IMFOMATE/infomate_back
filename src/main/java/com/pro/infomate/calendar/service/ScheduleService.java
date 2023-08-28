@@ -3,7 +3,6 @@ package com.pro.infomate.calendar.service;
 import com.pro.infomate.calendar.dto.CalendarDTO;
 import com.pro.infomate.calendar.dto.ScheduleDTO;
 import com.pro.infomate.calendar.entity.Schedule;
-import com.pro.infomate.calendar.repository.CalendarRepository;
 import com.pro.infomate.calendar.repository.ScheduleRepository;
 import com.pro.infomate.exception.NotFindDataException;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,22 +26,23 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final ModelMapper modelMapper;
 
-    public List<ScheduleDTO> findAllScheduleByCalendarByMemberCode(Integer memberCode) {
-
-        List<Schedule> scheduleList = scheduleRepository.findAllScheduleByCalendarByMemberCode(memberCode);
-
-        log.info("[ScheduleService](updateById) scheduleList : {}", scheduleList);
-
-        if(scheduleList.isEmpty() || scheduleList.size() == 0) throw new NotFindDataException("데이터를 찾을 수 없습니다.");
-
-        return scheduleList.stream()
-                .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
-                .map(scheduleDTO -> {
-                    scheduleDTO.setCalendar(null);
-                    return scheduleDTO;
-                })
-                .collect(Collectors.toList());
-    }
+//    안씀
+//    public List<ScheduleDTO> findAllScheduleByCalendarByMemberCode(Integer memberCode) {
+//
+//        List<Schedule> scheduleList = scheduleRepository.findAllScheduleByCalendarByMemberCode(memberCode);
+//
+//        log.info("[ScheduleService](updateById) scheduleList : {}", scheduleList);
+//
+//        if(scheduleList.isEmpty() || scheduleList.size() == 0) throw new NotFindDataException("데이터를 찾을 수 없습니다.");
+//
+//        return scheduleList.stream()
+//                .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
+//                .map(scheduleDTO -> {
+//                    scheduleDTO.setCalendar(null);
+//                    return scheduleDTO;
+//                })
+//                .collect(Collectors.toList());
+//    }
 
     public ScheduleDTO findById(Integer scheduleId){
         Optional<Schedule> schedule = scheduleRepository.findById(scheduleId);

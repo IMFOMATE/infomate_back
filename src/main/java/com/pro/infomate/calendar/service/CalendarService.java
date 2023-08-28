@@ -2,23 +2,16 @@ package com.pro.infomate.calendar.service;
 
 import com.pro.infomate.calendar.dto.CalendarDTO;
 import com.pro.infomate.calendar.dto.CalendarSummaryDTO;
-import com.pro.infomate.calendar.dto.FavoriteCalendarDTO;
-import com.pro.infomate.calendar.dto.ScheduleDTO;
 import com.pro.infomate.calendar.entity.Calendar;
-import com.pro.infomate.calendar.entity.CalendarSummary;
-import com.pro.infomate.calendar.entity.Schedule;
 import com.pro.infomate.calendar.repository.CalendarRepository;
 import com.pro.infomate.calendar.repository.FavotriteCalendarRepository;
 import com.pro.infomate.calendar.repository.ScheduleRepository;
 import com.pro.infomate.exception.NotFindDataException;
 import com.pro.infomate.member.dto.MemberDTO;
-import com.pro.infomate.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,10 +31,10 @@ public class CalendarService {
     private final ModelMapper modelMapper;
 
 
-    public List<CalendarDTO> findAll(int memberId) {
-        log.info("[CalendarService](findAll) memberId : {} ",memberId);
+    public List<CalendarDTO> findAll(int memberCode, int departmentCode) {
+        log.info("[CalendarService](findAll) memberId : {} ",memberCode);
 
-        List<Calendar> calendarList = calendarRepository.findByMemberCode(memberId);
+        List<Calendar> calendarList = calendarRepository.findByMemberCode(memberCode, departmentCode);
         log.info("[CalendarService](findAll) calendarList : {} ",calendarList);
 
         List<CalendarDTO> calendarDTOList = calendarList.stream()
@@ -69,27 +62,28 @@ public class CalendarService {
         return calendarDTOList;
     }
 
-    public CalendarDTO findById(Integer calendarId) {
-        log.info("[CalendarService](findById) calendarId : {} ",calendarId);
-
-        Optional<Calendar> calendar = calendarRepository.findById(calendarId);
-        log.info("[CalendarService](findById) calendar : {} ",calendar);
-
-        if (calendar.isEmpty()) throw new NotFindDataException("데이터를 찾을 수 없습니다.");
-
-        List<Schedule> scheduleList = calendar.get().getSchedule();
-        log.info("[CalendarService](findById) scheduleList : {} ",scheduleList);
-
-        CalendarDTO calendarDTO = modelMapper.map(calendar, CalendarDTO.class);
-        log.info("[CalendarService](findById) calendarDTO : {} ",calendarDTO);
-
-        calendarDTO.setScheduleList(scheduleList.stream()
-                .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class)).collect(Collectors.toList()));
-
-        log.info("[CalendarService](findById) calendarDTOReMapping : {} ",calendarDTO);
-
-        return calendarDTO;
-    }
+// 안씀
+//    public CalendarDTO findById(Integer calendarId) {
+//        log.info("[CalendarService](findById) calendarId : {} ",calendarId);
+//
+//        Optional<Calendar> calendar = calendarRepository.findById(calendarId);
+//        log.info("[CalendarService](findById) calendar : {} ",calendar);
+//
+//        if (calendar.isEmpty()) throw new NotFindDataException("데이터를 찾을 수 없습니다.");
+//
+//        List<Schedule> scheduleList = calendar.get().getSchedule();
+//        log.info("[CalendarService](findById) scheduleList : {} ",scheduleList);
+//
+//        CalendarDTO calendarDTO = modelMapper.map(calendar, CalendarDTO.class);
+//        log.info("[CalendarService](findById) calendarDTO : {} ",calendarDTO);
+//
+//        calendarDTO.setScheduleList(scheduleList.stream()
+//                .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class)).collect(Collectors.toList()));
+//
+//        log.info("[CalendarService](findById) calendarDTOReMapping : {} ",calendarDTO);
+//
+//        return calendarDTO;
+//    }
 
     @Transactional
     public void saveByCalendar(CalendarDTO calendar) {
@@ -134,11 +128,10 @@ public class CalendarService {
 
         Optional<Calendar> prevDefaultCalendar = calendarRepository.findByMemberCodeAndDefaultCalendar(calendarDTO.getMemberCode(), true);
 
-
-//        if(prevDefaultCalendar.isEmpty()) throw new NotFindDataException("기본 캘린더를 찾을 수 없습니다.");
         if(prevDefaultCalendar.isPresent()) {
             log.info("[CalendarService](updateDefaultCalender) prevDefaultCalendar : {}", prevDefaultCalendar.get());
             prevDefaultCalendar.get().setDefaultCalendar(false);
+
         }else {
             Optional<Calendar> afterDefaultCalendar = calendarRepository.findById(calendarDTO.getId());
 
@@ -161,10 +154,15 @@ public class CalendarService {
         calendarList.forEach(item ->{
             log.info("[CalendarService](deleteById) item : {}", item);
             scheduleRepository.deleteAllByRefCalendar(item);
+            favotriteCalendarRepository.deleteByRefCalendar(item);
             calendarRepository.deleteById(item);
         });
 
+        // indexNo 재정렬 로직 추가
+        // 삭제할 indexNo 기준 이후의 값들만 조회해서 수정
+
         Optional<Calendar> defaultCalendar = calendarRepository.findByMemberCodeAndDefaultCalendar(memberCode, true);
+
         if(defaultCalendar.isEmpty()){
             Optional<Calendar> findFirstCalendar = calendarRepository.findFirstByMemberCode(memberCode, Sort.by("indexNo").ascending());
             findFirstCalendar.get().setDefaultCalendar(true);
@@ -182,18 +180,8 @@ public class CalendarService {
 
         return calendarList.stream()
                 .map(calendar -> {
-//                    List<ScheduleDTO> scheduleDTOList =
-//                            calendar.getSchedule().stream()
-//                            .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
-//                             .collect(Collectors.toList());
-
-//                    log.info("[CalendarService](openCalendarList) scheduleDTOList : {}",scheduleDTOList);
-
                    CalendarDTO calendarDTO = modelMapper.map(calendar, CalendarDTO.class);
-
                    calendarDTO.setScheduleList(null);
-
-
                    calendarDTO.setFavoriteCalendar(
                            calendarDTO.getFavoriteCalendar().stream()
                                    .map(favoriteCalendarDTO -> {
@@ -230,10 +218,11 @@ public class CalendarService {
         return scheduleList;
     }
 
-    public List<CalendarDTO> myCalendarList(int memberCode) {
+    public List<CalendarDTO> myCalendarList(int memberCode,int departmentCode) {
 
         List<Calendar> calendarList =
-                calendarRepository.findAllByMemberCodeAndDepartmentCode(memberCode, null, Sort.by(Sort.Direction.ASC, "indexNo"));
+//                calendarRepository.findByMemberCode(memberCode, null, Sort.by(Sort.Direction.ASC, "indexNo"));
+                calendarRepository.findByMemberCode(memberCode, departmentCode);
 
         return calendarList.stream()
                 .map(calendar -> modelMapper.map(calendar, CalendarDTO.class))

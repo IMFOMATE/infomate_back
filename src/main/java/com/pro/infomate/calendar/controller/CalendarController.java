@@ -7,9 +7,7 @@ import com.pro.infomate.calendar.service.CalendarService;
 import com.pro.infomate.common.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,46 +23,45 @@ public class CalendarController {
 
     private final CalendarService calendarService;
 
-    // test success 팀, 회사전체 캘린더 추가 예정
-
-    @GetMapping(value = "/list/{memberId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseDTO> findAll(@PathVariable int memberId){
-        log.info("[CalendarController](findAll) memberId : {}",memberId);
+    @GetMapping(value = "/list/{memberCode}") // api 연동 확인
+    public ResponseEntity<ResponseDTO> findAll(@PathVariable int memberCode){
+        log.info("[CalendarController](findAll) memberCode : {}",memberCode);
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
                         .message("success")
-                        .data(calendarService.findAll(memberId))
+                        .data(calendarService.findAll(memberCode, 2))
                         .build());
     }
 
-    // test success
-    @GetMapping("/mylist/{memberCode}")
+
+    @GetMapping("/mylist/{memberCode}") // api 연동 확인
     public ResponseEntity<ResponseDTO> myCalendarList(@PathVariable int memberCode){
+
         log.info("[CalendarController](myCalendarList) memberCode : {}",memberCode);
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
                         .message("success")
-                        .data(calendarService.myCalendarList(memberCode))
+                        .data(calendarService.myCalendarList(memberCode, 2))
                         .build());
     }
 
 
-    // test success
-    @GetMapping("/{calendarId}")
-    public ResponseEntity<ResponseDTO> findById(@PathVariable Integer calendarId){
-        log.info("[CalendarController](findById) calendarId : {}",calendarId);
-
-        return ResponseEntity.ok()
-                .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK)
-                        .message("success")
-                        .data(calendarService.findById(calendarId))
-                        .build());
-    }
+    // test success 안씀
+//    @GetMapping("/{calendarId}")
+//    public ResponseEntity<ResponseDTO> findById(@PathVariable Integer calendarId){
+//        log.info("[CalendarController](findById) calendarId : {}",calendarId);
+//
+//        return ResponseEntity.ok()
+//                .body(ResponseDTO.builder()
+//                        .status(HttpStatus.OK)
+//                        .message("success")
+//                        .data(calendarService.findById(calendarId))
+//                        .build());
+//    }
 
 
     @PostMapping("/regist") // api 연동 확인
@@ -80,7 +77,7 @@ public class CalendarController {
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
-                        .message("success")
+                        .message("정상적으로 등록되었습니다.")
                         .build());
     }
 
@@ -95,7 +92,7 @@ public class CalendarController {
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
-                        .message("success")
+                        .message("정상적으로 수정되었습니다.")
                         .build());
     }
 
@@ -106,7 +103,7 @@ public class CalendarController {
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
-                        .message("success")
+                        .message("기본 캘린더가 변경되었습니다.")
                         .build());
     }
 
@@ -119,13 +116,11 @@ public class CalendarController {
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
-                        .message("success")
+                        .message("캘린더가 정상적으로 삭제 되었습니다.")
                         .build());
     }
 
-
-    // test success
-    @GetMapping("/openCalendarList/{memberCode}")
+    @GetMapping("/openCalendarList/{memberCode}") // api 연동 화인
     public ResponseEntity<ResponseDTO> findOpenCalendarList(@PathVariable Integer memberCode){
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()

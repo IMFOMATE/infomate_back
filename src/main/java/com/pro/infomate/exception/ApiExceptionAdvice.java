@@ -16,7 +16,7 @@ public class ApiExceptionAdvice {
         log.info("[ApiExceptionAdvice](notFindDataException) error : {} ", e);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                .body(new Response(HttpStatus.NO_CONTENT,"fail", e.getMessage()));
+                .body(new Response(HttpStatus.NO_CONTENT,e.getMessage(), e.getMessage()));
     }
 
     @ExceptionHandler(NotEnoughDateException.class)
@@ -25,7 +25,7 @@ public class ApiExceptionAdvice {
         log.info("[ApiExceptionAdvice](notEnoughDataException) erroer : {} ", e);
 
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-                .body(new Response(HttpStatus.NOT_ACCEPTABLE,"fail", e.getMessage()));
+                .body(new Response(HttpStatus.NOT_ACCEPTABLE,e.getMessage(), e.getMessage()));
     }
 
     @ExceptionHandler(NotAuthenticationServer.class)
@@ -34,7 +34,7 @@ public class ApiExceptionAdvice {
         log.info("[ApiExceptionAdvice](notAuthenticationServer) error : {} ", e);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                .body(new Response(HttpStatus.NO_CONTENT,"fail",e.getMessage()));
+                .body(new Response(HttpStatus.NO_CONTENT,e.getMessage(),e.getMessage()));
     }
 
     @ExceptionHandler(AlreadyRequstException.class)
@@ -43,7 +43,7 @@ public class ApiExceptionAdvice {
         log.info("[ApiExceptionAdvice](AlreadyRequestException) error : {} ", e);
 
         return ResponseEntity.status(HttpStatus.ALREADY_REPORTED)
-                .body(new Response(HttpStatus.ALREADY_REPORTED, "fail", e.getMessage()));
+                .body(new Response(HttpStatus.ALREADY_REPORTED, e.getMessage(),e.getMessage()));
     }
 
 }

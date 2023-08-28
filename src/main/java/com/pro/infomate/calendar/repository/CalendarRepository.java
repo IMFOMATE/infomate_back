@@ -18,18 +18,27 @@ public interface CalendarRepository extends JpaRepository<Calendar, Integer> {
 
     List<Calendar> findByDepartmentCodeAndOpenStatusAndMemberCodeNot(Integer departmentCode, boolean openStatus, Integer memberCode);
 
-    @Query(value = "SELECT s FROM Calendar s " +
-                     "JOIN Member m on m.memberCode = s.memberCode " +
-                    "LEFT JOIN FavoriteCalendar f on f.memberCode = :memberCode " +
-                    "WHERE NOT s.memberCode = :memberCode " +
-                    "AND s.openStatus = true " +
-                    "AND s.departmentCode IS NULL"
-    )
-    List<Calendar> findByPublicCalendarList(Integer memberCode);
+//    @Query(value = "SELECT s FROM Calendar s " +
+//                     "JOIN Member m on m.memberCode = s.memberCode " +
+//                    "LEFT JOIN FavoriteCalendar f on f.memberCode = :memberCode " +
+//                    "WHERE NOT s.memberCode = :memberCode " +
+//                    "AND s.openStatus = true " +
+//                    "AND s.departmentCode IS NULL"
+//    )
+//    List<Calendar> findByPublicCalendarList(Integer memberCode);
 
-    List<Calendar> findByMemberCode(int memberCode);
 
-    List<Calendar> findAllByMemberCodeAndDepartmentCode(int memberCode, Integer departmentCode, Sort indexNo);
+    @Query(value = "SELECT c FROM Calendar c " +
+                    "WHERE c.memberCode = :memberCode " +
+                       "OR c.id IN (SELECT f.refCalendar FROM FavoriteCalendar f " +
+                                    "WHERE f.memberCode = :memberCode " +
+                                      "AND f.approvalStatus = 'APPROVAL') " +
+                       "OR c.departmentCode = 0 "  +
+                       "OR c.departmentCode = :departmentCode " +
+                    "ORDER BY c.indexNo ASC ")
+    List<Calendar> findByMemberCode(int memberCode, int departmentCode);
+
+//    List<Calendar> findAllByMemberCodeAndDepartmentCode(int memberCode, Integer departmentCode, Sort indexNo);
 
     @Query(value = "SELECT COUNT(s.id) AS amount, " +
                           "TRUNC(s.endDate) AS day " +
