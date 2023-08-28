@@ -137,6 +137,8 @@ public class DocumentController {
   @GetMapping("/approval/{memberCode}")
   public ResponseEntity<ResponseDTO> approvalAllList(@PathVariable int memberCode, Pageable pageable){
 
+    log.info("[DocumentController] approvalAllList={}", memberCode);
+
     Page<Document> documents = documentService.approvalList(memberCode, pageable);
 
     Criteria criteria = new Criteria(pageable.getPageNumber()+1, pageable.getPageSize());
