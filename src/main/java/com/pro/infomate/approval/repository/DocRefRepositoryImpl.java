@@ -3,6 +3,7 @@ package com.pro.infomate.approval.repository;
 import com.pro.infomate.approval.dto.response.DocumentListResponse;
 import com.pro.infomate.approval.dto.response.QDocumentListResponse;
 
+import com.pro.infomate.member.entity.QMember;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import static com.pro.infomate.approval.entity.QDocument.*;
 import static com.pro.infomate.approval.entity.QDraft.*;
 import static com.pro.infomate.approval.entity.QPayment.*;
 import static com.pro.infomate.approval.entity.QVacation.*;
+import static com.pro.infomate.member.entity.QMember.*;
 
 @RequiredArgsConstructor
 public class DocRefRepositoryImpl implements DocRefRepositoryCustom {
@@ -33,10 +35,12 @@ public class DocRefRepositoryImpl implements DocRefRepositoryCustom {
                             document.documentStatus.as("documentStatus"),
                             document.emergency.as("emergency"),
                             document.createdDate.as("createdDate"),
-                            document.documentKind.as("documentKind")
+                            document.documentKind.as("documentKind"),
+                            document.member.memberName.as("auth")
                     ))
             .from(docRef)
             .leftJoin(document).on(docRef.document.id.eq(document.id))
+            .join(member).on(document.member.memberCode.eq(member.memberCode))
             .leftJoin(draft).on(document.id.eq(draft.id))
             .leftJoin(payment).on(document.id.eq(payment.id))
             .leftJoin(vacation).on(document.id.eq(vacation.id))

@@ -32,7 +32,7 @@ public class SecurityConfig {
         http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
 
         // 개발용 csrf 허용
-        http.csrf();
+        http.csrf().disable();
 
 //        http.sessionManagement()
 //            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

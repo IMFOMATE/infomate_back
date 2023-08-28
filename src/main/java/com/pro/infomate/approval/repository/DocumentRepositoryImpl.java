@@ -3,6 +3,7 @@ package com.pro.infomate.approval.repository;
 import com.pro.infomate.approval.dto.response.DocumentListResponse;
 import com.pro.infomate.approval.dto.response.QDocumentListResponse;
 import com.pro.infomate.approval.entity.*;
+import com.pro.infomate.department.entity.QDepartment;
 import com.querydsl.core.types.SubQueryExpression;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 
 import static com.pro.infomate.approval.entity.QApproval.*;
 import static com.pro.infomate.approval.entity.QDocument.*;
-import static com.pro.infomate.member.entity.QDepartment.*;
+import static com.pro.infomate.department.entity.QDepartment.department;
 import static com.pro.infomate.member.entity.QMember.*;
 
 @RequiredArgsConstructor
@@ -30,7 +31,7 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
   @Override
   public Page<DocumentListResponse> findByDeptDoc(int memberCode, Pageable pageable) {
 
-    SubQueryExpression<Long> subQueryDeptCodes = JPAExpressions
+    SubQueryExpression<Integer> subQueryDeptCodes = JPAExpressions
             .select(department.deptCode)
             .from(member)
             .join(member.department, department)
@@ -43,7 +44,8 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
                             document.documentStatus.as("documentStatus"),
                             document.emergency.as("emergency"),
                             document.createdDate.as("createdDate"),
-                            document.documentKind.as("documentKind")
+                            document.documentKind.as("documentKind"),
+                            document.member.memberName.as("auth")
                     ))
             .from(document)
             .join(document.member, member)
@@ -63,7 +65,7 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
                     document.documentStatus.eq(DocumentStatus.APPROVAL)
                     .and(department.deptCode.in(subQueryDeptCodes)))
                     .fetchOne();
-    
+
     return new PageImpl<>(content,pageable, count);
   }
 

@@ -31,7 +31,7 @@ Content-Type: application/json
 }
 
 ### 일정 수정
-PATCH http://localhost:8091/schedule/update
+PATCH http://localhost:8989/schedule/update
 Accept: */*
 Content-Type: application/json
 
