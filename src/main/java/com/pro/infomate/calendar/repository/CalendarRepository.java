@@ -16,7 +16,16 @@ public interface CalendarRepository extends JpaRepository<Calendar, Integer> {
 
     Optional<Calendar> findFirstByMemberCode(int memberCode, Sort sort);
 
-    List<Calendar> findByDepartmentCodeAndOpenStatus(Integer departmentCode, boolean openStatus);
+    List<Calendar> findByDepartmentCodeAndOpenStatusAndMemberCodeNot(Integer departmentCode, boolean openStatus, Integer memberCode);
+
+    @Query(value = "SELECT s FROM Calendar s " +
+                     "JOIN Member m on m.memberCode = s.memberCode " +
+                    "LEFT JOIN FavoriteCalendar f on f.memberCode = :memberCode " +
+                    "WHERE NOT s.memberCode = :memberCode " +
+                    "AND s.openStatus = true " +
+                    "AND s.departmentCode IS NULL"
+    )
+    List<Calendar> findByPublicCalendarList(Integer memberCode);
 
     List<Calendar> findByMemberCode(int memberCode);
 

@@ -56,10 +56,10 @@ public class Calendar {
     @Column(name = "CREATE_DATE")
     private LocalDateTime createDate;
 
-    @OneToMany(mappedBy = "calendar", fetch = FetchType.LAZY, targetEntity = FavoriteCalendar.class)
+    @OneToMany(mappedBy = "calendar")
     private List<FavoriteCalendar> favoriteCalendar;
 
-    @OneToMany(mappedBy = "calendar", fetch = FetchType.LAZY,targetEntity = Schedule.class)
+    @OneToMany(mappedBy = "calendar")
     private List<Schedule> schedule;
 
     @ManyToOne

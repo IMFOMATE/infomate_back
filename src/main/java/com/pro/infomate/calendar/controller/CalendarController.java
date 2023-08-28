@@ -28,7 +28,6 @@ public class CalendarController {
     // test success 팀, 회사전체 캘린더 추가 예정
 
     @GetMapping(value = "/list/{memberId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     public ResponseEntity<ResponseDTO> findAll(@PathVariable int memberId){
         log.info("[CalendarController](findAll) memberId : {}",memberId);
 
@@ -126,13 +125,13 @@ public class CalendarController {
 
 
     // test success
-    @GetMapping("/openCalendarList")
-    public ResponseEntity<ResponseDTO> findOpenCalendarList(){
+    @GetMapping("/openCalendarList/{memberCode}")
+    public ResponseEntity<ResponseDTO> findOpenCalendarList(@PathVariable Integer memberCode){
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
                         .message("success")
-                        .data(calendarService.openCalendarList())
+                        .data(calendarService.openCalendarList(memberCode))
                         .build());
     }
 

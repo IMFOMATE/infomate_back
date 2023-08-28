@@ -11,14 +11,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class FavoriteCalendarDTO {
 
     private int id;
 
     private int memberCode;
 
-    private MemberDTO refMember;
+    private MemberDTO member;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime requestDate;
@@ -31,4 +30,15 @@ public class FavoriteCalendarDTO {
 
     private CalendarDTO calendar;
 
+    @Override
+    public String toString() {
+        return "FavoriteCalendarDTO{" +
+                "id=" + id +
+                ", memberCode=" + memberCode +
+                ", requestDate=" + requestDate +
+                ", approvalStatus=" + approvalStatus +
+                ", labelColor='" + labelColor + '\'' +
+                ", refCalendar=" + refCalendar +
+                '}';
+    }
 }
