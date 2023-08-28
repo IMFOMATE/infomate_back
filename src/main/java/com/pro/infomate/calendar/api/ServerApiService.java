@@ -7,13 +7,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-@Component
+import java.util.List;
+import java.util.Map;
+
+@RestController
 @Slf4j
 public class ServerApiService {
 
@@ -27,7 +27,7 @@ public class ServerApiService {
     private String SECOND_SERVER_PROTOCOL;
 
 //    @Value("${second.server.api-token}")
-    private String SECOND_SERVER_API_TOKEN;
+    private List<String> SECOND_SERVER_API_TOKEN;
 
     private final RestTemplate restTemplate;
 
@@ -56,38 +56,18 @@ public class ServerApiService {
         );
     }
 
-    @GetMapping("/server/userinfo")
-    @ResponseBody
-    public TokenDTO getUserInfo(@RequestBody TokenDTO tokenDTO){
-        if(!tokenDTO.getJwt().equals(SECOND_SERVER_API_TOKEN)) throw new NotAuthenticationServer("허용되지 않는 서버 입니다.");
+    @PostMapping("/server/userinfo")
+    public TokenDTO getUserInfo(@RequestBody TokenDTO tokenDTO, @RequestHeader Map<String, String>  header){
+        log.info("[ServerApiService](getUserInfo) : header {}", header);
+        log.info("[ServerApiService](getUserInfo) : tokenDTO {}", tokenDTO);
+        log.info("[ServerApiService](getUserInfo) : SECOND_SERVER_API_TOKEN {}", SECOND_SERVER_API_TOKEN);
+
+        if(!SECOND_SERVER_API_TOKEN.contains(header.get("www-authenticate"))) throw new NotAuthenticationServer("허용되지 않는 서버 입니다.");
+
+        // memberservice 호출 후 계정 찾아 받환
+
         return TokenDTO.builder().build();
     }
 
-
-//        WebClient webClient = WebClient.builder()
-//                .baseUrl()
-//                .build();
-//
-//        webClient.post()
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .bodyValue().retrieve().bodyToMono(CalendarAlertDTO.class).block();
-
-
-
-//    }
-
-//    public void testApproval(ApprovalDTO approvalDTO){
-//        String uri = SECOND_SERVER_PROTOCOL + "://" + SECOND_SERVER_HOST + ":" + SECOND_SERVER_POST + "/approval/insert";
-//        log.info("[TestService](testApproval) uri : {}",uri);
-//
-//        restTemplate.exchange(
-//                uri,
-//                HttpMethod.POST,
-//                ResponseEntity.ok().body(approvalDTO),
-//                ApprovalDTO.class
-//                String.class
-//        );
-//
-//    }
 
 }

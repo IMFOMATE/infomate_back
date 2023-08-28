@@ -1,27 +1,35 @@
 package com.pro.infomate.approval.repository;
 
 import com.pro.infomate.approval.entity.Document;
+import com.pro.infomate.member.entity.Member;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.print.Doc;
 import java.util.List;
+import java.util.Optional;
 
-public interface DocumentRepository<T extends Document> extends JpaRepository<T, Long> {
+public interface DocumentRepository<T extends Document> extends JpaRepository<T, Long>, DocumentRepositoryCustom {
 
-  //1. 결제할 문서(3), 작성한문서(5), 참조문서(5) 개씩 보여주기(최신순으로만)
+  // 1. 내 기안문서 top 5
+  List<Document> findTop5ByMemberOrderByCreatedDateDesc(Member member);
 
-  //2. 작성한 문서 orderBy -> 최신순, 오래된 순/ where -> 결재 상태별   
+  // 2. 내 기안문서 페이징
+  Page<Document> findByMember(Member member, Pageable pageable);
 
-  //3. 임시저장상태 orderBy -> 최신순, 오래된 순
 
-  //4. 문서 저장
-
-  //5. 문서 세부 내용 조회
-
+  @Override
+  @EntityGraph(attributePaths = {"member"})
+  Optional<T> findById(Long aLong);
 
 
   @Query("select d from Document d where d.documentKind in (:type)")
   List<Document> findByDocuments(@Param("type") String type);
+
+
 
 }

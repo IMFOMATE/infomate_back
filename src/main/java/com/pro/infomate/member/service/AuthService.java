@@ -68,10 +68,10 @@ public class AuthService {
         log.info("[AuthService] signup Start ==================================");
         log.info("[AuthService] memberDTO {} =======> ", memberDTO);
 
-        if (memberRepository.findByMemberEmail(memberDTO.getMemberEmail()) != null){
-            log.info("[AuthService] 이메일이 종복됩니다.");
-            throw new DuplicatedMemberEmailException("이메일이 중복됩니다.");
-        }
+//        if (memberRepository.findByMemberEmail(memberDTO.getMemberEmail()) != null){
+//            log.info("[AuthService] 이메일이 종복됩니다.");
+//            throw new DuplicatedMemberEmailException("이메일이 중복됩니다.");
+//        }
 
         Member registMember = modelMapper.map(memberDTO, Member.class);
 

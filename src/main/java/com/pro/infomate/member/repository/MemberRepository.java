@@ -1,19 +1,23 @@
 package com.pro.infomate.member.repository;
 
 import com.pro.infomate.member.entity.Member;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface MemberRepository extends JpaRepository<Member, Integer> {
 
-    Member findByMemberId(String memberId);  // 회원아이디로 조회
+  @EntityGraph(attributePaths = {"department", "rank"})
+  Member findByMemberId(String memberId);
 
-    Member findByMemberEmail(String memberEmail);
+  List<Member> findByMemberCodeIn(List<Integer> ids);
 
+  Member findByMemberCode(int memberCode);
     @Query("SELECT MAX(a.memberCode) FROM Member a")
     int maxMemberCode();
 
-    /* purchase 도메인 추가하면서 추가한 메소드 */
-    @Query("SELECT a.memberCode FROM Member a WHERE a.memberId = ?1")
-    int findMemberCodeByMemberId(String orderMemberId);
+//  boolean findByMemberEmail(String memberEmail);
 }

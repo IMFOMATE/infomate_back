@@ -5,7 +5,6 @@ import com.pro.infomate.jwt.JwtAuthenticationEntryPoint;
 import com.pro.infomate.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -51,28 +50,24 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        // 개발용 퍼미션
-        http.csrf().disable()
-                .exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .accessDeniedHandler(jwtAccessDeniedHandler)
-                .and()
-                    .authorizeRequests()
-                    .antMatchers("/").authenticated()
-                    .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-                .and()
-                        .sessionManagement()
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                        .cors()
-                .and()
-                        .apply(new JwtSecurityConfig(tokenProvider));
 
-        // 개발 cors 설정
-        http.cors().disable();
+        //  개발용 cors 허용
+        http.cors().configurationSource(request -> {
+            CorsConfiguration config =  new CorsConfiguration();
+            config.addAllowedOrigin("*");
+            config.setAllowedMethods(Arrays.asList("GET","POST","PUT","PATCH","DELETE","OPTIONS"));
+            config.addAllowedHeader("*");
+            return config;
+        });
+//        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
+//        http.cors().configurationSource(corsConfigurationSource());
 
-//        http.sessionManagement()
-//            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        // 개발용 csrf 허용
+        http.csrf().disable().authorizeHttpRequests().antMatchers("*").permitAll();
+
+
+        http.sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         return http.build();
     }

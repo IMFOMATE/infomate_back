@@ -26,6 +26,8 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
     List<Schedule> findAllByEndDateBetweenThree(int memberCode, LocalDateTime startDate, LocalDateTime endDate);
 
 
+    void deleteAllByRefCalendar(int calendarId);
+
 // 부서 코드 조인으로 인한 member 엔티티 후 수정 예정
 //    @Query(value = "SELECT s "+
 //                     "FROM Schedule s " +

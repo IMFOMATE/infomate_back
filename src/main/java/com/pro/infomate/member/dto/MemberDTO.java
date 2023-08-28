@@ -1,5 +1,7 @@
 package com.pro.infomate.member.dto;
 
+import com.pro.infomate.department.dto.DepartmentDTO;
+import com.pro.infomate.department.entity.Department;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -37,7 +39,7 @@ public class MemberDTO implements UserDetails {
 
     private Timestamp hireDate;
 
-    private int deptCode;
+    private DepartmentDTO department;
 
     private String memberPic;
 

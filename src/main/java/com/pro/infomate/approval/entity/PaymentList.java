@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Entity
 @Table(name = "TBL_PAYMENTLIST")
 @SequenceGenerator(
@@ -39,14 +38,19 @@ public class PaymentList {
   @Column(name = "REMARKS")
   private String remarks;
 
-  @Column(name = "PAYMENT_REASON")
-  private String paymentReason;
-
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "DOCUMENT_ID")
   private Document document;
 
+  @Builder
 
-
-
+  public PaymentList(Long paymentCode, LocalDateTime paymentDate, String paymentSort, int paymentPrice, String paymentContent, String remarks, Document document) {
+    this.paymentCode = paymentCode;
+    this.paymentDate = paymentDate;
+    this.paymentSort = paymentSort;
+    this.paymentPrice = paymentPrice;
+    this.paymentContent = paymentContent;
+    this.remarks = remarks;
+    this.document = document;
+  }
 }

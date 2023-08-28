@@ -7,7 +7,9 @@ import com.pro.infomate.calendar.service.CalendarService;
 import com.pro.infomate.common.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +26,8 @@ public class CalendarController {
     private final CalendarService calendarService;
 
     // test success 팀, 회사전체 캘린더 추가 예정
-    @GetMapping("/list/{memberId}")
+
+    @GetMapping(value = "/list/{memberId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> findAll(@PathVariable int memberId){
         log.info("[CalendarController](findAll) memberId : {}",memberId);
 
@@ -63,8 +66,8 @@ public class CalendarController {
                         .build());
     }
 
-    // test success
-    @PostMapping("/regist")
+
+    @PostMapping("/regist") // api 연동 확인
     public ResponseEntity<ResponseDTO> saveByCalendar(@RequestBody CalendarDTO calendar){
         log.info("[CalendarController](saveByCalendar) calendar : {}",calendar);
 
@@ -81,8 +84,8 @@ public class CalendarController {
                         .build());
     }
 
-    // test success
-    @PatchMapping("/update")
+
+    @PatchMapping("/update") // api 연동 확인
     public ResponseEntity<ResponseDTO> updateByCalendar(@RequestBody CalendarDTO calendar){
 
         log.info("[CalendarController](updateByCalendar) calendar : {}",calendar);
@@ -96,8 +99,7 @@ public class CalendarController {
                         .build());
     }
 
-    // test success
-    @PatchMapping("/updateDafault")
+    @PatchMapping("/updateDafault") // api 연동 확인
     public ResponseEntity<ResponseDTO> updateDefaultByCalendar(@RequestBody CalendarDTO calendarDTO){
         log.info("[CalendarController](updateDefaultByCalendar) calendarDTO: {} ",calendarDTO);
         calendarService.updateDefaultCalender(calendarDTO); // userId 수정 요망
@@ -108,12 +110,12 @@ public class CalendarController {
                         .build());
     }
 
-    // test success
-    @DeleteMapping("/delete/")
-    public ResponseEntity<ResponseDTO> deleteByCalendar(@RequestBody List<Integer> calendarId){
-        log.info("[CalendarController](findSummaryCalendar) calendarId : ", calendarId);
+    @DeleteMapping("/delete") // api 연동 확인
+    public ResponseEntity<ResponseDTO> deleteByCalendar(@RequestBody List<Integer> calendarList){
+        log.info("[CalendarController](deleteByCalendar) calendarList : ", calendarList);
 
-        calendarService.deleteById(calendarId);
+        calendarService.deleteById(calendarList);
+
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
@@ -123,13 +125,13 @@ public class CalendarController {
 
 
     // test success
-    @GetMapping("/openCalendarList")
-    public ResponseEntity<ResponseDTO> findOpenCalendarList(){
+    @GetMapping("/openCalendarList/{memberCode}")
+    public ResponseEntity<ResponseDTO> findOpenCalendarList(@PathVariable Integer memberCode){
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
                         .message("success")
-                        .data(calendarService.openCalendarList())
+                        .data(calendarService.openCalendarList(memberCode))
                         .build());
     }
 
