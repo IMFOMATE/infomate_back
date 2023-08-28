@@ -1,0 +1,22 @@
+### 로그인
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+Accept: */*
+Access-Control-Allow-Origin: *
+
+{
+  "memberId": "dbrs96",
+  "memberPassword": "pass01"
+}
+
+### 회원가입
+POST http://localhost:8080/auth/signup
+Content-Type: application/json
+Accept: */*
+
+{
+  "memberId": "dbrs96",
+  "memberPassword": "pass01",
+  "memberName": "동덕",
+  "memberEmail": "dong@duckdin.com"
+}

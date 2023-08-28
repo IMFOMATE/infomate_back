@@ -11,5 +11,7 @@ public class AuthorityDTO {
 
     private int authorityCode;
 
-    private int memberCode;
+    private String authorityName;
+
+    private String authorityDesc;
 }

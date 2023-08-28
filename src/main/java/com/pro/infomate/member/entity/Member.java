@@ -75,6 +75,10 @@ public class Member {
     @Column(name = "MEMBER_OFF")
     private int memberOff;
 
+    @OneToMany
+    @JoinColumn(name = "MEMBER_CODE")
+    private List<AuthList> authList;
+
     @OneToMany(mappedBy = "member")
     private List<DocMemberRef> memberRefList;
 
@@ -92,5 +96,6 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Participant> participantList;
+
 
 }

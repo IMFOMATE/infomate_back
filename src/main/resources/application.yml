@@ -34,8 +34,8 @@ spring:
   profiles:
     active: local
 
-#jwt:
-#  secret:
+jwt:
+  secret: 1LxrVXYDdRoBBa2Wc9lfOLVUl9BXt6JEZEhkm1mLY04lbjIx4I18x4QOha7cSKrCQJCKwpavnVtfVzFPnBzJfQ==
 
 logging:
   level:
