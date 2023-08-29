@@ -2,6 +2,8 @@ package com.pro.infomate.approval.entity;
 
 import com.pro.infomate.addressbook.entity.Contact;
 import com.pro.infomate.addressbook.repository.ContactRepository;
+import com.pro.infomate.email.entity.Email;
+import com.pro.infomate.email.repository.EmailAndMemberRepository;
 import com.pro.infomate.exception.NotFindDataException;
 import com.pro.infomate.member.entity.Member;
 import com.pro.infomate.member.repository.MemberRepository;
@@ -25,6 +27,9 @@ public class AddressBookTest {
     @Autowired
     MemberRepository memberRepository;
 
+    @Autowired
+    EmailAndMemberRepository emailAndMemberRepository;
+
     @Test
     @DisplayName("contact test")
     void test1() {
@@ -45,16 +50,43 @@ public class AddressBookTest {
 //
 //        contactRepository.save(contact);
 
-        List<Contact> contacts = contactRepository.findByMemberCode(member.getMemberCode());
+//        List<Contact> contacts = contactRepository.findByMemberCode(member.getMemberCode());
+//
+//
+//        System.out.println(contacts);
 
+        //update
+        Contact addressBookList = contactRepository.findById(125L).get();
 
-        System.out.println(contacts);
-
-
+        addressBookList.setContactLike('Y');
 
 
         // when
 
         // then
+    }
+
+    @Test
+    @DisplayName("mail test")
+    void test2() {
+
+        Member member = memberRepository.findById(2L).orElseThrow(() -> new NotFindDataException("회원없음"));
+
+        Email email = new Email();
+        email.setMember(member);
+        email.setMailDate("2023-8-23");
+        email.setMailContent("아무말");
+        email.setMailStatus('Y');
+        email.setMailTitle("제에목");
+        email.setMailLike('Y');
+
+
+        emailAndMemberRepository.save(email);
+
+//        List<Email> emails = emailAndMemberRepository.findByMemberCode(member.getMemberCode());
+//
+//        System.out.println("22222222222222222222222223"+emails.get(0).getMember().getMemberCode());
+
+
     }
 }

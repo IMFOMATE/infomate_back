@@ -4,6 +4,7 @@ import com.pro.infomate.addressbook.entity.Contact;
 import com.pro.infomate.approval.entity.Approval;
 import com.pro.infomate.approval.entity.DocMemberRef;
 import com.pro.infomate.approval.entity.Document;
+import com.pro.infomate.email.entity.Email;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,6 +33,9 @@ public class Member {
 
   @OneToMany(mappedBy = "member")
   private List<Contact> contactList;
+
+  @OneToMany(mappedBy = "member")
+  private List<Email> emailList;
 
 
 

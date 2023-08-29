@@ -1,13 +1,17 @@
 package com.pro.infomate.addressbook.controller;
 
-import com.pro.infomate.addressbook.common.ResponseDTO;
+
 import com.pro.infomate.addressbook.dto.ContactDTO;
-import com.pro.infomate.addressbook.service.AddressBookService;
+import com.pro.infomate.addressbook.service.ContactService;
+import com.pro.infomate.calendar.common.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 
 @RestController
 @RequestMapping("/addressBook")
@@ -15,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class ContactController {
 
-    private final AddressBookService addressBookService;
+    private final ContactService addressBookService;
 
 
 
@@ -25,7 +29,7 @@ public class ContactController {
         log.info("[AddressBookController](addContact) memberCode : {} ", memberCode);
 
         return ResponseEntity.ok()
-                .body(com.pro.infomate.addressbook.common.ResponseDTO.builder()
+                .body(ResponseDTO.builder()
                         .status(HttpStatus.OK.value())
                         .message("success")
                         .data(addressBookService.selectAddressBook(memberCode))
@@ -34,16 +38,69 @@ public class ContactController {
     }
 
     @PostMapping("/addContact")
-    public ResponseEntity<ResponseDTO> registAddressBook(@RequestBody ContactDTO contact) {
 
-        log.info("contact ====================={} " , contact);
+    public ResponseEntity<ResponseDTO> registAddressBook(@RequestParam String contactName
+                                                        , @RequestParam String company
+                                                        , @RequestParam String department
+                                                        , @RequestParam String contactEmail
+                                                        , @RequestParam String contactPhone
+                                                        , @RequestParam String companyPhone
+                                                        , @RequestParam String companyAddress
+                                                        , @RequestParam String memo
+                                                        , @RequestParam char contactLike
+                                                        , @RequestParam MultipartFile contactPhoto) {
+
+
+        ContactDTO contact = new ContactDTO();
+
+        contact.setContactName(contactName);
+        contact.setCompany(company);
+        contact.setDepartment(department);
+        contact.setContactEmail(contactEmail);
+        contact.setContactPhone(contactPhone);
+        contact.setCompanyPhone(companyPhone);
+        contact.setCompanyAddress(companyAddress);
+        contact.setMemo(memo);
+        contact.setContactLike(contactLike);
+        contact.setContactPhoto(contactPhoto);
+
+        System.out.println(contact);
+
         addressBookService.registAddressBook(contact);
+
+
+
+        System.out.println("contactName =============== {} " + contactName);
+        System.out.println(department);
+        System.out.println(contactEmail);
+        System.out.println(contactPhone);
+        System.out.println(companyPhone);
+        System.out.println(companyAddress);
+        System.out.println(memo);
+        System.out.println(contactLike);
+        System.out.println(contactPhoto);
+
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.CREATED.value())
                         .message("success")
                         .build());
+    }
+
+    @PutMapping("/contactUpdate/{contactCode}")
+    public ResponseEntity<ResponseDTO> updateContact(@PathVariable Long contactCode) {
+
+        log.info("[AddressBookController] updateContact contactCode {} ", contactCode);
+
+        addressBookService.updateContact(contactCode);
+
+            return ResponseEntity.ok()
+                    .body(ResponseDTO.builder()
+                            .status(HttpStatus.CREATED.value())
+                            .message("success")
+                            .build());
+
     }
 
 

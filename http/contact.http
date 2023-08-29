@@ -15,8 +15,10 @@ Content-Type: application/json
   "companyPhone": "회사전화",
   "companyAddress": "회사 주소",
   "memo": "ㅁㄷ홈ㅈㅁㅈㄹ",
-  "memberCode": 2
+  "memberCode": 2,
+  "contactLike": "N"
 }
 
 ### 주소록 업데이트
-POST
+PUT http://localhost:8989/addressBook/contactUpdate/123
+

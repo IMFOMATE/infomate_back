@@ -2,8 +2,11 @@ package com.pro.infomate.addressbook.entity;
 
 import com.pro.infomate.member.entity.Member;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
+
 
 import javax.persistence.*;
+import java.io.File;
 
 @Entity
 @Table(name = "TBL_CONTACT")
@@ -25,7 +28,10 @@ public class Contact {
             strategy = GenerationType.SEQUENCE,
             generator = "SEQ_TBL_CONTACT_GENERATOR"
     )
-    private int contactCode;
+    private Long contactCode;
+
+    @Column(name = "CONTACT_PHOTO")
+    private String contactPhoto;
 
     @Column(name = "COMPANY")
     private String company;
@@ -50,6 +56,11 @@ public class Contact {
 
     @Column(name = "MEMO")
     private String memo;
+
+    @Column(name = "CONTACT_LIKE")
+    private char contactLike;
+
+
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_CODE", nullable = false)
