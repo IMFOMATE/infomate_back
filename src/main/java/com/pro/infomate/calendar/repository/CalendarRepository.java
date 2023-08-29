@@ -2,6 +2,7 @@ package com.pro.infomate.calendar.repository;
 
 
 import com.pro.infomate.calendar.entity.Calendar;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,7 +17,7 @@ public interface CalendarRepository extends JpaRepository<Calendar, Integer> {
 
     Optional<Calendar> findFirstByMemberCode(int memberCode, Sort sort);
 
-    List<Calendar> findByDepartmentCodeAndOpenStatusAndMemberCodeNot(Integer departmentCode, boolean openStatus, Integer memberCode);
+    List<Calendar> findByDepartmentCodeAndOpenStatusAndMemberCodeNot(Integer departmentCode, boolean openStatus, Integer memberCode, Pageable pageable);
 
     Optional<Calendar> findFirstByMemberCodeAndIndexNoBefore(Integer id, Integer indexNo);
     Optional<Calendar> findFirstByMemberCodeAndIndexNoAfter(Integer id, Integer indexNo, Sort sort);
@@ -35,6 +36,7 @@ public interface CalendarRepository extends JpaRepository<Calendar, Integer> {
                        "OR c.id IN (SELECT f.refCalendar FROM FavoriteCalendar f " +
                                     "WHERE f.memberCode = :memberCode " +
                                       "AND f.approvalStatus = 'APPROVAL') " +
+                      "AND c.openStatus = true " +
                        "OR c.departmentCode = 0 "  +
                        "OR c.departmentCode = :departmentCode " +
                     "ORDER BY c.indexNo ASC ")

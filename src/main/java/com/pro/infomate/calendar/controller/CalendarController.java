@@ -7,6 +7,10 @@ import com.pro.infomate.calendar.service.CalendarService;
 import com.pro.infomate.common.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -78,7 +82,7 @@ public class CalendarController {
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
-                        .message("정상적으로 등록되었습니다.")
+                        .message("캘린더가 정상적으로 생성됐습니다.")
                         .build());
     }
 
@@ -133,12 +137,15 @@ public class CalendarController {
     }
 
     @GetMapping("/openCalendarList/{memberCode}") // api 연동 화인
-    public ResponseEntity<ResponseDTO> findOpenCalendarList(@PathVariable Integer memberCode){
+    public ResponseEntity<ResponseDTO> findOpenCalendarList(@PathVariable Integer memberCode,
+                                                            Pageable pageable ){
+
+        log.info("[CalendarController](findOpenCalendarList) pageable : {}", pageable);
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
-                        .message("success")
-                        .data(calendarService.openCalendarList(memberCode))
+                        .message("공개 상태가 수정됐습니다.")
+                        .data(calendarService.openCalendarList(memberCode, pageable))
                         .build());
     }
 

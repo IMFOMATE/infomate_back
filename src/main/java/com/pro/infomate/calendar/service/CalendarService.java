@@ -12,6 +12,7 @@ import com.pro.infomate.member.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -197,9 +198,9 @@ public class CalendarService {
     }
 
 
-    public List<CalendarDTO> openCalendarList(Integer memberCode) {
+    public List<CalendarDTO> openCalendarList(Integer memberCode, Pageable pageable) {
 
-        List<Calendar> calendarList = calendarRepository.findByDepartmentCodeAndOpenStatusAndMemberCodeNot(null ,true, memberCode);
+        List<Calendar> calendarList = calendarRepository.findByDepartmentCodeAndOpenStatusAndMemberCodeNot(null ,true, memberCode, pageable);
         log.info("[CalendarService](openCalendarList) calendarList : {}",calendarList);
 
         if(calendarList.size() == 0 ) return null;

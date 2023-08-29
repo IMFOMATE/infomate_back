@@ -9,7 +9,14 @@ import java.util.Optional;
 
 public interface FavotriteCalendarRepository extends JpaRepository<FavoriteCalendar, Integer> {
 
-    List<FavoriteCalendar> findAllByMemberCode(Integer userId);
+
+    @Query(value = "SELECT f " +
+            "FROM FavoriteCalendar f " +
+            "WHERE f.refCalendar IN (SELECT c.id " +
+                                      "FROM Calendar c " +
+                                     "WHERE c.openStatus IS TRUE " +
+                                       "AND NOT c.memberCode = :memberCode)")
+    List<FavoriteCalendar> findAllByMemberCode(Integer memberCode);
 
     void deleteByRefCalendar(Integer calendarNo);
 
