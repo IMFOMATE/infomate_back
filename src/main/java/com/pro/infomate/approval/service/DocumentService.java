@@ -1,10 +1,7 @@
 package com.pro.infomate.approval.service;
 
 import com.pro.infomate.approval.dto.DocumentDTO;
-import com.pro.infomate.approval.dto.request.DocumentRequest;
-import com.pro.infomate.approval.dto.request.DraftRequest;
-import com.pro.infomate.approval.dto.request.PaymentRequest;
-import com.pro.infomate.approval.dto.request.VacationRequest;
+import com.pro.infomate.approval.dto.request.*;
 import com.pro.infomate.approval.dto.response.*;
 import com.pro.infomate.approval.entity.*;
 import com.pro.infomate.approval.repository.ApprovalRepository;
@@ -20,6 +17,7 @@ import com.pro.infomate.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @Service
@@ -54,7 +53,9 @@ public class DocumentService {
 
   //1. 휴가문서 등록
   @Transactional
-  public VacationResponse vacationSave(int memberCode, VacationRequest vacationRequest, String temp){
+  public VacationResponse vacationSave(
+          int memberCode,
+          VacationRequest vacationRequest, String temp){
 
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
 
@@ -75,7 +76,9 @@ public class DocumentService {
 
     // 참조자
     if(vacationRequest.getRefList().size() > 0){
-      List<Member> memberList = memberRepository.findByMemberCodeIn(vacationRequest.getRefList());
+      List<Integer> result = vacationRequest.getRefList().stream().map(RefRequest::getId).collect(Collectors.toList());
+
+      List<Member> memberList = memberRepository.findByMemberCodeIn(result);
 
       memberList.forEach(m->{
         DocRef ref = DocRef.builder().document(save).member(m).build();
@@ -112,7 +115,9 @@ public class DocumentService {
 
     // 참조자
     if(draftRequest.getRefList().size() > 0){
-      List<Member> memberList = memberRepository.findByMemberCodeIn(draftRequest.getRefList());
+      List<Integer> result = draftRequest.getRefList().stream().map(RefRequest::getId).collect(Collectors.toList());
+
+      List<Member> memberList = memberRepository.findByMemberCodeIn(result);
 
       memberList.forEach(m->{
         DocRef ref = DocRef.builder().document(save).member(m).build();
@@ -149,7 +154,9 @@ public class DocumentService {
 
     // 참조자
     if(paymentRequest.getRefList().size() > 0){
-      List<Member> memberList = memberRepository.findByMemberCodeIn(paymentRequest.getRefList());
+      List<Integer> result = paymentRequest.getRefList().stream().map(RefRequest::getId).collect(Collectors.toList());
+
+      List<Member> memberList = memberRepository.findByMemberCodeIn(result);
       memberList.forEach(m->{
         DocRef ref = DocRef.builder().document(save).member(m).build();
         docRefRepository.save(ref);
@@ -203,7 +210,7 @@ public class DocumentService {
     List<Document> approvalList = documentRepository.findTop5ByMemberOrderByCreatedDateDesc(member);
 
     //내 참조문서
-    Page<DocumentListResponse> refList = docRefRepository.refPagingList(memberCode, pageRequest);
+    Page<DocumentListResponse> refList = docRefRepository.refPagingList(null, memberCode, pageRequest);
 
     //내 결재 대기문서
     List<Document> creditList = documentRepository.findCredit(memberCode);
@@ -218,11 +225,22 @@ public class DocumentService {
 
 
   //6. 기안문서 페이징
-  public Page<Document> approvalList(int memberCode, Pageable pageable){
+  public Page<DocumentListResponse> approvalList(String status, int memberCode, Pageable pageable){
 
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
 
-    return documentRepository.findByMember(member, pageable);
+    return documentRepository.findAllApproval(status, memberCode, pageable);
+
+  }
+
+  //7. 결재 대기 페이징
+  public Page<DocumentListResponse> creditList(int memberCode, Pageable pageable){
+
+    Page<Document> documents = documentRepository.findCreditWithPaging(memberCode, pageable);
+
+    List<DocumentListResponse> content = documents.getContent().stream().map(DocumentListResponse::new).collect(Collectors.toList());
+
+    return new PageImpl<>(content, pageable, content.size());
 
   }
 

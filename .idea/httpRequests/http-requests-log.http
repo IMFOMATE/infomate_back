@@ -1,3 +1,13 @@
+GET http://localhost:8989/department/treeview
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: JSESSIONID=BF4C19D603B5C215B19A631D4CD24DE2
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-08-29T005154.200.json
+
+###
+
 GET http://localhost:8989/document/main/2
 Accept: */*
 Connection: Keep-Alive
@@ -587,15 +597,6 @@ User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
 <> 2023-08-16T173652.404.json
-
-###
-
-GET http://localhost:8091/schedule/reminder/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-16T173644.404.json
 
 ###
 

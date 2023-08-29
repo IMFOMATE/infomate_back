@@ -3,13 +3,16 @@ package com.pro.infomate.approval.repository;
 import com.pro.infomate.approval.dto.response.DocumentListResponse;
 import com.pro.infomate.approval.dto.response.QDocumentListResponse;
 
+import com.pro.infomate.approval.entity.DocumentStatus;
 import com.pro.infomate.member.entity.QMember;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -26,7 +29,7 @@ public class DocRefRepositoryImpl implements DocRefRepositoryCustom {
   private final JPAQueryFactory queryFactory;
 
   @Override
-  public Page<DocumentListResponse> refPagingList(int memberCode, Pageable pageable) {
+  public Page<DocumentListResponse> refPagingList(String status, int memberCode, Pageable pageable) {
 
     List<DocumentListResponse> content = queryFactory.select(
                     new QDocumentListResponse(
@@ -44,7 +47,10 @@ public class DocRefRepositoryImpl implements DocRefRepositoryCustom {
             .leftJoin(draft).on(document.id.eq(draft.id))
             .leftJoin(payment).on(document.id.eq(payment.id))
             .leftJoin(vacation).on(document.id.eq(vacation.id))
-            .where(docRef.member.memberCode.eq(memberCode))
+            .where(
+                    memberCodeEq(memberCode),
+                    documentStatus(status)
+            )
             .orderBy(document.createdDate.desc())
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
@@ -57,8 +63,21 @@ public class DocRefRepositoryImpl implements DocRefRepositoryCustom {
             .leftJoin(draft).on(document.id.eq(draft.id))
             .leftJoin(payment).on(document.id.eq(payment.id))
             .leftJoin(vacation).on(document.id.eq(vacation.id))
-            .where(docRef.member.memberCode.eq(memberCode));
+            .where(
+                    memberCodeEq(memberCode),
+                    documentStatus(status)
+            );
 
     return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
   }
+
+
+  private BooleanExpression documentStatus(String status) {
+    return StringUtils.hasText(status) ? document.documentStatus.eq(DocumentStatus.valueOf(status)) : null;
+  }
+
+  private BooleanExpression memberCodeEq(Integer memberCode) {
+    return memberCode != null ? docRef.member.memberCode.eq(memberCode) : null;
+  }
+
 }

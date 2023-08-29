@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Comparator;
@@ -116,6 +117,49 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
             .collect(Collectors.toList());
 
     return new PageImpl<>(documents, pageable, documents.size());
+  }
+
+  //조건 페이징
+  public Page<DocumentListResponse> findAllApproval(String status, int memberCode, Pageable pageable){
+    List<DocumentListResponse> content= queryFactory.select(
+                    new QDocumentListResponse(
+                            document.id.as("id"),
+                            document.title.as("title"),
+                            document.documentStatus.as("documentStatus"),
+                            document.emergency.as("emergency"),
+                            document.createdDate.as("createdDate"),
+                            document.documentKind.as("documentKind"),
+                            document.member.memberName.as("auth")
+                    ))
+            .from(document)
+            .join(document.member, member)
+            .where(
+                    memberCodeEq(memberCode),
+                    documentStatus(status)
+            )
+            .orderBy(document.createdDate.desc())
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
+
+    Long count = queryFactory.select(document.count())
+            .from(document)
+            .join(document.member, member)
+            .where(
+                    memberCodeEq(memberCode),
+                    documentStatus(status)
+            )
+            .fetchOne();
+
+    return new PageImpl<>(content,pageable, count);
+  }
+
+  private BooleanExpression documentStatus(String status) {
+    return StringUtils.hasText(status)  ?  document.documentStatus.eq(DocumentStatus.valueOf(status)) : null;
+  }
+
+  private BooleanExpression memberCodeEq(Integer memberCode) {
+    return memberCode != null ? member.memberCode.eq(memberCode) : null;
   }
 
 

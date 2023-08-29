@@ -59,6 +59,7 @@ public class DepartmentService {
                       .fileType("person")
                       .rank(member.getRank().getRankName())
                       .profile(member.getMemberPic())
+                      .memberCode(member.getMemberCode())
                       .build())
               .build();
       memberNodes.add(memberNode);

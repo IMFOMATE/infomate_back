@@ -21,6 +21,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,7 +40,8 @@ public class DocumentController {
   @PostMapping("/regist/vacation")
   public ResponseEntity<ResponseDTO> vacationRegist(
           @RequestBody VacationRequest vacationRequest,
-          @RequestParam(name = "temp",required = false) String temp
+          @RequestParam(name = "temp",required = false) String temp,
+          MultipartFile[] files
   ){
 
     //일단은 code로 사용
@@ -57,13 +59,19 @@ public class DocumentController {
   // 기안 문서 등록
   @PostMapping("/regist/draft")
   public ResponseEntity<ResponseDTO> draftRegist(
-          @RequestBody DraftRequest draftRequest,
-          @RequestParam(name = "temp",required = false) String temp
+          @ModelAttribute DraftRequest form,
+          @RequestParam(name = "temp",required = false) String temp,
+          List<MultipartFile> fileList
   ){
-    //일단은 code로 사용
-    int memberCode = 43;
 
-    documentService.draftSave(memberCode, draftRequest, temp);
+    System.out.println("form = " + form);
+    for (MultipartFile multipartFile : fileList) {
+      System.out.println("multipartFile.getName() = " + multipartFile.getName());
+    }
+    //일단은 code로 사용
+//    int memberCode = 43;
+//
+//    documentService.draftSave(memberCode, draftRequest, temp);
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
@@ -76,7 +84,8 @@ public class DocumentController {
   @PostMapping("/regist/payment")
   public ResponseEntity<ResponseDTO> paymentRegist(
           @RequestBody PaymentRequest paymentRequest,
-          @RequestParam(name = "temp",required = false) String temp
+          @RequestParam(name = "temp",required = false) String temp,
+          MultipartFile[] files
   ){
 
     //일단은 code로 사용
@@ -105,7 +114,6 @@ public class DocumentController {
                     .build());
   }
 
-
   // 문서 삭제
   @DeleteMapping("/delete")
   public ResponseEntity<ResponseDTO> deleteDocument(long documentId){
@@ -119,7 +127,6 @@ public class DocumentController {
                     .message("success")
                     .build());
   }
-
 
   //결재 메인
   @GetMapping("/main/{memberCode}")
@@ -135,23 +142,24 @@ public class DocumentController {
 
   // 기안문서
   @GetMapping("/approval/{memberCode}")
-  public ResponseEntity<ResponseDTO> approvalAllList(@PathVariable int memberCode, Pageable pageable){
+  public ResponseEntity<ResponseDTO> approvalAllList(
+          @PathVariable int memberCode,
+          @RequestParam(required = false, name = "status") String status,
+          Pageable pageable){
 
-    log.info("[DocumentController] approvalAllList={}", memberCode);
+    log.info("[DocumentController] status={}", status);
 
-    Page<Document> documents = documentService.approvalList(memberCode, pageable);
-
+    Page<DocumentListResponse> documents = documentService.approvalList(status, memberCode, pageable);
     Criteria criteria = new Criteria(pageable.getPageNumber()+1, pageable.getPageSize());
+    log.info("[DocumentController] page={}", pageable.getPageNumber());
+
     PageDTO pageDTO = new PageDTO(criteria, documents.getTotalElements());
 
-    List<DocumentListResponse> data = documents.getContent()
-            .stream()
-            .map(DocumentListResponse::new)
-            .collect(Collectors.toList());
+    log.info("[DocumentController] getContent={}", documents.getContent());
 
     PagingResponseDTO result = PagingResponseDTO.builder()
             .pageInfo(pageDTO)
-            .data(data)
+            .data(documents.getContent())
             .build();
 
     return ResponseEntity.ok()
@@ -165,6 +173,34 @@ public class DocumentController {
 
   }
 
+  // 결재 대기 문서
+  @GetMapping("/credit/{memberCode}")
+  public ResponseEntity<ResponseDTO> creditList(
+          @PathVariable int memberCode,
+          Pageable pageable){
+
+    Page<DocumentListResponse> documents = documentService.creditList(memberCode, pageable);
+
+    Criteria criteria = new Criteria(pageable.getPageNumber()+1, pageable.getPageSize());
+
+    log.info("[DocumentController] page={}", pageable.getPageNumber());
+
+    PageDTO pageDTO = new PageDTO(criteria, documents.getTotalElements());
+
+    log.info("[DocumentController] getContent={}", documents.getContent());
+
+    PagingResponseDTO result = PagingResponseDTO.builder()
+            .pageInfo(pageDTO)
+            .data(documents.getContent())
+            .build();
+
+    return ResponseEntity.ok()
+            .body(ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .message("success")
+                    .data(result)
+                    .build());
+  }
 
 
 }
