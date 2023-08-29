@@ -12,6 +12,8 @@ import com.pro.infomate.member.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -198,14 +200,15 @@ public class CalendarService {
     }
 
 
-    public List<CalendarDTO> openCalendarList(Integer memberCode, Pageable pageable) {
+    public Page<CalendarDTO> openCalendarList(Integer memberCode, Pageable pageable) {
 
-        List<Calendar> calendarList = calendarRepository.findByDepartmentCodeAndOpenStatusAndMemberCodeNot(null ,true, memberCode, pageable);
+
+        Page<Calendar> calendarList = calendarRepository.findByDepartmentCodeAndOpenStatusAndMemberCodeNot(null ,true, memberCode, pageable);
         log.info("[CalendarService](openCalendarList) calendarList : {}",calendarList);
 
-        if(calendarList.size() == 0 ) return null;
+        if(calendarList.getContent().size() == 0 ) return null;
 
-        return calendarList.stream()
+        return calendarList
                 .map(calendar -> {
                    CalendarDTO calendarDTO = modelMapper.map(calendar, CalendarDTO.class);
                    calendarDTO.setScheduleList(null);
@@ -224,8 +227,8 @@ public class CalendarService {
                    log.info("[CalendarService](openCalendarList) calendarDTO : {}",calendarDTO);
 
                    return calendarDTO;
-                })
-                .collect(Collectors.toList());
+                });
+
     }
 
     public List<CalendarSummaryDTO> findSummaryCalendar(int memberCode) {

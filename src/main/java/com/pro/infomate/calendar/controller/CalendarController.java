@@ -4,10 +4,15 @@ package com.pro.infomate.calendar.controller;
 import com.pro.infomate.calendar.dto.CalendarDTO;
 import com.pro.infomate.calendar.dto.CalendarSummaryDTO;
 import com.pro.infomate.calendar.service.CalendarService;
+import com.pro.infomate.common.Criteria;
+import com.pro.infomate.common.PageDTO;
+import com.pro.infomate.common.PagingResponseDTO;
 import com.pro.infomate.common.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -137,15 +142,29 @@ public class CalendarController {
     }
 
     @GetMapping("/openCalendarList/{memberCode}") // api 연동 화인
-    public ResponseEntity<ResponseDTO> findOpenCalendarList(@PathVariable Integer memberCode,
+    public ResponseEntity<PagingResponseDTO> findOpenCalendarList(@PathVariable Integer memberCode,
                                                             Pageable pageable ){
 
         log.info("[CalendarController](findOpenCalendarList) pageable : {}", pageable);
+
+        pageable = PageRequest.of(
+                pageable.getPageNumber() - 1 >= 0 ? pageable.getPageNumber() - 1 : 0 ,
+                pageable.getPageSize(),
+                pageable.getSort());
+
+        Page<CalendarDTO> calendarDTOPage = calendarService.openCalendarList(memberCode, pageable);
+
+        log.info("[CalendarController](findOpenCalendarList) calendarDTOPage : {}", calendarDTOPage.getContent());
+
+        PageDTO pageDTO = new PageDTO(new Criteria(pageable.getPageNumber(), pageable.getPageSize()),calendarDTOPage.getTotalPages());
+        log.info("[CalendarController](findOpenCalendarList) pageDTO : {}", pageDTO);
+
         return ResponseEntity.ok()
-                .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK)
-                        .message("공개 상태가 수정됐습니다.")
-                        .data(calendarService.openCalendarList(memberCode, pageable))
+                .body(PagingResponseDTO.builder()
+                        .httpStatus(HttpStatus.OK)
+                        .message("succes")
+                        .pageInfo(pageDTO)
+                        .data(calendarDTOPage.getContent())
                         .build());
     }
 
