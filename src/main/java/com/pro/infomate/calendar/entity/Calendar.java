@@ -1,18 +1,21 @@
 package com.pro.infomate.calendar.entity;
 
 
+import com.pro.infomate.calendar.dto.CalendarDTO;
 import com.pro.infomate.member.entity.Member;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Setter
 @Getter
 @Entity
+@DynamicUpdate
+@DynamicInsert
 @Table(name = "TBL_CLNDR")
 @SequenceGenerator(
         name = "SEQ_TBL_CLNDR_GEN",
@@ -39,10 +42,10 @@ public class Calendar {
     private String labelColor;
 
     @Column(name = "INDEX_NUM")
-    private int indexNo;
+    private Integer indexNo;
 
     @Column(name = "REF_MEMBER_CODE")
-    private int memberCode;
+    private Integer memberCode;
 
     @Column(name = "DEFAULT_SELC")
     private Boolean defaultCalendar;
@@ -53,15 +56,25 @@ public class Calendar {
     @Column(name = "CREATE_DATE")
     private LocalDateTime createDate;
 
-    @OneToMany(mappedBy = "calendar", fetch = FetchType.LAZY, targetEntity = FavoriteCalendar.class)
+    @OneToMany(mappedBy = "calendar")
     private List<FavoriteCalendar> favoriteCalendar;
 
-    @OneToMany(mappedBy = "calendar", fetch = FetchType.LAZY,targetEntity = Schedule.class)
+    @OneToMany(mappedBy = "calendar")
     private List<Schedule> schedule;
 
     @ManyToOne
     @JoinColumn(name = "REF_MEMBER_CODE",insertable = false ,updatable = false)
     private Member member;
+
+    public void update(CalendarDTO calendarDTO){
+        if(calendarDTO.getName() != null) this.name = calendarDTO.getName();
+        if(calendarDTO.getOpenStatus() != null) this.openStatus = calendarDTO.getOpenStatus();
+        if(calendarDTO.getLabelColor() != null) this.labelColor = calendarDTO.getLabelColor();
+        if(calendarDTO.getIndexNo() != null) this.indexNo = calendarDTO.getIndexNo();
+        if(calendarDTO.getMemberCode() != null) this.memberCode = calendarDTO.getMemberCode();
+        if(calendarDTO.getDepartmentCode() != null) this.departmentCode = calendarDTO.getDepartmentCode();
+        if(calendarDTO.getDefaultCalendar() != null) this.defaultCalendar = calendarDTO.getDefaultCalendar();
+    }
 
     @Override
     public String toString() {

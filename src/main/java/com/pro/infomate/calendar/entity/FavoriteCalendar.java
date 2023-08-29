@@ -3,6 +3,8 @@ package com.pro.infomate.calendar.entity;
 import com.pro.infomate.calendar.dto.ApprovalStatus;
 import com.pro.infomate.member.entity.Member;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +14,8 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Entity
+@DynamicUpdate
+@DynamicInsert
 @Table(name = "TBL_FVRT_CLNDR")
 @SequenceGenerator(
         name = "SEQ_TBL_FVRT_CLNDR_GEN",

@@ -1,25 +1,31 @@
 package com.pro.infomate.calendar.repository;
 
 
-import com.pro.infomate.calendar.dto.CalendarSummaryDTO;
 import com.pro.infomate.calendar.entity.Calendar;
-import com.pro.infomate.calendar.entity.CalendarSummary;
-import com.pro.infomate.calendar.entity.Schedule;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public interface CalendarRepository extends JpaRepository<Calendar, Integer> {
 
-    Optional<Calendar> findByMemberCodeAndDefaultCalendar(Integer userId, boolean isTrue);
+    Optional<Calendar> findByMemberCodeAndDefaultCalendar(Integer memberCoode, Boolean defaultCalendar);
 
-    List<Calendar> findByDepartmentCodeAndOpenStatus(Integer departmentCode, boolean openStatus);
+    Optional<Calendar> findFirstByMemberCode(int memberCode, Sort sort);
+
+    List<Calendar> findByDepartmentCodeAndOpenStatusAndMemberCodeNot(Integer departmentCode, boolean openStatus, Integer memberCode);
+
+    @Query(value = "SELECT s FROM Calendar s " +
+                     "JOIN Member m on m.memberCode = s.memberCode " +
+                    "LEFT JOIN FavoriteCalendar f on f.memberCode = :memberCode " +
+                    "WHERE NOT s.memberCode = :memberCode " +
+                    "AND s.openStatus = true " +
+                    "AND s.departmentCode IS NULL"
+    )
+    List<Calendar> findByPublicCalendarList(Integer memberCode);
 
     List<Calendar> findByMemberCode(int memberCode);
 

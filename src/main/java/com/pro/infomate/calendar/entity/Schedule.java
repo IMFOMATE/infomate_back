@@ -1,8 +1,15 @@
 package com.pro.infomate.calendar.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.pro.infomate.calendar.dto.CalendarDTO;
+import com.pro.infomate.calendar.dto.ParticipantDTO;
+import com.pro.infomate.calendar.dto.ScheduleDTO;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,6 +22,7 @@ import java.util.List;
 @Entity
 @Table(name = "TBL_SCHDL")
 @DynamicUpdate
+@DynamicInsert
 @SequenceGenerator(
         name = "SEQ_TBL_SCHDL_GEN",
         sequenceName = "SEQ_TBL_SCHDL_SCHDL_ID",
@@ -34,11 +42,9 @@ public class Schedule {
     private String title;
 
     @Column(name = "START_DATE")
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-ddTHH:mm:ss")
     private LocalDateTime startDate;
 
     @Column(name = "END_DATE")
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-ddTHH:mm:ss")
     private LocalDateTime endDate;
 
     @Column(name = "CONTENT")
@@ -70,7 +76,18 @@ public class Schedule {
     @JoinColumn(name = "REF_CLNDR_ID",updatable = false, insertable = false)
     private Calendar calendar;
 
-
+    public void update(ScheduleDTO scheduleDTO){
+        if(scheduleDTO.getTitle() != null) this.title = scheduleDTO.getTitle();
+        if(scheduleDTO.getStartDate() != null) this.startDate = scheduleDTO.getStartDate();
+        if(scheduleDTO.getEndDate() != null) this.endDate = scheduleDTO.getEndDate();
+        if(scheduleDTO.getContent() != null) this.content = scheduleDTO.getContent();
+        if(scheduleDTO.getAddress() != null) this.address = scheduleDTO.getAddress();
+        if(scheduleDTO.getAllDay() != null) this.allDay = scheduleDTO.getAllDay();
+        if(scheduleDTO.getCorpSchdl() != null) this.corpSchdl = scheduleDTO.getCorpSchdl();
+        if(scheduleDTO.getRepeat() != null) this.repeat = scheduleDTO.getRepeat();
+        if(scheduleDTO.getImportant() != null) this.important = scheduleDTO.getImportant();
+        if(scheduleDTO.getRefCalendar() != null) this.refCalendar = scheduleDTO.getRefCalendar();
+    }
 
     @Override
     public String toString() {
