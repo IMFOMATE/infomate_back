@@ -1,9 +1,9 @@
 package com.pro.infomate.work.entity;
 
+import com.pro.infomate.member.entity.Member;
 import lombok.*;
 
 import javax.persistence.*;
-import java.lang.reflect.Member;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
@@ -33,10 +33,10 @@ public class Work {
     @Column(name = "WORK_STATUS")
     private String workStatus;
 
-    @Column(name = "MEMBER_CODE")
-    private int memberCode;
+//    @Column(name = "MEMBER_CODE")
+//    private int memberCode;
 
-//    @OneToMany
-//    @JoinColumn(name = "MEMBER_CODE")
-//    private Member memberCode;
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_CODE")
+    private Member member;
 }

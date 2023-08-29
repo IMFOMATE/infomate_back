@@ -1,4 +1,4 @@
-package com.pro.infomate.BoardWork.dto;
+package com.pro.infomate.Board.dto;
 
 import lombok.*;
 

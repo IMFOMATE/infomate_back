@@ -1,4 +1,4 @@
-package com.pro.infomate.BoardWork.entity;
+package com.pro.infomate.Board.entity;
 
 import com.pro.infomate.member.entity.Member;
 import lombok.*;
@@ -24,8 +24,8 @@ public class Comment {
     @Column(name = "POST_CODE")
     private int postCode;
 
-    @Column(name = "MEMBER_CODE")
-    private int memberCode;
+//    @Column(name = "MEMBER_CODE")
+//    private int memberCode;
 
 
     @ManyToOne

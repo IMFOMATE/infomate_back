@@ -1,4 +1,4 @@
-package com.pro.infomate.BoardWork.entity;
+package com.pro.infomate.Board.entity;
 
 import lombok.*;
 
@@ -17,8 +17,8 @@ public class BoardFile {
     @Column(name = "FILE_NO")
     private int fileNo;
 
-    @Column(name = "POST_CODE")
-    private int postCode;
+//    @Column(name = "POST_CODE")
+//    private int postCode;
 
     @Column(name = "FILE_NAME")
     private String fileName;
@@ -27,10 +27,7 @@ public class BoardFile {
     private String fileOriginal;
 
 
-
     @ManyToOne
-    @JoinColumn(name = "BOARD_CODE")
-    private Board boardCode;
-
-
+    @JoinColumn(name = "POST_CODE")
+    private Post post;
 }

@@ -11,7 +11,9 @@ Content-Type: application/json
   "indexNo" : 1,
   "memberCode" : 2,
   "departmentCode" : "123",
-  "defaultCalendar" : true
+  "defaultCalendar" : true,
+
+
 }
 
 ### 캘린더 업데이트

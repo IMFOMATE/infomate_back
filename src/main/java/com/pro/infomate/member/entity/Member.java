@@ -1,8 +1,12 @@
 package com.pro.infomate.member.entity;
 
+import com.pro.infomate.Board.entity.Board;
+import com.pro.infomate.Board.entity.Post;
 import com.pro.infomate.calendar.entity.Calendar;
 import com.pro.infomate.calendar.entity.FavoriteCalendar;
 import com.pro.infomate.calendar.entity.Participant;
+import com.pro.infomate.work.entity.Off;
+import com.pro.infomate.work.entity.Work;
 import io.github.classgraph.PackageInfo;
 import lombok.*;
 import com.pro.infomate.approval.entity.Approval;
@@ -93,4 +97,11 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Participant> participantList;
 
+    @OneToMany(mappedBy = "member")
+    private List<Work> workList;
+
+    @OneToMany(mappedBy = "member")
+    private List<Off> OffList;
+
 }
+

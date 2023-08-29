@@ -1,8 +1,11 @@
-package com.pro.infomate.BoardWork.dto;
+package com.pro.infomate.Board.dto;
 
+import com.pro.infomate.member.dto.MemberDTO;
 import lombok.*;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,15 +18,14 @@ public class PostDTO {
 
     private String postTitle;
 
-    private Timestamp postDate;
+    private String postDate;
 
     private String postContents;
 
     private String boardCategory;
 
-    private int boardCode;
+    private BoardDTO board;
 
-    private int memberCode;
+    private MemberDTO member;
 
-    private Timestamp yearMonth;    // 일자(아마도 년월일표기 할 듯)
 }

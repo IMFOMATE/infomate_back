@@ -1,9 +1,9 @@
 package com.pro.infomate.work.entity;
 
+import com.pro.infomate.member.entity.Member;
 import lombok.*;
 
 import javax.persistence.*;
-import java.lang.reflect.Member;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -32,11 +32,11 @@ public class Off {
     @Column(name = "OFF_REASON")
     private String offReason;
 
-    @Column(name = "MEMBER_CODE")
-    private int memberCode;
+//    @Column(name = "MEMBER_CODE")
+//    private int memberCode;
 
-//    @ManyToOne
-//    @JoinColumn(name = "MEMBER_CODE")
-//    private Member memberCode;
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_CODE")
+    private Member member;
 
 }
