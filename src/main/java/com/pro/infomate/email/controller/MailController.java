@@ -1,6 +1,7 @@
 package com.pro.infomate.email.controller;
 
-import com.pro.infomate.calendar.common.ResponseDTO;
+
+import com.pro.infomate.common.ResponseDTO;
 import com.pro.infomate.email.dto.EmailDTO;
 import com.pro.infomate.email.service.MailService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class MailController {
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.valueOf(HttpStatus.OK.value()))
                         .message("success")
                         .data(mailService.selectMail(memberCode))
                         .build());
@@ -37,7 +38,7 @@ public class MailController {
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.CREATED.value())
+                        .status(HttpStatus.valueOf(HttpStatus.CREATED.value()))
                         .message("success")
                         .build());
     }

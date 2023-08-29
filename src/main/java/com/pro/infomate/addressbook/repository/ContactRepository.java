@@ -12,5 +12,5 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
 
 
     @Query("SELECT c FROM Contact c join c.member m where m.memberCode = :memberCode")
-    List<Contact> findByMemberCode(Long memberCode);
+    List<Contact> findByMemberCode(int memberCode);
 }

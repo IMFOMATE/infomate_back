@@ -3,7 +3,8 @@ package com.pro.infomate.addressbook.controller;
 
 import com.pro.infomate.addressbook.dto.ContactDTO;
 import com.pro.infomate.addressbook.service.ContactService;
-import com.pro.infomate.calendar.common.ResponseDTO;
+
+import com.pro.infomate.common.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,13 +25,13 @@ public class ContactController {
 
 
     @GetMapping("/contact/{memberCode}")
-    public ResponseEntity<ResponseDTO> selectAddressBook(@PathVariable Long memberCode) {
+    public ResponseEntity<ResponseDTO> selectAddressBook(@PathVariable int memberCode) {
 
         log.info("[AddressBookController](addContact) memberCode : {} ", memberCode);
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK.value())
+                        .status(HttpStatus.valueOf(HttpStatus.OK.value()))
                         .message("success")
                         .data(addressBookService.selectAddressBook(memberCode))
                         .build());
@@ -83,7 +84,7 @@ public class ContactController {
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
-                        .status(HttpStatus.CREATED.value())
+                        .status(HttpStatus.valueOf(HttpStatus.CREATED.value()))
                         .message("success")
                         .build());
     }
@@ -97,7 +98,7 @@ public class ContactController {
 
             return ResponseEntity.ok()
                     .body(ResponseDTO.builder()
-                            .status(HttpStatus.CREATED.value())
+                            .status(HttpStatus.valueOf(HttpStatus.CREATED.value()))
                             .message("success")
                             .build());
 

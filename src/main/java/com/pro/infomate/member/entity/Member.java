@@ -58,13 +58,14 @@ public class Member {
     @Column(name = "EXTENSION_NUMBER")
     private String extensionNumber;
 
-  @OneToMany(mappedBy = "member")
-  private List<Contact> contactList;
+    @OneToMany(mappedBy = "member")
+    private List<Contact> contactList;
+
+    @OneToMany(mappedBy = "member")
+    private List<Email> emailList;
 
     @Column(name = "MEMBER_ADDRESS")
     private String memberAddress;
-  @OneToMany(mappedBy = "member")
-  private List<Email> emailList;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DEPT_CODE")

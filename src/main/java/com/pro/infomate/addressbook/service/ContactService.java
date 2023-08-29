@@ -24,7 +24,7 @@ public class ContactService {
     private final ModelMapper modelMapper;
 
 
-    public List<ContactDTO> selectAddressBook(Long memberCode) {
+    public List<ContactDTO> selectAddressBook(int memberCode) {
 
         List<Contact> addressBookList = contactRepository.findByMemberCode(memberCode);
 
