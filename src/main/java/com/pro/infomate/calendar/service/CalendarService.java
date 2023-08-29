@@ -6,6 +6,7 @@ import com.pro.infomate.calendar.entity.Calendar;
 import com.pro.infomate.calendar.repository.CalendarRepository;
 import com.pro.infomate.calendar.repository.FavotriteCalendarRepository;
 import com.pro.infomate.calendar.repository.ScheduleRepository;
+import com.pro.infomate.exception.InvalidRequestException;
 import com.pro.infomate.exception.NotFindDataException;
 import com.pro.infomate.member.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
@@ -131,16 +132,41 @@ public class CalendarService {
         if(prevDefaultCalendar.isPresent()) {
             log.info("[CalendarService](updateDefaultCalender) prevDefaultCalendar : {}", prevDefaultCalendar.get());
             prevDefaultCalendar.get().setDefaultCalendar(false);
-
-        }else {
-            Optional<Calendar> afterDefaultCalendar = calendarRepository.findById(calendarDTO.getId());
-
-            if(afterDefaultCalendar.isEmpty()) throw new NotFindDataException("수정할 캘린더를 찾을 수 없습니다.");
-
-            log.info("[CalendarService](updateDefaultCalender) afterDefaultCalendar : {}", afterDefaultCalendar.get());
-
-            afterDefaultCalendar.get().setDefaultCalendar(true);
         }
+
+        Optional<Calendar> afterDefaultCalendar = calendarRepository.findById(calendarDTO.getId());
+
+        if(afterDefaultCalendar.isEmpty()) throw new NotFindDataException("수정할 캘린더를 찾을 수 없습니다.");
+
+        log.info("[CalendarService](updateDefaultCalender) afterDefaultCalendar : {}", afterDefaultCalendar.get());
+
+        afterDefaultCalendar.get().setDefaultCalendar(true);
+    }
+
+    @Transactional
+    public void updateCalendarIndexNo(Map<String, String> info){
+
+        log.info("[CalendarService](updateCalendarIndexNo) info : {}", info);
+
+        Optional<Calendar> cur = calendarRepository.findById(Integer.valueOf(info.get("id")));
+        if(cur.isEmpty()) throw new NotFindDataException("캘린더를 찾을 수 없습니다.");
+        int tempSeq = cur.get().getIndexNo();
+
+        if(info.get("direction").equals("prev")){
+            Optional<Calendar> prev = calendarRepository.findFirstByMemberCodeAndIndexNoBefore(Integer.valueOf(info.get("memberCode")),tempSeq);
+            log.info("[CalendarService](updateCalendarIndexNo) prev : {}", prev);
+            cur.get().setIndexNo(prev.get().getIndexNo());
+            prev.get().setIndexNo(tempSeq);
+
+        }else if(info.get("direction").equals("next")){
+            Optional<Calendar> next = calendarRepository.findFirstByMemberCodeAndIndexNoAfter(Integer.valueOf(info.get("memberCode")),tempSeq, Sort.by("indexNo").ascending());
+            log.info("[CalendarService](updateCalendarIndexNo) next : {}", next);
+            cur.get().setIndexNo(next.get().getIndexNo());
+            next.get().setIndexNo(tempSeq);
+        }else {
+            throw new InvalidRequestException("잘못된 요청입니다.");
+        }
+
 
     }
 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -104,6 +105,17 @@ public class CalendarController {
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
                         .message("기본 캘린더가 변경되었습니다.")
+                        .build());
+    }
+
+    @PatchMapping("/changeIndexNo") // api 연동 확인
+    public ResponseEntity<ResponseDTO> updateCalendarIndexNo(@RequestBody Map<String, String> info){
+        log.info("[CalendarController](updateDefaultByCalendar) info: {} ",info);
+        calendarService.updateCalendarIndexNo(info); // userId 수정 요망
+        return ResponseEntity.ok()
+                .body(ResponseDTO.builder()
+                        .status(HttpStatus.OK)
+                        .message("캘린더 순서가 변경되었습니다")
                         .build());
     }
 

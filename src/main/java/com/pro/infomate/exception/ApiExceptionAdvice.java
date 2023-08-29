@@ -46,4 +46,13 @@ public class ApiExceptionAdvice {
                 .body(new Response(HttpStatus.ALREADY_REPORTED, e.getMessage(),e.getMessage()));
     }
 
+    @ExceptionHandler(InvalidRequestException.class)
+    public ResponseEntity<Response> InvalidRequestException(InvalidRequestException e){
+
+        log.info("[ApiExceptionAdvice](AlreadyRequestException) error : {} ", e);
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new Response(HttpStatus.BAD_REQUEST, e.getMessage(),e.getMessage()));
+    }
+
 }
