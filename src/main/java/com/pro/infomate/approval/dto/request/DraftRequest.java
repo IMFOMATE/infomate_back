@@ -19,10 +19,13 @@ public class DraftRequest extends DocumentRequest{
   @JsonFormat(pattern = "yyyy-MM-dd")
   private LocalDateTime startDate;
 
+  private List<ApprovalRequest> approvalList;
+
   @Builder
   public DraftRequest(@NotBlank @Size(min = 5, max = 100) String title, String content, String emergency, List<RefRequest> refList, List<ApprovalRequest> approvalList, String coDept, LocalDateTime startDate) {
-    super(title, content, emergency, refList, approvalList);
+    super(title, content, emergency, refList);
     this.coDept = coDept;
     this.startDate = startDate;
+    this.approvalList = approvalList;
   }
 }

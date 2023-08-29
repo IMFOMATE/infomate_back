@@ -2,6 +2,7 @@ package com.pro.infomate.approval.controller;
 
 
 import com.pro.infomate.approval.dto.DocumentDTO;
+import com.pro.infomate.approval.dto.request.ApprovalRequest;
 import com.pro.infomate.approval.dto.request.DraftRequest;
 import com.pro.infomate.approval.dto.request.PaymentRequest;
 import com.pro.infomate.approval.dto.request.VacationRequest;
@@ -47,7 +48,7 @@ public class DocumentController {
     //일단은 code로 사용
     int memberCode = 22;
 
-    documentService.vacationSave(memberCode, vacationRequest, temp);
+//    documentService.vacationSave(memberCode, vacationRequest, temp);
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
@@ -59,15 +60,13 @@ public class DocumentController {
   // 기안 문서 등록
   @PostMapping("/regist/draft")
   public ResponseEntity<ResponseDTO> draftRegist(
-          @ModelAttribute DraftRequest form,
+          @ModelAttribute(name = "form") DraftRequest request,
           @RequestParam(name = "temp",required = false) String temp,
-          List<MultipartFile> fileList
+          @ModelAttribute(name = "fileList") List<MultipartFile> fileList
   ){
 
-    System.out.println("form = " + form);
-    for (MultipartFile multipartFile : fileList) {
-      System.out.println("multipartFile.getName() = " + multipartFile.getName());
-    }
+    System.out.println("form = " + request);
+
     //일단은 code로 사용
 //    int memberCode = 43;
 //
@@ -91,7 +90,7 @@ public class DocumentController {
     //일단은 code로 사용
     int memberCode = 2;
 
-    documentService.paymentSave(memberCode, paymentRequest,temp );
+//    documentService.paymentSave(memberCode, paymentRequest,temp );
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
@@ -145,6 +144,7 @@ public class DocumentController {
   public ResponseEntity<ResponseDTO> approvalAllList(
           @PathVariable int memberCode,
           @RequestParam(required = false, name = "status") String status,
+//          @RequestParam(required = false, name = "page") String page,
           Pageable pageable){
 
     log.info("[DocumentController] status={}", status);

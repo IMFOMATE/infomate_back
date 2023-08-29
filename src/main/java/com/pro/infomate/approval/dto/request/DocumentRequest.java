@@ -22,11 +22,9 @@ public class DocumentRequest {
 
   private String emergency; // 긴급여부
 
-  @JsonFormat(shape = JsonFormat.Shape.OBJECT)
   private List<RefRequest> refList; // 참조자 멤버목록(코드만)
 
-  @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-  private List<ApprovalRequest> approvalList;// 결재 목록
+//  private List<ApprovalRequest> approvalList;// 결재 목록
 
 
 }

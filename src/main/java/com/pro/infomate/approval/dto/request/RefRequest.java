@@ -1,16 +1,14 @@
 package com.pro.infomate.approval.dto.request;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @ToString
+@AllArgsConstructor
 public class RefRequest {
   
-  private int id; // 멤버 코드
+  private Integer id; // 멤버 코드
 
 }
