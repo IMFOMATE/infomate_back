@@ -1,6 +1,8 @@
 package com.pro.infomate.calendar.repository;
 
 import com.pro.infomate.calendar.entity.FavoriteCalendar;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -16,7 +18,7 @@ public interface FavotriteCalendarRepository extends JpaRepository<FavoriteCalen
                                       "FROM Calendar c " +
                                      "WHERE c.openStatus IS TRUE " +
                                        "AND NOT c.memberCode = :memberCode)")
-    List<FavoriteCalendar> findAllByMemberCode(Integer memberCode);
+    Page<FavoriteCalendar> findAllByMemberCode(Integer memberCode, Pageable pageable);
 
     void deleteByRefCalendar(Integer calendarNo);
 
@@ -26,5 +28,5 @@ public interface FavotriteCalendarRepository extends JpaRepository<FavoriteCalen
                      "WHERE fc.refCalendar IN (SELECT c.id " +
                                                 "FROM Calendar c " +
                                                "WHERE c.memberCode = :memberCode)")
-    List<FavoriteCalendar> findByCalendarByMemberCode(Integer memberCode);
+    Page<FavoriteCalendar> findByCalendarByMemberCode(Integer memberCode, Pageable pageable);
 }

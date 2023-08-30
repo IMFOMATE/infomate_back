@@ -154,7 +154,9 @@ public class CalendarController {
 
         Page<CalendarDTO> calendarDTOPage = calendarService.openCalendarList(memberCode, pageable);
 
-        log.info("[CalendarController](findOpenCalendarList) calendarDTOPage : {}", calendarDTOPage.getContent());
+
+        log.info("[CalendarController](findOpenCalendarList) calendarDTOPage.getSize() : {}", calendarDTOPage.getSize());
+        log.info("[CalendarController](findOpenCalendarList) calendarDTOPage.getContent() : {}", calendarDTOPage.getContent());
 
         PageDTO pageDTO = new PageDTO(new Criteria(pageable.getPageNumber(), pageable.getPageSize()),calendarDTOPage.getTotalPages());
         log.info("[CalendarController](findOpenCalendarList) pageDTO : {}", pageDTO);

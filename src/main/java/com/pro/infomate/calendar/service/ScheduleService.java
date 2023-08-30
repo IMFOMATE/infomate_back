@@ -15,8 +15,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -45,8 +45,10 @@ public class ScheduleService {
 //    }
 
     public ScheduleDTO findById(Integer scheduleId){
-        Optional<Schedule> schedule = scheduleRepository.findById(scheduleId);
-        return schedule.stream()
+        Schedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new NotFindDataException("일정을 찾을 수 없습니다"));
+
+        return Stream.of(schedule)
                 .map(value -> modelMapper.map(value, ScheduleDTO.class))
                 .map(scheduleDTO -> {
                     CalendarDTO calendarDTO = scheduleDTO.getCalendar();
@@ -71,12 +73,12 @@ public class ScheduleService {
     public void updateById(ScheduleDTO schedule) {
         log.info("[ScheduleService](updateById) schedule : {}",schedule);
 
-        Optional<Schedule> entitySchedule = scheduleRepository.findById(schedule.getId());
+        Schedule entitySchedule = scheduleRepository
+                .findById(schedule.getId())
+                .orElseThrow(() -> new NotFindDataException("일정을 찾을 수 없습니다"));
         log.info("[ScheduleService](updateById) entitySchedule : {}",entitySchedule);
 
-        if(entitySchedule.isEmpty()) throw new NotFindDataException("일정을 찾을 수 없습니다.");
-
-        entitySchedule.get().update(schedule);
+        entitySchedule.update(schedule);
 
     }
 

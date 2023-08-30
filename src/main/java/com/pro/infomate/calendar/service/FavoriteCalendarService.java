@@ -13,6 +13,8 @@ import com.pro.infomate.member.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,13 +34,13 @@ public class FavoriteCalendarService {
 
     private final ModelMapper modelMapper;
 
-    public List<FavoriteCalendarDTO> findAllByFavoriteCalendar(Integer memberCode){
+    public Page<FavoriteCalendarDTO> findAllByFavoriteCalendar(Integer memberCode, Pageable pageable){
 
-        List<FavoriteCalendar> favoriteCalendarList = favotriteCalendarRepository.findByCalendarByMemberCode(memberCode);
+        Page<FavoriteCalendar> favoriteCalendarList = favotriteCalendarRepository.findByCalendarByMemberCode(memberCode, pageable);
 
         log.info("[FavoriteCalendarService](findAllByFavoriteCalendar) calendarList : {}",favoriteCalendarList);
 
-        List<FavoriteCalendarDTO> favoriteCalendarDTOList = favoriteCalendarList.stream()
+        Page<FavoriteCalendarDTO> favoriteCalendarDTOList = favoriteCalendarList
                 .map(favoriteCalendar -> modelMapper.map(favoriteCalendar, FavoriteCalendarDTO.class))
                 .map(favoriteCalendarDTO -> {
 
@@ -53,10 +55,8 @@ public class FavoriteCalendarService {
                     memberDTO.setMemberNo(favoriteCalendarDTO.getMember().getMemberNo());
                     favoriteCalendarDTO.setMember(memberDTO);
 
-
                     return favoriteCalendarDTO;
-                })
-                .collect(Collectors.toList());
+                });
 
         log.info("[FavoriteCalendarService](findAllByFavoriteCalendar) favoriteCalendarDTOList : {}",favoriteCalendarDTOList);
 
@@ -64,10 +64,10 @@ public class FavoriteCalendarService {
 
     }
 
-    public List<FavoriteCalendarDTO> findAllByMemberCode(Integer memberCode) {
-        List<FavoriteCalendar> favoriteCalendars = favotriteCalendarRepository.findAllByMemberCode(memberCode);
+    public Page<FavoriteCalendarDTO> findAllByMemberCode(Integer memberCode, Pageable pageable) {
+        Page<FavoriteCalendar> favoriteCalendars = favotriteCalendarRepository.findAllByMemberCode(memberCode, pageable);
 
-        return favoriteCalendars.stream()
+        return favoriteCalendars
                 .map(favoriteCalendar -> modelMapper.map(favoriteCalendar,FavoriteCalendarDTO.class))
                 .map(favoriteCalendarDTO -> {
                     favoriteCalendarDTO.getCalendar().setFavoriteCalendar(null);
@@ -80,18 +80,18 @@ public class FavoriteCalendarService {
 
                     favoriteCalendarDTO.setMember(memberDTO);
                     return favoriteCalendarDTO;
-                }).collect(Collectors.toList());
+                });
     }
 
     @Transactional
     public void updateApprovalStatusById(List<FavoriteCalendarDTO> favoriteList) {
 
         favoriteList.stream().forEach(favorite -> {
-            Optional<FavoriteCalendar> favoriteCalendar = favotriteCalendarRepository.findById(favorite.getId());
+            FavoriteCalendar favoriteCalendar = favotriteCalendarRepository
+                    .findById(favorite.getId())
+                    .orElseThrow(() -> new NotFindDataException("캘린더를 찾을 수 없습니다"));
 
-            if(favoriteCalendar.isEmpty()) throw new NotFindDataException("캘린더를 찾을 수 없습니다.");
-
-            favoriteCalendar.get().setApprovalStatus(favorite.getApprovalStatus());
+            favoriteCalendar.setApprovalStatus(favorite.getApprovalStatus());
         });
     }
 
@@ -113,10 +113,14 @@ public class FavoriteCalendarService {
         favoriteCalendarDTO.stream()
                 .map(favoriteCalendar -> modelMapper.map(favoriteCalendar, FavoriteCalendar.class))
                 .forEach(favoriteCalendar -> {
-                    Optional<Calendar> calendar = calendarRepository.findById(favoriteCalendar.getRefCalendar());
-                    if(calendar.isEmpty() || !calendar.get().getOpenStatus()) throw new NotFindDataException("캘린더를 찾을 수 없거나 비공개된 캘린더 입니다");
+                    Calendar calendar = calendarRepository
+                            .findById(favoriteCalendar.getRefCalendar())
+                            .orElseThrow(() -> new NotFindDataException("캘린더를 찾을 수 없습니다"));
+
+                    if(!calendar.getOpenStatus()) throw new NotFindDataException("캘린더를 찾을 수 없거나 비공개된 캘린더 입니다");
                     favoriteCalendar.setApprovalStatus(ApprovalStatus.WAIT);
                     favoriteCalendar.setRequestDate(LocalDateTime.now());
+
                     favotriteCalendarRepository.save(favoriteCalendar);
                 });
     }
