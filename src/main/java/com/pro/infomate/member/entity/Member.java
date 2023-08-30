@@ -1,9 +1,11 @@
 package com.pro.infomate.member.entity;
 
+import com.pro.infomate.addressbook.entity.Contact;
 import com.pro.infomate.approval.entity.Approval;
 import com.pro.infomate.approval.entity.DocRef;
 import com.pro.infomate.approval.entity.Document;
 import com.pro.infomate.department.entity.Department;
+import com.pro.infomate.email.entity.Email;
 import lombok.*;
 
 import javax.persistence.*;
@@ -56,6 +58,12 @@ public class Member {
     @Column(name = "EXTENSION_NUMBER")
     private String extensionNumber;
 
+    @OneToMany(mappedBy = "member")
+    private List<Contact> contactList;
+
+    @OneToMany(mappedBy = "member")
+    private List<Email> emailList;
+
     @Column(name = "MEMBER_ADDRESS")
     private String memberAddress;
 
@@ -77,6 +85,10 @@ public class Member {
     @Column(name = "MEMBER_OFF")
     private int memberOff;
 
+    @OneToMany
+    @JoinColumn(name = "MEMBER_CODE")
+    private List<AuthList> authList;
+
     @OneToMany(mappedBy = "member")
     private List<DocRef> memberRefList = new ArrayList<>();
 
@@ -85,6 +97,7 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Document> documentList = new ArrayList<>();
+
 
 
 

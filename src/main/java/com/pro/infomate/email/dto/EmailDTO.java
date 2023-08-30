@@ -20,4 +20,8 @@ public class EmailDTO {
     private char mailStatus;
 
     private String mailTitle;
+
+    private char mailLike;
+
+    private String receiverMail;
 }

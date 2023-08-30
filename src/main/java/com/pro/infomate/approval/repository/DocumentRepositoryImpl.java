@@ -3,6 +3,7 @@ package com.pro.infomate.approval.repository;
 import com.pro.infomate.approval.dto.response.DocumentListResponse;
 import com.pro.infomate.approval.dto.response.QDocumentListResponse;
 import com.pro.infomate.approval.entity.*;
+
 import com.querydsl.core.types.SubQueryExpression;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
@@ -13,24 +14,24 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.Comparator;
 import java.util.stream.Collectors;
 
-import static com.pro.infomate.approval.entity.QApproval.*;
+import static com.pro.infomate.approval.entity.QApproval.approval;
 import static com.pro.infomate.approval.entity.QDocument.*;
-import static com.pro.infomate.member.entity.QDepartment.*;
-import static com.pro.infomate.member.entity.QMember.*;
+import static com.pro.infomate.department.entity.QDepartment.department;
+import static com.pro.infomate.member.entity.QMember.member;
+
 
 @RequiredArgsConstructor
 public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
 
   private final JPAQueryFactory queryFactory;
 
-  // 본인 부서 중 완료된 문서 리스트
+//   본인 부서 중 완료된 문서 리스트
   @Override
   public Page<DocumentListResponse> findByDeptDoc(int memberCode, Pageable pageable) {
 
-    SubQueryExpression<Long> subQueryDeptCodes = JPAExpressions
+    SubQueryExpression<Integer> subQueryDeptCodes = JPAExpressions
             .select(department.deptCode)
             .from(member)
             .join(member.department, department)
@@ -63,7 +64,7 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
                     document.documentStatus.eq(DocumentStatus.APPROVAL)
                     .and(department.deptCode.in(subQueryDeptCodes)))
                     .fetchOne();
-    
+
     return new PageImpl<>(content,pageable, count);
   }
 
@@ -89,7 +90,7 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
             .leftJoin(approval.document, document).fetchJoin()
             .where(approval.approvalDate.isNull()
                     .and(approval.member.memberCode.eq(memberCode)))
-//            .orderBy(approval.document.createdDate.desc())
+            .orderBy(approval.document.createdDate.desc())
             .limit(5)
             .fetch();
 
@@ -114,6 +115,8 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
             .collect(Collectors.toList());
 
     return new PageImpl<>(documents, pageable, documents.size());
+
+
   }
 
 
