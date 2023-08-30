@@ -2,6 +2,71 @@ POST http://localhost:8989/auth/login
 Content-Type: application/json
 Accept: */*
 Access-Control-Allow-Origin: *
+Content-Length: 54
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "memberId": "user1",
+  "memberPassword": "user1"
+}
+
+<> 2023-08-30T102103.200.json
+
+###
+
+POST http://localhost:8989/auth/signup
+Content-Type: application/json
+Accept: */*
+Content-Length: 370
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "memberPassword": "user1",
+  "memberName": "아무개",
+  "memberId": "user1",
+  "memberEmail": "a@mugae.com",
+  "memberPhone": "010-4324-1234",
+  "memberNo": "1999-01-23",
+  "memberStatus": "Y",
+  "memberAddress": "경기도 고양시 일산동구",
+  "hireDate": "2023-08-28T12:00:00Z",
+  "department": {
+    "deptCode": 3
+  },
+  "rankCode": 2,
+  "memberOff": 12
+}
+
+<> 2023-08-30T101943.200.json
+
+###
+
+POST http://localhost:8989/auth/login
+Content-Type: application/json
+Accept: */*
+Access-Control-Allow-Origin: *
+Content-Length: 56
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "memberId": "dbrs96",
+  "memberPassword": "pass01"
+}
+
+<> 2023-08-29T153728.200.json
+
+###
+
+POST http://localhost:8989/auth/login
+Content-Type: application/json
+Accept: */*
+Access-Control-Allow-Origin: *
 Content-Length: 56
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
@@ -796,33 +861,6 @@ User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
 <> 2023-08-16T203859.200.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-16T201827.500.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-16T201553.500.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-16T201219.500.json
 
 ###
 

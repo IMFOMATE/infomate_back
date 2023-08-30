@@ -5,8 +5,8 @@ Accept: */*
 Access-Control-Allow-Origin: *
 
 {
-  "memberId": "dbrs96",
-  "memberPassword": "pass01"
+  "memberId": "user1",
+  "memberPassword": "user1"
 }
 
 ### 회원가입
@@ -15,18 +15,18 @@ Content-Type: application/json
 Accept: */*
 
 {
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberId": "dbrs96",
-  "memberEmail": "dong@duckdin.com",
-  "memberPhone": "010-1234-5678",
-  "memberNo": "1996-10-27",
+  "memberPassword": "user1",
+  "memberName": "아무개",
+  "memberId": "user1",
+  "memberEmail": "a@mugae.com",
+  "memberPhone": "010-4324-1234",
+  "memberNo": "1999-01-23",
   "memberStatus": "Y",
-  "memberAddress": "경기도 고양시 일산서구",
+  "memberAddress": "경기도 고양시 일산동구",
   "hireDate": "2023-08-28T12:00:00Z",
   "department": {
-    "deptCode": 1
+    "deptCode": 3
   },
-  "rankCode": 1,
-  "memberOff": 10
+  "rankCode": 2,
+  "memberOff": 12
 }
