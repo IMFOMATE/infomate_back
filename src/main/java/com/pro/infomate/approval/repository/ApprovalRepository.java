@@ -1,18 +1,26 @@
 package com.pro.infomate.approval.repository;
 
 import com.pro.infomate.approval.entity.Approval;
+import com.pro.infomate.approval.entity.Document;
+import com.pro.infomate.member.entity.Member;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
-public interface ApprovalRepository extends JpaRepository<Approval, Long> {
+import java.util.List;
 
-    //1. 결재 리스트 조회
+public interface ApprovalRepository extends JpaRepository<Approval, Long>, ApprovalRepositoryCustom {
 
-    //2. 결재 승인
 
-    //3. 결재 반려
+  List<Approval> findByMemberAndApprovalDateIsNull(Member member);
 
-    //4. 결재 취소
+  @EntityGraph(attributePaths = {"member"})
+  Approval findTopByDocumentAndApprovalDateIsNullOrderByOrderAsc(Document document);
 
-    //5. 결재 리스트 저장
+
+
+
+//  Approval findByApproval(long id);
+
 
 }

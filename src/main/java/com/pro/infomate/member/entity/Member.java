@@ -1,18 +1,18 @@
 package com.pro.infomate.member.entity;
 
-import com.pro.infomate.Board.entity.Board;
-import com.pro.infomate.Board.entity.Post;
-import com.pro.infomate.calendar.entity.Calendar;
-import com.pro.infomate.calendar.entity.FavoriteCalendar;
-import com.pro.infomate.calendar.entity.Participant;
+
 import com.pro.infomate.work.entity.Off;
 import com.pro.infomate.work.entity.Work;
-import io.github.classgraph.PackageInfo;
-import lombok.*;
+import com.pro.infomate.addressbook.entity.Contact;
 import com.pro.infomate.approval.entity.Approval;
-import com.pro.infomate.approval.entity.DocMemberRef;
+import com.pro.infomate.approval.entity.DocRef;
 import com.pro.infomate.approval.entity.Document;
+import com.pro.infomate.department.entity.Department;
+import com.pro.infomate.email.entity.Email;
+import lombok.*;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import java.sql.Timestamp;
@@ -61,41 +61,48 @@ public class Member {
     @Column(name = "EXTENSION_NUMBER")
     private String extensionNumber;
 
+    @OneToMany(mappedBy = "member")
+    private List<Contact> contactList;
+
+    @OneToMany(mappedBy = "member")
+    private List<Email> emailList;
+
     @Column(name = "MEMBER_ADDRESS")
     private String memberAddress;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "DEPT_CODE")
+    private Department department;
 
     @Column(name = "HIRE_DATE")
     private Timestamp hireDate;
 
-    @Column(name = "DEPT_CODE")
-    private int deptCode;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "RANK_CODE")
+    private Rank rank;
 
     @Column(name = "MEMBER_PIC")
     private String memberPic;
 
-    @Column(name = "RANK_CODE")
-    private int rankCode;
 
     @Column(name = "MEMBER_OFF")
     private int memberOff;
 
-    @OneToMany(mappedBy = "member")
-    private List<DocMemberRef> memberRefList;
+    @OneToMany
+    @JoinColumn(name = "MEMBER_CODE")
+    private List<AuthList> authList;
 
     @OneToMany(mappedBy = "member")
-    private List<Approval> approvalList;
+    private List<DocRef> memberRefList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
-    private List<Document> documentList;
+    private List<Approval> approvalList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
-    private List<FavoriteCalendar> favoriteCalendarList;
+    private List<Document> documentList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
-    private List<Calendar> calendarList;
 
-    @OneToMany(mappedBy = "member")
-    private List<Participant> participantList;
+
 
     @OneToMany(mappedBy = "member")
     private List<Work> workList;

@@ -22,4 +22,7 @@ public class Authority {
 
     @Column(name = "AUTHORITY_NAME")
     private String authorityName;
+
+    @Column(name = "AUTHORITY_DESC")
+    private String authorityDesc;
 }

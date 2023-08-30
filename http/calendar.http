@@ -33,12 +33,12 @@ Content-Type: application/json
 }
 
 ### 기본 캘린더 변경
-PATCH http://localhost:8091/calendar/updateDafault
+PATCH http://localhost:8989/calendar/updateDafault
 Accept: */*
 Content-Type: application/json
 
 {
-  "id" : 42,
+  "id" : 174,
   "memberCode" : 2
 }
 
@@ -46,7 +46,7 @@ Content-Type: application/json
 GET http://localhost:8091/calendar/list/2
 
 ### 일정 등록용 캘린더 리스트 조회
-GET http://localhost:8091/calendar/mylist/2
+GET http://localhost:8989/calendar/mylist/2
 
 ### 팔로우 가능 캘린더 리스트
 GET http://localhost:8091/calendar/openCalendarList

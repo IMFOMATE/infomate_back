@@ -6,10 +6,7 @@ import lombok.*;
 import java.util.List;
 
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
-@Builder
 @Setter
 @ToString
 public class ParticipantDTO {

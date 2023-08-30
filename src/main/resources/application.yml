@@ -28,14 +28,14 @@ spring:
   data:
     web:
       pageable:
-        default-page-size: 10 #페이지 사이즈(default)
+        default-page-size: 20 #페이지 사이즈(default)
         max-page-size: 50 # max 사이즈
 
   profiles:
     active: local
 
-#jwt:
-#  secret:
+jwt:
+  secret: 1LxrVXYDdRoBBa2Wc9lfOLVUl9BXt6JEZEhkm1mLY04lbjIx4I18x4QOha7cSKrCQJCKwpavnVtfVzFPnBzJfQ==
 
 logging:
   level:

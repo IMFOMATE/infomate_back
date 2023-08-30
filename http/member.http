@@ -1,0 +1,32 @@
+### 로그인
+POST http://localhost:8989/auth/login
+Content-Type: application/json
+Accept: */*
+Access-Control-Allow-Origin: *
+
+{
+  "memberId": "dbrs96",
+  "memberPassword": "pass01"
+}
+
+### 회원가입
+POST http://localhost:8989/auth/signup
+Content-Type: application/json
+Accept: */*
+
+{
+  "memberPassword": "pass01",
+  "memberName": "동덕",
+  "memberId": "dbrs96",
+  "memberEmail": "dong@duckdin.com",
+  "memberPhone": "010-1234-5678",
+  "memberNo": "1996-10-27",
+  "memberStatus": "Y",
+  "memberAddress": "경기도 고양시 일산서구",
+  "hireDate": "2023-08-28T12:00:00Z",
+  "department": {
+    "deptCode": 1
+  },
+  "rankCode": 1,
+  "memberOff": 10
+}
