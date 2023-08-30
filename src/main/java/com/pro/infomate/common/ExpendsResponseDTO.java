@@ -10,12 +10,12 @@ public class ExpendsResponseDTO extends ResponseDTO {
 
     private ExpendsProps expendsProps;
 
-    private PageDTO pageDTO;
+    private PageDTO pageInfo;
 
     @Builder(builderMethodName = "expendsResponseBuilder")
     public ExpendsResponseDTO(HttpStatus status, String message, Object data, ExpendsProps expendsProps, PageDTO pageDTO) {
         super(status, message, data);
         this.expendsProps = expendsProps;
-        this.pageDTO = pageDTO;
+        this.pageInfo = pageDTO;
     }
 }

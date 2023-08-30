@@ -28,8 +28,10 @@ public class FavoriteCalendarController {
     @GetMapping("/followerList/{memberCode}") // api 연동 확인
     public ResponseEntity<ResponseDTO> findAllByFollowerList(@PathVariable Integer memberCode, Pageable pageable){
 
+        log.info("[FavoriteCalendarController](updateApprovalStatus) pageable.isUnpaged() : {}", pageable);
+
         pageable = PageRequest.of(
-                pageable.getPageNumber() - 1 < 0 ? 0 : pageable.getPageNumber() - 1,
+                pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
                 pageable.getPageSize(),
                 pageable.getSort()
         );

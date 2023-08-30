@@ -237,6 +237,7 @@ public class CalendarService {
                            calendarDTO.getFavoriteCalendar().stream()
                                    .map(favoriteCalendarDTO -> {
                                        favoriteCalendarDTO.setCalendar(null);
+                                       favoriteCalendarDTO.getMember().setDepartment(null); // 부서관련 오류 처리 내용 확인 후 처리 옙정
                                        return favoriteCalendarDTO;
 
                                    }).collect(Collectors.toList()));
@@ -244,6 +245,7 @@ public class CalendarService {
                    MemberDTO memberDTO = new MemberDTO();
                    memberDTO.setMemberName(calendarDTO.getMember().getMemberName());
                    memberDTO.setMemberNo(calendarDTO.getMember().getMemberNo());
+                   memberDTO.setDepartment(null);
                    calendarDTO.setMember(memberDTO);
 
                    log.info("[CalendarService](openCalendarList) calendarDTO : {}",calendarDTO);
