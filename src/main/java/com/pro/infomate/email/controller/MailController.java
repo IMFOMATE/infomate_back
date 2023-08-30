@@ -19,7 +19,7 @@ public class MailController {
     private final MailService mailService;
 
     @GetMapping("/mailList/{memberCode}")
-    public ResponseEntity<ResponseDTO> selectAddressBook(@PathVariable Long memberCode) {
+    public ResponseEntity<ResponseDTO> selectAddressBook(@PathVariable Integer memberCode) {
 
 
         return ResponseEntity.ok()

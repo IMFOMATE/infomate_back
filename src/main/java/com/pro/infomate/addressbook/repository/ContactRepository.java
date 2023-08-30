@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import java.util.List;
 import java.util.Optional;
 
-public interface ContactRepository extends JpaRepository<Contact, Long> {
+public interface ContactRepository extends JpaRepository<Contact, Integer> {
 
 
     @Query("SELECT c FROM Contact c join c.member m where m.memberCode = :memberCode")

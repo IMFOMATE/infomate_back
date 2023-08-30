@@ -5,14 +5,13 @@ import com.pro.infomate.addressbook.dto.ContactDTO;
 import com.pro.infomate.addressbook.service.ContactService;
 
 import com.pro.infomate.common.ResponseDTO;
+import com.pro.infomate.util.FileUploadUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
 
 @RestController
 @RequestMapping("/addressBook")
@@ -25,7 +24,7 @@ public class ContactController {
 
 
     @GetMapping("/contact/{memberCode}")
-    public ResponseEntity<ResponseDTO> selectAddressBook(@PathVariable int memberCode) {
+    public ResponseEntity<ResponseDTO> selectAddressBook(@PathVariable Integer memberCode) {
 
         log.info("[AddressBookController](addContact) memberCode : {} ", memberCode);
 
@@ -82,6 +81,8 @@ public class ContactController {
         System.out.println(contactPhoto);
 
 
+
+
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.valueOf(HttpStatus.CREATED.value()))
@@ -90,7 +91,7 @@ public class ContactController {
     }
 
     @PutMapping("/contactUpdate/{contactCode}")
-    public ResponseEntity<ResponseDTO> updateContact(@PathVariable Long contactCode) {
+    public ResponseEntity<ResponseDTO> updateContact(@PathVariable Integer contactCode ) {
 
         log.info("[AddressBookController] updateContact contactCode {} ", contactCode);
 
@@ -101,6 +102,23 @@ public class ContactController {
                             .status(HttpStatus.valueOf(HttpStatus.CREATED.value()))
                             .message("success")
                             .build());
+
+    }
+
+    @DeleteMapping("/deleteContact/{contactCode}")
+    public ResponseEntity<ResponseDTO> deleteContact(@PathVariable Integer contactCode) {
+
+        log.info("[AddressBookController] deleteContact contactCode {} ", contactCode);
+
+        addressBookService.deleteContact(contactCode);
+
+        System.out.println("contactCode" + contactCode);
+
+        return ResponseEntity.ok()
+                .body(ResponseDTO.builder()
+                        .status(HttpStatus.valueOf(HttpStatus.CREATED.value()))
+                        .message("success")
+                        .build());
 
     }
 

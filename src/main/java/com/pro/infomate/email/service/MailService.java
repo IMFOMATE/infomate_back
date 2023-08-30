@@ -28,7 +28,7 @@ public class MailService {
     private final ModelMapper modelMapper;
 
 
-    public List<EmailDTO> selectMail(Long memberCode) {
+    public List<EmailDTO> selectMail(Integer memberCode) {
 
         List<Email> emails = emailAndMemberRepository.findByMemberCode(memberCode);
 

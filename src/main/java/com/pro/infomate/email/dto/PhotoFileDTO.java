@@ -9,9 +9,9 @@ import lombok.*;
 @ToString
 public class PhotoFileDTO {
 
-    private int fileCode;
+    private Integer fileCode;
 
-    private int mailCode;
+    private Integer mailCode;
 
     private String fileDate;
 

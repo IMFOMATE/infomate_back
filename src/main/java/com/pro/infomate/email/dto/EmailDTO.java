@@ -15,7 +15,7 @@ public class EmailDTO {
 
     private String mailDate;
 
-    private int memberCode;
+    private Integer memberCode;
 
     private char mailStatus;
 

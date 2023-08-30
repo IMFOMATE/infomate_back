@@ -26,7 +26,7 @@ public class Email {
             strategy = GenerationType.SEQUENCE,
             generator = "SEQ_TBL_MAIL_GENERATOR"
     )
-    private Long mailCode;
+    private Integer mailCode;
 
     @Column(name = "MAIL_CONTENT")
     private String mailContent;
