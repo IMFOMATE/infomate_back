@@ -5,12 +5,12 @@ Content-Type: application/json
 
 ### 게시글 등록
 POST http://localhost:8989/board/posting
-Content-Type: multipart/form-data; boundary=WebAppBoundary
+#Content-Type: multipart/form-data; boundary=WebAppBoundary
 Accept: */*
 Content-Type: application/json
-
---WebAppBoundary
-Content-Disposition: form-data;
+#
+#--WebAppBoundary
+#Content-Disposition: form-data;
 
 {
   "postCode": 0,
