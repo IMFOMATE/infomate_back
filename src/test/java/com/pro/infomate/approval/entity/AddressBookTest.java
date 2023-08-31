@@ -35,7 +35,7 @@ public class AddressBookTest {
     void test1() {
 
         // given
-        Member member = memberRepository.findById(2L).orElseThrow(() -> new NotFindDataException("회원없음"));
+//        Member member = memberRepository.findById(2L).orElseThrow(() -> new NotFindDataException("회원없음"));
 
 //        Contact contact = new Contact();
 //        contact.setCompany("무슨회사");
@@ -70,10 +70,10 @@ public class AddressBookTest {
     @DisplayName("mail test")
     void test2() {
 
-        Member member = memberRepository.findById(2L).orElseThrow(() -> new NotFindDataException("회원없음"));
+//        Member member = memberRepository.findById(2L).orElseThrow(() -> new NotFindDataException("회원없음"));
 
         Email email = new Email();
-        email.setMember(member);
+//        email.setMember(member);
         email.setMailDate("2023-8-23");
         email.setMailContent("아무말");
         email.setMailStatus('Y');

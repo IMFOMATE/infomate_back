@@ -45,6 +45,7 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
                             document.emergency.as("emergency"),
                             document.createdDate.as("createdDate"),
                             document.documentKind.as("documentKind")
+
                     ))
             .from(document)
             .join(document.member, member)
@@ -66,6 +67,7 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
                     .fetchOne();
 
     return new PageImpl<>(content,pageable, count);
+
   }
 
 

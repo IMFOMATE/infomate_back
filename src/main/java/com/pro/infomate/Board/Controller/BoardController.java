@@ -23,7 +23,7 @@ class BoardController {
         this.boardService = boardService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/")    // 게시판 (게시글 목록)
     public ResponseEntity<ResponseDTO> getPost() {
         log.info("[BoardController] getMainPage");
 
@@ -33,10 +33,10 @@ class BoardController {
     }
 
 
-    @PostMapping("/posting")
+    @PostMapping("/posting")    // 글작성페이지
     public ResponseEntity<ResponseDTO> postPost(@RequestBody PostDTO postDTO) {
         System.out.println("postDTO = " + postDTO);
-       // String result = boardService.postPost(postDTO);
+        // String result = boardService.postPost(postDTO);
         boardService.postPost(postDTO);
 
         return ResponseEntity.ok()
@@ -45,4 +45,35 @@ class BoardController {
                         .message("작성 완료")
                         .build());
     }
+
+
+
+    @GetMapping("/notice")  // 공지사항
+    public ResponseEntity<ResponseDTO> boardNotice() {
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지사항 조회 성공", boardService.boardNotice()));
+    }
+
+
+    @GetMapping("/common")  // 일반게시판
+    public ResponseEntity<ResponseDTO> boardCommon() {
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일반게시판 조회 성공", boardService.boardCommon()));
+    }
+
+
+    @GetMapping("/anony")   // 익명게시판
+    public ResponseEntity<ResponseDTO> boardAnony() {
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "익명게시판 조회 성공", boardService.boardAnony()));
+    }
+
+
+
+    @GetMapping("/dept")   // 부서게시판
+    public ResponseEntity<ResponseDTO> boardDept() {
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "부서게시판 조회 성공", boardService.boardDept()));
+    }
+    
 }
