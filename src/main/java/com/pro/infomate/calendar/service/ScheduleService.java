@@ -99,8 +99,7 @@ public class ScheduleService {
     public Object insertSchedule(ScheduleDTO scheduleDTO) {
         log.info("[ScheduleService](insertSchedule) scheduleDTO : {}",scheduleDTO);
         Schedule schedule = modelMapper.map(scheduleDTO, Schedule.class);
-//        Calendar calendar = calendarRepository.findById(scheduleDTO.getRefCalendar()).get();
-//        schedule.setRefCalendar(calendar);
+
         log.info("[ScheduleService](insertSchedule) schedule : {}",schedule);
         return scheduleRepository.save(schedule);
     }
