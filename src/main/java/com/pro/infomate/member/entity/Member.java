@@ -1,5 +1,8 @@
 package com.pro.infomate.member.entity;
 
+
+import com.pro.infomate.work.entity.Off;
+import com.pro.infomate.work.entity.Work;
 import com.pro.infomate.addressbook.entity.Contact;
 import com.pro.infomate.approval.entity.Approval;
 import com.pro.infomate.approval.entity.DocRef;
@@ -101,4 +104,11 @@ public class Member {
 
 
 
+    @OneToMany(mappedBy = "member")
+    private List<Work> workList;
+
+    @OneToMany(mappedBy = "member")
+    private List<Off> OffList;
+
 }
+

@@ -52,3 +52,114 @@ Content-Type: application/json
   ]
 }
 
+<<<<<<< HEAD
+### main
+GET http://localhost:8989/document/main
+Accept: */*
+
+
+### 결재문서 상세 조회
+GET http://localhost:8989/document/56
+
+### 문서 등록 test1
+POST http://localhost:8989/document/regist/vacation
+Accept: */*
+Content-Type: application/json
+
+{
+  "title": "휴가승인바랍니다",
+  "createdDate": "2023-08-17 12:30:00",
+  "sort": "연차",
+  "startDate": "2023-09-12 09:00:00",
+  "endDate": "2023-09-13 09:00:00",
+  "emergency" : "N",
+  "reason" : "쓰고싶엇거",
+  "refList": [
+    43
+  ],
+  "approvalList": [
+    {
+      "id": 2,
+      "order": 1
+    }
+  ]
+}
+
+### 문서 등록 test2
+POST http://localhost:8989/document/regist/draft
+Accept: */*
+Content-Type: application/json
+
+{
+  "title": "업무보고드립니다.",
+  "content": "이러저러해서 이러저러함",
+  "emergency": "N",
+  "refList": [],
+  "approvalList": [
+    {
+      "id": 2,
+      "order": 2
+    },
+    {
+      "id": 43,
+      "order": 1
+    }
+  ]
+}
+
+### main
+GET http://localhost:8989/document/main
+Accept: */*
+
+
+### 결재문서 상세 조회
+GET http://localhost:8989/document/56
+
+### 문서 등록 test1
+POST http://localhost:8989/document/regist/vacation
+Accept: */*
+Content-Type: application/json
+
+{
+  "title": "휴가승인바랍니다",
+  "createdDate": "2023-08-17 12:30:00",
+  "sort": "연차",
+  "startDate": "2023-09-12 09:00:00",
+  "endDate": "2023-09-13 09:00:00",
+  "emergency" : "N",
+  "reason" : "쓰고싶엇거",
+  "refList": [
+    43
+  ],
+  "approvalList": [
+    {
+      "id": 2,
+      "order": 1
+    }
+  ]
+}
+
+### 문서 등록 test2
+POST http://localhost:8989/document/regist/draft
+Accept: */*
+Content-Type: application/json
+
+{
+  "title": "업무보고드립니다.",
+  "content": "이러저러해서 이러저러함",
+  "emergency": "N",
+  "refList": [],
+  "approvalList": [
+    {
+      "id": 2,
+      "order": 2
+    },
+    {
+      "id": 43,
+      "order": 1
+    }
+  ]
+}
+
+=======
+>>>>>>> c9199d8e83bec2b26652b68fa92e51c1207da5e6
