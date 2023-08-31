@@ -27,11 +27,7 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
 
   private final JPAQueryFactory queryFactory;
 
-<<<<<<< HEAD
   //   본인 부서 중 완료된 문서 리스트
-=======
-//   본인 부서 중 완료된 문서 리스트
->>>>>>> 9b43f91e0443c7197b6c7438be37b47d19d65f14
   @Override
   public Page<DocumentListResponse> findByDeptDoc(int memberCode, Pageable pageable) {
 
@@ -67,13 +63,8 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
             .join(member.department, department)
             .where(
                     document.documentStatus.eq(DocumentStatus.APPROVAL)
-<<<<<<< HEAD
                             .and(department.deptCode.in(subQueryDeptCodes)))
             .fetchOne();
-=======
-                    .and(department.deptCode.in(subQueryDeptCodes)))
-                    .fetchOne();
->>>>>>> 9b43f91e0443c7197b6c7438be37b47d19d65f14
 
     return new PageImpl<>(content,pageable, count);
 
