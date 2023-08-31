@@ -32,6 +32,8 @@ public class DocumentDetailResponse {
   private String content; // 내용
 
   private String documentKind; // 문서종류
+  
+  private String emergency; // 긴급여부
 
   private List<DocFileResponse> fileList; // 첨부파일
 

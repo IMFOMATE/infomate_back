@@ -40,15 +40,15 @@ public class DocumentController {
   // 휴가 문서 등록
   @PostMapping("/regist/vacation")
   public ResponseEntity<ResponseDTO> vacationRegist(
-          @RequestBody VacationRequest vacationRequest,
+          @ModelAttribute VacationRequest vacationRequest,
           @RequestParam(name = "temp",required = false) String temp,
-          MultipartFile[] files
+          @ModelAttribute(name = "fileList") List<MultipartFile> fileList
   ){
 
     //일단은 code로 사용
     int memberCode = 22;
 
-//    documentService.vacationSave(memberCode, vacationRequest, temp);
+    documentService.vacationSave(memberCode, vacationRequest, temp, fileList);
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
@@ -60,17 +60,17 @@ public class DocumentController {
   // 기안 문서 등록
   @PostMapping("/regist/draft")
   public ResponseEntity<ResponseDTO> draftRegist(
-          @ModelAttribute(name = "form") DraftRequest request,
+          @ModelAttribute DraftRequest draftRequest,
           @RequestParam(name = "temp",required = false) String temp,
           @ModelAttribute(name = "fileList") List<MultipartFile> fileList
   ){
 
-    System.out.println("form = " + request);
+    System.out.println("form = " + draftRequest);
 
     //일단은 code로 사용
-//    int memberCode = 43;
+    int memberCode = 43;
 //
-//    documentService.draftSave(memberCode, draftRequest, temp);
+    documentService.draftSave(memberCode, draftRequest, temp ,fileList);
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
@@ -82,9 +82,9 @@ public class DocumentController {
   // 지출결의서 등록
   @PostMapping("/regist/payment")
   public ResponseEntity<ResponseDTO> paymentRegist(
-          @RequestBody PaymentRequest paymentRequest,
+          @ModelAttribute PaymentRequest paymentRequest,
           @RequestParam(name = "temp",required = false) String temp,
-          MultipartFile[] files
+          @ModelAttribute(name = "fileList") List<MultipartFile> fileList
   ){
 
     //일단은 code로 사용
@@ -144,10 +144,10 @@ public class DocumentController {
   public ResponseEntity<ResponseDTO> approvalAllList(
           @PathVariable int memberCode,
           @RequestParam(required = false, name = "status") String status,
-//          @RequestParam(required = false, name = "page") String page,
           Pageable pageable){
 
     log.info("[DocumentController] status={}", status);
+    log.info("[DocumentController] memberCode={}", memberCode);
 
     Page<DocumentListResponse> documents = documentService.approvalList(status, memberCode, pageable);
     Criteria criteria = new Criteria(pageable.getPageNumber()+1, pageable.getPageSize());

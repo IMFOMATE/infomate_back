@@ -3,7 +3,6 @@ package com.pro.infomate.approval.repository;
 import com.pro.infomate.approval.dto.response.DocumentListResponse;
 import com.pro.infomate.approval.dto.response.QDocumentListResponse;
 import com.pro.infomate.approval.entity.*;
-import com.pro.infomate.department.entity.QDepartment;
 import com.querydsl.core.types.SubQueryExpression;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
@@ -15,8 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.Comparator;
-import java.util.stream.Collectors;
 
 import static com.pro.infomate.approval.entity.QApproval.*;
 import static com.pro.infomate.approval.entity.QDocument.*;
@@ -84,40 +81,7 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
             .fetch();
   }
 
-  //결재대기
-  public List<Document> findCredit(int memberCode) {
-    List<Approval> approvals = queryFactory
-            .selectFrom(approval)
-            .leftJoin(approval.member)
-            .leftJoin(approval.document, document).fetchJoin()
-            .where(approval.approvalDate.isNull()
-                    .and(approval.member.memberCode.eq(memberCode)))
-//            .orderBy(approval.document.createdDate.desc())
-            .limit(5)
-            .fetch();
 
-    return approvals.stream()
-            .map(Approval::getDocument)
-            .collect(Collectors.toList());
-  }
-
-  //페이징 결재대기
-  public Page<Document> findCreditWithPaging(int memberCode, Pageable pageable) {
-    List<Approval> approvals = queryFactory
-            .selectFrom(approval)
-            .leftJoin(approval.member)
-            .leftJoin(approval.document, document).fetchJoin()
-            .where(approval.approvalDate.isNull()
-                    .and(approval.member.memberCode.eq(memberCode)))
-//            .orderBy(approval.document.createdDate.desc())
-            .fetch();
-
-    List<Document> documents = approvals.stream()
-            .map(Approval::getDocument)
-            .collect(Collectors.toList());
-
-    return new PageImpl<>(documents, pageable, documents.size());
-  }
 
   //조건 페이징
   public Page<DocumentListResponse> findAllApproval(String status, int memberCode, Pageable pageable){
@@ -161,6 +125,5 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
   private BooleanExpression memberCodeEq(Integer memberCode) {
     return memberCode != null ? member.memberCode.eq(memberCode) : null;
   }
-
 
 }

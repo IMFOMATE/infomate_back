@@ -1,5 +1,6 @@
 package com.pro.infomate.approval.entity;
 
+import com.pro.infomate.approval.dto.response.DocFileResponse;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,9 +31,22 @@ public class DocumentFile {
   @Column(name = "FILE_ORGIN_NAME")
   private String originalName;
 
+  @Column(name = "FILE_TYPE")
+  private String fileType;
+
+  @Column(name = "FILE_SIZE")
+  private long fileSize;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "DOCUMENT_ID")
   private Document document;
 
+  public DocumentFile(DocFileResponse fileResponse, Document document){
+    this.fileName = fileResponse.getFileName();
+    this.originalName = fileResponse.getOriginalName();
+    this.fileSize = fileResponse.getFileSize();
+    this.fileType = fileResponse.getFileType();
+    this.document = document;
+  }
 
 }

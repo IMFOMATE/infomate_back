@@ -41,9 +41,15 @@ class ApprovalRepositoryTest {
   }
 
   @Test
-  @DisplayName("top1")
+  @DisplayName("top2")
   void top1Test(){
+    int memberCode =2;
 
+    List<Document> result = documentRepository.findApprovalsDocument(memberCode);
+    result.forEach(d->{
+      System.out.println("d. = " + d.getId());
+      System.out.println("d. = " + d.getCreatedDate());
+    });
 
   }
 

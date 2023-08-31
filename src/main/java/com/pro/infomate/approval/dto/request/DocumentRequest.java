@@ -24,7 +24,7 @@ public class DocumentRequest {
 
   private List<RefRequest> refList; // 참조자 멤버목록(코드만)
 
-//  private List<ApprovalRequest> approvalList;// 결재 목록
+  private List<ApprovalRequest> approvalList;// 결재 목록
 
 
 }

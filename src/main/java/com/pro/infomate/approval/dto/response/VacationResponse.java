@@ -25,20 +25,13 @@ public class VacationResponse extends DocumentDetailResponse {
 
     @NotBlank
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-
     private LocalDateTime endDate;
 
-    @NotBlank
-    @Size(min = 10, max = 320)
-    private String reason;
-
     @Builder
-    public VacationResponse(Long id, @NotBlank @Size(min = 5, max = 100) String title, LocalDateTime createdDate, DocumentStatus documentStatus, MemberResponse member, String content, String documentKind, List<DocFileResponse> fileList, List<ApprovalResponse> approvalList, List<RefMemberResponse> refList, String sort, LocalDateTime startDate, LocalDateTime endDate, String reason) {
-        super(id, title, createdDate, documentStatus, member, content, documentKind, fileList, approvalList, refList);
+    public VacationResponse(Long id, @NotBlank @Size(min = 5, max = 100) String title, LocalDateTime createdDate, DocumentStatus documentStatus, MemberResponse member, String content, String documentKind, String emergency, List<DocFileResponse> fileList, List<ApprovalResponse> approvalList, List<RefMemberResponse> refList, String sort, LocalDateTime startDate, LocalDateTime endDate) {
+        super(id, title, createdDate, documentStatus, member, content, documentKind, emergency, fileList, approvalList, refList);
         this.sort = sort;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.reason = reason;
     }
-
 }

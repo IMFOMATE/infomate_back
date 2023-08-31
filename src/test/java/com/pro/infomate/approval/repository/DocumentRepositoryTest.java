@@ -102,5 +102,10 @@ class DocumentRepositoryTest {
     allApproval.forEach(a -> System.out.println("a.getId() = " + a.getId()));
 
   }
+  
+
+
+  
+  
 
 }

@@ -28,9 +28,6 @@ public class Vacation extends Document{
   @Column(name = "END_DATE")
   private LocalDateTime endDate;
 
-  @Column(name = "VACTION_REASON")
-  private String reason;
-
   @Override
   public DocumentDetailResponse accept(DocumentVisitor<DocumentDetailResponse> visitor) {
     return visitor.visit(this);

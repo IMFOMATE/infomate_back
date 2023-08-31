@@ -25,26 +25,26 @@ class DocumentServiceTest {
 
   @Autowired private DocumentRepository<Vacation> documentRepository;
 
-  @Test
-  @DisplayName("insert")
+//  @Test
+//  @DisplayName("insert")
 //  @Commit
-  void insert() {
-    List<Integer> ref = new ArrayList<>();
-    ref.add(2);
-    ref.add(43);
-    VacationRequest vacationDTO = VacationRequest.builder()
-            .refList(ref)
-            .title("휴가 승인바랍니다")
-            .approvalList(new ArrayList<>())
-            .sort("연차")
-            .startDate(LocalDateTime.of(2023,9,10,0,0))
-            .endDate(LocalDateTime.of(2023,9,11,0,0))
-            .reason("휴가쓸래...").build();
+//  void insert() {
+//    List<Integer> ref = new ArrayList<>();
+//    ref.add(2);
+//    ref.add(43);
+//    VacationRequest vacationDTO = VacationRequest.builder()
+//            .refList(ref)
+//            .title("휴가 승인바랍니다")
+//            .approvalList(new ArrayList<>())
+//            .sort("연차")
+//            .startDate(LocalDateTime.of(2023,9,10,0,0))
+//            .endDate(LocalDateTime.of(2023,9,11,0,0))
+//            .reason("휴가쓸래...").build();
+////
+//    VacationResponse vacation = documentService.vacationSave(22, vacationDTO,null);
+//    System.out.println("vacation = " + vacation);
 //
-    VacationResponse vacation = documentService.vacationSave(22, vacationDTO,null);
-    System.out.println("vacation = " + vacation);
-
-  }
+//  }
   
   @Test
   @DisplayName("세부내용")

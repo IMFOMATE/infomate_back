@@ -17,12 +17,10 @@ public class PaymentRequest extends DocumentRequest {
   @NotBlank
   private List<PaymentListRequest> paymentList;
 
-  private List<ApprovalRequest> approvalList;
 
   @Builder
   public PaymentRequest(@NotBlank @Size(min = 5, max = 100) String title, String content, String emergency, List<RefRequest> refList, List<ApprovalRequest> approvalList, List<PaymentListRequest> paymentList) {
-    super(title, content, emergency, refList);
+    super(title, content, emergency, refList, approvalList);
     this.paymentList = paymentList;
-    this.approvalList = approvalList;
   }
 }

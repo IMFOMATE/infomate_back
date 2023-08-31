@@ -48,7 +48,7 @@ public class ApprovalService {
             .filter(document -> document.getDocumentStatus() == DocumentStatus.WAITING )
             .collect(Collectors.toList());
 
-    return approvedDocuments.stream().map((element) -> modelMapper.map(element, DocumentListResponse.class)).collect(Collectors.toList());
+    return approvedDocuments.stream().map(DocumentListResponse::new).collect(Collectors.toList());
 
   }
 

@@ -18,20 +18,6 @@ public class ApprovalController {
   
   private final ApprovalService approvalService;
 
-  //결재 대기문서 리스트
-  @GetMapping
-  public ResponseEntity<ResponseDTO> findApprovalList(){
-
-    //멤버코드를 Auth로 받아오기
-    int memberCode = 2;
-
-    return ResponseEntity.ok()
-            .body(ResponseDTO.builder()
-                    .status(HttpStatus.OK)
-                    .message("success")
-                    .data(approvalService.ApprovalDocumentList(memberCode))
-                    .build());
-  }
   
   // 승인
   @PatchMapping("/approve")
