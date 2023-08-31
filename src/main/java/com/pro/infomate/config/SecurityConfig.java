@@ -51,6 +51,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 
+        // 개발 cors 설정
+        http.cors();
         //  개발용 cors 허용
         http.cors().configurationSource(request -> {
             CorsConfiguration config =  new CorsConfiguration();
@@ -59,6 +61,7 @@ public class SecurityConfig {
             config.addAllowedHeader("*");
             return config;
         });
+
 //        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
 //        http.cors().configurationSource(corsConfigurationSource());
 
@@ -83,8 +86,10 @@ public class SecurityConfig {
                 , "X-Requested-With"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
-
         return source;
     }
 
-}
+    }
+
+
+

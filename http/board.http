@@ -1,0 +1,27 @@
+### 게시글 조회
+GET http://localhost:8989/board
+Accept: */*
+Content-Type: application/json
+
+### 게시글 등록
+POST http://localhost:8989/board/posting
+#Content-Type: multipart/form-data; boundary=WebAppBoundary
+Accept: */*
+Content-Type: application/json
+#
+#--WebAppBoundary
+#Content-Disposition: form-data;
+
+{
+  "postCode": 0,
+  "postTitle": "안뇽",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세연",
+  "boardCategory": "공지사항",
+  "board": {
+    "boardCode": 101
+  },
+  "member": {
+    "memberCode": 22
+  }
+}

@@ -1,2 +1,0 @@
-### 주소록 조회
-GET http://localhost:8091/addressBook/contact/1

@@ -1,0 +1,48 @@
+package com.pro.infomate.Board.Controller;
+
+import com.pro.infomate.Board.dto.BoardDTO;
+import com.pro.infomate.Board.dto.PostDTO;
+import com.pro.infomate.Board.entity.Post;
+import com.pro.infomate.Board.service.BoardService;
+import com.pro.infomate.common.ResponseDTO;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/board")
+@Slf4j
+class BoardController {
+
+    private final BoardService boardService;
+
+    public BoardController(BoardService boardService) {
+        this.boardService = boardService;
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<ResponseDTO> getPost() {
+        log.info("[BoardController] getMainPage");
+
+        List<PostDTO> postList = boardService.getAllBoards(); // 게시판의 모든 게시물을 조회
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지사항 조회 성공", postList));
+    }
+
+
+    @PostMapping("/posting")
+    public ResponseEntity<ResponseDTO> postPost(@RequestBody PostDTO postDTO) {
+        System.out.println("postDTO = " + postDTO);
+       // String result = boardService.postPost(postDTO);
+        boardService.postPost(postDTO);
+
+        return ResponseEntity.ok()
+                .body(ResponseDTO.builder()
+                        .status(HttpStatus.OK)
+                        .message("작성 완료")
+                        .build());
+    }
+}

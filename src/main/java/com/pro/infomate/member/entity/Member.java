@@ -1,10 +1,18 @@
 package com.pro.infomate.member.entity;
 
+<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonIgnore;
+=======
+
+import com.pro.infomate.work.entity.Off;
+import com.pro.infomate.work.entity.Work;
+import com.pro.infomate.addressbook.entity.Contact;
+>>>>>>> 9b43f91e0443c7197b6c7438be37b47d19d65f14
 import com.pro.infomate.approval.entity.Approval;
 import com.pro.infomate.approval.entity.DocRef;
 import com.pro.infomate.approval.entity.Document;
 import com.pro.infomate.department.entity.Department;
+import com.pro.infomate.email.entity.Email;
 import lombok.*;
 
 import javax.persistence.*;
@@ -57,6 +65,12 @@ public class Member {
     @Column(name = "EXTENSION_NUMBER")
     private String extensionNumber;
 
+    @OneToMany(mappedBy = "member")
+    private List<Contact> contactList;
+
+    @OneToMany(mappedBy = "member")
+    private List<Email> emailList;
+
     @Column(name = "MEMBER_ADDRESS")
     private String memberAddress;
 
@@ -96,6 +110,15 @@ public class Member {
 
 
 
+<<<<<<< HEAD
 
+=======
+    @OneToMany(mappedBy = "member")
+    private List<Work> workList;
+
+    @OneToMany(mappedBy = "member")
+    private List<Off> OffList;
+>>>>>>> 9b43f91e0443c7197b6c7438be37b47d19d65f14
 
 }
+
