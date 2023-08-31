@@ -13,17 +13,17 @@ import java.util.List;
 @AllArgsConstructor
 public class DocumentRequest {
 
-  @NotBlank
-  @Size(min = 5, max = 100)
-  private String title; //제목
+    @NotBlank
+    @Size(min = 5, max = 100)
+    private String title; //제목
 
-  private String content; // 문서 내용
+    private String content; // 문서 내용
 
-  private String emergency; // 긴급여부
+    private String emergency; // 긴급여부
 
-  private List<Integer> refList; // 참조자 멤버목록(코드만)
+    private List<Integer> refList; // 참조자 멤버목록(코드만)
 
-  private List<ApprovalRequest> approvalList;// 결재 목록
+    private List<ApprovalRequest> approvalList;// 결재 목록
 
 
 }

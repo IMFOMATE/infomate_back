@@ -1,5 +1,6 @@
 package com.pro.infomate.department.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pro.infomate.member.entity.Member;
 import lombok.*;
 
@@ -27,6 +28,8 @@ public class Department {
 
   @Column(name = "DEPT_NAME")
   private String deptName;
+
+  @JsonIgnore
   @OneToMany(mappedBy = "department")
   private List<Member> members;
 

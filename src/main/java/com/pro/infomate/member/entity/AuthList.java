@@ -1,5 +1,6 @@
 package com.pro.infomate.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class AuthList {
     @Column(name = "AUTHORITY_CODE")
     private int authorityCode;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "AUTHORITY_CODE", insertable = false, updatable = false)
     private Authority authority;

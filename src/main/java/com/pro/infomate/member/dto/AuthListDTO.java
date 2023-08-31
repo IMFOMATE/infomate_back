@@ -1,5 +1,6 @@
 package com.pro.infomate.member.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pro.infomate.member.entity.Authority;
 import lombok.*;
 
@@ -12,6 +13,7 @@ public class AuthListDTO {
 
     private int authorityCode;
 
+    @JsonIgnore
     private AuthorityDTO authority;
 
     public AuthListDTO() {

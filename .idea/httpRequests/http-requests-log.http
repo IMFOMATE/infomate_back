@@ -1,828 +1,405 @@
-POST http://localhost:8989/auth/login
-Content-Type: application/json
-Accept: */*
-Access-Control-Allow-Origin: *
-Content-Length: 56
+GET http://localhost:8989/emp/info/2
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberId": "dbrs96",
-  "memberPassword": "pass01"
-}
-
-<> 2023-08-28T193947.200.json
+<> 2023-08-31T135455.200.json
 
 ###
 
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
-Accept: */*
-Content-Length: 374
+GET http://localhost:8989/emp/info/2
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberId": "dbrs96",
-  "memberEmail": "dong@duckdin.com",
-  "memberPhone": "010-1234-5678",
-  "memberNo": "1996-10-27",
-  "memberStatus": "Y",
-  "memberAddress": "경기도 고양시 일산서구",
-  "hireDate": "2023-08-28T12:00:00Z",
-  "department": {
-    "deptCode": 1
-  },
-  "rankCode": 1,
-  "memberOff": 10
-}
-
-<> 2023-08-28T193645.200.json
+<> 2023-08-31T135344.200.json
 
 ###
 
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
-Accept: */*
-Content-Length: 352
+GET http://localhost:8989/emp/info/2
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberId": "dbrs96",
-  "memberEmail": "dong@duckdin.com",
-  "memberPhone": "010-1234-5678",
-  "memberNo": "1996-10-27",
-  "memberStatus": "Y",
-  "memberAddress": "경기도 고양시 일산서구",
-  "hireDate": "2023-08-28T12:00:00Z",
-  "department": 1,
-  "rankCode": 1,
-  "memberOff": 10
-}
-
-<> 2023-08-28T193501.400.json
+<> 2023-08-31T135233.200.json
 
 ###
 
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
-Accept: */*
-Content-Length: 352
+GET http://localhost:8989/emp/info/2
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberId": "dbrs96",
-  "memberEmail": "dong@duckdin.com",
-  "memberPhone": "010-1234-5678",
-  "memberNo": "1996-10-27",
-  "memberStatus": "Y",
-  "memberAddress": "경기도 고양시 일산서구",
-  "hireDate": "2023-08-28T12:00:00Z",
-  "department": 1,
-  "rankCode": 1,
-  "memberOff": 10
-}
-
-<> 2023-08-28T193051.400.json
+<> 2023-08-31T134357.200.json
 
 ###
 
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
-Accept: */*
-Content-Length: 352
+GET http://localhost:8989/emp/info/2
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberId": "dbrs96",
-  "memberEmail": "dong@duckdin.com",
-  "memberPhone": "010-1234-5678",
-  "memberNo": "1996-10-27",
-  "memberStatus": "Y",
-  "memberAddress": "경기도 고양시 일산서구",
-  "hireDate": "2023-08-28T12:00:00Z",
-  "department": 1,
-  "rankCode": 1,
-  "memberOff": 10
-}
-
-<> 2023-08-28T192917.500.json
+<> 2023-08-31T133621.200.json
 
 ###
 
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
-Accept: */*
-Content-Length: 361
+GET http://localhost:8989/emp/info/2
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberId": "dbrs96",
-  "memberEmail": "dong@duckdin.com",
-  "memberPhone": "010-1234-5678",
-  "memberNo": "1996-10-27",
-  "memberStatus": "Y",
-  "memberAddress": "경기도 고양시 일산서구",
-  "hireDate": "2023-08-28T12:00:00Z",
-  "department.deptCode": 1,
-  "rankCode": 1,
-  "memberOff": 10
-}
-
-<> 2023-08-28T192626.500.json
+<> 2023-08-31T131609.200.json
 
 ###
 
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
-Accept: */*
-Content-Length: 374
+GET http://localhost:8989/emp/info/2
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberId": "dbrs96",
-  "memberEmail": "dong@duckdin.com",
-  "memberPhone": "010-1234-5678",
-  "memberNo": "1996-10-27",
-  "memberStatus": "Y",
-  "memberAddress": "경기도 고양시 일산서구",
-  "hireDate": "2023-08-28T12:00:00Z",
-  "deptCode": "department{deptCode: 1}",
-  "rankCode": 1,
-  "memberOff": 10
-}
-
-<> 2023-08-28T192538.400.json
+<> 2023-08-31T130842.200.json
 
 ###
 
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
-Accept: */*
-Content-Length: 350
+GET http://localhost:8989/emp/info/2
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberId": "dbrs96",
-  "memberEmail": "dong@duckdin.com",
-  "memberPhone": "010-1234-5678",
-  "memberNo": "1996-10-27",
-  "memberStatus": "Y",
-  "memberAddress": "경기도 고양시 일산서구",
-  "hireDate": "2023-08-28T12:00:00Z",
-  "deptCode": 1,
-  "rankCode": 1,
-  "memberOff": 10
-}
-
-<> 2023-08-28T181138.500.json
+<> 2023-08-31T130203.200.json
 
 ###
 
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
-Accept: */*
-Content-Length: 346
+GET http://localhost:8989/emp/info/2
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberId": "dbrs96",
-  "memberEmail": "dong@duckdin.com",
-  "memberPhone": "010-1234-5678",
-  "memberNo": "1996-10-27",
-  "memberStatus": "Y",
-  "memberAddress": "경기도 고양시 일산서구",
-  "hireDate": "2023-08-28T12:00:00Z",
-  "deptCode": 1,
-  "rank": 1,
-  "memberOff": 10
-}
-
-<> 2023-08-28T180707.500.json
+<> 2023-08-31T130106.200.json
 
 ###
 
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
-Accept: */*
-Content-Length: 348
+GET http://localhost:8989/emp/info/2
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberId": "dbrs96",
-  "memberEmail": "dong@duckdin.com",
-  "memberPhone": "010-1234-5678",
-  "memberNo": "1996-10-27",
-  "memberStatus": "Y",
-  "memberAddress": "경기도 고양시 일산서구",
-  "hireDate": "2023-08-28T12:00:00Z",
-  "department": 1,
-  "rank": 1,
-  "memberOff": 10
-}
-
-<> 2023-08-28T180614.500.json
+<> 2023-08-31T122820.200.json
 
 ###
 
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
-Accept: */*
-Content-Length: 375
+GET http://localhost:8989/emp/info/2
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberId": "dbrs96",
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberEmail": "dong@duckdin.com",
-  "memberPhone": "010-1234-5678",
-  "memberNo": "1996-10-27",
-  "memberStatus": "Y",
-  "memberAddress": "경기도 고양시 일산서구",
-  "memberOff": 10,
-  "hireDate": "2023-08-28T12:00:00Z",
-  "department": 1,
-  "memberPic": "pika",
-  "rankCode": 1
-}
-
-<> 2023-08-28T180344.500.json
+<> 2023-08-31T113805.200.json
 
 ###
 
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
-Accept: */*
-Content-Length: 373
+GET http://localhost:8989/emp/info/2
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberId": "dbrs96",
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberEmail": "dong@duckdin.com",
-  "memberPhone": "010-1234-5678",
-  "memberNo": "1996-10-27",
-  "memberStatus": "Y",
-  "memberAddress": "경기도 고양시 일산서구",
-  "memberOff": 10,
-  "hireDate": "2023-08-28T12:00:00Z",
-  "deptCode": 1,
-  "memberPic": "pika",
-  "rankCode": 1
-}
-
-<> 2023-08-28T180258.500.json
+<> 2023-08-31T105824.200.json
 
 ###
 
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
+GET http://localhost:8989/emp/info/81
 Accept: */*
-Content-Length: 375
+Content-Type: application/json
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberId": "dbrs96",
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberEmail": "dong@duckdin.com",
-  "memberPhone": "010-1234-5678",
-  "memberNo": "1996-10-27",
-  "memberStatus": "Y",
-  "memberAddress": "경기도 고양시 일산서구",
-  "memberOff": 10,
-  "hireDate": "2023-08-28T12:00:00Z",
-  "department": 1,
-  "memberPic": "pika",
-  "rankCode": 1
-}
-
-<> 2023-08-28T180218.500.json
+<> 2023-08-31T104744.200.json
 
 ###
 
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
+GET http://localhost:8989/emp/info/81
 Accept: */*
-Content-Length: 375
+Content-Type: application/json
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberId": "dbrs96",
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberEmail": "dong@duckdin.com",
-  "memberPhone": "010-1234-5678",
-  "memberNo": "1996-10-27",
-  "memberStatus": "Y",
-  "memberAddress": "경기도 고양시 일산서구",
-  "memberOff": 10,
-  "hireDate": "2023-08-28T12:00:00Z",
-  "department": 1,
-  "memberPic": "pika",
-  "rankCode": 1
-}
-
-<> 2023-08-28T180030.500.json
+<> 2023-08-31T104724.200.json
 
 ###
 
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
+GET http://localhost:8989/emp/info/81
 Accept: */*
-Content-Length: 376
+Content-Type: application/json
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberId": "dbrs96",
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberEmail": "dong@duckdin.com",
-  "memberPhone": "010-1234-5678",
-  "memberNo": "1996-10-27",
-  "memberStatus": "Y",
-  "memberAddress": "경기도 고양시 일산서구",
-  "memberOff": 10,
-  "hireDate": "2023-08-28T12:00:00Z",
-  "department": 1,
-  "memberPic": "pika",
-  "rankCode": 1,
-}
-
-<> 2023-08-28T180003.400.json
+<> 2023-08-31T003916.200.json
 
 ###
 
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
+GET http://localhost:8989/emp/info/81
 Accept: */*
-Content-Length: 397
+Content-Type: application/json
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberId": "dbrs96",
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberEmail": "dong@duckdin.com",
-  "memberPhone": "010-1234-5678",
-  "memberNo": "1996-10-27",
-  "memberStatus": "Y",
-  "memberAddress": "경기도 고양시 일산서구",
-  "memberOff": "10",
-  "hireDate": "2023-08-28T12:00:00Z",
-  "department": 1,
-  "memberPic": "pika",
-  "rankCode": 1,
-  "memberOff": "Y"
-}
-
-<> 2023-08-28T175927.400.json
+<> 2023-08-30T182031.200.json
 
 ###
 
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
+GET http://localhost:8989/emp/info/81
 Accept: */*
-Content-Length: 119
+Content-Type: application/json
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberId": "dbrs96",
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberEmail": "dong@duckdin.com"
-}
-
-<> 2023-08-28T165902.500.json
+<> 2023-08-30T181839.200.json
 
 ###
 
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
+GET http://localhost:8989/emp/info/81
 Accept: */*
-Content-Length: 119
+Content-Type: application/json
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberId": "dbrs96",
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberEmail": "dong@duckdin.com"
-}
-
-<> 2023-08-28T165118.500.json
+<> 2023-08-30T181523.200.json
 
 ###
 
-POST http://localhost:8989/auth/login
-Content-Type: application/json
+GET http://localhost:8989/emp/info/81
 Accept: */*
-Access-Control-Allow-Origin: *
-Content-Length: 53
+Content-Type: application/json
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberId": "TEST1",
-  "memberPassword": "2222"
-}
-
-<> 2023-08-28T164836.400.json
+<> 2023-08-30T180100.200.json
 
 ###
 
-POST http://localhost:8989/auth/login
-Content-Type: application/json
+GET http://localhost:8989/emp/info/2
 Accept: */*
-Access-Control-Allow-Origin: *
-Content-Length: 55
+Content-Type: application/json
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberId": "TEST123",
-  "memberPassword": "1234"
-}
-
-<> 2023-08-28T164817.400.json
+<> 2023-08-30T180039.200.json
 
 ###
 
-POST http://localhost:8989/auth/login
-Content-Type: application/json
+GET http://localhost:8989/emp/info/2
 Accept: */*
-Access-Control-Allow-Origin: *
-Content-Length: 52
+Content-Type: application/json
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberId": "TEST",
-  "memberPassword": "1234"
-}
-
-<> 2023-08-28T164754.400.json
+<> 2023-08-30T175854.200.json
 
 ###
 
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
+GET http://localhost:8989/emp/info
 Accept: */*
-Content-Length: 119
+Content-Type: application/json
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberId": "dbrs96",
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberEmail": "dong@duckdin.com"
-}
-
-<> 2023-08-28T164703.500.json
+<> 2023-08-30T175213.404.json
 
 ###
 
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
+GET http://localhost:8989/emp/info
 Accept: */*
-Content-Length: 119
+Content-Type: application/json
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberId": "dbrs96",
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberEmail": "dong@duckdin.com"
-}
-
-<> 2023-08-28T164435.500.json
+<> 2023-08-30T175156.404.json
 
 ###
 
-POST http://localhost:8989/auth/login
-Content-Type: application/json
+GET http://localhost:8989/emp/info
 Accept: */*
-Access-Control-Allow-Origin: *
-Content-Length: 56
+Content-Type: application/json
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-{
-  "memberId": "dbrs96",
-  "memberPassword": "pass01"
-}
-
-<> 2023-08-28T164428.400.json
-
-###
-
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
-Accept: */*
-Content-Length: 119
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "memberId": "dbrs96",
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberEmail": "dong@duckdin.com"
-}
-
-<> 2023-08-28T164416.500.json
+<> 2023-08-30T174551.404.json
 
 ###
 
 GET http://localhost:8989/department/treeview
 Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-08-25T005243.200.json
+<> 2023-08-30T162022.200.json
 
 ###
 
-GET http://localhost:8989/calendar/list/2
-GET http://localhost:8989/document/main/2
+GET http://localhost:8989/document/56
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-08-30T161942.200.json
+
+###
+
+GET http://localhost:8989/document/56
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-08-30T161925.200.json
+
+###
+
+GET http://localhost:8989/info/2
 Accept: */*
+Content-Type: application/json
 Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-08-24T180220.200.json
+<> 2023-08-30T152806.404.json
 
 ###
 
-GET http://localhost:8989/calendar/list/2
+GET http://localhost:8989/info/1
+Accept: */*
+Content-Type: application/json
 Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-08-24T165620.200.json
+<> 2023-08-30T152756.404.json
 
 ###
 
-GET http://localhost:8091/schedule/all/2
+GET http://localhost:8989/emp/info/1
+Accept: */*
+Content-Type: application/json
 Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-08-21T180354.200.json
+<> 2023-08-30T152644.500.json
 
 ###
 
-GET http://localhost:8091/calendar/list/2
+GET http://localhost:8989/department/treeview
 Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-08-21T180333.200.json
+<> 2023-08-30T152118.200.json
 
 ###
 
-GET http://localhost:8091/schedule/all/2
+GET http://localhost:8989/emp/info/2
+Accept: */*
+Content-Type: application/json
 Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-08-21T180121.200.json
+<> 2023-08-30T144655.404.json
 
 ###
 
-GET http://localhost:8091/schedule/all/2
+GET http://localhost:8989/emp/info/2
+Accept: */*
+Content-Type: application/json
 Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-08-21T180002.500.json
+<> 2023-08-30T144242.404.json
 
 ###
 
-GET http://localhost:8091/schedule/all/2
+GET http://localhost:8989/emp/info/2
+Accept: */*
+Content-Type: application/json
 Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-08-21T175934.200.json
+<> 2023-08-30T144156.404.json
 
 ###
 
-GET http://localhost:8091/schedule/all/2
+GET http://localhost:8989/member/2
 Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-08-21T175843.500.json
+<> 2023-08-30T122536.404.json
 
 ###
 
-GET http://localhost:8091/schedule/all/2
+GET http://localhost:8989/department/treeview
 Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-08-21T175734.500.json
+<> 2023-08-30T113755.200.json
 
 ###
 
-GET http://localhost:8091/schedule/all/2
+GET http://localhost:8989/emp/info/81
 Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-08-21T175633.200.json
+<> 2023-08-30T113435.404.json
 
 ###
 
-POST http://localhost:8091/server/userinfo
-Content-Length: 0
+GET http://localhost:8989/emp/info/81
 Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-08-18T215758.400.json
+<> 2023-08-30T113417.404.json
 
 ###
 
-POST http://localhost:8091/server/userinfo
-Content-Length: 0
+GET http://localhost:8989/emp/info
 Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-08-18T215750.400.json
+<> 2023-08-30T113401.404.json
 
 ###
 
-GET http://localhost:8091/schedule/all/2
+GET http://localhost:8989/emp/info/2
 Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-08-16T205336.200.json
+<> 2023-08-30T113305.404.json
 
 ###
 
-GET http://localhost:8091/schedule/all/2
+GET http://localhost:8989/department/treeview
 Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-08-16T205109.200.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-16T205012.200.json
-
-###
-
-GET http://localhost:8091/calendar/list/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-16T204834.200.json
-
-###
-
-GET http://localhost:8091/calendar/list/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-16T204656.200.json
-
-###
-
-GET http://localhost:8091/calendar/list/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-16T204157.200.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-16T204144.200.json
-
-###
-
-GET http://localhost:8091/calendar/list/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-16T203917.200.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-16T203859.200.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-16T201827.500.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-16T201553.500.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-16T201219.500.json
+<> 2023-08-30T104549.200.json
 
 ###
 

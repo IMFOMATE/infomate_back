@@ -1,2 +1,6 @@
 ### 트리뷰 리스트
 GET http://localhost:8989/department/treeview
+
+
+### 회원조회
+GET http://localhost:8989/emp/info/2
