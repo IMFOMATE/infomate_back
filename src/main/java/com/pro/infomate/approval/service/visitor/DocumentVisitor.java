@@ -5,7 +5,7 @@ import com.pro.infomate.approval.entity.Payment;
 import com.pro.infomate.approval.entity.Vacation;
 
 public interface DocumentVisitor<T> {
-  T visit(Vacation vacation);
-  T visit(Payment payment);
-  T visit(Draft draft);
+    T visit(Vacation vacation);
+    T visit(Payment payment);
+    T visit(Draft draft);
 }

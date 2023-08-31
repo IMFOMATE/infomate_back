@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 public class ApprovalRequest {
-  
-  private int id; // 멤버 코드
-  private int order; // 결재 순서
+
+    private int id; // 멤버 코드
+    private int order; // 결재 순서
 
 }

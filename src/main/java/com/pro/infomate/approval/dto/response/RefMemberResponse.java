@@ -8,13 +8,13 @@ import lombok.*;
 @ToString
 public class RefMemberResponse {
 
-  private String memberName; // 이름
+    private String memberName; // 이름
 
-  private String rankName; // 직책
+    private String rankName; // 직책
 
-  @Builder
-  public RefMemberResponse(String memberName, String rankName) {
-    this.memberName = memberName;
-    this.rankName = rankName;
-  }
+    @Builder
+    public RefMemberResponse(String memberName, String rankName) {
+        this.memberName = memberName;
+        this.rankName = rankName;
+    }
 }

@@ -3,9 +3,11 @@ package com.pro.infomate.department.service;
 import com.pro.infomate.department.dto.TreeViewResponse;
 import com.pro.infomate.department.entity.Department;
 import com.pro.infomate.department.repository.DepartmentRepository;
+import com.pro.infomate.member.dto.MemberDTO;
 import com.pro.infomate.member.entity.Member;
 import com.pro.infomate.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,11 +17,14 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class DepartmentService {
 
   private final DepartmentRepository departmentRepository;
 
   private final MemberRepository memberRepository;
+
+
 
   public List<TreeViewResponse> deptTreeViewList() {
     List<Department> allDept = departmentRepository.findAll();
@@ -65,5 +70,7 @@ public class DepartmentService {
     }
     return memberNodes;
   }
+
+
 
 }
