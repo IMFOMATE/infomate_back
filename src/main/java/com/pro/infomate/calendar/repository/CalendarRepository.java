@@ -62,4 +62,6 @@ public interface CalendarRepository extends JpaRepository<Calendar, Integer> {
     List<Object[]> findAllByDaysCount(Integer memberCode, LocalDate localDate);
 
     List<Calendar> findAllByMemberCodeAndDefaultCalendar(int memberCode, boolean b);
+
+    List<Calendar> findAllByMemberCode(int memberCode, Sort sort);
 }

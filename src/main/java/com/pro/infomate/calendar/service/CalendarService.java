@@ -23,9 +23,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -161,11 +163,10 @@ public class CalendarService {
 
 
     /**
-     * Save department calendar regist.
+     * 부서 생성시 부서 캘린더 생성 메소드
      *
      * @param deptCode the dept code
      */
-// 부서 생성시 팀 캘린더 생성
     public void saveDepartmentCalendarRegist(int deptCode){
         Optional<Calendar> isExist = calendarRepository.findByDepartmentCode(deptCode);
         if(isExist.isPresent()) throw new InvalidRequestException("이미 부서 캘린더가 존재합니다.");
@@ -305,6 +306,12 @@ public class CalendarService {
         // 통신오류로 기본캘린더가 여러개 입력되었을 경우
         InitDefaultCalendar(memberCode);
 
+        Calendar changeDefaultCalendar = calendarRepository
+                .findFirstByMemberCode(memberCode, Sort.by("indexNo").ascending())
+                .orElseThrow(() -> new NotFindDataException("캘린더가 없습니다."));
+
+        changeDefaultCalendar.setDefaultCalendar(true);
+
         Optional<Calendar> defaultCalendar = calendarRepository.findByMemberCodeAndDefaultCalendar(memberCode, true);
         defaultCalendar.orElseThrow(()->
                 new NotEnoughDateException("기본 캘린더가 존재 하지 않습니다."));
@@ -313,6 +320,19 @@ public class CalendarService {
         findFirstCalendar.orElseThrow(()->
                         new NotFindDataException("캘린더가 존재 하지 않습니다."))
                 .setDefaultCalendar(true);
+
+        List<Calendar> indexCalendar = calendarRepository.findAllByMemberCode(memberCode, Sort.by("indexNo").ascending());
+        List<Calendar> newCalendar = new ArrayList<>();
+
+        int count = 1;
+
+        for (Calendar calendar : indexCalendar){
+            calendar.setIndexNo(count++);
+            newCalendar.add(calendar);
+        }
+
+        calendarRepository.saveAll(newCalendar);
+
     }
 
 
