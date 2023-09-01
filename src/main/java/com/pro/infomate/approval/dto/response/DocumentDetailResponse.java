@@ -28,7 +28,7 @@ public class DocumentDetailResponse {
   private DocumentStatus documentStatus; // 결재 상태
 
   private MemberResponse member; // 상신자
-  
+
   private String content; // 내용
 
   private String documentKind; // 문서종류

@@ -1,6 +1,9 @@
 package com.pro.infomate.addressbook.dto;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 
 @Getter
 @Setter
@@ -9,7 +12,9 @@ import lombok.*;
 @ToString
 public class ContactDTO {
 
-    private int contactCode;
+    private Long contactCode;
+
+    private MultipartFile contactPhoto;
 
     private String company;
 
@@ -28,5 +33,9 @@ public class ContactDTO {
     private String memo;
 
     private int memberCode;
+
+    private char contactLike;
+
+
 
 }

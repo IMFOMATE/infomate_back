@@ -6,7 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "TBL_EMAIL")
+@Table(name = "TBL_MAIL")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,9 +14,10 @@ import javax.persistence.*;
 @ToString
 @SequenceGenerator(
         name = "SEQ_TBL_MAIL_GENERATOR",
-        sequenceName = "SEQ_TBL_MAIL_CODE",
+        sequenceName = "SEQ_TBL_MAIL_MAIL_CODE",
         initialValue = 1, allocationSize = 1
 )
+
 public class Email {
 
     @Id
@@ -25,7 +26,7 @@ public class Email {
             strategy = GenerationType.SEQUENCE,
             generator = "SEQ_TBL_MAIL_GENERATOR"
     )
-    private String mailCode;
+    private Long mailCode;
 
     @Column(name = "MAIL_CONTENT")
     private String mailContent;
@@ -45,5 +46,8 @@ public class Email {
 
     @Column(name = "MAIL_LIKE")
     private char mailLike;
+
+    @Column(name = "RECEIVER_MAIL")
+    private String receiverMail;
 
 }

@@ -115,8 +115,9 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
             )
             .fetchOne();
 
-    return new PageImpl<>(content,pageable, count);
-  }
+    List<Document> documents = approvals.stream()
+            .map(Approval::getDocument)
+            .collect(Collectors.toList());
 
   private BooleanExpression documentStatus(String status) {
     return StringUtils.hasText(status)  ?  document.documentStatus.eq(DocumentStatus.valueOf(status)) : null;

@@ -1,5 +1,6 @@
 package com.pro.infomate.member.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pro.infomate.department.dto.DepartmentDTO;
 import com.pro.infomate.department.entity.Department;
 import lombok.*;
@@ -17,23 +18,23 @@ import java.util.List;
 @ToString
 public class MemberDTO implements UserDetails {
 
-    private int memberCode;
+    private int memberCode;         // 회원코드
 
     private String memberPassword;
 
     private String memberName;
 
-    private String memberId;
+    private String memberId;            // 사번
 
     private String memberEmail;
 
     private String memberPhone;
 
-    private String memberNo;
+    private String memberNo;            // 생년월일
 
-    private String memberStatus;
+    private String memberStatus;        // 재직여부
 
-    private String extensionNumber;
+    private String extensionNumber;         // 내선번호
 
     private String memberAddress;
 
@@ -43,12 +44,15 @@ public class MemberDTO implements UserDetails {
 
     private String memberPic;
 
-    private int rankCode;
+    private RankDTO rank;
 
     private int memberOff;
 
+
+    @JsonIgnore
     private List<AuthListDTO> authList;
 
+    @JsonIgnore
     private Collection<GrantedAuthority> authorities;
 
     @Override

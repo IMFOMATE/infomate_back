@@ -1,9 +1,15 @@
 package com.pro.infomate.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import com.pro.infomate.work.entity.Off;
+import com.pro.infomate.work.entity.Work;
+import com.pro.infomate.addressbook.entity.Contact;
 import com.pro.infomate.approval.entity.Approval;
 import com.pro.infomate.approval.entity.DocRef;
 import com.pro.infomate.approval.entity.Document;
 import com.pro.infomate.department.entity.Department;
+import com.pro.infomate.email.entity.Email;
 import lombok.*;
 
 import javax.persistence.*;
@@ -56,6 +62,12 @@ public class Member {
     @Column(name = "EXTENSION_NUMBER")
     private String extensionNumber;
 
+    @OneToMany(mappedBy = "member")
+    private List<Contact> contactList;
+
+    @OneToMany(mappedBy = "member")
+    private List<Email> emailList;
+
     @Column(name = "MEMBER_ADDRESS")
     private String memberAddress;
 
@@ -70,6 +82,7 @@ public class Member {
     @JoinColumn(name = "RANK_CODE")
     private Rank rank;
 
+
     @Column(name = "MEMBER_PIC")
     private String memberPic;
 
@@ -77,6 +90,7 @@ public class Member {
     @Column(name = "MEMBER_OFF")
     private int memberOff;
 
+    @JsonIgnore
     @OneToMany
     @JoinColumn(name = "MEMBER_CODE")
     private List<AuthList> authList;
@@ -93,4 +107,15 @@ public class Member {
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 27b3904af9e4c6be15acb3e4c3602ba8cfbe9f3b
+    @OneToMany(mappedBy = "member")
+    private List<Work> workList;
+
+    @OneToMany(mappedBy = "member")
+    private List<Off> OffList;
+
 }
+

@@ -3,11 +3,16 @@ package com.pro.infomate.approval.repository;
 
 import com.pro.infomate.approval.entity.Approval;
 import com.pro.infomate.approval.entity.Document;
-import com.pro.infomate.approval.entity.QApproval;
+//import com.pro.infomate.approval.entity.QApproval;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
-import static com.pro.infomate.approval.entity.QApproval.*;
+//import static com.pro.infomate.approval.entity.QApproval.*;
+
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.RequiredArgsConstructor;
+
+
 
 @RequiredArgsConstructor
 public class ApprovalRepositoryImpl implements ApprovalRepositoryCustom{
