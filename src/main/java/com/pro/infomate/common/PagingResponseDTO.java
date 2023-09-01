@@ -1,14 +1,12 @@
 package com.pro.infomate.common;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.domain.Pageable;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class PagingResponseDTO {
 
     private PageDTO pageInfo; //페이지 정보
@@ -19,4 +17,5 @@ public class PagingResponseDTO {
         this.pageInfo = pageInfo;
         this.data = data;
     }
+
 }

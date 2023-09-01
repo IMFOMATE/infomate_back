@@ -13,7 +13,8 @@ public class MemberResponse {
 
   private String deptName;
   @Builder
-  public MemberResponse(String memberName, String deptName) {
+  public MemberResponse(int memberCode, String memberName, String deptName) {
+    this.memberCode = memberCode;
     this.memberName = memberName;
     this.deptName = deptName;
   }

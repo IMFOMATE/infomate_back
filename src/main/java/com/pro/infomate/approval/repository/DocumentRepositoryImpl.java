@@ -61,8 +61,8 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
             .join(member.department, department)
             .where(
                     document.documentStatus.eq(DocumentStatus.APPROVAL)
-                    .and(department.deptCode.in(subQueryDeptCodes)))
-                    .fetchOne();
+                            .and(department.deptCode.in(subQueryDeptCodes)))
+            .fetchOne();
 
     return new PageImpl<>(content,pageable, count);
   }
@@ -115,9 +115,8 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
             )
             .fetchOne();
 
-    List<Document> documents = approvals.stream()
-            .map(Approval::getDocument)
-            .collect(Collectors.toList());
+    return new PageImpl<>(content,pageable, count);
+  }
 
   private BooleanExpression documentStatus(String status) {
     return StringUtils.hasText(status)  ?  document.documentStatus.eq(DocumentStatus.valueOf(status)) : null;
