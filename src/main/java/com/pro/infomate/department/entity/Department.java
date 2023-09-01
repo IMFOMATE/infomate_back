@@ -29,7 +29,7 @@ public class Department {
   @Column(name = "DEPT_NAME")
   private String deptName;
 
-  @JsonIgnore
+//  @JsonIgnore
   @OneToMany(mappedBy = "department")
   private List<Member> members;
 

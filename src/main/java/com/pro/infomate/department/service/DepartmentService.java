@@ -1,18 +1,21 @@
 package com.pro.infomate.department.service;
 
+import com.pro.infomate.department.dto.DepartmentDTO;
+import com.pro.infomate.department.dto.DeptListResponse;
 import com.pro.infomate.department.dto.TreeViewResponse;
 import com.pro.infomate.department.entity.Department;
 import com.pro.infomate.department.repository.DepartmentRepository;
-import com.pro.infomate.member.dto.MemberDTO;
 import com.pro.infomate.member.entity.Member;
 import com.pro.infomate.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +27,21 @@ public class DepartmentService {
 
   private final MemberRepository memberRepository;
 
+  private final ModelMapper modelMapper;
+
+  public List<DeptListResponse> selectDeptList() {
+    log.info("[DepartmentService] selectDeptList Start ====================== ");
+    List<Department> deptlist= departmentRepository.findAll();
+    List<DeptListResponse> result = new ArrayList<>();
+    int count = deptlist.size();
+
+    for(Department dept : deptlist) {
+      result.addAll(createDeptList(dept, count));
+      count += dept.getMembers().size();
+    }
+    return result;
+
+  }
 
 
   public List<TreeViewResponse> deptTreeViewList() {
@@ -69,6 +87,31 @@ public class DepartmentService {
       memberNodes.add(memberNode);
     }
     return memberNodes;
+  }
+
+
+  private List<DeptListResponse> createDeptList(Department dept, int count){      // 부서 리스트 넣어주기
+    List<Department> all = departmentRepository.findAll();
+    List<DeptListResponse> memberList = new ArrayList<>();
+
+    for (Member member : dept.getMembers()){
+      DeptListResponse deptList = DeptListResponse.builder()
+                      .id(++count)
+                      .data(DeptListResponse.DepartDTO.builder()
+                            .empName(member.getMemberName())
+                            .empNum(member.getMemberId())
+                            .deptName(member.getDepartment().getDeptName())
+                            .rankName(member.getRank().getRankName())
+                            .empCode(member.getMemberCode())
+                            .rank(member.getRank().getRankPlace())
+                            .build()
+                            ).build();
+      memberList.add(deptList);
+    }
+    log.info("{}=============",memberList);
+
+    return memberList;
+
   }
 
 

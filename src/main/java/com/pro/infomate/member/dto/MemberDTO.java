@@ -32,7 +32,7 @@ public class MemberDTO implements UserDetails {
 
     private String memberNo;            // 생년월일
 
-    private String memberStatus;
+    private String memberStatus;        // 재직여부
 
     private String extensionNumber;         // 내선번호
 
