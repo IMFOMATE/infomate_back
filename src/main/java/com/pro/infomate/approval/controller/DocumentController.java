@@ -8,10 +8,7 @@ import com.pro.infomate.approval.dto.response.DocumentListResponse;
 import com.pro.infomate.approval.entity.Document;
 import com.pro.infomate.approval.service.DocRefService;
 import com.pro.infomate.approval.service.DocumentService;
-import com.pro.infomate.common.Criteria;
-import com.pro.infomate.common.PageDTO;
-import com.pro.infomate.common.PagingResponseDTO;
-import com.pro.infomate.common.ResponseDTO;
+import com.pro.infomate.common.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -32,7 +29,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DocumentController {
   private final ModelMapper modelMapper;
-
   private final DocumentService documentService;
   private final DocRefService docRefService;
 
@@ -100,19 +96,6 @@ public class DocumentController {
                     .build());
   }
 
-
-  // 문서세부내용
-  @GetMapping("/{documentId}")
-  public ResponseEntity<ResponseDTO> documentDetail(@PathVariable long documentId){
-    log.info("documentId = {}",documentId);
-
-    return ResponseEntity.ok()
-            .body(ResponseDTO.builder()
-                    .status(HttpStatus.OK)
-                    .message("success")
-                    .data(documentService.findById(documentId))
-                    .build());
-  }
 
   // 문서 삭제
   @DeleteMapping("/delete")
@@ -184,6 +167,31 @@ public class DocumentController {
                     .data(result)
                     .build());
   }
+
+
+  // 문서세부내용
+  @GetMapping("/{documentId}")
+  public ResponseEntity<ResponseDTO> documentDetail(@PathVariable long documentId){
+    log.info("documentId = {}",documentId);
+
+    int memberCode = 43;
+
+    return ResponseEntity.ok()
+            .body(ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .message("success")
+                    .data(documentService.findById(documentId,memberCode))
+                    .build());
+  }
+
+//  @GetMapping("/{documentId}")
+//  public ResponseEntity<ExpendsResponseDTO> documentDetailCondition(@PathVariable Long documentId){
+//
+//
+//
+//  }
+
+
 
 
   // 기안문서
