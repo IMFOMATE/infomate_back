@@ -15,7 +15,7 @@ public interface DocumentRepositoryCustom {
   List<Document> findApprovalsDocument(int memberCode);
 
 
-  public Page<DocumentListResponse> findAllApproval(String status,int memberCode, Pageable pageable);
+  public Page<DocumentListResponse> findAllApproval(String status, int memberCode, Pageable pageable);
 
 
 

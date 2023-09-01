@@ -35,7 +35,6 @@ import java.util.stream.Stream;
 public class DocumentService {
 
   private final DocumentRepository<Document> documentRepository;
-
   private final DocumentRepository<Vacation> vacationDocumentRepository;
   private final DocumentRepository<Payment> paymentDocumentRepository;
   private final DocumentRepository<Draft> draftDocumentRepository;
@@ -263,8 +262,6 @@ public class DocumentService {
       }
     }
 
-
-
     return modelMapper.map(save, PaymentResponse.class);
   }
 
@@ -274,6 +271,29 @@ public class DocumentService {
 
     Document document = documentRepository.findById(documentId)
             .orElseThrow(() -> new NotFindDataException("해당문서가 없습니다."));
+
+
+    // 임시저장..........
+
+    // 생각해보자 문서 보여줘야하는건
+    // insert 시 : 결재 요청, 임시저장, 취소, 결재선 선택
+    // 내가 작성한 문서는 : 재기안, 삭제, 목록 다운로드/미리보기
+    // 결재해야하는 문서 : 결재, 반려, 목록, 다운로드/미리보기
+    // 다른 사람 문서 또는 참조된문서 :  다운로드/미리보기, 목록
+    // 우리부서 문서 : 재기안, 목록, 미리보기/다운로드
+
+
+
+    // insert 제외하고 공통적인 버튼 : 목록, 다운로드/미리보기
+    // 재기안이 되야되는 건 내가 작성한문서와 우리부서문서 => 재기안 누르면 데이터가지고 insert
+    // 결재여부가 true 일때 결재 반려 보여주기
+    // 재기안여부 true 일때 재기안버튼 보여주기
+    //
+
+    // 결재 반려 재기안 삭제, 임시저장, 취소
+    // 미리보기 또는 다운로드
+
+
 
     return document.accept(visitor);
   }
@@ -337,15 +357,11 @@ public class DocumentService {
   }
 
 
-    // 임시저장문서
-  @Transactional
-  public void update(DocumentRequest documentRequest){
-
-  }
-
   // 문서삭제
   @Transactional
   public void deleteDocument(long documentId){
+
+    documentRepository.findById(documentId).orElseThrow(() -> new NotFindDataException("해당문서가 없습니다"));
     documentRepository.deleteById(documentId);
   }
 

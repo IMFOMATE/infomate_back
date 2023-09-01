@@ -20,7 +20,6 @@ public interface DocumentRepository<T extends Document> extends JpaRepository<T,
 
   // 2. 내 기안문서 페이징
   Page<Document> findByMember(Member member, Pageable pageable);
-  
 
   @Override
   @EntityGraph(attributePaths = {"member"})

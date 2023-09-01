@@ -31,12 +31,12 @@ class ApprovalRepositoryTest {
   void top1() {
     int memberCode =2;
 
-    List<Document> result = documentRepository.findCredit(memberCode);
-
-    result.forEach(d->{
-      System.out.println("d. = " + d.getId());
-      System.out.println("d. = " + d.getCreatedDate());
-    });
+//    List<Document> result = documentRepository.findCredit(memberCode);
+//
+//    result.forEach(d->{
+//      System.out.println("d. = " + d.getId());
+//      System.out.println("d. = " + d.getCreatedDate());
+//    });
 
   }
 

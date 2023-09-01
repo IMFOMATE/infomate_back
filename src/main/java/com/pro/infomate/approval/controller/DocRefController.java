@@ -40,33 +40,5 @@ public class DocRefController {
                     .build());
   }
 
-  //참조문서 페이징
-  @GetMapping("/viewer/{memberCode}")
-  public ResponseEntity<ResponseDTO> refListPaging(
-          @PathVariable int memberCode,
-          Pageable pageable,
-          @RequestParam(name = "status", required = false) String status
-  ){
-
-    log.info("[DocRefController] status={}", status);
-
-    Page<DocumentListResponse> documents = docRefService.refPagingList(status, memberCode, pageable);
-    Criteria criteria = new Criteria(pageable.getPageNumber()+1, pageable.getPageSize());
-
-    log.info("[DocRefController] getContent={}", documents.getContent());
-    PageDTO pageDTO = new PageDTO(criteria, documents.getTotalElements());
-
-    PagingResponseDTO result = PagingResponseDTO.builder()
-            .pageInfo(pageDTO)
-            .data(documents.getContent())
-            .build();
-
-    return ResponseEntity.ok()
-            .body(ResponseDTO.builder()
-                    .status(HttpStatus.OK)
-                    .message("success")
-                    .data(result)
-                    .build());
-  }
 
 }

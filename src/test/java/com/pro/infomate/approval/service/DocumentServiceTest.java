@@ -2,6 +2,7 @@ package com.pro.infomate.approval.service;
 
 import com.pro.infomate.approval.dto.request.VacationRequest;
 import com.pro.infomate.approval.dto.response.DocumentDetailResponse;
+import com.pro.infomate.approval.dto.response.DocumentListResponse;
 import com.pro.infomate.approval.dto.response.VacationResponse;
 import com.pro.infomate.approval.entity.Vacation;
 import com.pro.infomate.approval.repository.DocumentRepository;
@@ -9,6 +10,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -50,7 +53,18 @@ class DocumentServiceTest {
   @DisplayName("세부내용")
   void 세부내용() {
     DocumentDetailResponse result = documentService.findById(28);
-
   }
 
+  
+  @Test
+  @DisplayName("문서상태에따른 페이징")
+  void 문서상태페이지() {
+    // Given
+    PageRequest.of(0, 20);
+
+    Page<DocumentListResponse> temporary = documentService.approvalList("TEMPORARY", 43, PageRequest.of(0, 20));
+    System.out.println("temporary.getContent() = " + temporary.getContent());
+
+
+  }
 }

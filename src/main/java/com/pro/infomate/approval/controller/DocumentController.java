@@ -3,8 +3,10 @@ package com.pro.infomate.approval.controller;
 
 import com.pro.infomate.approval.dto.DocumentDTO;
 import com.pro.infomate.approval.dto.request.*;
+import com.pro.infomate.approval.dto.response.DocumentDetailResponse;
 import com.pro.infomate.approval.dto.response.DocumentListResponse;
 import com.pro.infomate.approval.entity.Document;
+import com.pro.infomate.approval.service.DocRefService;
 import com.pro.infomate.approval.service.DocumentService;
 import com.pro.infomate.common.Criteria;
 import com.pro.infomate.common.PageDTO;
@@ -32,6 +34,7 @@ public class DocumentController {
   private final ModelMapper modelMapper;
 
   private final DocumentService documentService;
+  private final DocRefService docRefService;
 
 
   // 휴가 문서 등록
@@ -115,7 +118,6 @@ public class DocumentController {
   @DeleteMapping("/delete")
   public ResponseEntity<ResponseDTO> deleteDocument(long documentId){
 
-    log.info("[DocumentController] documentId={}", documentId);
     documentService.deleteDocument(documentId);
 
     return ResponseEntity.ok()
@@ -137,24 +139,39 @@ public class DocumentController {
                     .build());
   }
 
-  // 기안문서
-  @GetMapping("/approval/{memberCode}")
-  public ResponseEntity<ResponseDTO> approvalAllList(
-          @PathVariable int memberCode,
+  // 상태별 리스트
+  @GetMapping("/approval/{docStatus}")
+  public ResponseEntity<ResponseDTO> approvalList(
+          @PathVariable String docStatus,
+//          @PathVariable int memberCode,
           @RequestParam(required = false, name = "status") String status,
-          Pageable pageable){
+          Pageable pageable
+          ){
 
+    int memberCode = 43;
     log.info("[DocumentController] status={}", status);
-    log.info("[DocumentController] memberCode={}", memberCode);
+    log.info("[DocumentController] docStatus={}", docStatus);
 
-    Page<DocumentListResponse> documents = documentService.approvalList(status, memberCode, pageable);
     Criteria criteria = new Criteria(pageable.getPageNumber()+1, pageable.getPageSize());
-    log.info("[DocumentController] page={}", pageable.getPageNumber());
+
+    Page<DocumentListResponse> documents = null;
+
+    switch (docStatus.toUpperCase()){
+      case "APPROVAL":
+        documents = documentService.approvalList(status, memberCode, pageable);
+        break;
+      case "REF":
+        documents = docRefService.refPagingList(status, memberCode, pageable);
+        break;
+      case "TEMPORARY":
+        documents = documentService.approvalList("TEMPORARY", memberCode, pageable);
+        break;
+      case "CREDIT":
+        documents = documentService.creditList(memberCode, pageable);
+        break;
+    }
 
     PageDTO pageDTO = new PageDTO(criteria, documents.getTotalElements());
-
-    log.info("[DocumentController] getContent={}", documents.getContent());
-
     PagingResponseDTO result = PagingResponseDTO.builder()
             .pageInfo(pageDTO)
             .data(documents.getContent())
@@ -166,8 +183,40 @@ public class DocumentController {
                     .message("success")
                     .data(result)
                     .build());
-
   }
+
+
+  // 기안문서
+//  @GetMapping("/approval/{memberCode}")
+//  public ResponseEntity<ResponseDTO> approvalAllList(
+//          @PathVariable int memberCode,
+//          @RequestParam(required = false, name = "status") String status,
+//          Pageable pageable){
+//
+//    log.info("[DocumentController] status={}", status);
+//    log.info("[DocumentController] memberCode={}", memberCode);
+//
+//    Page<DocumentListResponse> documents = documentService.approvalList(status, memberCode, pageable);
+//    Criteria criteria = new Criteria(pageable.getPageNumber()+1, pageable.getPageSize());
+//    log.info("[DocumentController] page={}", pageable.getPageNumber());
+//
+//    PageDTO pageDTO = new PageDTO(criteria, documents.getTotalElements());
+//
+//    log.info("[DocumentController] getContent={}", documents.getContent());
+//
+//    PagingResponseDTO result = PagingResponseDTO.builder()
+//            .pageInfo(pageDTO)
+//            .data(documents.getContent())
+//            .build();
+//
+//    return ResponseEntity.ok()
+//            .body(ResponseDTO.builder()
+//                    .status(HttpStatus.OK)
+//                    .message("success")
+//                    .data(result)
+//                    .build());
+//
+//  }
 
   // 결재 대기 문서
   @GetMapping("/credit/{memberCode}")
