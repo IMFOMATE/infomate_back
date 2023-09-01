@@ -198,7 +198,7 @@ public class DocumentService {
           PaymentRequest paymentRequest, String temp, List<MultipartFile> multipartFiles){
 
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
-
+    System.out.println("paymentRequest = " + paymentRequest.getPaymentList());
     Payment payment = modelMapper.map(paymentRequest, Payment.class);
     payment.addMember(member);
 
@@ -239,14 +239,15 @@ public class DocumentService {
     if(paymentRequest.getPaymentList() != null){
       paymentRequest.getPaymentList().forEach(list -> {
 
-        PaymentList paymentList = PaymentList.builder()
-                .paymentContent(list.getPaymentContent())
-                .paymentDate(list.getPaymentDate())
-                .paymentPrice(list.getPaymentPrice())
-                .paymentSort(list.getPaymentSort())
-                .remarks(list.getRemarks())
-                .document(save)
-                .build();
+        PaymentList paymentList = new PaymentList(list.getPaymentDate(), list.getPaymentSort(), list.getPaymentPrice(), list.getPaymentContent(), list.getRemarks(), save);
+//        PaymentList paymentList = PaymentList.builder()
+//                .paymentContent(list.getPaymentContent())
+//                .paymentDate(list.getPaymentDate())
+//                .paymentPrice(list.getPaymentPrice())
+//                .paymentSort(list.getPaymentSort())
+//                .remarks(list.getRemarks())
+//                .document(save)
+//                .build();
         paymentListRepository.save(paymentList);
       });
     }

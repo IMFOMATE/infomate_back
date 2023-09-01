@@ -2,6 +2,7 @@ package com.pro.infomate.approval.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
@@ -13,9 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class PaymentListRequest {
 
-  @NotBlank
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  private LocalDateTime paymentDate; // 지출 날짜
+  private String paymentDate; // 지출 날짜
 
   @NotBlank
   private String paymentSort; // 지출 종류
@@ -30,7 +29,7 @@ public class PaymentListRequest {
   private String remarks; //비고
 
   @Builder
-  public PaymentListRequest(LocalDateTime paymentDate, String paymentSort, int paymentPrice, String paymentContent, String remarks) {
+  public PaymentListRequest(String paymentDate, String paymentSort, int paymentPrice, String paymentContent, String remarks) {
     this.paymentDate = paymentDate;
     this.paymentSort = paymentSort;
     this.paymentPrice = paymentPrice;

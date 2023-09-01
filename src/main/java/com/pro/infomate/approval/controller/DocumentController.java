@@ -2,10 +2,7 @@ package com.pro.infomate.approval.controller;
 
 
 import com.pro.infomate.approval.dto.DocumentDTO;
-import com.pro.infomate.approval.dto.request.ApprovalRequest;
-import com.pro.infomate.approval.dto.request.DraftRequest;
-import com.pro.infomate.approval.dto.request.PaymentRequest;
-import com.pro.infomate.approval.dto.request.VacationRequest;
+import com.pro.infomate.approval.dto.request.*;
 import com.pro.infomate.approval.dto.response.DocumentListResponse;
 import com.pro.infomate.approval.entity.Document;
 import com.pro.infomate.approval.service.DocumentService;
@@ -83,14 +80,15 @@ public class DocumentController {
   @PostMapping("/regist/payment")
   public ResponseEntity<ResponseDTO> paymentRegist(
           @ModelAttribute PaymentRequest paymentRequest,
-          @RequestParam(name = "temp",required = false) String temp,
+          @RequestParam(name = "temp", required = false) String temp,
           @ModelAttribute(name = "fileList") List<MultipartFile> fileList
   ){
 
     //일단은 code로 사용
-    int memberCode = 2;
+    int memberCode = 43;
+    System.out.println("controller = " + paymentRequest.getPaymentList());
 
-//    documentService.paymentSave(memberCode, paymentRequest,temp );
+    documentService.paymentSave(memberCode, paymentRequest, temp, fileList);
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()

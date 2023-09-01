@@ -67,7 +67,6 @@ public abstract class Document {
   @OneToMany(mappedBy = "document", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<DocRef> refList= new ArrayList<>();
 
-
   //편의 메소드
   public void addFile(DocumentFile file){
     fileList.add(file);
