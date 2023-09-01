@@ -40,14 +40,14 @@ public class Post {
     @Column(name = "BOARD_CATEGORY")
     private String boardCategory;
 
-//    @Column(name = "BOARD_CODE")
-//    private int boardCode;
+    @Column(name = "BOARD_CODE")
+    private int boardCode;
 
 //    @Column(name = "MEMBER_CODE")
 //    private int memberCode;
 
     @ManyToOne
-    @JoinColumn(name = "BOARD_CODE")
+    @JoinColumn(name = "BOARD_CODE", updatable = false, insertable = false)
     private Board board;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)

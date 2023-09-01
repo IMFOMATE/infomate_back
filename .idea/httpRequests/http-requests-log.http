@@ -1,26 +1,53 @@
+<<<<<<< HEAD
 GET http://localhost:8989/emp/info/2
+=======
+GET http://localhost:8989/brd/board
+Accept: */*
+Content-Type: application/json
+>>>>>>> 27b3904af9e4c6be15acb3e4c3602ba8cfbe9f3b
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
+<<<<<<< HEAD
 <> 2023-09-01T173737.200.json
 
 ###
 
 GET http://localhost:8989/department/emp/list
+=======
+<> 2023-09-01T125305.200.json
+
+###
+
+GET http://localhost:8989/brd/board
+Accept: */*
+Content-Type: application/json
+>>>>>>> 27b3904af9e4c6be15acb3e4c3602ba8cfbe9f3b
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
+<<<<<<< HEAD
 <> 2023-09-01T171751.200.json
 
 ###
 
 GET http://localhost:8989/department/emp/list
+=======
+<> 2023-09-01T121836.500.json
+
+###
+
+GET http://localhost:8989/brd/board
+Accept: */*
+Content-Type: application/json
+>>>>>>> 27b3904af9e4c6be15acb3e4c3602ba8cfbe9f3b
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
+<<<<<<< HEAD
 <> 2023-09-01T171112.200.json
 
 ###
@@ -220,6 +247,9 @@ User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
 <> 2023-08-31T145456.404.json
+=======
+<> 2023-09-01T121808.500.json
+>>>>>>> 27b3904af9e4c6be15acb3e4c3602ba8cfbe9f3b
 
 ###
 
@@ -613,3 +643,424 @@ Content-Disposition: form-data; name="pName"
 
 ###
 
+<<<<<<< HEAD
+=======
+POST http://localhost:8989/board/posting
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+Accept: */*
+Content-Type: application/json
+Content-Length: 223
+=======
+  "memberPassword": "pass01",
+  "memberName": "동덕",
+  "memberId": "dbrs96",
+  "memberEmail": "dong@duckdin.com",
+  "memberPhone": "010-1234-5678",
+  "memberNo": "1996-10-27",
+  "memberStatus": "Y",
+  "memberAddress": "경기도 고양시 일산서구",
+  "hireDate": "2023-08-28T12:00:00Z",
+  "department": 1,
+  "rankCode": 1,
+  "memberOff": 10
+}
+
+<> 2023-08-28T193051.400.json
+
+###
+
+POST http://localhost:8989/auth/signup
+Content-Type: application/json
+Accept: */*
+Content-Length: 352
+>>>>>>> c9199d8e83bec2b26652b68fa92e51c1207da5e6
+>>>>>>> 9b43f91e0443c7197b6c7438be37b47d19d65f14
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<<<<<<< HEAD
+<> 2023-08-31T133621.200.json
+
+###
+
+GET http://localhost:8989/emp/info/2
+=======
+{
+<<<<<<< HEAD
+  "postCode": 0,
+  "postTitle": "안뇽",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세연",
+  "boardCategory": "공지사항",
+  "board": {
+    "boardCode": 101
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-08-30T080309.415.json
+
+###
+
+GET http://localhost:8989/board
+Accept: */*
+Content-Type: application/json
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-08-29T231632.404.json
+
+###
+
+GET http://localhost:8989/board/board
+Accept: */*
+Content-Type: application/json
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-08-29T231559.200.json
+
+###
+
+POST http://localhost:8989/board/posting
+Accept: */*
+Content-Type: application/json
+Content-Length: 223
+=======
+  "memberPassword": "pass01",
+  "memberName": "동덕",
+  "memberId": "dbrs96",
+  "memberEmail": "dong@duckdin.com",
+  "memberPhone": "010-1234-5678",
+  "memberNo": "1996-10-27",
+  "memberStatus": "Y",
+  "memberAddress": "경기도 고양시 일산서구",
+  "hireDate": "2023-08-28T12:00:00Z",
+  "department": 1,
+  "rankCode": 1,
+  "memberOff": 10
+}
+
+<> 2023-08-28T192917.500.json
+
+###
+
+POST http://localhost:8989/auth/signup
+Content-Type: application/json
+Accept: */*
+Content-Length: 361
+>>>>>>> c9199d8e83bec2b26652b68fa92e51c1207da5e6
+>>>>>>> 9b43f91e0443c7197b6c7438be37b47d19d65f14
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<<<<<<< HEAD
+<> 2023-08-31T131609.200.json
+
+###
+
+GET http://localhost:8989/emp/info/2
+=======
+{
+<<<<<<< HEAD
+  "postCode": 0,
+  "postTitle": "안뇽",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세연",
+  "boardCategory": "공지사항",
+  "board": {
+    "boardCode": 101
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-08-29T220327.200.json
+
+###
+
+POST http://localhost:8989/board/posting
+Accept: */*
+Content-Type: application/json
+Content-Length: 223
+=======
+  "memberPassword": "pass01",
+  "memberName": "동덕",
+  "memberId": "dbrs96",
+  "memberEmail": "dong@duckdin.com",
+  "memberPhone": "010-1234-5678",
+  "memberNo": "1996-10-27",
+  "memberStatus": "Y",
+  "memberAddress": "경기도 고양시 일산서구",
+  "hireDate": "2023-08-28T12:00:00Z",
+  "department.deptCode": 1,
+  "rankCode": 1,
+  "memberOff": 10
+}
+
+<> 2023-08-28T192626.500.json
+
+###
+
+POST http://localhost:8989/auth/signup
+Content-Type: application/json
+Accept: */*
+Content-Length: 374
+>>>>>>> c9199d8e83bec2b26652b68fa92e51c1207da5e6
+>>>>>>> 9b43f91e0443c7197b6c7438be37b47d19d65f14
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<<<<<<< HEAD
+<> 2023-08-31T130842.200.json
+
+###
+
+GET http://localhost:8989/emp/info/2
+=======
+{
+<<<<<<< HEAD
+  "postCode": 0,
+  "postTitle": "안뇽",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세연",
+  "boardCategory": "공지사항",
+  "board": {
+    "boardCode": 101
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-08-29T215701.200.json
+
+###
+
+POST http://localhost:8989/board/posting
+Accept: */*
+Content-Type: application/json
+Content-Length: 223
+=======
+  "memberPassword": "pass01",
+  "memberName": "동덕",
+  "memberId": "dbrs96",
+  "memberEmail": "dong@duckdin.com",
+  "memberPhone": "010-1234-5678",
+  "memberNo": "1996-10-27",
+  "memberStatus": "Y",
+  "memberAddress": "경기도 고양시 일산서구",
+  "hireDate": "2023-08-28T12:00:00Z",
+  "deptCode": "department{deptCode: 1}",
+  "rankCode": 1,
+  "memberOff": 10
+}
+
+<> 2023-08-28T192538.400.json
+
+###
+
+POST http://localhost:8989/auth/signup
+Content-Type: application/json
+Accept: */*
+Content-Length: 350
+>>>>>>> c9199d8e83bec2b26652b68fa92e51c1207da5e6
+>>>>>>> 9b43f91e0443c7197b6c7438be37b47d19d65f14
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<<<<<<< HEAD
+<> 2023-08-31T130203.200.json
+
+###
+
+GET http://localhost:8989/emp/info/2
+=======
+{
+<<<<<<< HEAD
+  "postCode": 0,
+  "postTitle": "안뇽",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세연",
+  "boardCategory": "공지사항",
+  "board": {
+    "boardCode": 101
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-08-29T212924.200.json
+
+###
+
+POST http://localhost:8989/board/posting
+Content-Type: multipart/form-data;
+Accept: */*
+Content-Type: application/json
+Content-Length: 223
+=======
+  "memberPassword": "pass01",
+  "memberName": "동덕",
+  "memberId": "dbrs96",
+  "memberEmail": "dong@duckdin.com",
+  "memberPhone": "010-1234-5678",
+  "memberNo": "1996-10-27",
+  "memberStatus": "Y",
+  "memberAddress": "경기도 고양시 일산서구",
+  "hireDate": "2023-08-28T12:00:00Z",
+  "deptCode": 1,
+  "rankCode": 1,
+  "memberOff": 10
+}
+
+<> 2023-08-28T181138.500.json
+
+###
+
+POST http://localhost:8989/auth/signup
+Content-Type: application/json
+Accept: */*
+Content-Length: 346
+>>>>>>> c9199d8e83bec2b26652b68fa92e51c1207da5e6
+>>>>>>> 9b43f91e0443c7197b6c7438be37b47d19d65f14
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<<<<<<< HEAD
+<> 2023-08-31T130106.200.json
+
+###
+
+GET http://localhost:8989/emp/info/2
+=======
+{
+<<<<<<< HEAD
+  "postCode": 0,
+  "postTitle": "안뇽",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세연",
+  "boardCategory": "공지사항",
+  "board": {
+    "boardCode": 101
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-08-29T212916.500.json
+
+###
+
+POST http://localhost:8989/board/posting
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+Accept: */*
+Content-Type: application/json
+Content-Length: 223
+=======
+  "memberPassword": "pass01",
+  "memberName": "동덕",
+  "memberId": "dbrs96",
+  "memberEmail": "dong@duckdin.com",
+  "memberPhone": "010-1234-5678",
+  "memberNo": "1996-10-27",
+  "memberStatus": "Y",
+  "memberAddress": "경기도 고양시 일산서구",
+  "hireDate": "2023-08-28T12:00:00Z",
+  "deptCode": 1,
+  "rank": 1,
+  "memberOff": 10
+}
+
+<> 2023-08-28T180707.500.json
+
+###
+
+POST http://localhost:8989/auth/signup
+Content-Type: application/json
+Accept: */*
+Content-Length: 348
+>>>>>>> c9199d8e83bec2b26652b68fa92e51c1207da5e6
+>>>>>>> 9b43f91e0443c7197b6c7438be37b47d19d65f14
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<<<<<<< HEAD
+<> 2023-08-31T122820.200.json
+
+###
+
+GET http://localhost:8989/emp/info/2
+=======
+{
+<<<<<<< HEAD
+  "postCode": 0,
+  "postTitle": "안뇽",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세연",
+  "boardCategory": "공지사항",
+  "board": {
+    "boardCode": 101
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-08-29T212913.415.json
+
+###
+
+POST http://localhost:8989/board/posting
+Content-Type: multipart/form-data;
+Accept: */*
+Content-Type: application/json
+Content-Length: 223
+=======
+  "memberPassword": "pass01",
+  "memberName": "동덕",
+  "memberId": "dbrs96",
+  "memberEmail": "dong@duckdin.com",
+  "memberPhone": "010-1234-5678",
+  "memberNo": "1996-10-27",
+  "memberStatus": "Y",
+  "memberAddress": "경기도 고양시 일산서구",
+  "hireDate": "2023-08-28T12:00:00Z",
+  "department": 1,
+  "rank": 1,
+  "memberOff": 10
+}
+
+<> 2023-08-28T180614.500.json
+
+###
+
+POST http://localhost:8989/auth/signup
+Content-Type: application/json
+Accept: */*
+Content-Length: 375
+>>>>>>> c9199d8e83bec2b26652b68fa92e51c1207da5e6
+>>>>>>> 9b43f91e0443c7197b6c7438be37b47d19d65f14
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<<<<<<< HEAD
+<> 2023-08-31T113805.200.json
+
+###
+
+>>>>>>> 27b3904af9e4c6be15acb3e4c3602ba8cfbe9f3b
