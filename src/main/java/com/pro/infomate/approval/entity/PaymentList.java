@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.awt.*;
 import java.time.LocalDateTime;
 
 @Getter
@@ -40,9 +41,10 @@ public class PaymentList {
   @Column(name = "REMARKS")
   private String remarks;
 
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "DOCUMENT_ID")
-  private Payment document;
+  private Document document;
 
 //  public PaymentList(Long paymentCode, String paymentDate, String paymentSort, int paymentPrice, String paymentContent, String remarks, Payment document) {
 //    this.paymentCode = paymentCode;

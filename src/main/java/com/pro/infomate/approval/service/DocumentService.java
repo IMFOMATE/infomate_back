@@ -240,14 +240,8 @@ public class DocumentService {
       paymentRequest.getPaymentList().forEach(list -> {
 
         PaymentList paymentList = new PaymentList(list.getPaymentDate(), list.getPaymentSort(), list.getPaymentPrice(), list.getPaymentContent(), list.getRemarks(), save);
-//        PaymentList paymentList = PaymentList.builder()
-//                .paymentContent(list.getPaymentContent())
-//                .paymentDate(list.getPaymentDate())
-//                .paymentPrice(list.getPaymentPrice())
-//                .paymentSort(list.getPaymentSort())
-//                .remarks(list.getRemarks())
-//                .document(save)
-//                .build();
+        save.addPaymentList(paymentList);
+
         paymentListRepository.save(paymentList);
       });
     }

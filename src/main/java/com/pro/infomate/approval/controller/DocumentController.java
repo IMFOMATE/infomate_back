@@ -167,8 +167,6 @@ public class DocumentController {
                     .data(result)
                     .build());
 
-
-
   }
 
   // 결재 대기 문서
