@@ -1,13 +1,20 @@
 package com.pro.infomate.Board.service;
 
 
+import com.pro.infomate.Board.Repository.BoardRepository;
 import com.pro.infomate.Board.Repository.PostRepository;
 import com.pro.infomate.Board.dto.PostDTO;
+import com.pro.infomate.Board.entity.Board;
 import com.pro.infomate.Board.entity.Post;
+import com.pro.infomate.common.Criteria;
 import com.pro.infomate.member.dto.MemberDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +46,41 @@ public class BoardService {
 //        return boardRepository.findById(boardCode)
 //                .orElseThrow(() -> new EntityNotFoundException("Board not found with id: " + boardCode));
 //    }
+
+    public int totalPost() {    // 페이지
+
+        log.info("[BoardService] totalPost Start ==========================");
+
+        List<Post> postList = postRepository.findAll();
+        log.info("[PostService] PostList.Size : {}", postList.size());
+        log.info("[PostService] totalPost End =========================");
+
+        return postList.size();
+    }
+
+    public List<PostDTO> postListPaging(Criteria cri) {
+
+        log.info("[BoardService] postListPaging Start ================");
+        int index = cri.getPageNum() -1;
+        int count = cri.getAmount();
+        Pageable paging = PageRequest.of(index, count, Sort.by("postCode").descending());
+
+        Page<Post> result = postRepository.findAll(paging);
+
+        List<PostDTO> postList = result.stream()
+                .map(post -> modelMapper
+                        .map(post, PostDTO.class)).collect(Collectors.toList());
+
+//        for(int i = 0; i < postList.size(); i++){
+//            postList.get(i).setPostImageUrl(IMAGE_URL + postList.get(i).getPostImageUrl());
+//        }
+
+        log.info("[BoardService] postListPaging End ==================");
+        return postList;
+    }
+
+
+
 
     public List<PostDTO> getAllBoards() {   // 게시판 목록 조회
         List<Post> postList = postRepository.findAll();

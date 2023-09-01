@@ -1,13 +1,10 @@
 package com.pro.infomate.member.entity;
 
-<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonIgnore;
-=======
 
 import com.pro.infomate.work.entity.Off;
 import com.pro.infomate.work.entity.Work;
 import com.pro.infomate.addressbook.entity.Contact;
->>>>>>> 9b43f91e0443c7197b6c7438be37b47d19d65f14
 import com.pro.infomate.approval.entity.Approval;
 import com.pro.infomate.approval.entity.DocRef;
 import com.pro.infomate.approval.entity.Document;
@@ -110,15 +107,12 @@ public class Member {
 
 
 
-<<<<<<< HEAD
 
-=======
     @OneToMany(mappedBy = "member")
     private List<Work> workList;
 
     @OneToMany(mappedBy = "member")
     private List<Off> OffList;
->>>>>>> 9b43f91e0443c7197b6c7438be37b47d19d65f14
 
 }
 
