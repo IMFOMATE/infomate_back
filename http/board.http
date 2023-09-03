@@ -1,4 +1,4 @@
-### 게시글 조회
+### 게시판 조회
 GET http://localhost:8989/brd/board
 Accept: */*
 Content-Type: application/json
@@ -25,6 +25,13 @@ Content-Type: application/json
     "memberCode": 22
   }
 }
+
+### 게시글 조회
+GET http://localhost:8989/brd/board/post/1118
+Accept: */*
+Content-Type: application/json
+
+
 
 ### 일반게시판 조회
 GET http://localhost:8989/board/common

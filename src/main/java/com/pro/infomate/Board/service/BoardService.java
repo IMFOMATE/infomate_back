@@ -8,6 +8,7 @@ import com.pro.infomate.Board.entity.Board;
 import com.pro.infomate.Board.entity.Post;
 import com.pro.infomate.common.Criteria;
 import com.pro.infomate.member.dto.MemberDTO;
+import com.pro.infomate.member.entity.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -58,7 +61,7 @@ public class BoardService {
         return postList.size();
     }
 
-    public List<PostDTO> postListPaging(Criteria cri) {
+    public List<PostDTO> postListPaging(Criteria cri) { // 전체글, 페이징
 
         log.info("[BoardService] postListPaging Start ================");
         int index = cri.getPageNum() -1;
@@ -80,27 +83,61 @@ public class BoardService {
     }
 
 
+    public PostDTO postView(Integer postCode) {     // 게시글 상세보기
+        Optional<Post> postOptional = postRepository.findByPostCode(postCode);
+
+            Post post = postOptional.get();
+
+            PostDTO postDTO = modelMapper.map(post, PostDTO.class);
+
+            Member member = post.getMember();
+            MemberDTO memberDTO = new MemberDTO();
+            memberDTO.setMemberId(member.getMemberId());
+            memberDTO.setMemberName(member.getMemberName());
+            memberDTO.setMemberNo(member.getMemberNo());
+
+            postDTO.setMember(memberDTO);
+
+            return postDTO; // 게시글을 찾지 못한 경우 null 반환 또는 예외 처리
+        }
 
 
-    public List<PostDTO> getAllBoards() {   // 게시판 목록 조회
-        List<Post> postList = postRepository.findAll();
+//    @Transactional
+//    public String updatePost(PostDTO postDTO, MultipartFile postImage){
+//
+//        log.info("[ProductService] updatePost Start ===================================");
+//        log.info("[ProductService] postDTO : " + postDTO);
+//
+//        String replaceFileName = null;
+//        int result = 0;
+//
+//        try {
+//
+//            Post post = postRepository.findById(postDTO.getPostCode()).get();
+//            String oriImage = post.getPostImageURL();
+//        }
+//    }
 
-        return postList.stream()
-                .map(post -> modelMapper.map(post, PostDTO.class))
-                .map(postDTO -> {
 
-                    MemberDTO memberDTO = new MemberDTO();
-                    memberDTO.setMemberId(postDTO.getMember().getMemberId());
-                    memberDTO.setMemberName(postDTO.getMember().getMemberName());
-                    memberDTO.setMemberNo(postDTO.getMember().getMemberNo());
-
-                    postDTO.setMember(memberDTO);
-
-                    return postDTO;
-
-                })
-                .collect(Collectors.toList());
-    }
+//    public List<PostDTO> getAllBoards() {   // 게시판 목록 조회
+//        List<Post> postList = postRepository.findAll();
+//
+//        return postList.stream()
+//                .map(post -> modelMapper.map(post, PostDTO.class))
+//                .map(postDTO -> {
+//
+//                    MemberDTO memberDTO = new MemberDTO();
+//                    memberDTO.setMemberId(postDTO.getMember().getMemberId());
+//                    memberDTO.setMemberName(postDTO.getMember().getMemberName());
+//                    memberDTO.setMemberNo(postDTO.getMember().getMemberNo());
+//
+//                    postDTO.setMember(memberDTO);
+//
+//                    return postDTO;
+//
+//                })
+//                .collect(Collectors.toList());
+//    }
 
 
     @Transactional

@@ -26,7 +26,7 @@ class BoardController {
         this.boardService = boardService;
     }
 
-    @GetMapping("/board")    // 페이징
+    @GetMapping("/board")    // 전체글, 페이징
     public ResponseEntity<ResponseDTO> boardPaging(
             @RequestParam(name = "offset", defaultValue = "1") String offset){
 
@@ -44,6 +44,14 @@ class BoardController {
         log.info("[BoardController] boardPaging End =====================");
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", pagingResponseDTO));
     }
+
+    @GetMapping("/board/post/{postCode}")  // 글 상세 페이지
+    public ResponseEntity<ResponseDTO> postView(@PathVariable Integer postCode) {
+
+        PostDTO postDTO = boardService.postView(postCode);
+
+            return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", postDTO));
+        }
 
 //    @GetMapping("/board/newpost")    // 게시판 (게시글 목록)
 //    public ResponseEntity<ResponseDTO> getPost() {
@@ -67,8 +75,6 @@ class BoardController {
                         .message("작성 완료")
                         .build());
     }
-
-
 
     @GetMapping("/board/notice")  // 공지사항
     public ResponseEntity<ResponseDTO> boardNotice() {
