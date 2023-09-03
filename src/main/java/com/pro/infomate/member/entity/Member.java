@@ -1,5 +1,6 @@
 package com.pro.infomate.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.pro.infomate.work.entity.Off;
 import com.pro.infomate.work.entity.Work;
@@ -81,6 +82,7 @@ public class Member {
     @JoinColumn(name = "RANK_CODE")
     private Rank rank;
 
+
     @Column(name = "MEMBER_PIC")
     private String memberPic;
 
@@ -88,6 +90,7 @@ public class Member {
     @Column(name = "MEMBER_OFF")
     private int memberOff;
 
+    @JsonIgnore
     @OneToMany
     @JoinColumn(name = "MEMBER_CODE")
     private List<AuthList> authList;
@@ -104,6 +107,10 @@ public class Member {
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 27b3904af9e4c6be15acb3e4c3602ba8cfbe9f3b
     @OneToMany(mappedBy = "member")
     private List<Work> workList;
 

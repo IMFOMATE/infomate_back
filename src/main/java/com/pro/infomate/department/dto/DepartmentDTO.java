@@ -1,6 +1,7 @@
 package com.pro.infomate.department.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pro.infomate.member.dto.MemberDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +18,8 @@ public class DepartmentDTO {
     private int deptCode;
 
     private String deptName;
+
+    @JsonIgnore
     private List<MemberDTO> members;
 
 }
