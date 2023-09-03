@@ -5,6 +5,8 @@ import com.pro.infomate.calendar.service.ScheduleService;
 import com.pro.infomate.common.ExpendsProps;
 import com.pro.infomate.common.ExpendsResponseDTO;
 import com.pro.infomate.common.ResponseDTO;
+import com.pro.infomate.member.dto.MemberDTO;
+import com.pro.infomate.member.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,8 @@ import java.util.List;
 public class ScheduleController {
 
     private final ScheduleService scheduleService;
+
+    private final EmployeeService employeeService;
 
 //    private final ServerApiService serverApiService;
 
@@ -49,8 +53,13 @@ public class ScheduleController {
         ScheduleDTO schedule = scheduleService.findById(scheduleId, memberCode);
         log.info("[ScheduleController](findById) schedule : {} ", schedule);
 
+        MemberDTO memberDTO = employeeService.selectMemberInfo(memberCode);
+
+        boolean compare = schedule.getCalendar().getMemberCode().equals(memberCode)
+                || schedule.getCalendar().getDepartmentCode().equals(memberDTO.getDepartment().getDeptCode());
+
         ExpendsProps expendsProps = ExpendsProps.builder()
-                .compare(schedule.getCalendar().getMemberCode().equals(memberCode))
+                .compare(compare)
                 .build();
 
         return ResponseEntity.ok()
