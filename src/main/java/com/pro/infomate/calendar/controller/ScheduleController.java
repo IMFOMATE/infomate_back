@@ -2,6 +2,8 @@ package com.pro.infomate.calendar.controller;
 
 import com.pro.infomate.calendar.dto.ScheduleDTO;
 import com.pro.infomate.calendar.service.ScheduleService;
+import com.pro.infomate.common.ExpendsProps;
+import com.pro.infomate.common.ExpendsResponseDTO;
 import com.pro.infomate.common.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,26 +42,31 @@ public class ScheduleController {
 //                        .build());
 //    }
 
-    @GetMapping("/{scheduleId}") // api 연동 확인
-    public ResponseEntity<ResponseDTO> findById(@PathVariable Integer scheduleId){
+    @GetMapping("/{memberCode}/{scheduleId}") // api 연동 확인
+    public ResponseEntity<ExpendsResponseDTO> findById(@PathVariable int scheduleId, @PathVariable int memberCode) {
         log.info("[ScheduleController](findById) scheduleId : {} ", scheduleId);
 
-        ScheduleDTO schedule = scheduleService.findById(scheduleId);
+        ScheduleDTO schedule = scheduleService.findById(scheduleId, memberCode);
         log.info("[ScheduleController](findById) schedule : {} ", schedule);
 
+        ExpendsProps expendsProps = ExpendsProps.builder()
+                .compare(schedule.getCalendar().getMemberCode().equals(memberCode))
+                .build();
+
         return ResponseEntity.ok()
-                    .body(ResponseDTO.builder()
+                    .body(ExpendsResponseDTO.expendsResponseBuilder()
                             .status(HttpStatus.OK)
+                            .expendsProps(expendsProps)
                             .message("success")
                             .data(schedule)
                             .build());
     }
 
 
-    @PatchMapping("/update") // api 연동 확인
-    public ResponseEntity<ResponseDTO> updateById(@RequestBody ScheduleDTO scheduleDTO){
+    @PatchMapping("/update/{memberCode}") // api 연동 확인
+    public ResponseEntity<ResponseDTO> updateById(@PathVariable int memberCode, @RequestBody ScheduleDTO scheduleDTO){
         log.info("[ScheduleController](updateById) scheduleDTO : {} ", scheduleDTO);
-        scheduleService.updateById(scheduleDTO);
+        scheduleService.updateById(scheduleDTO, memberCode);
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
@@ -68,10 +75,12 @@ public class ScheduleController {
     }
 
 
-    @DeleteMapping("/delete") // api 연동 확인
-    public ResponseEntity<ResponseDTO> deleteById(@RequestBody List<Integer> scheduleId){
+    @DeleteMapping("/delete/{scheduleId}/{memberCode}") // api 연동 확인
+    public ResponseEntity<ResponseDTO> deleteById(@PathVariable int scheduleId, @PathVariable int memberCode){
         log.info("[ScheduleController](deleteById) scheduleId : {} ", scheduleId);
-        scheduleService.deleteById(scheduleId);
+
+        scheduleService.deleteById(scheduleId, memberCode);
+
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
@@ -94,8 +103,8 @@ public class ScheduleController {
     }
 
 
-    @PostMapping("/regist") // api 연동 확인
-    public ResponseEntity<ResponseDTO> insertSchedule(@RequestBody ScheduleDTO scheduleDTO){
+    @PostMapping("/regist/{memberCode}") // api 연동 확인
+    public ResponseEntity<ResponseDTO> insertSchedule(@RequestBody ScheduleDTO scheduleDTO, @PathVariable int memberCode){
         log.info("[ScheduleController](insertSchedule) scheduleDTO : {} ", scheduleDTO);
 
 //        serverApiService.scheduleInsertApi(scheduleDTO);
@@ -104,7 +113,7 @@ public class ScheduleController {
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
                         .message("정상적으로 수정 되었습니다.")
-                        .data(scheduleService.insertSchedule(scheduleDTO))
+                        .data(scheduleService.insertSchedule(scheduleDTO, memberCode))
                         .build());
     }
 

@@ -74,4 +74,12 @@ public class ApiExceptionAdvice {
                 .body(new Response(HttpStatus.BAD_REQUEST, e.getMessage(),e.getMessage()));
     }
 
+    @ExceptionHandler(NotAuthenticationMember.class)
+    public ResponseEntity<Response> NotAuthenticationMember(NotAuthenticationMember e){
+        log.info("[ApiExceptionAdvice](NotAuthenticationMember) error : {} ", e);
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new Response(HttpStatus.BAD_REQUEST, e.getMessage(),e.getMessage()));
+    }
+
 }
