@@ -115,5 +115,17 @@ public class DepartmentService {
   }
 
 
+  public List<DepartmentDTO> selectDept(String search) {
 
+    log.info("[DepartmentService] selectDeptList Start ======================");
+
+    List<Department> departmentListSearchValue = departmentRepository.findByDeptName(search);
+
+    List<DepartmentDTO> departmentDTOlist = departmentListSearchValue.stream()
+            .map(department -> modelMapper.map(department, DepartmentDTO.class)).collect(Collectors.toList());
+
+    log.info("[DepartmentService] selectDeptList End ========================");
+
+    return departmentDTOlist;
+  }
 }
