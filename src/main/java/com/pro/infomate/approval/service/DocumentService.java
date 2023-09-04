@@ -380,6 +380,16 @@ public class DocumentService {
     return creditPaging.map(DocumentListResponse::new);
   }
 
+  // 부서문서
+  public Page<DocumentListResponse> deptList(int memberCode, Pageable pageable) {
+
+    Page<DocumentListResponse> deptResult = documentRepository.findByDeptDoc(memberCode, pageable);
+
+    return new PageImpl<>(deptResult.getContent(), pageable, deptResult.getTotalElements());
+
+  }
+
+
 
   // 문서삭제
   @Transactional

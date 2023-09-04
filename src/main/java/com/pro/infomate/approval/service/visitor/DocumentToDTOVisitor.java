@@ -27,6 +27,7 @@ public class DocumentToDTOVisitor implements DocumentVisitor<DocumentDetailRespo
                       .memberCode(approvalMember.getMemberCode())
                       .rankName(approvalMember.getRank().getRankName())
                       .profile(approvalMember.getMemberPic())
+                      .approvalStatus(approval.getApprovalStatus().toString())
                       .memberName(approvalMember.getMemberName())
                       .comment(approval.getComment())
                       .approvalDate(approval.getApprovalDate())

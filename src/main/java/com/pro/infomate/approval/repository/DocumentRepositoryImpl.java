@@ -5,12 +5,14 @@ import com.pro.infomate.approval.dto.response.QDocumentListResponse;
 import com.pro.infomate.approval.entity.*;
 import com.querydsl.core.types.SubQueryExpression;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -85,6 +87,7 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
 
   //조건 페이징
   public Page<DocumentListResponse> findAllApproval(String status, int memberCode, Pageable pageable){
+
     List<DocumentListResponse> content= queryFactory.select(
                     new QDocumentListResponse(
                             document.id.as("id"),
@@ -119,7 +122,7 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
   }
 
   private BooleanExpression documentStatus(String status) {
-    return StringUtils.hasText(status)  ?  document.documentStatus.eq(DocumentStatus.valueOf(status)) : null;
+    return (!"null".equals(status)) && StringUtils.hasText(status) ? document.documentStatus.eq(DocumentStatus.valueOf(status)) : null;
   }
 
   private BooleanExpression memberCodeEq(Integer memberCode) {

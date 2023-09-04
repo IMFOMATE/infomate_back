@@ -23,18 +23,21 @@ public class ApprovalResponse {
 
     private String profile;
 
+    private String approvalStatus;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime approvalDate;
 
     private int order;
 
     @Builder
-    public ApprovalResponse(int memberCode,String memberName, String rankName, String comment, LocalDateTime approvalDate,String profile, int order) {
+    public ApprovalResponse(int memberCode,String memberName, String rankName, String comment, LocalDateTime approvalDate,String approvalStatus, String profile, int order) {
         this.memberCode = memberCode;
         this.memberName = memberName;
         this.rankName = rankName;
         this.comment = comment;
         this.approvalDate = approvalDate;
+        this.approvalStatus = approvalStatus;
         this.order = order;
         this.profile = profile;
     }

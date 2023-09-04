@@ -73,7 +73,7 @@ public class DocRefRepositoryImpl implements DocRefRepositoryCustom {
 
 
   private BooleanExpression documentStatus(String status) {
-    return StringUtils.hasText(status) ? document.documentStatus.eq(DocumentStatus.valueOf(status)) : null;
+    return (!"null".equals(status)) && StringUtils.hasText(status) ? document.documentStatus.eq(DocumentStatus.valueOf(status)) : null;
   }
 
   private BooleanExpression memberCodeEq(Integer memberCode) {

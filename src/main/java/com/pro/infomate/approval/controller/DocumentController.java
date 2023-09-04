@@ -151,6 +151,10 @@ public class DocumentController {
       case "CREDIT":
         documents = documentService.creditList(memberCode, pageable);
         break;
+      case "DEPT":
+        documents = documentService.deptList(memberCode, pageable);
+        System.out.println("documents = " + documents);
+        break;
     }
 
     PageDTO pageDTO = new PageDTO(criteria, documents.getTotalElements());
@@ -183,69 +187,6 @@ public class DocumentController {
                     .build());
   }
 
-
-
-
-  // 기안문서
-//  @GetMapping("/approval/{memberCode}")
-//  public ResponseEntity<ResponseDTO> approvalAllList(
-//          @PathVariable int memberCode,
-//          @RequestParam(required = false, name = "status") String status,
-//          Pageable pageable){
-//
-//    log.info("[DocumentController] status={}", status);
-//    log.info("[DocumentController] memberCode={}", memberCode);
-//
-//    Page<DocumentListResponse> documents = documentService.approvalList(status, memberCode, pageable);
-//    Criteria criteria = new Criteria(pageable.getPageNumber()+1, pageable.getPageSize());
-//    log.info("[DocumentController] page={}", pageable.getPageNumber());
-//
-//    PageDTO pageDTO = new PageDTO(criteria, documents.getTotalElements());
-//
-//    log.info("[DocumentController] getContent={}", documents.getContent());
-//
-//    PagingResponseDTO result = PagingResponseDTO.builder()
-//            .pageInfo(pageDTO)
-//            .data(documents.getContent())
-//            .build();
-//
-//    return ResponseEntity.ok()
-//            .body(ResponseDTO.builder()
-//                    .status(HttpStatus.OK)
-//                    .message("success")
-//                    .data(result)
-//                    .build());
-//
-//  }
-
-  // 결재 대기 문서
-  @GetMapping("/credit/{memberCode}")
-  public ResponseEntity<ResponseDTO> creditList(
-          @PathVariable int memberCode,
-          Pageable pageable){
-
-    Page<DocumentListResponse> documents = documentService.creditList(memberCode, pageable);
-
-    Criteria criteria = new Criteria(pageable.getPageNumber()+1, pageable.getPageSize());
-
-    log.info("[DocumentController] page={}", pageable.getPageNumber());
-
-    PageDTO pageDTO = new PageDTO(criteria, documents.getTotalElements());
-
-    log.info("[DocumentController] getContent={}", documents.getContent());
-
-    PagingResponseDTO result = PagingResponseDTO.builder()
-            .pageInfo(pageDTO)
-            .data(documents.getContent())
-            .build();
-
-    return ResponseEntity.ok()
-            .body(ResponseDTO.builder()
-                    .status(HttpStatus.OK)
-                    .message("success")
-                    .data(result)
-                    .build());
-  }
 
 
 }

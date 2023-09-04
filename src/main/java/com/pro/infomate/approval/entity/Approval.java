@@ -44,6 +44,10 @@ public class Approval {
   @JoinColumn(name = "MEMBER_CODE")
   private Member member;
 
+  @Enumerated(EnumType.STRING)
+  @Column(name = "APPROVAL_STATUS")
+  private ApprovalStatus approvalStatus;
+
 
   @Builder
   public Approval(int order, Member member,Document document){

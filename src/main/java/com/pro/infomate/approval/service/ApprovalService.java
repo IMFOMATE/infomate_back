@@ -3,6 +3,7 @@ package com.pro.infomate.approval.service;
 import com.pro.infomate.approval.dto.request.ConfirmRequest;
 import com.pro.infomate.approval.dto.response.DocumentListResponse;
 import com.pro.infomate.approval.entity.Approval;
+import com.pro.infomate.approval.entity.ApprovalStatus;
 import com.pro.infomate.approval.entity.Document;
 import com.pro.infomate.approval.entity.DocumentStatus;
 import com.pro.infomate.approval.repository.ApprovalRepository;
@@ -68,6 +69,7 @@ public class ApprovalService {
             .forEach(approval -> {
               approval.setComment(confirmRequest.getComment());
               approval.setApprovalDate(LocalDateTime.now());
+              approval.setApprovalStatus(ApprovalStatus.APPROVAL);
             });
 
     boolean allNotNull = approvalList.stream()
@@ -94,6 +96,7 @@ public class ApprovalService {
             .forEach(approval -> {
               approval.setComment(confirmRequest.getComment());
               approval.setApprovalDate(LocalDateTime.now());
+              approval.setApprovalStatus(ApprovalStatus.REJECT);
             });
   }
 

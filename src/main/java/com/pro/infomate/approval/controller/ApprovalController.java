@@ -41,9 +41,14 @@ public class ApprovalController {
 
   // 반려
   @PatchMapping("/reject")
-  public ResponseEntity<ResponseDTO> reject(@RequestBody ConfirmRequest confirmRequest){
+  public ResponseEntity<ResponseDTO> reject(
+          @RequestBody ConfirmRequest confirmRequest
+    //          @AuthenticationPrincipal
+  ){
     log.info("[ApprovalController] ConfirmRequest={}", confirmRequest);
 
+    int memberCode = 43;
+    confirmRequest.setMemberCode(memberCode);
     approvalService.reject(confirmRequest);
 
     return ResponseEntity.ok()
