@@ -9,6 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.sql.Blob;
+import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/mail")
 @RestController
@@ -31,15 +36,25 @@ public class MailController {
 
     }
 
-    @PostMapping("/sendMail")
-    public ResponseEntity<ResponseDTO> sendMail(@RequestBody EmailDTO email) {
+    @PostMapping("/postMail")
+    public ResponseEntity<ResponseDTO> sendMail(@RequestParam List receiverMail,
+                                                @RequestParam String mailReference,
+                                                @RequestParam String mailTitle,
+                                                @RequestParam(required=false) MultipartFile mailFile,
+                                                @RequestParam(required=false) Blob mailContent) {
 
-        mailService.sendMail(email);
+        System.out.println("receiverMail = " + receiverMail);
+        System.out.println("mailFile = " + mailFile);
+        System.out.println("mailContent = " + mailContent);
+
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.valueOf(HttpStatus.CREATED.value()))
                         .message("success")
                         .build());
+
     }
+
 }
+
