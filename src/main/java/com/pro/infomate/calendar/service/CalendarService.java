@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -81,29 +80,6 @@ public class CalendarService {
 
         return calendarDTOList;
     }
-
-// 안씀
-//    public CalendarDTO findById(Integer calendarId) {
-//        log.info("[CalendarService](findById) calendarId : {} ",calendarId);
-//
-//        Optional<Calendar> calendar = calendarRepository.findById(calendarId);
-//        log.info("[CalendarService](findById) calendar : {} ",calendar);
-//
-//        if (calendar.isEmpty()) throw new NotFindDataException("데이터를 찾을 수 없습니다.");
-//
-//        List<Schedule> scheduleList = calendar.get().getSchedule();
-//        log.info("[CalendarService](findById) scheduleList : {} ",scheduleList);
-//
-//        CalendarDTO calendarDTO = modelMapper.map(calendar, CalendarDTO.class);
-//        log.info("[CalendarService](findById) calendarDTO : {} ",calendarDTO);
-//
-//        calendarDTO.setScheduleList(scheduleList.stream()
-//                .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class)).collect(Collectors.toList()));
-//
-//        log.info("[CalendarService](findById) calendarDTOReMapping : {} ",calendarDTO);
-//
-//        return calendarDTO;
-//    }
 
     /**
      * Init default calendar.
