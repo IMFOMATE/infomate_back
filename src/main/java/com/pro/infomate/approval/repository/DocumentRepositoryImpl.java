@@ -2,8 +2,9 @@ package com.pro.infomate.approval.repository;
 
 import com.pro.infomate.approval.dto.response.DocumentListResponse;
 import com.pro.infomate.approval.dto.response.QDocumentListResponse;
-import com.pro.infomate.approval.entity.*;
-
+import com.pro.infomate.approval.entity.Approval;
+import com.pro.infomate.approval.entity.Document;
+import com.pro.infomate.approval.entity.DocumentStatus;
 import com.querydsl.core.types.SubQueryExpression;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
@@ -27,11 +28,6 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
 
   private final JPAQueryFactory queryFactory;
 
-<<<<<<< HEAD
-
-=======
-  //   본인 부서 중 완료된 문서 리스트
->>>>>>> 27b3904af9e4c6be15acb3e4c3602ba8cfbe9f3b
   @Override
   public Page<DocumentListResponse> findByDeptDoc(int memberCode, Pageable pageable) {
 
@@ -65,13 +61,8 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
             .from(document)
             .join(document.member, member)
             .join(member.department, department)
-            .where(
-                    document.documentStatus.eq(DocumentStatus.APPROVAL)
-<<<<<<< HEAD
-            .and(department.deptCode.in(subQueryDeptCodes)))
-=======
-                            .and(department.deptCode.in(subQueryDeptCodes)))
->>>>>>> 27b3904af9e4c6be15acb3e4c3602ba8cfbe9f3b
+            .where(document.documentStatus.eq(DocumentStatus.APPROVAL)
+                    .and(department.deptCode.in(subQueryDeptCodes)))
             .fetchOne();
 
     return new PageImpl<>(content,pageable, count);

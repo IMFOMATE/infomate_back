@@ -1,6 +1,7 @@
 package com.pro.infomate.calendar.service;
 
 import com.pro.infomate.calendar.dto.CalendarDTO;
+import com.pro.infomate.calendar.dto.DayPerCountDTO;
 import com.pro.infomate.calendar.dto.ScheduleDTO;
 import com.pro.infomate.calendar.entity.Calendar;
 import com.pro.infomate.calendar.entity.Schedule;
@@ -165,8 +166,7 @@ public class ScheduleService {
         log.info("[ScheduleService](reminder) today : {}",today);
 
         List<Schedule> scheduleList =
-                scheduleRepository.findAllByEndDateBetweenThree(memberCode, today.atStartOfDay(), today.plusDays(2)
-                        .atTime(LocalTime.MAX));
+                scheduleRepository.findThreeDays(memberCode, today.atStartOfDay(), today.plusDays(2).atTime(LocalTime.MAX));
 
         log.info("[ScheduleService](reminder) scheduleList : {}",scheduleList);
 
@@ -177,6 +177,21 @@ public class ScheduleService {
                     return scheduleDTO;
                 })
                 .collect(Collectors.toList());
+    }
+
+    public List<DayPerCountDTO> dayPerCount(LocalDate startDay, LocalDate endDay, int memberCode) {
+//        List<Object[]> daysCount = scheduleRepository.dayPerCount(startDay, endDay, memberCode);
+        List<DayPerCountDTO> daysCount  = scheduleRepository.dayPerCount(startDay.atStartOfDay(), endDay.atStartOfDay(), memberCode);
+        log.info("[ScheduleService](dayPerCount) daysCount : {}", daysCount);
+
+//        List<DayPerCountDTO> dayPerCountDTOS = new ArrayList<>();
+//        for (Object[] item : daysCount){
+//            dayPerCountDTOS.add(new DayPerCountDTO(LocalDateTime.parse((String) item[1]), (Long) item[0]));
+//        }
+
+
+//        log.info("[ScheduleService](dayPerCount) dayPerCountDTOS : {}", dayPerCountDTOS);
+        return daysCount;
     }
 // member 엔티티 완료 된 후 수정
 //    public List<ScheduleDTO> findAllScheduleSearch(int memberCode, String keyword){
