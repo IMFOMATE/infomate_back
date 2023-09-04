@@ -2,6 +2,8 @@ package com.pro.infomate.calendar.repository;
 
 
 import com.pro.infomate.calendar.entity.Calendar;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,20 +18,34 @@ public interface CalendarRepository extends JpaRepository<Calendar, Integer> {
 
     Optional<Calendar> findFirstByMemberCode(int memberCode, Sort sort);
 
-    List<Calendar> findByDepartmentCodeAndOpenStatusAndMemberCodeNot(Integer departmentCode, boolean openStatus, Integer memberCode);
+    Optional<Calendar> findByDepartmentCode(int deptCode);
 
-    @Query(value = "SELECT s FROM Calendar s " +
-                     "JOIN Member m on m.memberCode = s.memberCode " +
-                    "LEFT JOIN FavoriteCalendar f on f.memberCode = :memberCode " +
-                    "WHERE NOT s.memberCode = :memberCode " +
-                    "AND s.openStatus = true " +
-                    "AND s.departmentCode IS NULL"
-    )
-    List<Calendar> findByPublicCalendarList(Integer memberCode);
+    Page<Calendar> findByDepartmentCodeAndOpenStatusAndMemberCodeNot(Integer departmentCode, boolean openStatus, Integer memberCode, Pageable pageable);
 
-    List<Calendar> findByMemberCode(int memberCode);
+    Optional<Calendar> findFirstByMemberCodeAndIndexNoBefore(Integer id, Integer indexNo);
+    Optional<Calendar> findFirstByMemberCodeAndIndexNoAfter(Integer id, Integer indexNo, Sort sort);
+//    @Query(value = "SELECT s FROM Calendar s " +
+//                     "JOIN Member m on m.memberCode = s.memberCode " +
+//                    "LEFT JOIN FavoriteCalendar f on f.memberCode = :memberCode " +
+//                    "WHERE NOT s.memberCode = :memberCode " +
+//                    "AND s.openStatus = true " +
+//                    "AND s.departmentCode IS NULL"
+//    )
+//    List<Calendar> findByPublicCalendarList(Integer memberCode);
 
-    List<Calendar> findAllByMemberCodeAndDepartmentCode(int memberCode, Integer departmentCode, Sort indexNo);
+
+    @Query(value = "SELECT c FROM Calendar c " +
+                    "WHERE c.memberCode = :memberCode " +
+                       "OR c.id IN (SELECT f.refCalendar FROM FavoriteCalendar f " +
+                                    "WHERE f.memberCode = :memberCode " +
+                                      "AND f.approvalStatus = 'APPROVAL') " +
+                       "OR c.departmentCode = 1 "  +
+                       "OR c.departmentCode = :departmentCode " +
+                      "AND c.openStatus = true " +
+                    "ORDER BY c.indexNo ASC ")
+    List<Calendar> findByMemberCode(int memberCode, int departmentCode);
+
+//    List<Calendar> findAllByMemberCodeAndDepartmentCode(int memberCode, Integer departmentCode, Sort indexNo);
 
     @Query(value = "SELECT COUNT(s.id) AS amount, " +
                           "TRUNC(s.endDate) AS day " +
@@ -44,4 +60,8 @@ public interface CalendarRepository extends JpaRepository<Calendar, Integer> {
                                                 "WHERE m.memberCode = :memberCode) " +
                                                 "GROUP BY TRUNC(s.endDate)")
     List<Object[]> findAllByDaysCount(Integer memberCode, LocalDate localDate);
+
+    List<Calendar> findAllByMemberCodeAndDefaultCalendar(int memberCode, boolean b);
+
+    List<Calendar> findAllByMemberCode(int memberCode, Sort sort);
 }
