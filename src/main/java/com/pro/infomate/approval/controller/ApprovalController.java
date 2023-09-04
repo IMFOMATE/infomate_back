@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,15 @@ public class ApprovalController {
   
   // 승인
   @PatchMapping("/approve")
-  public ResponseEntity<ResponseDTO> approve(@RequestBody ConfirmRequest confirmRequest){
+  public ResponseEntity<ResponseDTO> approve(
+          @RequestBody ConfirmRequest confirmRequest
+//          @AuthenticationPrincipal
+  ){
+    int memberCode = 43;
+    confirmRequest.setMemberCode(memberCode);
+
+    System.out.println("confirmRequest = " + confirmRequest);
+
         approvalService.approve(confirmRequest);
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()

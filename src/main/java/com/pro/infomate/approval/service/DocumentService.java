@@ -70,6 +70,7 @@ public class DocumentService {
 
     Vacation vacation = modelMapper.map(vacationRequest, Vacation.class);
     vacation.addMember(member);
+    vacation.setCreatedDate(LocalDateTime.now());
 
     if(temp != null){
       vacation.setDocumentStatus(DocumentStatus.TEMPORARY);
@@ -78,6 +79,7 @@ public class DocumentService {
     Vacation save = vacationDocumentRepository.save(vacation);
 
     System.out.println("vacation = " + vacation.getId());
+    System.out.println("vacation = " + vacation.getCreatedDate());
 
     // 참조자
     if(vacationRequest.getRefList() != null){
@@ -201,6 +203,7 @@ public class DocumentService {
     System.out.println("paymentRequest = " + paymentRequest.getPaymentList());
     Payment payment = modelMapper.map(paymentRequest, Payment.class);
     payment.addMember(member);
+    payment.setCreatedDate(LocalDateTime.now());
 
     if(temp != null){
       payment.setDocumentStatus(DocumentStatus.TEMPORARY);
@@ -275,16 +278,20 @@ public class DocumentService {
     Document document = documentRepository.findById(documentId)
             .orElseThrow(() -> new NotFindDataException("해당문서가 없습니다."));
 
-    //결재여부
+    // 결재여부
     List<Approval> approvalList = document.getApprovalList();
     approvalList.sort(Comparator.comparingInt(Approval::getOrder));
 
     Approval approval = approvalList.stream().filter(app -> app.getApprovalDate() == null)
             .findFirst().orElse(null);
 
+    boolean allApprovalDatesNull = approvalList.stream()
+            .allMatch(app -> app.getApprovalDate() == null);
+
     DocumentCondition condition = DocumentCondition.builder()
             .isDept(document.getMember().getDepartment().equals(nowMember.getDepartment()))
-            .isCredit(approval.getMember().getMemberCode() == memberCode)
+            .isCredit(approval != null && approval.getMember().getMemberCode() == memberCode)
+            .isCancel(document.getMember().equals(nowMember) && allApprovalDatesNull)
             .build();
 
     System.out.println("condition = " + condition);
@@ -296,12 +303,11 @@ public class DocumentService {
     // 다른 사람 문서 또는 참조된문서 :  다운로드/미리보기, 목록
     // 우리부서 문서 : 재기안, 목록, 미리보기/다운로드
 
-
     // insert 제외하고 공통적인 버튼 : 목록, 다운로드/미리보기
     // 재기안이 되야되는 건 내가 작성한문서와 우리부서문서 => 재기안 누르면 데이터가지고 insert
     // 결재여부가 true 일때 결재 반려 보여주기
     // 재기안여부 true 일때 재기안버튼 보여주기
-    //상신취소는....
+    // 상신취소는 내문서이면서 결재 한사람이 없을떄 ?
 
     // 결재 반려 재기안 삭제, 임시저장, 취소
     // 미리보기 또는 다운로드
@@ -309,7 +315,11 @@ public class DocumentService {
     // 임시저장..........
 
 
-    return document.accept(visitor);
+    DocumentDetailResponse result = document.accept(visitor);
+    result.setCondition(condition);
+
+    return result;
+
   }
 
   //5. 문서 리스트 top 5개

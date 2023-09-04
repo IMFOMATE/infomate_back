@@ -37,7 +37,7 @@ public abstract class Document {
   @Column(name = "DOCUMENT_TITLE", nullable = false)
   private String title;
 
-  @Column(name = "DOCUMENT_DATE", nullable = false)
+  @Column(name = "DOCUMENT_DATE")
   private LocalDateTime createdDate;
 
   @Enumerated(EnumType.STRING)

@@ -14,9 +14,12 @@ public class DocumentCondition {
 
   private Boolean isDept;
 
+  private Boolean isCancel;
+
   @Builder
-  public DocumentCondition(Boolean isCredit, Boolean isDept) {
+  public DocumentCondition(Boolean isCredit, Boolean isDept, Boolean isCancel) {
     this.isCredit = isCredit;
     this.isDept = isDept;
+    this.isCancel = isCancel;
   }
 }

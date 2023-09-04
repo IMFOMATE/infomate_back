@@ -28,8 +28,8 @@ public class VacationResponse extends DocumentDetailResponse {
     private LocalDateTime endDate;
 
     @Builder
-    public VacationResponse(Long id, @NotBlank @Size(min = 5, max = 100) String title, LocalDateTime createdDate, DocumentStatus documentStatus, MemberResponse member, String content, String documentKind, String emergency, List<DocFileResponse> fileList, List<ApprovalResponse> approvalList, List<RefMemberResponse> refList, String sort, LocalDateTime startDate, LocalDateTime endDate) {
-        super(id, title, createdDate, documentStatus, member, content, documentKind, emergency, fileList, approvalList, refList);
+    public VacationResponse(Long id, @NotBlank @Size(min = 5, max = 100) String title, LocalDateTime createdDate, DocumentStatus documentStatus, MemberResponse member, String content, String documentKind, String emergency, List<DocFileResponse> fileList, List<ApprovalResponse> approvalList, List<RefMemberResponse> refList, DocumentCondition condition, String sort, LocalDateTime startDate, LocalDateTime endDate) {
+        super(id, title, createdDate, documentStatus, member, content, documentKind, emergency, fileList, approvalList, refList, condition);
         this.sort = sort;
         this.startDate = startDate;
         this.endDate = endDate;

@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "TBL_VACATION")
 @DiscriminatorValue("vacation")
-@DynamicInsert
 @ToString(callSuper = true)
+@DynamicInsert
 public class Vacation extends Document{
 
   @Column(name = "VACATION_SORT")

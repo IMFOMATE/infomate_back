@@ -55,21 +55,33 @@ public class ApprovalService {
   //2. 결재 승인
   //해당문서의 결재리스트에서 order가 1인데 null이거나
   //order
+  @Transactional
   public void approve(ConfirmRequest confirmRequest){
     Document document = documentRepository.findById(confirmRequest.getDocumentCode()).orElseThrow(() -> new NotFindDataException("요청하신 문서를 찾을 수 없습니다"));
     List<Approval> approvalList = document.getApprovalList();
 
     Member member = memberRepository.findByMemberCode(confirmRequest.getMemberCode());
 
+    System.out.println("confirmRequest = " + confirmRequest);
     approvalList.stream()
             .filter(approval -> approval.getMember().equals(member))
             .forEach(approval -> {
               approval.setComment(confirmRequest.getComment());
               approval.setApprovalDate(LocalDateTime.now());
             });
+
+    boolean allNotNull = approvalList.stream()
+            .allMatch(approval -> approval.getApprovalDate() != null);
+
+    if(allNotNull){
+      document.setDocumentStatus(DocumentStatus.APPROVAL);
+    }
+
+
   }
 
   //4. 결재 반려
+  @Transactional
   public void reject(ConfirmRequest confirmRequest){
     Document document = documentRepository.findById(confirmRequest.getDocumentCode()).orElseThrow(() -> new NotFindDataException("요청하신 문서를 찾을 수 없습니다"));
     List<Approval> approvalList = document.getApprovalList();
@@ -86,11 +98,10 @@ public class ApprovalService {
   }
 
   //5. 상신 취소
-  public void cancel(long documentId){
+  public void cancel(Long documentId){
     Document document = documentRepository.findById(documentId).orElseThrow(() -> new NotFindDataException("요청하신 문서를 찾을 수 없습니다"));
 
     document.setDocumentStatus(DocumentStatus.TEMPORARY);
-
   }
 
 

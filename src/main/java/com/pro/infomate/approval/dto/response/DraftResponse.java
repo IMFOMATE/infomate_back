@@ -22,8 +22,8 @@ public class DraftResponse extends DocumentDetailResponse {
     private LocalDateTime startDate;
 
     @Builder
-    public DraftResponse(Long id, @NotBlank @Size(min = 5, max = 100) String title, LocalDateTime createdDate, DocumentStatus documentStatus, MemberResponse member, String content, String documentKind, String emergency, List<DocFileResponse> fileList, List<ApprovalResponse> approvalList, List<RefMemberResponse> refList, String coDept, LocalDateTime startDate) {
-        super(id, title, createdDate, documentStatus, member, content, documentKind, emergency, fileList, approvalList, refList);
+    public DraftResponse(Long id, @NotBlank @Size(min = 5, max = 100) String title, LocalDateTime createdDate, DocumentStatus documentStatus, MemberResponse member, String content, String documentKind, String emergency, List<DocFileResponse> fileList, List<ApprovalResponse> approvalList, List<RefMemberResponse> refList, DocumentCondition condition, String coDept, LocalDateTime startDate) {
+        super(id, title, createdDate, documentStatus, member, content, documentKind, emergency, fileList, approvalList, refList, condition);
         this.coDept = coDept;
         this.startDate = startDate;
     }

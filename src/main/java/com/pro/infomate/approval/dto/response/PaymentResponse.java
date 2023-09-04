@@ -18,8 +18,9 @@ public class PaymentResponse extends DocumentDetailResponse {
     private List<PaymentListResponse> paymentList;
 
     @Builder
-    public PaymentResponse(Long id, @NotBlank @Size(min = 5, max = 100) String title, LocalDateTime createdDate, DocumentStatus documentStatus, MemberResponse member, String content, String documentKind, String emergency, List<DocFileResponse> fileList, List<ApprovalResponse> approvalList, List<RefMemberResponse> refList, List<PaymentListResponse> paymentList) {
-        super(id, title, createdDate, documentStatus, member, content, documentKind, emergency, fileList, approvalList, refList);
+
+    public PaymentResponse(Long id, @NotBlank @Size(min = 5, max = 100) String title, LocalDateTime createdDate, DocumentStatus documentStatus, MemberResponse member, String content, String documentKind, String emergency, List<DocFileResponse> fileList, List<ApprovalResponse> approvalList, List<RefMemberResponse> refList, DocumentCondition condition, List<PaymentListResponse> paymentList) {
+        super(id, title, createdDate, documentStatus, member, content, documentKind, emergency, fileList, approvalList, refList, condition);
         this.paymentList = paymentList;
     }
 }

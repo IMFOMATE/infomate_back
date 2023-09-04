@@ -43,7 +43,6 @@ public class DocumentController {
 
     //일단은 code로 사용
     int memberCode = 22;
-
     documentService.vacationSave(memberCode, vacationRequest, temp, fileList);
 
     return ResponseEntity.ok()
@@ -183,13 +182,6 @@ public class DocumentController {
                     .data(documentService.findById(documentId,memberCode))
                     .build());
   }
-
-//  @GetMapping("/{documentId}")
-//  public ResponseEntity<ExpendsResponseDTO> documentDetailCondition(@PathVariable Long documentId){
-//
-//
-//
-//  }
 
 
 

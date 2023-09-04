@@ -41,4 +41,6 @@ public class DocumentDetailResponse {
 
   private List<RefMemberResponse> refList; // 참조자
 
+  private DocumentCondition condition ;
+
 }

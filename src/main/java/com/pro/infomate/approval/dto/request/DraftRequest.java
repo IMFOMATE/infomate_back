@@ -2,6 +2,7 @@ package com.pro.infomate.approval.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -16,7 +17,7 @@ public class DraftRequest extends DocumentRequest{
 
   private String coDept;
 
-  @JsonFormat(pattern = "yyyy-MM-dd")
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime startDate;
 
 
