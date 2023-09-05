@@ -40,7 +40,7 @@ public class Member {
     @Column(name = "MEMBER_NAME")
     private String memberName;
 
-    @Column(name = "MEMBER_ID")
+    @Column(name = "MEMBER_ID", unique = true)
     private String memberId;
 
     @Column(name = "MEMBER_EMAIL")
@@ -99,6 +99,25 @@ public class Member {
     private List<Document> documentList = new ArrayList<>();
 
 
-
-
+    @Override
+    public String toString() {
+        return "Member{" +
+                "memberCode=" + memberCode +
+                ", memberPassword='" + memberPassword + '\'' +
+                ", memberName='" + memberName + '\'' +
+                ", memberId='" + memberId + '\'' +
+                ", memberEmail='" + memberEmail + '\'' +
+                ", memberPhone='" + memberPhone + '\'' +
+                ", memberNo='" + memberNo + '\'' +
+                ", memberStatus='" + memberStatus + '\'' +
+                ", extensionNumber='" + extensionNumber + '\'' +
+                ", memberAddress='" + memberAddress + '\'' +
+                ", department=" + department +
+                ", hireDate=" + hireDate +
+                ", rank=" + rank +
+                ", memberPic='" + memberPic + '\'' +
+                ", memberOff=" + memberOff +
+                ", authList=" + authList +
+                '}';
+    }
 }

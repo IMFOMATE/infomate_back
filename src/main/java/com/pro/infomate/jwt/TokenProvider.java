@@ -29,7 +29,7 @@ public class TokenProvider {
 
     private static final String BEARER_TYPE = "Bearer";
 
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 10;
 
     private final Key key;
 
@@ -65,7 +65,7 @@ public class TokenProvider {
                 .compact();
         log.info("[TokenProvider] generateTokenDTO End = == = = = = = == = = = = == = = == = = == = ");
 
-        return new TokenDTO(BEARER_TYPE, member.getMemberName(), accessToken, accessTokenExpiresIn.getTime());
+        return new TokenDTO(BEARER_TYPE, member.getMemberName(), member.getDepartment().getDeptName(), member.getRank().getRankName(), accessToken, accessTokenExpiresIn.getTime());
     }
 
     public String getUserId(String token){

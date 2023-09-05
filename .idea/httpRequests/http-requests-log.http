@@ -1,3 +1,379 @@
+POST http://localhost:8989/auth/login
+Content-Type: application/json
+Accept: */*
+Access-Control-Allow-Origin: *
+Content-Length: 52
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "memberId": "num5",
+  "memberPassword": "num5"
+}
+
+<> 2023-09-05T115351.200.json
+
+###
+
+POST http://localhost:8989/auth/signup
+Content-Type: application/json
+Accept: */*
+Content-Length: 361
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "memberPassword": "num5",
+  "memberName": "주인5",
+  "memberId": "num5",
+  "memberEmail": "num5@num5.com",
+  "memberPhone": "010-5555-5555",
+  "memberNo": "1947-05-05",
+  "memberStatus": "Y",
+  "memberAddress": "서울특별시 종로구",
+  "hireDate": "1999-08-28T12:00:00Z",
+  "department": {
+    "deptCode": 1
+  },
+  "rankCode": 1,
+  "memberOff": 12
+}
+
+<> 2023-09-05T115327.200.json
+
+###
+
+POST http://localhost:8989/auth/login
+Content-Type: application/json
+Accept: */*
+Access-Control-Allow-Origin: *
+Content-Length: 52
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "memberId": "num4",
+  "memberPassword": "num4"
+}
+
+<> 2023-09-05T115251.200.json
+
+###
+
+POST http://localhost:8989/auth/login
+Content-Type: application/json
+Accept: */*
+Access-Control-Allow-Origin: *
+Content-Length: 52
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "memberId": "num4",
+  "memberPassword": "num4"
+}
+
+<> 2023-09-05T115106.200.json
+
+###
+
+POST http://localhost:8989/auth/signup
+Content-Type: application/json
+Accept: */*
+Content-Length: 361
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "memberPassword": "num4",
+  "memberName": "주인4",
+  "memberId": "num4",
+  "memberEmail": "num4@num4.com",
+  "memberPhone": "010-4444-4444",
+  "memberNo": "1946-04-04",
+  "memberStatus": "Y",
+  "memberAddress": "서울특별시 종로구",
+  "hireDate": "1999-08-28T12:00:00Z",
+  "department": {
+    "deptCode": 1
+  },
+  "rankCode": 1,
+  "memberOff": 12
+}
+
+<> 2023-09-05T115048.200.json
+
+###
+
+POST http://localhost:8989/auth/login
+Content-Type: application/json
+Accept: */*
+Access-Control-Allow-Origin: *
+Content-Length: 52
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "memberId": "num3",
+  "memberPassword": "num3"
+}
+
+<> 2023-09-05T115027.200.json
+
+###
+
+POST http://localhost:8989/auth/login
+Content-Type: application/json
+Accept: */*
+Access-Control-Allow-Origin: *
+Content-Length: 52
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "memberId": "num3",
+  "memberPassword": "num3"
+}
+
+<> 2023-09-05T114138.200.json
+
+###
+
+POST http://localhost:8989/auth/signup
+Content-Type: application/json
+Accept: */*
+Content-Length: 379
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "memberPassword": "num3",
+  "memberName": "주인3",
+  "memberId": "num3",
+  "memberEmail": "num3@num3.com",
+  "memberPhone": "010-3333-3333",
+  "memberNo": "1946-03-03",
+  "memberStatus": "Y",
+  "memberAddress": "서울특별시 종로구",
+  "hireDate": "1999-08-28T12:00:00Z",
+  "department": {
+    "deptCode": 1
+  },
+  "rank": {
+    "rankCode": 1
+  },
+  "memberOff": 12
+}
+
+<> 2023-09-05T114005.200.json
+
+###
+
+POST http://localhost:8989/auth/login
+Content-Type: application/json
+Accept: */*
+Access-Control-Allow-Origin: *
+Content-Length: 52
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "memberId": "num2",
+  "memberPassword": "num2"
+}
+
+<> 2023-09-05T112746.200.json
+
+###
+
+POST http://localhost:8989/auth/signup
+Content-Type: application/json
+Accept: */*
+Content-Length: 379
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "memberPassword": "num2",
+  "memberName": "주인2",
+  "memberId": "num2",
+  "memberEmail": "num2@num2.com",
+  "memberPhone": "010-2222-2222",
+  "memberNo": "1946-02-02",
+  "memberStatus": "Y",
+  "memberAddress": "서울특별시 종로구",
+  "hireDate": "1999-08-28T12:00:00Z",
+  "department": {
+    "deptCode": 1
+  },
+  "rank": {
+    "rankCode": 1
+  },
+  "memberOff": 12
+}
+
+<> 2023-09-05T112641.200.json
+
+###
+
+POST http://localhost:8989/auth/signup
+Content-Type: application/json
+Accept: */*
+Content-Length: 360
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "memberPassword": "num1",
+  "memberName": "주인",
+  "memberId": "num1",
+  "memberEmail": "num1@num1.com",
+  "memberPhone": "010-4554-5654",
+  "memberNo": "1945-06-05",
+  "memberStatus": "Y",
+  "memberAddress": "서울특별시 종로구",
+  "hireDate": "1999-08-28T12:00:00Z",
+  "department": {
+    "deptCode": 1
+  },
+  "rankCode": 1,
+  "memberOff": 12
+}
+
+<> 2023-08-31T190039.200.json
+
+###
+
+POST http://localhost:8989/auth/login
+Content-Type: application/json
+Accept: */*
+Access-Control-Allow-Origin: *
+Content-Length: 53
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "memberId": "admin",
+  "memberPassword": "admi"
+}
+
+<> 2023-08-30T183015.400.json
+
+###
+
+POST http://localhost:8989/auth/login
+Content-Type: application/json
+Accept: */*
+Access-Control-Allow-Origin: *
+Content-Length: 53
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "memberId": "admi",
+  "memberPassword": "admin"
+}
+
+<> 2023-08-30T183000.400.json
+
+###
+
+POST http://localhost:8989/auth/login
+Content-Type: application/json
+Accept: */*
+Access-Control-Allow-Origin: *
+Content-Length: 54
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "memberId": "admin",
+  "memberPassword": "admin"
+}
+
+<> 2023-08-30T182954.200.json
+
+###
+
+POST http://localhost:8989/auth/login
+Content-Type: application/json
+Accept: */*
+Access-Control-Allow-Origin: *
+Content-Length: 54
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "memberId": "admin",
+  "memberPassword": "admin"
+}
+
+<> 2023-08-30T170731.200.json
+
+###
+
+POST http://localhost:8989/auth/login
+Content-Type: application/json
+Accept: */*
+Access-Control-Allow-Origin: *
+Content-Length: 54
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "memberId": "admin",
+  "memberPassword": "admin"
+}
+
+<> 2023-08-30T164854.200.json
+
+###
+
+POST http://localhost:8989/auth/signup
+Content-Type: application/json
+Accept: */*
+Content-Length: 367
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "memberPassword": "admin",
+  "memberName": "드미니",
+  "memberId": "admin",
+  "memberEmail": "admin@admin.com",
+  "memberPhone": "010-9876-5432",
+  "memberNo": "1955-05-05",
+  "memberStatus": "Y",
+  "memberAddress": "서울특별시 종로구",
+  "hireDate": "2000-08-28T12:00:00Z",
+  "department": {
+    "deptCode": 1
+  },
+  "rankCode": 1,
+  "memberOff": 12
+}
+
+<> 2023-08-30T162735.200.json
+
+###
+
 GET http://localhost:8989/addressBook/contact/2
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
@@ -638,218 +1014,6 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 }
 
 <> 2023-08-28T164836.400.json
-
-###
-
-POST http://localhost:8989/auth/login
-Content-Type: application/json
-Accept: */*
-Access-Control-Allow-Origin: *
-Content-Length: 55
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "memberId": "TEST123",
-  "memberPassword": "1234"
-}
-
-<> 2023-08-28T164817.400.json
-
-###
-
-POST http://localhost:8989/auth/login
-Content-Type: application/json
-Accept: */*
-Access-Control-Allow-Origin: *
-Content-Length: 52
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "memberId": "TEST",
-  "memberPassword": "1234"
-}
-
-<> 2023-08-28T164754.400.json
-
-###
-
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
-Accept: */*
-Content-Length: 119
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "memberId": "dbrs96",
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberEmail": "dong@duckdin.com"
-}
-
-<> 2023-08-28T164703.500.json
-
-###
-
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
-Accept: */*
-Content-Length: 119
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "memberId": "dbrs96",
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberEmail": "dong@duckdin.com"
-}
-
-<> 2023-08-28T164435.500.json
-
-###
-
-POST http://localhost:8989/auth/login
-Content-Type: application/json
-Accept: */*
-Access-Control-Allow-Origin: *
-Content-Length: 56
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "memberId": "dbrs96",
-  "memberPassword": "pass01"
-}
-
-<> 2023-08-28T164428.400.json
-
-###
-
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
-Accept: */*
-Content-Length: 119
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "memberId": "dbrs96",
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberEmail": "dong@duckdin.com"
-}
-
-<> 2023-08-28T164416.500.json
-
-###
-
-GET http://localhost:8989/department/treeview
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-25T005243.200.json
-
-###
-
-GET http://localhost:8989/calendar/list/2
-GET http://localhost:8989/document/main/2
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-24T180220.200.json
-
-###
-
-GET http://localhost:8989/calendar/list/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-24T165620.200.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-21T180354.200.json
-
-###
-
-GET http://localhost:8091/calendar/list/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-21T180333.200.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-21T180121.200.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-21T180002.500.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-21T175934.200.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-21T175843.500.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-21T175734.500.json
-
-###
-
-GET http://localhost:8091/schedule/all/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-21T175633.200.json
 
 ###
 

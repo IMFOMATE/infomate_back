@@ -5,8 +5,8 @@ Accept: */*
 Access-Control-Allow-Origin: *
 
 {
-  "memberId": "user1",
-  "memberPassword": "user1"
+  "memberId": "num5",
+  "memberPassword": "num5"
 }
 
 ### 회원가입
@@ -15,18 +15,18 @@ Content-Type: application/json
 Accept: */*
 
 {
-  "memberPassword": "user1",
-  "memberName": "아무개",
-  "memberId": "user1",
-  "memberEmail": "a@mugae.com",
-  "memberPhone": "010-4324-1234",
-  "memberNo": "1999-01-23",
+  "memberPassword": "num5",
+  "memberName": "주인5",
+  "memberId": "num5",
+  "memberEmail": "num5@num5.com",
+  "memberPhone": "010-5555-5555",
+  "memberNo": "1947-05-05",
   "memberStatus": "Y",
-  "memberAddress": "경기도 고양시 일산동구",
-  "hireDate": "2023-08-28T12:00:00Z",
+  "memberAddress": "서울특별시 종로구",
+  "hireDate": "1999-08-28T12:00:00Z",
   "department": {
-    "deptCode": 3
+    "deptCode": 1
   },
-  "rankCode": 2,
+  "rankCode": 1,
   "memberOff": 12
 }

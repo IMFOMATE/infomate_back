@@ -81,7 +81,7 @@ public class AuthService {
 
         int MaxMemberCode = memberRepository.maxMemberCode();
 
-        AuthList registAuth = new AuthList(MaxMemberCode, 2);
+        AuthList registAuth = new AuthList(MaxMemberCode, 1);
 
         AuthList result2 = authListRepository.save(registAuth);
 

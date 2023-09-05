@@ -17,6 +17,7 @@ public class DepartmentDTO {
     private int deptCode;
 
     private String deptName;
+
     private List<MemberDTO> members;
 
 }
