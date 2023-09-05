@@ -28,8 +28,9 @@ public class VacationRequest extends DocumentRequest{
   private LocalDateTime endDate;
 
   @Builder
-  public VacationRequest(@NotBlank @Size(min = 5, max = 100) String title, String content, String emergency, List<RefRequest> refList, List<ApprovalRequest> approvalList, String sort, LocalDateTime startDate, LocalDateTime endDate) {
-    super(title, content, emergency, refList, approvalList);
+
+  public VacationRequest(@NotBlank @Size(min = 5, max = 100) String title, String content, String emergency, List<RefRequest> refList, List<ApprovalRequest> approvalList, List<Integer> existList, String sort, LocalDateTime startDate, LocalDateTime endDate) {
+    super(title, content, emergency, refList, approvalList, existList);
     this.sort = sort;
     this.startDate = startDate;
     this.endDate = endDate;

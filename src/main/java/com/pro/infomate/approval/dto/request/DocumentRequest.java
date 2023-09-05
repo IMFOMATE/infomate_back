@@ -26,5 +26,6 @@ public class DocumentRequest {
 
   private List<ApprovalRequest> approvalList;// 결재 목록
 
+  private List<Integer> existList;
 
 }

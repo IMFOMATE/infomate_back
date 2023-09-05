@@ -41,6 +41,7 @@ public class DocumentToDTOVisitor implements DocumentVisitor<DocumentDetailRespo
     return files.stream()
             .map(file -> DocFileResponse.builder()
                     .fileCode(file.getFileCode())
+                    .originalName(file.getOriginalName())
                     .fileName(file.getFileName())
                     .fileType(file.getFileType())
                     .fileSize(file.getFileSize())
@@ -53,6 +54,7 @@ public class DocumentToDTOVisitor implements DocumentVisitor<DocumentDetailRespo
             .map(docRef -> {
               Member result = docRef.getMember();
               return RefMemberResponse.builder()
+                      .memberCode(result.getMemberCode())
                       .memberName(result.getMemberName())
                       .profile(result.getMemberPic())
                       .rankName(result.getRank().getRankName())

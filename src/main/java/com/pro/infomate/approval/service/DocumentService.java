@@ -136,6 +136,7 @@ public class DocumentService {
 
     Draft draft = modelMapper.map(draftRequest, Draft.class);
     draft.addMember(member);
+    draft.setDocumentStatus(DocumentStatus.WAITING);
 
 
     if(temp != null){
@@ -172,6 +173,34 @@ public class DocumentService {
         approvalRepository.save(approval);
       });
     }
+
+
+    if (draftRequest.getExistList() != null && !draftRequest.getExistList().isEmpty()) {
+      List<Long> existList = draftRequest.getExistList().stream()
+              .map(Integer::longValue)
+              .collect(Collectors.toList());
+      System.out.println("existList = " + existList);
+
+      List<DocumentFile> existingFiles = documentFileRepository.findAllById(existList);
+      existingFiles.forEach(f -> {
+        System.out.println("f. = " + f.getFileName());
+        System.out.println("f. = " + f.getOriginalName());
+
+      });
+
+      List<DocumentFile> newFiles = existingFiles.stream().map(ex->{
+                DocumentFile file = DocumentFile.builder()
+                        .fileName(ex.getFileName())
+                        .fileType(ex.getFileType())
+                        .fileSize(ex.getFileSize())
+                        .originalName(ex.getOriginalName())
+                        .document(save).build();
+                return file;
+      }).collect(Collectors.toList());
+
+      documentFileRepository.saveAll(newFiles);
+    }
+
 
     if(multipartFiles != null){
       List<DocFileResponse> files = null;

@@ -2,6 +2,7 @@ package com.pro.infomate.approval.entity;
 
 import com.pro.infomate.approval.dto.response.DocFileResponse;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "TBL_DOCFILE")
+@DynamicInsert
 @SequenceGenerator(
         name = "FILE_CODE_GENERATOR",
         sequenceName = "SEQ_TBL_DOCFILE_FILE_CODE",
@@ -49,4 +51,12 @@ public class DocumentFile {
     this.document = document;
   }
 
+  @Builder
+  public DocumentFile(String fileName, String originalName, String fileType, long fileSize, Document document) {
+    this.fileName = fileName;
+    this.originalName = originalName;
+    this.fileType = fileType;
+    this.fileSize = fileSize;
+    this.document = document;
+  }
 }

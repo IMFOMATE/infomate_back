@@ -22,8 +22,8 @@ public class DraftRequest extends DocumentRequest{
 
 
   @Builder
-  public DraftRequest(@NotBlank @Size(min = 5, max = 100) String title, String content, String emergency, List<RefRequest> refList, List<ApprovalRequest> approvalList, String coDept, LocalDateTime startDate) {
-    super(title, content, emergency, refList, approvalList);
+  public DraftRequest(@NotBlank @Size(min = 5, max = 100) String title, String content, String emergency, List<RefRequest> refList, List<ApprovalRequest> approvalList, List<Integer> existList, String coDept, LocalDateTime startDate) {
+    super(title, content, emergency, refList, approvalList, existList);
     this.coDept = coDept;
     this.startDate = startDate;
   }
