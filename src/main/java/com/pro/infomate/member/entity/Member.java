@@ -24,7 +24,6 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @SequenceGenerator(
         name = "MEMBER_CODE_GENERATOR",
         sequenceName = "SEQ_TBL_MEMBER_MEMBER_CODE",
@@ -82,7 +81,6 @@ public class Member {
     @JoinColumn(name = "RANK_CODE")
     private Rank rank;
 
-
     @Column(name = "MEMBER_PIC")
     private String memberPic;
 
@@ -105,17 +103,31 @@ public class Member {
     private List<Document> documentList = new ArrayList<>();
 
 
-
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 27b3904af9e4c6be15acb3e4c3602ba8cfbe9f3b
     @OneToMany(mappedBy = "member")
     private List<Work> workList;
 
     @OneToMany(mappedBy = "member")
     private List<Off> OffList;
 
+    @Override
+    public String toString() {
+        return "Member{" +
+                "memberCode=" + memberCode +
+                ", memberPassword='" + memberPassword + '\'' +
+                ", memberName='" + memberName + '\'' +
+                ", memberId='" + memberId + '\'' +
+                ", memberEmail='" + memberEmail + '\'' +
+                ", memberPhone='" + memberPhone + '\'' +
+                ", memberNo='" + memberNo + '\'' +
+                ", memberStatus='" + memberStatus + '\'' +
+                ", extensionNumber='" + extensionNumber + '\'' +
+                ", memberAddress='" + memberAddress + '\'' +
+                ", department=" + department +
+                ", hireDate=" + hireDate +
+                ", rank=" + rank +
+                ", memberPic='" + memberPic + '\'' +
+                ", memberOff=" + memberOff +
+                ", authList=" + authList +
+                '}';
+    }
 }
-
