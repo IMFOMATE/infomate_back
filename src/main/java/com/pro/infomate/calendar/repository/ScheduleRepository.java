@@ -1,10 +1,10 @@
 package com.pro.infomate.calendar.repository;
 
+import com.pro.infomate.calendar.dto.DayPerCountDTO;
 import com.pro.infomate.calendar.entity.Schedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,16 +17,27 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
                                              "WHERE c.memberCode = :memberCode)")
     List<Schedule> findAllScheduleByCalendarByMemberCode(int memberCode);
 
-
     @Query(value = "SELECT s " +
                      "FROM Schedule s " +
-                    "JOIN Calendar c ON c.id = s.refCalendar " +
-                    "WHERE s.endDate between :startDate AND :endDate " +
-                      "AND c.memberCode = :memberCode")
-    List<Schedule> findAllByEndDateBetweenThree(int memberCode, LocalDateTime startDate, LocalDateTime endDate);
+                     "JOIN Calendar c ON c.id = s.refCalendar " +
+                    "WHERE c.departmentCode = (SELECT d.deptCode " +
+                                                "FROM Member m " +
+                                                "JOIN m.department d " +
+                                               "WHERE m.memberCode = :memberCode) " +
+                      "AND s.startDate BETWEEN :startDate AND :endDate " )
+    List<Schedule> findThreeDays(int memberCode, LocalDateTime startDate, LocalDateTime endDate);
 
 
     void deleteAllByRefCalendar(int calendarId);
+
+
+    @Query(value = "SELECT COUNT(s.id) as count, TRUNC(s.startDate) as date " +
+                     "FROM Schedule s " +
+                     "JOIN s.calendar c "+
+                    "WHERE c.memberCode = :memberCode " +
+                      "AND s.startDate BETWEEN :startDay AND :endDay " +
+                    "GROUP BY s.startDate ")
+    List<DayPerCountDTO> dayPerCount(LocalDateTime startDay, LocalDateTime endDay, int memberCode);
 
 // 부서 코드 조인으로 인한 member 엔티티 후 수정 예정
 //    @Query(value = "SELECT s "+

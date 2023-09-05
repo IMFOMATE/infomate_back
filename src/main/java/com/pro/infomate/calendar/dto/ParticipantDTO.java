@@ -3,9 +3,6 @@ package com.pro.infomate.calendar.dto;
 import com.pro.infomate.member.dto.MemberDTO;
 import lombok.*;
 
-import java.util.List;
-
-
 @Getter
 @Setter
 @ToString

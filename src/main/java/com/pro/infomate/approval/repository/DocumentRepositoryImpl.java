@@ -3,6 +3,7 @@ package com.pro.infomate.approval.repository;
 import com.pro.infomate.approval.dto.response.DocumentListResponse;
 import com.pro.infomate.approval.dto.response.QDocumentListResponse;
 import com.pro.infomate.approval.entity.*;
+
 import com.querydsl.core.types.SubQueryExpression;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
@@ -16,6 +17,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.pro.infomate.approval.entity.QApproval.*;
 import static com.pro.infomate.approval.entity.QDocument.*;
@@ -67,6 +69,7 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
             .fetchOne();
 
     return new PageImpl<>(content,pageable, count);
+
   }
 
 
@@ -128,5 +131,6 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
   private BooleanExpression memberCodeEq(Integer memberCode) {
     return memberCode != null ? member.memberCode.eq(memberCode) : null;
   }
+
 
 }
