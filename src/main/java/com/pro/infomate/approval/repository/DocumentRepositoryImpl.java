@@ -27,7 +27,7 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
 
   private final JPAQueryFactory queryFactory;
 
-  //   본인 부서 중 완료된 문서 리스트
+
   @Override
   public Page<DocumentListResponse> findByDeptDoc(int memberCode, Pageable pageable) {
 

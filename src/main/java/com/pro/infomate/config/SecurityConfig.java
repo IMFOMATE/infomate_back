@@ -12,8 +12,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
@@ -50,9 +48,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-
-        // 개발 cors 설정
-        http.cors();
         //  개발용 cors 허용
         http.cors().configurationSource(request -> {
             CorsConfiguration config =  new CorsConfiguration();
@@ -62,8 +57,6 @@ public class SecurityConfig {
             return config;
         });
 
-//        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
-//        http.cors().configurationSource(corsConfigurationSource());
 
         // 개발용 csrf 허용
         http.csrf().disable().authorizeHttpRequests().antMatchers("*").permitAll();
@@ -75,21 +68,21 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//
+//        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+//        configuration.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE"));
+//        configuration.setAllowedHeaders(Arrays.asList("Access-Control-Allow-Origin", "Content-type"
+//                , "Access-Control-Allow-Headers", "Authorization"
+//                , "X-Requested-With"));
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
 
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE"));
-        configuration.setAllowedHeaders(Arrays.asList("Access-Control-Allow-Origin", "Content-type"
-                , "Access-Control-Allow-Headers", "Authorization"
-                , "X-Requested-With"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
-
-    }
+}
 
 
 

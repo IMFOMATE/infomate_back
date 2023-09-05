@@ -2,12 +2,12 @@ package com.pro.infomate.Board.Controller;
 
 import com.pro.infomate.Board.Repository.PostRepository;
 import com.pro.infomate.Board.dto.BoardDTO;
+import com.pro.infomate.Board.dto.PagingResponseDTO;
 import com.pro.infomate.Board.dto.PostDTO;
 import com.pro.infomate.Board.entity.Post;
 import com.pro.infomate.Board.service.BoardService;
 import com.pro.infomate.common.Criteria;
 import com.pro.infomate.common.PageDTO;
-import com.pro.infomate.common.PagingResponseDTO;
 import com.pro.infomate.common.ResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
