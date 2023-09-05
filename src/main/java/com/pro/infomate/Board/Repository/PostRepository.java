@@ -17,6 +17,11 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
     Optional<Post> findByPostCode(Integer postCode);
 
+    Optional<Post> findById(int postCode);
+
+//    void deleteAllByPost(int item);
+
+
 //    List<Post> findBy(int i);
 
 //    List<Post> findByBoardId(int i);

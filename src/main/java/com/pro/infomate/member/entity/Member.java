@@ -104,10 +104,6 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Document> documentList = new ArrayList<>();
 
-
-
-
-
     @OneToMany(mappedBy = "member")
     private List<Work> workList;
 

@@ -4,3 +4,9 @@ GET http://localhost:8989/department/treeview
 
 ### 회원조회
 GET http://localhost:8989/emp/info/2
+
+
+### 부서조회
+GET http://localhost:8989/department/emp/list
+
+

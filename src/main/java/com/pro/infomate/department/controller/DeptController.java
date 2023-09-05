@@ -21,6 +21,14 @@ public class DeptController {
   private final DepartmentService departmentService;
 
 
+  @GetMapping("/emp/list")
+  public ResponseEntity<ResponseDTO> deptList(){
+
+    return ResponseEntity.ok()
+            .body(ResponseDTO.builder().status(HttpStatus.OK).message("조회성공").data(departmentService.selectDeptList()).build());
+
+  }
+
 
 
 

@@ -1,14 +1,14 @@
 package com.pro.infomate.Board.service;
 
 
-import com.pro.infomate.Board.Repository.BoardRepository;
 import com.pro.infomate.Board.Repository.PostRepository;
 import com.pro.infomate.Board.dto.PostDTO;
-import com.pro.infomate.Board.entity.Board;
+import com.pro.infomate.Board.entity.BoardFile;
 import com.pro.infomate.Board.entity.Post;
 import com.pro.infomate.common.Criteria;
 import com.pro.infomate.member.dto.MemberDTO;
 import com.pro.infomate.member.entity.Member;
+import com.pro.infomate.util.FileUploadUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +16,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.EntityNotFoundException;
-import java.text.SimpleDateFormat;
+import java.awt.*;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import static com.pro.infomate.Board.entity.QPost.post;
 
 @Service
 @Slf4j
@@ -44,6 +47,8 @@ public class BoardService {
         this.modelMapper = modelMapper;
 
     }
+
+
 
 //    public Board getBoardById(int boardCode) {
 //        return boardRepository.findById(boardCode)
@@ -102,43 +107,6 @@ public class BoardService {
         }
 
 
-//    @Transactional
-//    public String updatePost(PostDTO postDTO, MultipartFile postImage){
-//
-//        log.info("[ProductService] updatePost Start ===================================");
-//        log.info("[ProductService] postDTO : " + postDTO);
-//
-//        String replaceFileName = null;
-//        int result = 0;
-//
-//        try {
-//
-//            Post post = postRepository.findById(postDTO.getPostCode()).get();
-//            String oriImage = post.getPostImageURL();
-//        }
-//    }
-
-
-//    public List<PostDTO> getAllBoards() {   // 게시판 목록 조회
-//        List<Post> postList = postRepository.findAll();
-//
-//        return postList.stream()
-//                .map(post -> modelMapper.map(post, PostDTO.class))
-//                .map(postDTO -> {
-//
-//                    MemberDTO memberDTO = new MemberDTO();
-//                    memberDTO.setMemberId(postDTO.getMember().getMemberId());
-//                    memberDTO.setMemberName(postDTO.getMember().getMemberName());
-//                    memberDTO.setMemberNo(postDTO.getMember().getMemberNo());
-//
-//                    postDTO.setMember(memberDTO);
-//
-//                    return postDTO;
-//
-//                })
-//                .collect(Collectors.toList());
-//    }
-
 
     @Transactional
     public String postPost(PostDTO postDTO) {   // 새 글 작성
@@ -160,6 +128,43 @@ public class BoardService {
         return (result > 0) ? "게시글 등록 성공" : "게시글 입력 실패";
 
     }
+
+
+
+    @Transactional // 게시글 수정
+    public String updatePost(PostDTO postDTO) {
+    log.info("[updatePost] postDTO :  {}", postDTO);
+        try {
+            Post post = postRepository.findById(postDTO.getPostCode()).get();
+
+            if (post != null) {
+                post.setPostCode(postDTO.getPostCode());
+                post.setPostTitle(postDTO.getPostTitle());
+                post.setPostDate(postDTO.getPostDate());
+                post.setPostContents(postDTO.getPostContents());
+                post.setBoardCategory(postDTO.getBoardCategory());
+                post.setBoardCode(postDTO.getBoard().getBoardCode());
+
+                postRepository.save(post);
+                return "게시글 수정 완료";
+            } else {
+                return "게시글을 찾을 수 없습니다.";
+            }
+        } catch (Exception e) {
+            return "게시글 수정 실패: " + e.getMessage();
+        }
+    }
+
+
+    @Transactional
+    public void deleteById(Integer postCode) {
+
+        log.info("[BoardService](deleteById) post : {}", postCode);
+       // postRepository.deleteAllByPost(postCode);
+    }
+
+
+
 
 
 
@@ -187,6 +192,8 @@ public class BoardService {
                 })
                 .collect(Collectors.toList());
     }
+
+
 
 
 
@@ -270,3 +277,50 @@ public class BoardService {
                 .collect(Collectors.toList());
     }
 }
+
+
+//
+//        log.info("[ProductService] updatePost Start ===================================");
+//        log.info("[ProductService] postDTO : " + postDTO);
+//
+////        String replaceFileName = null;
+////        int result = 0;
+//
+//        try {
+//            Post post = postRepository.findById(postDTO.getPostCode()).get();
+////            String BoardFile = post.getBoardFile();
+////            log.info("[updatePost] postImage : " + postImage);
+//
+//
+//                post.setPostCode(postDTO.getPostCode());
+//                post.setPostTitle(postDTO.getPostTitle());
+//                post.setPostDate(postDTO.getPostDate());
+//                post.setPostContents(postDTO.getPostContents());
+//                post.setBoardCategory(postDTO.getBoardCategory());
+//                post.setBoardCode(postDTO.getPostCode());
+//
+//                if (postImage != null && !postImage.isEmpty()) {
+//                    String imageName = UUID.randomUUID().toString().replace("-", "");
+//                    replaceFileName = FileUploadUtils.saveFile(imageName, BoardFile);
+//                    log.info("updatePost] InsertFileName : " + replaceFileName);
+//
+//                    post.setBoardFile(replaceFileName);
+//                    log.info("[updatePost] deleteFileName : " + BoardFile);
+//
+//                    boolean isDelete = FileUploadUtils.deleteFile(BoardFile);
+//                    log.info("[update] isDelete : " + isDelete);
+//                } else {
+//
+//                    post.setBoardFile(postImage);
+//                }
+//
+//                result = 1;
+//        } catch (IOException e) {
+//            log.info("[updatePost] Exception!!");
+////            FileUploadUtils.deleteFile(replaceFileName);
+//            throw new RuntimeException(e);
+//        }
+//        log.info("[PostService] updatePost End ==================================");
+//        return (result > 0) ? "게시글 수정 완료" : "게시글 수정 실패";
+//
+//    }

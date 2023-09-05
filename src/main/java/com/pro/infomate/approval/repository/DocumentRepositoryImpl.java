@@ -63,7 +63,7 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
             .join(member.department, department)
             .where(
                     document.documentStatus.eq(DocumentStatus.APPROVAL)
-                            .and(department.deptCode.in(subQueryDeptCodes)))
+            .and(department.deptCode.in(subQueryDeptCodes)))
             .fetchOne();
 
     return new PageImpl<>(content,pageable, count);

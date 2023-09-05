@@ -10,7 +10,9 @@ import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Integer> {
 
-//  @EntityGraph(attributePaths = {"department", "rank"})
+
+
+    //  @EntityGraph(attributePaths = {"department", "rank"})
   Member findByMemberId(String memberId);
 
   List<Member> findByMemberCodeIn(List<Integer> ids);
