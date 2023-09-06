@@ -25,7 +25,6 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @SequenceGenerator(
         name = "MEMBER_CODE_GENERATOR",
         sequenceName = "SEQ_TBL_MEMBER_MEMBER_CODE",
@@ -115,5 +114,26 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Participant> participantList;
 
+    @Override
+    public String toString() {
+        return "Member{" +
+                "memberCode=" + memberCode +
+                ", memberPassword='" + memberPassword + '\'' +
+                ", memberName='" + memberName + '\'' +
+                ", memberId='" + memberId + '\'' +
+                ", memberEmail='" + memberEmail + '\'' +
+                ", memberPhone='" + memberPhone + '\'' +
+                ", memberNo='" + memberNo + '\'' +
+                ", memberStatus='" + memberStatus + '\'' +
+                ", extensionNumber='" + extensionNumber + '\'' +
+                ", memberAddress='" + memberAddress + '\'' +
+                ", department=" + department +
+                ", hireDate=" + hireDate +
+                ", rank=" + rank +
+                ", memberPic='" + memberPic + '\'' +
+                ", memberOff=" + memberOff +
+                ", authList=" + authList +
+                '}';
+    }
 }
 

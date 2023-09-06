@@ -2,9 +2,8 @@ package com.pro.infomate.approval.repository;
 
 import com.pro.infomate.approval.dto.response.DocumentListResponse;
 import com.pro.infomate.approval.dto.response.QDocumentListResponse;
-import com.pro.infomate.approval.entity.Approval;
-import com.pro.infomate.approval.entity.Document;
-import com.pro.infomate.approval.entity.DocumentStatus;
+import com.pro.infomate.approval.entity.*;
+
 import com.querydsl.core.types.SubQueryExpression;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
@@ -27,6 +26,7 @@ import static com.pro.infomate.member.entity.QMember.member;
 public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
 
   private final JPAQueryFactory queryFactory;
+
 
   @Override
   public Page<DocumentListResponse> findByDeptDoc(int memberCode, Pageable pageable) {
@@ -61,8 +61,10 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
             .from(document)
             .join(document.member, member)
             .join(member.department, department)
-            .where(document.documentStatus.eq(DocumentStatus.APPROVAL)
-                    .and(department.deptCode.in(subQueryDeptCodes)))
+            .where(
+                    document.documentStatus.eq(DocumentStatus.APPROVAL)
+                  .and(department.deptCode.in(subQueryDeptCodes)))
+
             .fetchOne();
 
     return new PageImpl<>(content,pageable, count);

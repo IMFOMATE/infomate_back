@@ -1,5 +1,6 @@
 package com.pro.infomate.department.service;
 
+import com.pro.infomate.department.dto.DepartmentDTO;
 import com.pro.infomate.department.dto.DepartmentExpendDTO;
 import com.pro.infomate.department.dto.DeptListResponse;
 import com.pro.infomate.department.dto.TreeViewResponse;
@@ -115,11 +116,26 @@ public class DepartmentService {
   }
 
 
-    public List<DepartmentExpendDTO> participantList() {
-      List<Department> departmentList = departmentRepository.findAll();
-      log.info("[DepartmentService](participantList) departmentList : {}", departmentList);
-      return departmentList.stream()
-              .map(department -> modelMapper.map(department, DepartmentExpendDTO.class))
-          .collect(Collectors.toList());
-    }
+  public List<DepartmentDTO> selectDept(String search) {
+
+    log.info("[DepartmentService] selectDeptList Start ======================");
+
+    List<Department> departmentListSearchValue = departmentRepository.findByDeptName(search);
+
+    List<DepartmentDTO> departmentDTOlist = departmentListSearchValue.stream()
+            .map(department -> modelMapper.map(department, DepartmentDTO.class)).collect(Collectors.toList());
+
+    log.info("[DepartmentService] selectDeptList End ========================");
+
+    return departmentDTOlist;
+  }
+
+  public List<DepartmentExpendDTO> participantList() {
+    List<Department> departmentList = departmentRepository.findAll();
+    log.info("[DepartmentService](participantList) departmentList : {}", departmentList);
+    return departmentList.stream()
+            .map(department -> modelMapper.map(department, DepartmentExpendDTO.class))
+            .collect(Collectors.toList());
+  }
+
 }
