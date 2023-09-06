@@ -45,10 +45,10 @@ logging:
     root: info
 
 image:
-  add-resource-locations: classpath:/static/productimgs/
-  add-resource-handler: /productimgs/**
+  add-resources-locations: classpath:/static/productimgs/
+  add-resources-handler: /productimgs/**
 
-  image-dir: src/main/resource/static/productimgs
+  image-dir: src/main/resources/static/productimgs
   image-url: http://localhost:8989/productimgs/
 
 

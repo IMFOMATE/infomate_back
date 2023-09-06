@@ -6,7 +6,7 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
 
@@ -37,13 +37,17 @@ public class MemberDTO implements UserDetails {
 
     private String memberAddress;
 
-    private Timestamp hireDate;
+    private Date hireDate;
 
     private DepartmentDTO department;
+
+    private int deptCode;
 
     private String memberPic;
 
     private RankDTO rank;
+
+    private int rankCode;
 
     private int memberOff;
 
