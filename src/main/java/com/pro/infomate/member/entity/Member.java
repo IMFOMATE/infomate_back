@@ -73,16 +73,18 @@ public class Member {
     private String memberAddress;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "DEPT_CODE")
+    @JoinColumn(name = "DEPT_CODE", insertable = false,updatable = false)
     private Department department;
 
     @Column(name = "HIRE_DATE")
     private Timestamp hireDate;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "RANK_CODE")
+    @JoinColumn(name = "RANK_CODE", insertable = false,updatable = false)
     private Rank rank;
 
+    @Column(name = "RANK_CODE")
+    private int rankCode;
 
     @Column(name = "MEMBER_PIC")
     private String memberPic;
@@ -90,6 +92,9 @@ public class Member {
 
     @Column(name = "MEMBER_OFF")
     private int memberOff;
+
+    @Column(name = "DEPT_CODE")
+    private int deptCode;
 
     @JsonIgnore
     @OneToMany
