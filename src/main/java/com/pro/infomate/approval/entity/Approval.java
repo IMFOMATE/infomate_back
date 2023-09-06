@@ -2,6 +2,7 @@ package com.pro.infomate.approval.entity;
 
 import com.pro.infomate.member.entity.Member;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
@@ -44,8 +45,9 @@ public class Approval {
   @JoinColumn(name = "MEMBER_CODE")
   private Member member;
 
+  @ColumnDefault("'WAITING'")
   @Enumerated(EnumType.STRING)
-  @Column(name = "APPROVAL_STATUS")
+  @Column(columnDefinition = "VARCHAR2(80) default 'WAITING'" , name = "APPROVAL_STATUS")
   private ApprovalStatus approvalStatus;
 
 

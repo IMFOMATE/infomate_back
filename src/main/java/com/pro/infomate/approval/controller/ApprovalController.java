@@ -3,6 +3,7 @@ package com.pro.infomate.approval.controller;
 import com.pro.infomate.approval.dto.request.ConfirmRequest;
 import com.pro.infomate.approval.service.ApprovalService;
 import com.pro.infomate.common.ResponseDTO;
+import com.pro.infomate.member.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -23,10 +24,10 @@ public class ApprovalController {
   // 승인
   @PatchMapping("/approve")
   public ResponseEntity<ResponseDTO> approve(
-          @RequestBody ConfirmRequest confirmRequest
-//          @AuthenticationPrincipal
+          @RequestBody ConfirmRequest confirmRequest,
+          @AuthenticationPrincipal MemberDTO memberDTO
   ){
-    int memberCode = 43;
+    int memberCode = memberDTO.getMemberCode();
     confirmRequest.setMemberCode(memberCode);
 
     System.out.println("confirmRequest = " + confirmRequest);
@@ -42,12 +43,12 @@ public class ApprovalController {
   // 반려
   @PatchMapping("/reject")
   public ResponseEntity<ResponseDTO> reject(
-          @RequestBody ConfirmRequest confirmRequest
-    //          @AuthenticationPrincipal
-  ){
+          @RequestBody ConfirmRequest confirmRequest,
+          @AuthenticationPrincipal MemberDTO memberDTO
+          ){
     log.info("[ApprovalController] ConfirmRequest={}", confirmRequest);
 
-    int memberCode = 43;
+    int memberCode = memberDTO.getMemberCode();
     confirmRequest.setMemberCode(memberCode);
     approvalService.reject(confirmRequest);
 

@@ -95,6 +95,7 @@ public class DocumentService {
     // 기안 리스트
     if(vacationRequest.getApprovalList() == null){
       Approval approval = Approval.builder().order(1).member(member).document(save).build();
+      approval.setApprovalStatus(ApprovalStatus.APPROVAL);
       Approval saveapproval = approvalRepository.save(approval);
       saveapproval.setApprovalDate(save.getCreatedDate());
       save.setDocumentStatus(DocumentStatus.APPROVAL);
@@ -161,6 +162,7 @@ public class DocumentService {
     // 기안 리스트
     if(draftRequest.getApprovalList() == null){
       Approval approval = Approval.builder().order(1).member(member).document(save).build();
+      approval.setApprovalStatus(ApprovalStatus.APPROVAL);
       Approval saveapproval = approvalRepository.save(approval);
       saveapproval.setApprovalDate(save.getCreatedDate());
       save.setDocumentStatus(DocumentStatus.APPROVAL);
@@ -254,6 +256,7 @@ public class DocumentService {
     // 결재 리스트
     if(paymentRequest.getApprovalList() == null){
       Approval approval = Approval.builder().order(1).member(member).document(save).build();
+      approval.setApprovalStatus(ApprovalStatus.APPROVAL);
       Approval saveapproval = approvalRepository.save(approval);
       saveapproval.setApprovalDate(save.getCreatedDate());
       save.setDocumentStatus(DocumentStatus.APPROVAL);

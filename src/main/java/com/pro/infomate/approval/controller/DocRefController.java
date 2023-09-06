@@ -27,7 +27,9 @@ public class DocRefController {
 
   //참조 문서 5개
   @GetMapping
-  public ResponseEntity<ResponseDTO> findRefList(){
+  public ResponseEntity<ResponseDTO> findRefList(
+
+  ){
 
     //멤버코드를 Auth로 받아오기
     int memberCode = 22;

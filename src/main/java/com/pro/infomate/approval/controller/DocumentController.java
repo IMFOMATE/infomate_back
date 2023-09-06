@@ -1,20 +1,15 @@
 package com.pro.infomate.approval.controller;
 
-
-import com.pro.infomate.approval.dto.DocumentDTO;
 import com.pro.infomate.approval.dto.request.*;
-import com.pro.infomate.approval.dto.response.DocumentDetailResponse;
 import com.pro.infomate.approval.dto.response.DocumentListResponse;
-import com.pro.infomate.approval.entity.Document;
 import com.pro.infomate.approval.service.DocRefService;
 import com.pro.infomate.approval.service.DocumentService;
 import com.pro.infomate.common.*;
+import com.pro.infomate.member.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,14 +17,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
 @RequestMapping("/document")
 @RequiredArgsConstructor
 public class DocumentController {
-  private final ModelMapper modelMapper;
   private final DocumentService documentService;
   private final DocRefService docRefService;
 
@@ -39,11 +32,12 @@ public class DocumentController {
   public ResponseEntity<ResponseDTO> vacationRegist(
           @ModelAttribute VacationRequest vacationRequest,
           @RequestParam(name = "temp",required = false) String temp,
-          @ModelAttribute(name = "fileList") List<MultipartFile> fileList
+          @ModelAttribute(name = "fileList") List<MultipartFile> fileList,
+          @AuthenticationPrincipal MemberDTO memberDTO
   ){
 
-    //일단은 code로 사용
-    int memberCode = 43;
+    int memberCode = memberDTO.getMemberCode();
+
     documentService.vacationSave(memberCode, vacationRequest, temp, fileList);
 
     return ResponseEntity.ok()
@@ -58,13 +52,14 @@ public class DocumentController {
   public ResponseEntity<ResponseDTO> draftRegist(
           @ModelAttribute DraftRequest draftRequest,
           @RequestParam(name = "temp",required = false) String temp,
-          @ModelAttribute(name = "fileList") List<MultipartFile> fileList
+          @ModelAttribute(name = "fileList") List<MultipartFile> fileList,
+          @AuthenticationPrincipal MemberDTO memberDTO
   ){
 
     System.out.println("form = " + draftRequest);
 
-    //일단은 code로 사용
-    int memberCode = 43;
+    int memberCode = memberDTO.getMemberCode();
+
 //
     documentService.draftSave(memberCode, draftRequest, temp ,fileList);
 
@@ -80,11 +75,11 @@ public class DocumentController {
   public ResponseEntity<ResponseDTO> paymentRegist(
           @ModelAttribute PaymentRequest paymentRequest,
           @RequestParam(name = "temp", required = false) String temp,
-          @ModelAttribute(name = "fileList") List<MultipartFile> fileList
+          @ModelAttribute(name = "fileList") List<MultipartFile> fileList,
+          @AuthenticationPrincipal MemberDTO memberDTO
   ){
 
-    //일단은 code로 사용
-    int memberCode = 43;
+    int memberCode = memberDTO.getMemberCode();
     System.out.println("controller = " + paymentRequest.getPaymentList());
 
     documentService.paymentSave(memberCode, paymentRequest, temp, fileList);
@@ -113,27 +108,30 @@ public class DocumentController {
   }
 
   //결재 메인
-  @GetMapping("/main/{memberCode}")
-  public ResponseEntity<ResponseDTO> documentMain(@PathVariable int memberCode){
+  @GetMapping("/main")
+  public ResponseEntity<ResponseDTO> documentMain(
+          @AuthenticationPrincipal MemberDTO memberDTO
+          ){
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
                     .status(HttpStatus.OK)
                     .message("success")
-                    .data(documentService.top5List(memberCode))
+                    .data(documentService.top5List(memberDTO.getMemberCode()))
                     .build());
   }
 
   // 상태별 리스트
   @GetMapping("/approval/{docStatus}")
-  public ResponseEntity<ResponseDTO> approvalList(
+  public ResponseEntity<PagingResponseDTO> approvalList(
           @PathVariable String docStatus,
-//          @PathVariable int memberCode,
+          @AuthenticationPrincipal MemberDTO memberDTO,
           @RequestParam(required = false, name = "status") String status,
           Pageable pageable
           ){
 
-    int memberCode = 43;
+    log.info("[DocumentController] memberDTO={}", memberDTO);
+    int memberCode = memberDTO.getMemberCode();
     log.info("[DocumentController] status={}", status);
     log.info("[DocumentController] docStatus={}", docStatus);
 
@@ -164,23 +162,25 @@ public class DocumentController {
     PagingResponseDTO result = PagingResponseDTO.builder()
             .pageInfo(pageDTO)
             .data(documents.getContent())
+            .message("success")
+            .httpStatus(HttpStatus.OK)
             .build();
 
     return ResponseEntity.ok()
-            .body(ResponseDTO.builder()
-                    .status(HttpStatus.OK)
-                    .message("success")
-                    .data(result)
-                    .build());
+            .body(result);
   }
 
 
   // 문서세부내용
   @GetMapping("/{documentId}")
-  public ResponseEntity<ResponseDTO> documentDetail(@PathVariable long documentId){
+  public ResponseEntity<ResponseDTO> documentDetail(
+          @PathVariable long documentId,
+          @AuthenticationPrincipal MemberDTO memberDTO
+  ){
     log.info("documentId = {}",documentId);
+    log.info("memberDTO={}",memberDTO);
 
-    int memberCode = 43;
+    int memberCode = memberDTO.getMemberCode();
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
