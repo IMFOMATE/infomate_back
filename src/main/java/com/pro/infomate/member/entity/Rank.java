@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
+
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -28,4 +29,7 @@ public class Rank {
 
   @Column(name = "RANK_PLACE")
   private int rankPlace;
+
+//  @OneToOne(mappedBy = "rank")
+//  private Member member;
 }

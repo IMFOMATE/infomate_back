@@ -104,11 +104,33 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Document> documentList = new ArrayList<>();
 
+
     @OneToMany(mappedBy = "member")
     private List<Work> workList;
 
     @OneToMany(mappedBy = "member")
     private List<Off> OffList;
 
+    @Override
+    public String toString() {
+        return "Member{" +
+                "memberCode=" + memberCode +
+                ", memberPassword='" + memberPassword + '\'' +
+                ", memberName='" + memberName + '\'' +
+                ", memberId='" + memberId + '\'' +
+                ", memberEmail='" + memberEmail + '\'' +
+                ", memberPhone='" + memberPhone + '\'' +
+                ", memberNo='" + memberNo + '\'' +
+                ", memberStatus='" + memberStatus + '\'' +
+                ", extensionNumber='" + extensionNumber + '\'' +
+                ", memberAddress='" + memberAddress + '\'' +
+                ", department=" + department +
+                ", hireDate=" + hireDate +
+                ", rank=" + rank +
+                ", memberPic='" + memberPic + '\'' +
+                ", memberOff=" + memberOff +
+                ", authList=" + authList +
+                '}';
+    }
 }
 
