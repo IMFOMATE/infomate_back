@@ -22,6 +22,9 @@ import java.util.List;
         sequenceName = "SEQ_TBL_CLNDR_CLNDR_CODE",
         initialValue = 1, allocationSize = 1
 )
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Calendar {
 
     @Id
@@ -74,18 +77,6 @@ public class Calendar {
         if(calendarDTO.getMemberCode() != null) this.memberCode = calendarDTO.getMemberCode();
         if(calendarDTO.getDepartmentCode() != null) this.departmentCode = calendarDTO.getDepartmentCode();
         if(calendarDTO.getDefaultCalendar() != null) this.defaultCalendar = calendarDTO.getDefaultCalendar();
-    }
-    @Builder
-    public Calendar(int id, String name, Boolean openStatus, String labelColor, Integer indexNo, Integer memberCode, Boolean defaultCalendar, Integer departmentCode, LocalDateTime createDate) {
-        this.id = id;
-        this.name = name;
-        this.openStatus = openStatus;
-        this.labelColor = labelColor;
-        this.indexNo = indexNo;
-        this.memberCode = memberCode;
-        this.defaultCalendar = defaultCalendar;
-        this.departmentCode = departmentCode;
-        this.createDate = createDate;
     }
 
     @Override

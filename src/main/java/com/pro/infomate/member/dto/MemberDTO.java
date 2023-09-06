@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+//@ToString
 public class MemberDTO implements UserDetails {
 
     private int memberCode;         // 회원코드
@@ -47,7 +47,6 @@ public class MemberDTO implements UserDetails {
     private RankDTO rank;
 
     private int memberOff;
-
 
     @JsonIgnore
     private List<AuthListDTO> authList;

@@ -41,24 +41,6 @@ public class ScheduleService {
     private final ParticipantRepository participantRepository;
     private final ModelMapper modelMapper;
 
-//    안씀
-//    public List<ScheduleDTO> findAllScheduleByCalendarByMemberCode(Integer memberCode) {
-//
-//        List<Schedule> scheduleList = scheduleRepository.findAllScheduleByCalendarByMemberCode(memberCode);
-//
-//        log.info("[ScheduleService](updateById) scheduleList : {}", scheduleList);
-//
-//        if(scheduleList.isEmpty() || scheduleList.size() == 0) throw new NotFindDataException("데이터를 찾을 수 없습니다.");
-//
-//        return scheduleList.stream()
-//                .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
-//                .map(scheduleDTO -> {
-//                    scheduleDTO.setCalendar(null);
-//                    return scheduleDTO;
-//                })
-//                .collect(Collectors.toList());
-//    }
-
     public ScheduleDTO findById(int scheduleId, int memberCode){
         Schedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new NotFindDataException("일정을 찾을 수 없습니다"));
@@ -117,6 +99,9 @@ public class ScheduleService {
         }
 
         log.info("[ScheduleService](updateById) entitySchedule : {}",entitySchedule);
+        entitySchedule.update(modelMapper.map(scheduleDTO, Schedule.class));
+
+        if(scheduleDTO.getParticipantList() == null) return;
 
         List<Participant> participant = scheduleDTO.getParticipantList().stream().map(item -> modelMapper.map(item, Participant.class)).collect(Collectors.toList());
         participant = participant.stream().map(participant1 -> {
@@ -126,7 +111,7 @@ public class ScheduleService {
 
         participantRepository.deleteByScheduleCode(scheduleDTO.getId());
         participantRepository.saveAll(participant);
-        entitySchedule.update(modelMapper.map(scheduleDTO, Schedule.class));
+
 
     }
 
