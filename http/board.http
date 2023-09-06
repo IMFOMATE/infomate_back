@@ -1,4 +1,4 @@
-### 게시글 조회
+### 게시판 조회
 GET http://localhost:8989/brd/board
 Accept: */*
 Content-Type: application/json

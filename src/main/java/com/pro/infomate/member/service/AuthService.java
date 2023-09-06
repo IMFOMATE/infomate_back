@@ -46,6 +46,7 @@ public class AuthService {
         this.memberRepository = memberRepository;
         this.passwordEncoder = passwordEncoder;
         this.tokenProvider = tokenProvider;
+        this.calendarService = calendarService;
         this.modelMapper = modelMapper;
         this.authListRepository = authListRepository;
     }
