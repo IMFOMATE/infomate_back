@@ -217,7 +217,7 @@ public class CalendarService {
 
         InitDefaultCalendar(memberCode);
 
-        Optional<Calendar> prevDefaultCalendar = calendarRepository.findByMemberCodeAndDefaultCalendar(calendarDTO.getMemberCode(), true);
+        Optional<Calendar> prevDefaultCalendar = calendarRepository.findByMemberCodeAndDefaultCalendar(memberCode, true);
 
         if (prevDefaultCalendar.isPresent()) {
             log.info("[CalendarService](updateDefaultCalender) prevDefaultCalendar : {}", prevDefaultCalendar.get());
@@ -239,7 +239,7 @@ public class CalendarService {
      * @param info the info
      */
     @Transactional
-    public void updateCalendarIndexNo(Map<String, String> info) {
+    public void updateCalendarIndexNo(Map<String, String> info, int memberCode) {
 
         log.info("[CalendarService](updateCalendarIndexNo) info : {}", info);
 
@@ -248,7 +248,7 @@ public class CalendarService {
         int tempSeq = cur.orElseThrow(() -> new NotFindDataException("캘린더를 찾을 수 없습니다.")).getIndexNo();
 
         if (info.get("direction").equals("prev")) {
-            Optional<Calendar> prev = calendarRepository.findFirstByMemberCodeAndIndexNoBefore(Integer.valueOf(info.get("memberCode")), tempSeq);
+            Optional<Calendar> prev = calendarRepository.findFirstByMemberCodeAndIndexNoBefore(memberCode, tempSeq);
             int prevIndexNo = prev.orElseThrow(() ->
                     new NotFindDataException("캘린더가 존재 하지 않습니다.")
             ).getIndexNo();
@@ -280,25 +280,15 @@ public class CalendarService {
     /**
      * Delete by id.
      *
-     * @param calendarList the calendar list
+     * @param calendar the calendar list
      * @param memberCode   the member code
      */
     @Transactional
-    public void deleteById(List<Integer> calendarList, int memberCode) {
+    public void deleteById(Integer calendar, int memberCode) {
 
-        log.info("[CalendarService](deleteById) calendarList : {}", calendarList);
-
-        calendarList.forEach(item -> {
-            log.info("[CalendarService](deleteById) calendarList.forEach(1) : {}", item);
-            scheduleRepository.deleteAllByRefCalendar(item);
-
-            log.info("[CalendarService](deleteById) calendarList.forEach(2) : {}", item);
-            favotriteCalendarRepository.deleteByRefCalendar(item);
-
-            log.info("[CalendarService](deleteById) calendarList.forEach(3) : {}", item);
-            calendarRepository.deleteById(item);
-            log.info("[CalendarService](deleteById) calendarList.forEach(4) : {}", item);
-        });
+        scheduleRepository.deleteAllByRefCalendar(calendar);
+        favotriteCalendarRepository.deleteByRefCalendar(calendar);
+        calendarRepository.deleteById(calendar);
 
         // indexNo 재정렬 로직 추가
         // 삭제할 indexNo 기준 이후의 값들만 조회해서 수정
@@ -326,9 +316,9 @@ public class CalendarService {
 
         int count = 1;
 
-        for (Calendar calendar : indexCalendar) {
-            calendar.setIndexNo(count++);
-            newCalendar.add(calendar);
+        for (Calendar calendarTemp : indexCalendar) {
+            calendarTemp.setIndexNo(count++);
+            newCalendar.add(calendarTemp);
         }
 
         calendarRepository.saveAll(newCalendar);

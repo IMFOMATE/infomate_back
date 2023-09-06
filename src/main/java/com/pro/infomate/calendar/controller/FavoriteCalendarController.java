@@ -32,7 +32,8 @@ public class FavoriteCalendarController {
                                                              @AuthenticationPrincipal MemberDTO member){
 
         int memberCode = member.getMemberCode();
-        log.info("[FavoriteCalendarController](updateApprovalStatus) pageable.isUnpaged() : {}", pageable);
+        log.info("[FavoriteCalendarController](findAllByFollowerList) pageable : {}", pageable);
+        log.info("[FavoriteCalendarController](findAllByFollowerList) member : {}", member);
 
         pageable = PageRequest.of(
                 pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,

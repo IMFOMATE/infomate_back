@@ -109,7 +109,6 @@ public class CalendarController {
     @PatchMapping("/updateDafault") // api 연동 확인
     public ResponseEntity<ResponseDTO> updateDefaultByCalendar(@RequestBody CalendarDTO calendarDTO, @AuthenticationPrincipal MemberDTO member){
 
-        int department = member.getDepartment().getDeptCode();
         int memberCode = member.getMemberCode();
 
         log.info("[CalendarController](updateDefaultByCalendar) calendarDTO: {} ",calendarDTO);
@@ -127,7 +126,7 @@ public class CalendarController {
         int department = member.getDepartment().getDeptCode();
         int memberCode = member.getMemberCode();
         log.info("[CalendarController](updateDefaultByCalendar) info: {} ",info);
-        calendarService.updateCalendarIndexNo(info); // userId 수정 요망
+        calendarService.updateCalendarIndexNo(info, memberCode); // userId 수정 요망
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
@@ -135,15 +134,16 @@ public class CalendarController {
                         .build());
     }
 
-    @DeleteMapping("/delete") // api 연동 확인
-    public ResponseEntity<ResponseDTO> deleteByCalendar(@RequestBody List<Integer> calendarList, @AuthenticationPrincipal MemberDTO member){
-        int department = member.getDepartment().getDeptCode();
+    @DeleteMapping("/delete/{calendar}") // api 연동 확인
+    public ResponseEntity<ResponseDTO> deleteByCalendar(@PathVariable Integer calendar, @AuthenticationPrincipal MemberDTO member ){
+        log.info("[CalendarController](deleteByCalendar) member : ", member);
+//        int department = member.getDepartment().getDeptCode();
         int memberCode = member.getMemberCode();
 
-        log.info("[CalendarController](deleteByCalendar) calendarList : ", calendarList);
+        log.info("[CalendarController](deleteByCalendar) calendarList : ", calendar);
         log.info("[CalendarController](deleteByCalendar) memberCode : ", memberCode);
 
-        calendarService.deleteById(calendarList, memberCode);
+        calendarService.deleteById(calendar, memberCode);
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()

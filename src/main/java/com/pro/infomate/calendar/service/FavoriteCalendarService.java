@@ -66,8 +66,9 @@ public class FavoriteCalendarService {
     public Page<FavoriteCalendarDTO> findAllByMemberCode(Integer memberCode, Pageable pageable) {
         Page<FavoriteCalendar> favoriteCalendars = favotriteCalendarRepository.findAllByMemberCode(memberCode, pageable);
         log.info("[FavoriteCalendarService](findAllByMemberCode) favoriteCalendars : {}", favoriteCalendars);
+
         if(favoriteCalendars == null || favoriteCalendars.getSize() == 0 ) throw new NotFindDataException("데이터가 없습니다.");
-        log.info("[FavoriteCalendarService](findAllByMemberCode) favoriteCalendars.getContent().get(0).getMember().getMemberName() : {}", favoriteCalendars.getContent().get(0).getMember().getMemberName());
+
 
         return favoriteCalendars
                 .map(favoriteCalendar -> modelMapper.map(favoriteCalendar,FavoriteCalendarDTO.class))
