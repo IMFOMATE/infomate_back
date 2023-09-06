@@ -119,12 +119,11 @@ public class ScheduleController {
         log.info("[ScheduleController](insertSchedule) scheduleDTO : {} ", scheduleDTO);
 
 //        serverApiService.scheduleInsertApi(scheduleDTO);
-
+        scheduleService.insertSchedule(scheduleDTO, memberCode);
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
                         .message("정상적으로 수정 되었습니다.")
-                        .data(scheduleService.insertSchedule(scheduleDTO, memberCode))
                         .build());
     }
 

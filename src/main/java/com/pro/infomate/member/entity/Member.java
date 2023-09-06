@@ -2,6 +2,7 @@ package com.pro.infomate.member.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.pro.infomate.calendar.entity.Participant;
 import com.pro.infomate.work.entity.Off;
 import com.pro.infomate.work.entity.Work;
 import com.pro.infomate.addressbook.entity.Contact;
@@ -104,18 +105,15 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Document> documentList = new ArrayList<>();
 
-
-
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 27b3904af9e4c6be15acb3e4c3602ba8cfbe9f3b
     @OneToMany(mappedBy = "member")
     private List<Work> workList;
 
     @OneToMany(mappedBy = "member")
     private List<Off> OffList;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "member")
+    private List<Participant> participantList;
 
 }
 

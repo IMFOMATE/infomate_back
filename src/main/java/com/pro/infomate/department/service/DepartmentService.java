@@ -1,6 +1,6 @@
 package com.pro.infomate.department.service;
 
-import com.pro.infomate.department.dto.DepartmentDTO;
+import com.pro.infomate.department.dto.DepartmentExpendDTO;
 import com.pro.infomate.department.dto.DeptListResponse;
 import com.pro.infomate.department.dto.TreeViewResponse;
 import com.pro.infomate.department.entity.Department;
@@ -115,5 +115,11 @@ public class DepartmentService {
   }
 
 
-
+    public List<DepartmentExpendDTO> participantList() {
+      List<Department> departmentList = departmentRepository.findAll();
+      log.info("[DepartmentService](participantList) departmentList : {}", departmentList);
+      return departmentList.stream()
+              .map(department -> modelMapper.map(department, DepartmentExpendDTO.class))
+          .collect(Collectors.toList());
+    }
 }
