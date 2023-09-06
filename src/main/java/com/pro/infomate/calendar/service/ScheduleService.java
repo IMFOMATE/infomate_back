@@ -112,7 +112,6 @@ public class ScheduleService {
         participantRepository.deleteByScheduleCode(scheduleDTO.getId());
         participantRepository.saveAll(participant);
 
-
     }
 
     @Transactional

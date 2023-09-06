@@ -50,16 +50,16 @@ public class DeptController {
   }
 
 
-//  @GetMapping("/participantList")
-//  public ResponseEntity<ResponseDTO> participantList(){
-//
-//    return ResponseEntity.ok().body(
-//            ResponseDTO.builder()
-//                    .status(HttpStatus.OK)
-//                    .data(departmentService.participantList())
-//                    .build()
-//    );
-//  }
+  @GetMapping("/participantList")
+  public ResponseEntity<ResponseDTO> participantList(){
+
+    return ResponseEntity.ok().body(
+            ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .data(departmentService.participantList())
+                    .build()
+    );
+  }
 
 
 }
