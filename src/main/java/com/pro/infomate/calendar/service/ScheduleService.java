@@ -183,9 +183,9 @@ public class ScheduleService {
         log.info("[ScheduleService](insertSchedule) schedule : {}", schedule.getParticipantList());
         schedule.setParticipantList(null);
 
-
         scheduleRepository.save(schedule);
 
+        if(schedule.getParticipantList() == null) return;
 
         List<Participant> participant = scheduleDTO.getParticipantList().stream().map(item -> modelMapper.map(item, Participant.class)).collect(Collectors.toList());
         participant = participant.stream().map(participant1 -> {
@@ -193,10 +193,7 @@ public class ScheduleService {
             return participant1;
         }).collect(Collectors.toList());
 
-
-        log.info("[ScheduleService](insertSchedule) participant : {}",participant);
         participantRepository.saveAll(participant);
-//
         log.info("[ScheduleService](insertSchedule) schedule : {}",schedule);
     }
 

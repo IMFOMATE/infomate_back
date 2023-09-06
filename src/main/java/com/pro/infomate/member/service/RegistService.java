@@ -1,5 +1,6 @@
 package com.pro.infomate.member.service;
 
+import com.pro.infomate.calendar.service.CalendarService;
 import com.pro.infomate.member.dto.MemberDTO;
 import com.pro.infomate.member.entity.Member;
 import com.pro.infomate.member.repository.RegistRepository;
@@ -18,6 +19,8 @@ import java.util.UUID;
 public class RegistService {
 
     private final RegistRepository registRepository;
+
+    private final CalendarService calendarService; // 작성자 유승철
     private final ModelMapper modelMapper;
 
     @Value("${image.image-dir}")
@@ -25,9 +28,10 @@ public class RegistService {
     @Value("${image.image-url}")
     private String IMAGE_URL;
 
-    public RegistService(RegistRepository registRepository, ModelMapper modelMapper) {
+    public RegistService(RegistRepository registRepository, ModelMapper modelMapper, CalendarService calendarService) {
         this.registRepository = registRepository;
         this.modelMapper = modelMapper;
+        this.calendarService = calendarService;
     }
 
     @Transactional
@@ -50,6 +54,9 @@ public class RegistService {
             Member registMember = modelMapper.map(memberDTO, Member.class);
 
             registRepository.save(registMember);
+
+            // 계정생성시 기본 캘린더 생성 서비스
+            calendarService.saveFirstCalendarRegist(registMember.getMemberCode());
 
             result = 1;
         } catch (Exception e){

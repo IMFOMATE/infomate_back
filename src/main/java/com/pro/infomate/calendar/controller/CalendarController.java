@@ -8,6 +8,7 @@ import com.pro.infomate.common.Criteria;
 import com.pro.infomate.common.PageDTO;
 import com.pro.infomate.common.PagingResponseDTO;
 import com.pro.infomate.common.ResponseDTO;
+import com.pro.infomate.member.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -30,8 +32,13 @@ public class CalendarController {
 
     private final CalendarService calendarService;
 
-    @GetMapping(value = "/list/{memberCode}/{department}") // api 연동 확인
-    public ResponseEntity<ResponseDTO> findAll(@PathVariable int memberCode, @PathVariable int department){
+    @GetMapping(value = "/list") // api 연동 확인
+    public ResponseEntity<ResponseDTO> findAll(@AuthenticationPrincipal MemberDTO member){
+        log.info("[CalendarController](findAll) principal : {}", member);
+
+        int department = member.getDepartment().getDeptCode();
+        int memberCode = member.getMemberCode();
+
         log.info("[CalendarController](findAll) memberCode : {}", memberCode);
         log.info("[CalendarController](findAll) department : {}", department);
 
@@ -44,8 +51,11 @@ public class CalendarController {
     }
 
 
-    @GetMapping("/mylist/{memberCode}/{department}") // api 연동 확인
-    public ResponseEntity<ResponseDTO> myCalendarList(@PathVariable int memberCode, @PathVariable int department){
+    @GetMapping("/mylist") // api 연동 확인
+    public ResponseEntity<ResponseDTO> myCalendarList(@AuthenticationPrincipal MemberDTO member){
+
+        int department = member.getDepartment().getDeptCode();
+        int memberCode = member.getMemberCode();
 
         log.info("[CalendarController](myCalendarList) memberCode : {}",memberCode);
         log.info("[CalendarController](myCalendarList) department : {}",department);
@@ -58,28 +68,16 @@ public class CalendarController {
                         .build());
     }
 
-
-    // test success 안씀
-//    @GetMapping("/{calendarId}")
-//    public ResponseEntity<ResponseDTO> findById(@PathVariable Integer calendarId){
-//        log.info("[CalendarController](findById) calendarId : {}",calendarId);
-//
-//        return ResponseEntity.ok()
-//                .body(ResponseDTO.builder()
-//                        .status(HttpStatus.OK)
-//                        .message("success")
-//                        .data(calendarService.findById(calendarId))
-//                        .build());
-//    }
-
-
     @PostMapping("/regist") // api 연동 확인
-    public ResponseEntity<ResponseDTO> saveByCalendar(@RequestBody CalendarDTO calendar){
-        log.info("[CalendarController](saveByCalendar) calendar : {}",calendar);
+    public ResponseEntity<ResponseDTO> saveByCalendar(@RequestBody CalendarDTO calendar, @AuthenticationPrincipal MemberDTO member ){
+
+        calendar.setMemberCode(member.getMemberCode());
+
+        log.info("[CalendarController](saveByCalendar) calendar : {}", calendar);
 
         calendar.setCreateDate(LocalDateTime.now());
 
-        log.info("[CalendarController](saveByCalendar) calendar : {}",calendar);
+        log.info("[CalendarController](saveByCalendar) calendar : {}", calendar);
 
         calendarService.saveByCalendar(calendar);
 
@@ -92,7 +90,10 @@ public class CalendarController {
 
 
     @PatchMapping("/update") // api 연동 확인
-    public ResponseEntity<ResponseDTO> updateByCalendar(@RequestBody CalendarDTO calendar){
+    public ResponseEntity<ResponseDTO> updateByCalendar(@RequestBody CalendarDTO calendar, @AuthenticationPrincipal MemberDTO member){
+
+        int department = member.getDepartment().getDeptCode();
+        int memberCode = member.getMemberCode();
 
         log.info("[CalendarController](updateByCalendar) calendar : {}",calendar);
 
@@ -105,8 +106,12 @@ public class CalendarController {
                         .build());
     }
 
-    @PatchMapping("/updateDafault/{memberCode}") // api 연동 확인
-    public ResponseEntity<ResponseDTO> updateDefaultByCalendar(@PathVariable int memberCode, @RequestBody CalendarDTO calendarDTO){
+    @PatchMapping("/updateDafault") // api 연동 확인
+    public ResponseEntity<ResponseDTO> updateDefaultByCalendar(@RequestBody CalendarDTO calendarDTO, @AuthenticationPrincipal MemberDTO member){
+
+        int department = member.getDepartment().getDeptCode();
+        int memberCode = member.getMemberCode();
+
         log.info("[CalendarController](updateDefaultByCalendar) calendarDTO: {} ",calendarDTO);
         calendarService.updateDefaultCalender(calendarDTO, memberCode); // userId 수정 요망
         return ResponseEntity.ok()
@@ -117,7 +122,10 @@ public class CalendarController {
     }
 
     @PatchMapping("/changeIndexNo") // api 연동 확인
-    public ResponseEntity<ResponseDTO> updateCalendarIndexNo(@RequestBody Map<String, String> info){
+    public ResponseEntity<ResponseDTO> updateCalendarIndexNo(@RequestBody Map<String, String> info, @AuthenticationPrincipal MemberDTO member){
+
+        int department = member.getDepartment().getDeptCode();
+        int memberCode = member.getMemberCode();
         log.info("[CalendarController](updateDefaultByCalendar) info: {} ",info);
         calendarService.updateCalendarIndexNo(info); // userId 수정 요망
         return ResponseEntity.ok()
@@ -127,8 +135,11 @@ public class CalendarController {
                         .build());
     }
 
-    @DeleteMapping("/delete/{memberCode}") // api 연동 확인
-    public ResponseEntity<ResponseDTO> deleteByCalendar(@PathVariable int memberCode,@RequestBody List<Integer> calendarList){
+    @DeleteMapping("/delete") // api 연동 확인
+    public ResponseEntity<ResponseDTO> deleteByCalendar(@RequestBody List<Integer> calendarList, @AuthenticationPrincipal MemberDTO member){
+        int department = member.getDepartment().getDeptCode();
+        int memberCode = member.getMemberCode();
+
         log.info("[CalendarController](deleteByCalendar) calendarList : ", calendarList);
         log.info("[CalendarController](deleteByCalendar) memberCode : ", memberCode);
 
@@ -141,9 +152,10 @@ public class CalendarController {
                         .build());
     }
 
-    @GetMapping("/openCalendarList/{memberCode}") // api 연동 화인
-    public ResponseEntity<PagingResponseDTO> findOpenCalendarList(@PathVariable Integer memberCode,
-                                                            Pageable pageable ){
+    @GetMapping("/openCalendarList") // api 연동 화인
+    public ResponseEntity<PagingResponseDTO> findOpenCalendarList(Pageable pageable, @AuthenticationPrincipal MemberDTO member){
+
+        int memberCode = member.getMemberCode();
 
         log.info("[CalendarController](findOpenCalendarList) pageable : {}", pageable);
 
@@ -171,8 +183,11 @@ public class CalendarController {
     }
 
     // test success
-    @GetMapping("/summary/{memberCode}")
-    public ResponseEntity<ResponseDTO> findSummaryCalendar(@PathVariable int memberCode){
+    @GetMapping("/summary")
+    public ResponseEntity<ResponseDTO> findSummaryCalendar(@AuthenticationPrincipal MemberDTO member){
+
+        int department = member.getDepartment().getDeptCode();
+        int memberCode = member.getMemberCode();
 
         log.info("[CalendarController](findSummaryCalendar) memberCode : ", memberCode);
 
@@ -187,6 +202,13 @@ public class CalendarController {
                         .message("success")
                         .data(calendarSummaryDTOList)
                         .build());
+    }
+
+
+
+    @GetMapping("/test/{memberCode}")
+    public void saveFirstCalendarRegist(@PathVariable int memberCode){
+        calendarService.saveFirstCalendarRegist(memberCode);
     }
 
 }

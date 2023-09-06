@@ -65,19 +65,31 @@ public class FavoriteCalendarService {
 
     public Page<FavoriteCalendarDTO> findAllByMemberCode(Integer memberCode, Pageable pageable) {
         Page<FavoriteCalendar> favoriteCalendars = favotriteCalendarRepository.findAllByMemberCode(memberCode, pageable);
+        log.info("[FavoriteCalendarService](findAllByMemberCode) favoriteCalendars : {}", favoriteCalendars);
+        if(favoriteCalendars == null || favoriteCalendars.getSize() == 0 ) throw new NotFindDataException("데이터가 없습니다.");
+        log.info("[FavoriteCalendarService](findAllByMemberCode) favoriteCalendars.getContent().get(0).getMember().getMemberName() : {}", favoriteCalendars.getContent().get(0).getMember().getMemberName());
 
         return favoriteCalendars
                 .map(favoriteCalendar -> modelMapper.map(favoriteCalendar,FavoriteCalendarDTO.class))
                 .map(favoriteCalendarDTO -> {
                     favoriteCalendarDTO.getCalendar().setFavoriteCalendar(null);
-                    favoriteCalendarDTO.getCalendar().setMember(null);
+
+                    MemberDTO calMemberDTO = new MemberDTO();
+                    calMemberDTO.setMemberCode(favoriteCalendarDTO.getCalendar().getMember().getMemberCode());
+                    calMemberDTO.setMemberName(favoriteCalendarDTO.getCalendar().getMember().getMemberName());
+                    calMemberDTO.setRank(favoriteCalendarDTO.getCalendar().getMember().getRank());
+
+                    log.info("[FavoriteCalendarService](findAllByMemberCode) calMemberDTO : {}", calMemberDTO);
+
+                    favoriteCalendarDTO.getCalendar().setMember(calMemberDTO);
+                    favoriteCalendarDTO.setMember(null);
                     favoriteCalendarDTO.getCalendar().setScheduleList(null);
 
-                    MemberDTO memberDTO = new MemberDTO();
-                    memberDTO.setMemberNo(favoriteCalendarDTO.getMember().getMemberNo());
-                    memberDTO.setMemberName(favoriteCalendarDTO.getMember().getMemberName());
+//                    MemberDTO memberDTO = new MemberDTO();
+//                    memberDTO.setMemberNo(favoriteCalendarDTO.getMember().getMemberNo());
+//                    memberDTO.setMemberName(favoriteCalendarDTO.getMember().getMemberName());
 
-                    favoriteCalendarDTO.setMember(memberDTO);
+//                    favoriteCalendarDTO.setMember(memberDTO);
                     return favoriteCalendarDTO;
                 });
     }

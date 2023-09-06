@@ -6,6 +6,7 @@ import com.pro.infomate.common.Criteria;
 import com.pro.infomate.common.ExpendsResponseDTO;
 import com.pro.infomate.common.PageDTO;
 import com.pro.infomate.common.ResponseDTO;
+import com.pro.infomate.member.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,9 +27,11 @@ public class FavoriteCalendarController {
 
     private final FavoriteCalendarService favoriteCalendarService;
 
-    @GetMapping("/followerList/{memberCode}") // api 연동 확인
-    public ResponseEntity<ResponseDTO> findAllByFollowerList(@PathVariable Integer memberCode, Pageable pageable){
+    @GetMapping("/followerList") // api 연동 확인
+    public ResponseEntity<ResponseDTO> findAllByFollowerList(Pageable pageable,
+                                                             @AuthenticationPrincipal MemberDTO member){
 
+        int memberCode = member.getMemberCode();
         log.info("[FavoriteCalendarController](updateApprovalStatus) pageable.isUnpaged() : {}", pageable);
 
         pageable = PageRequest.of(
@@ -61,22 +65,16 @@ public class FavoriteCalendarController {
     }
 
 
-    @GetMapping("/follow/{memberCode}") // api 연동 확인
-//    public ResponseEntity<ResponseDTO> findAllByMemberCode(@PathVariable Integer memberCode, Pageable pageable){
-    public ResponseEntity<ExpendsResponseDTO> findAllByMemberCode(@PathVariable Integer memberCode, Pageable pageable){
+    @GetMapping("/follow")
+    public ResponseEntity<ExpendsResponseDTO> findAllByMemberCode(@AuthenticationPrincipal MemberDTO member, Pageable pageable){
+        int memberCode = member.getMemberCode();
         log.info("[FavoriteCalendarController](findAllByMemberCode) memberCode : {}", memberCode);
-
+//
         log.info("[FavoriteCalendarController](findAllByMemberCode) pageable : {}", pageable);
 
         pageable = PageRequest.of(pageable.getPageNumber() -1 < 0? 0 : pageable.getPageNumber() - 1,pageable.getPageSize(),pageable.getSort());
 
         Page<FavoriteCalendarDTO> favoriteCalendarDTOPage = favoriteCalendarService.findAllByMemberCode(memberCode, pageable);
-
-//        return ResponseEntity.ok()
-//                .body(ResponseDTO.builder().status(HttpStatus.OK)
-//                        .message("success")
-//                        .data(favoriteCalendarService.findAllByMemberCode(memberCode))
-//                        .build());
 
         return ResponseEntity.ok()
                 .body(ExpendsResponseDTO.expendsResponseBuilder()
@@ -100,8 +98,6 @@ public class FavoriteCalendarController {
                         .message("성공적으로 등록되었습니다.")
                         .build());
     }
-
-
 
     @DeleteMapping("/DeleteFollowCalendar") // api 연동 확인
     public ResponseEntity<ResponseDTO> deleteFollowCalendar(@RequestBody List<Integer> favoriteId){

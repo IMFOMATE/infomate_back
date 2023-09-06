@@ -75,6 +75,18 @@ public class Calendar {
         if(calendarDTO.getDepartmentCode() != null) this.departmentCode = calendarDTO.getDepartmentCode();
         if(calendarDTO.getDefaultCalendar() != null) this.defaultCalendar = calendarDTO.getDefaultCalendar();
     }
+    @Builder
+    public Calendar(int id, String name, Boolean openStatus, String labelColor, Integer indexNo, Integer memberCode, Boolean defaultCalendar, Integer departmentCode, LocalDateTime createDate) {
+        this.id = id;
+        this.name = name;
+        this.openStatus = openStatus;
+        this.labelColor = labelColor;
+        this.indexNo = indexNo;
+        this.memberCode = memberCode;
+        this.defaultCalendar = defaultCalendar;
+        this.departmentCode = departmentCode;
+        this.createDate = createDate;
+    }
 
     @Override
     public String toString() {

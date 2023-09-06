@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -31,11 +32,14 @@ public class ScheduleController {
 
 //    private final ServerApiService serverApiService;
 
-    @GetMapping("/dayCount/{memberCode}")
+    @GetMapping("/dayCount")
     public ResponseEntity<ResponseDTO> dayPerCount(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDay,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDay,
-            @PathVariable int memberCode){
+            @AuthenticationPrincipal MemberDTO member){
+
+        int department = member.getDepartment().getDeptCode();
+        int memberCode = member.getMemberCode();
 
         log.info("[ScheduleController](dayPerCount) startDay : {} ", startDay);
         log.info("[ScheduleController](dayPerCount) endDay : {} ", endDay);
@@ -51,8 +55,10 @@ public class ScheduleController {
                         .build());
     }
 
-    @GetMapping("/{memberCode}/{scheduleId}") // api 연동 확인
-    public ResponseEntity<ExpendsResponseDTO> findById(@PathVariable int scheduleId, @PathVariable int memberCode) {
+    @GetMapping("/{scheduleId}") // api 연동 확인
+    public ResponseEntity<ExpendsResponseDTO> findById(@PathVariable int scheduleId, @AuthenticationPrincipal MemberDTO member) {
+        int department = member.getDepartment().getDeptCode();
+        int memberCode = member.getMemberCode();
         log.info("[ScheduleController](findById) scheduleId : {} ", scheduleId);
 
         ScheduleDTO schedule = scheduleService.findById(scheduleId, memberCode);
@@ -77,8 +83,11 @@ public class ScheduleController {
     }
 
 
-    @PatchMapping("/update/{memberCode}") // api 연동 확인
-    public ResponseEntity<ResponseDTO> updateById(@PathVariable int memberCode, @RequestBody ScheduleDTO scheduleDTO){
+    @PatchMapping("/update") // api 연동 확인
+    public ResponseEntity<ResponseDTO> updateById(@RequestBody ScheduleDTO scheduleDTO,
+                                                  @AuthenticationPrincipal MemberDTO member){
+        int department = member.getDepartment().getDeptCode();
+        int memberCode = member.getMemberCode();
         log.info("[ScheduleController](updateById) scheduleDTO : {} ", scheduleDTO);
         scheduleService.updateById(scheduleDTO, memberCode);
         return ResponseEntity.ok()
@@ -88,8 +97,11 @@ public class ScheduleController {
                         .build());
     }
 
-    @DeleteMapping("/delete/{scheduleId}/{memberCode}") // api 연동 확인
-    public ResponseEntity<ResponseDTO> deleteById(@PathVariable int scheduleId, @PathVariable int memberCode){
+    @DeleteMapping("/delete/{scheduleId}") // api 연동 확인
+    public ResponseEntity<ResponseDTO> deleteById(@PathVariable int scheduleId,
+                                                  @AuthenticationPrincipal MemberDTO member){
+        int department = member.getDepartment().getDeptCode();
+        int memberCode = member.getMemberCode();
         log.info("[ScheduleController](deleteById) scheduleId : {} ", scheduleId);
 
         scheduleService.deleteById(scheduleId, memberCode);
@@ -102,8 +114,9 @@ public class ScheduleController {
     }
 
     // test join 부섴드 조인 오류
-    @GetMapping("/findScheduleSearch/{memberCode}")
-    public ResponseEntity<ResponseDTO> findScheduleSearch(@PathVariable Integer memberCode, @RequestParam String keyword){
+    @GetMapping("/findScheduleSearch")
+    public ResponseEntity<ResponseDTO> findScheduleSearch(@RequestParam String keyword,
+                                                          @AuthenticationPrincipal MemberDTO member){
 //        List<ScheduleDTO> scheduleList = scheduleService.findAllScheduleSearch(memberCode, keyword);
 
         return ResponseEntity.ok()
@@ -114,8 +127,10 @@ public class ScheduleController {
                         .build());
     }
 
-    @PostMapping("/regist/{memberCode}") // api 연동 확인
-    public ResponseEntity<ResponseDTO> insertSchedule(@RequestBody ScheduleDTO scheduleDTO, @PathVariable int memberCode){
+    @PostMapping("/regist") // api 연동 확인
+    public ResponseEntity<ResponseDTO> insertSchedule(@RequestBody ScheduleDTO scheduleDTO, @AuthenticationPrincipal MemberDTO member){
+        int department = member.getDepartment().getDeptCode();
+        int memberCode = member.getMemberCode();
         log.info("[ScheduleController](insertSchedule) scheduleDTO : {} ", scheduleDTO);
 
 //        serverApiService.scheduleInsertApi(scheduleDTO);
@@ -127,8 +142,10 @@ public class ScheduleController {
                         .build());
     }
 
-    @GetMapping("/reminder/{memberCode}")
-    public ResponseEntity<ResponseDTO> reminder(@PathVariable int memberCode){
+    @GetMapping("/reminder")
+    public ResponseEntity<ResponseDTO> reminder(@AuthenticationPrincipal MemberDTO member){
+        int department = member.getDepartment().getDeptCode();
+        int memberCode = member.getMemberCode();
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
