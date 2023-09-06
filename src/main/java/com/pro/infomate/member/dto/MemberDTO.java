@@ -2,7 +2,6 @@ package com.pro.infomate.member.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pro.infomate.department.dto.DepartmentDTO;
-import com.pro.infomate.department.entity.Department;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -87,5 +86,24 @@ public class MemberDTO implements UserDetails {
     @Override
     public boolean isEnabled() {
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "MemberDTO{" +
+                "memberCode=" + memberCode +
+                ", memberPassword='" + memberPassword + '\'' +
+                ", memberName='" + memberName + '\'' +
+                ", memberId='" + memberId + '\'' +
+                ", memberEmail='" + memberEmail + '\'' +
+                ", memberPhone='" + memberPhone + '\'' +
+                ", memberNo='" + memberNo + '\'' +
+                ", memberStatus='" + memberStatus + '\'' +
+                ", extensionNumber='" + extensionNumber + '\'' +
+                ", memberAddress='" + memberAddress + '\'' +
+                ", hireDate=" + hireDate +
+                ", memberPic='" + memberPic + '\'' +
+                ", memberOff=" + memberOff +
+                '}';
     }
 }

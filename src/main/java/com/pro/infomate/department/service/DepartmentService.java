@@ -1,11 +1,11 @@
 package com.pro.infomate.department.service;
 
 import com.pro.infomate.department.dto.DepartmentDTO;
-import com.pro.infomate.department.dto.DepartmentExpendDTO;
 import com.pro.infomate.department.dto.DeptListResponse;
 import com.pro.infomate.department.dto.TreeViewResponse;
 import com.pro.infomate.department.entity.Department;
 import com.pro.infomate.department.repository.DepartmentRepository;
+import com.pro.infomate.member.dto.MemberDTO;
 import com.pro.infomate.member.entity.Member;
 import com.pro.infomate.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -129,13 +129,4 @@ public class DepartmentService {
 
     return departmentDTOlist;
   }
-
-  public List<DepartmentExpendDTO> participantList() {
-    List<Department> departmentList = departmentRepository.findAll();
-    log.info("[DepartmentService](participantList) departmentList : {}", departmentList);
-    return departmentList.stream()
-            .map(department -> modelMapper.map(department, DepartmentExpendDTO.class))
-            .collect(Collectors.toList());
-  }
-
 }
