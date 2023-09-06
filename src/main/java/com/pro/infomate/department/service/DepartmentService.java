@@ -5,6 +5,7 @@ import com.pro.infomate.department.dto.DeptListResponse;
 import com.pro.infomate.department.dto.TreeViewResponse;
 import com.pro.infomate.department.entity.Department;
 import com.pro.infomate.department.repository.DepartmentRepository;
+import com.pro.infomate.member.dto.MemberDTO;
 import com.pro.infomate.member.entity.Member;
 import com.pro.infomate.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -115,5 +116,17 @@ public class DepartmentService {
   }
 
 
+  public List<DepartmentDTO> selectDept(String search) {
 
+    log.info("[DepartmentService] selectDeptList Start ======================");
+
+    List<Department> departmentListSearchValue = departmentRepository.findByDeptName(search);
+
+    List<DepartmentDTO> departmentDTOlist = departmentListSearchValue.stream()
+            .map(department -> modelMapper.map(department, DepartmentDTO.class)).collect(Collectors.toList());
+
+    log.info("[DepartmentService] selectDeptList End ========================");
+
+    return departmentDTOlist;
+  }
 }
