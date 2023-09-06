@@ -1,11 +1,15 @@
 package com.pro.infomate.Board.dto;
 
+import com.pro.infomate.Board.entity.BoardFile;
 import com.pro.infomate.member.dto.MemberDTO;
 import lombok.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,4 +32,5 @@ public class PostDTO {
 
     private MemberDTO member;
 
+    private BoardFileDTO boardFile;
 }

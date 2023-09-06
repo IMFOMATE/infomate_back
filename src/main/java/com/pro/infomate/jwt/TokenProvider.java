@@ -65,7 +65,16 @@ public class TokenProvider {
                 .compact();
         log.info("[TokenProvider] generateTokenDTO End = == = = = = = == = = = = == = = == = = == = ");
 
-        return new TokenDTO(BEARER_TYPE, member.getMemberName(), accessToken, accessTokenExpiresIn.getTime());
+        return new TokenDTO(
+                                BEARER_TYPE,
+                                member.getMemberName(),
+                                member.getDepartment().getDeptName(),
+                                member.getDepartment().getDeptCode(),
+                                member.getRank().getRankName(),
+                                member.getMemberCode(),
+                                accessToken,
+                                accessTokenExpiresIn.getTime()
+                            );
     }
 
     public String getUserId(String token){

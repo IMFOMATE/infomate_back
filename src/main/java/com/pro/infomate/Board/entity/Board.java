@@ -26,8 +26,9 @@ public class Board {
     private int refBoard;
 
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Post> posts = new ArrayList<>();
+    @OneToMany(mappedBy = "boardCode")
+    private List<Post> posts;
+
 
 //    public void addPost(Post post) {
 //        posts.add(post);

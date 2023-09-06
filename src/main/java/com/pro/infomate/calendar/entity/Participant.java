@@ -26,12 +26,16 @@ public class Participant {
     }
 
     @Id
-    @Column(name = "REF_SCHDL_ID")
-    private int scheduleCode;
+    @Column(name = "REF_SCHDL_ID", updatable = false, insertable = false)
+    private Integer scheduleCode;
 
     @Id
-    @Column(name = "REF_MEMBER_CODE")
-    private int memberCode;
+    @Column(name = "REF_MEMBER_CODE", updatable = false, insertable = false)
+    private Integer memberCode;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "REF_SCHDL_ID")
+    private Schedule schedule;
 
     @ManyToOne
     @JoinColumn(name = "REF_MEMBER_CODE", insertable = false, updatable = false)

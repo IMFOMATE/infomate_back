@@ -8,8 +8,12 @@ import java.util.List;
 public interface DepartmentRepository extends JpaRepository<Department, Integer> {
 
 
+
     List<Department> findByDeptNameContaining(String searchKeyword);
 
     List<Department> findByDeptName(String deptName);
+
+
+//    List<Department> findByDeptName(String search);
 
 }

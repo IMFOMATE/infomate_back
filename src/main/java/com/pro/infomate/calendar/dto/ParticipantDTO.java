@@ -1,6 +1,7 @@
 package com.pro.infomate.calendar.dto;
 
 import com.pro.infomate.member.dto.MemberDTO;
+import com.pro.infomate.member.dto.MemberSumamryDTO;
 import lombok.*;
 
 @Getter

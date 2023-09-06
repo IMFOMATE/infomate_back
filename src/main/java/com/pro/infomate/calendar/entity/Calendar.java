@@ -22,6 +22,9 @@ import java.util.List;
         sequenceName = "SEQ_TBL_CLNDR_CLNDR_CODE",
         initialValue = 1, allocationSize = 1
 )
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Calendar {
 
     @Id

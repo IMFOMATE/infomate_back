@@ -1,5 +1,6 @@
 package com.pro.infomate.calendar.controller;
 
+import com.pro.infomate.calendar.dto.DayPerCountDTO;
 import com.pro.infomate.calendar.dto.ScheduleDTO;
 import com.pro.infomate.calendar.service.ScheduleService;
 import com.pro.infomate.common.ExpendsProps;
@@ -9,10 +10,13 @@ import com.pro.infomate.member.dto.MemberDTO;
 import com.pro.infomate.member.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -28,26 +32,33 @@ public class ScheduleController {
 
 //    private final ServerApiService serverApiService;
 
+    @GetMapping("/dayCount")
+    public ResponseEntity<ResponseDTO> dayPerCount(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDay,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDay,
+            @AuthenticationPrincipal MemberDTO member){
 
+        int department = member.getDepartment().getDeptCode();
+        int memberCode = member.getMemberCode();
 
-// 안씀
-//    @GetMapping("/all/{memberCode}") // 월,주,일 단위 출력(?)예정 , 회사, 부서 일정 추가 예정
-//    public ResponseEntity<ResponseDTO>findAllSchedule(@PathVariable Integer memberCode){
-//        log.info("[ScheduleController](findAllSchedule) memberCode : {} ", memberCode);
-//
-//        List<ScheduleDTO> scheduleList = scheduleService.findAllScheduleByCalendarByMemberCode(memberCode);
-//        log.info("[ScheduleController](findAllSchedule) scheduleList : {} ", scheduleList);
-//
-//        return ResponseEntity.ok()
-//                .body(ResponseDTO.builder()
-//                        .status(HttpStatus.OK)
-//                        .message("success")
-//                        .data(scheduleList)
-//                        .build());
-//    }
+        log.info("[ScheduleController](dayPerCount) startDay : {} ", startDay);
+        log.info("[ScheduleController](dayPerCount) endDay : {} ", endDay);
+        log.info("[ScheduleController](dayPerCount) memberCode : {} ", memberCode);
 
-    @GetMapping("/{memberCode}/{scheduleId}") // api 연동 확인
-    public ResponseEntity<ExpendsResponseDTO> findById(@PathVariable int scheduleId, @PathVariable int memberCode) {
+        List<DayPerCountDTO> perCount = scheduleService.dayPerCount(startDay, endDay, memberCode);
+
+        return ResponseEntity.ok()
+                .body(ResponseDTO.builder()
+                        .status(HttpStatus.OK)
+                        .message("success")
+                        .data(perCount)
+                        .build());
+    }
+
+    @GetMapping("/{scheduleId}") // api 연동 확인
+    public ResponseEntity<ExpendsResponseDTO> findById(@PathVariable int scheduleId, @AuthenticationPrincipal MemberDTO member) {
+        int department = member.getDepartment().getDeptCode();
+        int memberCode = member.getMemberCode();
         log.info("[ScheduleController](findById) scheduleId : {} ", scheduleId);
 
         ScheduleDTO schedule = scheduleService.findById(scheduleId, memberCode);
@@ -72,8 +83,11 @@ public class ScheduleController {
     }
 
 
-    @PatchMapping("/update/{memberCode}") // api 연동 확인
-    public ResponseEntity<ResponseDTO> updateById(@PathVariable int memberCode, @RequestBody ScheduleDTO scheduleDTO){
+    @PatchMapping("/update") // api 연동 확인
+    public ResponseEntity<ResponseDTO> updateById(@RequestBody ScheduleDTO scheduleDTO,
+                                                  @AuthenticationPrincipal MemberDTO member){
+        int department = member.getDepartment().getDeptCode();
+        int memberCode = member.getMemberCode();
         log.info("[ScheduleController](updateById) scheduleDTO : {} ", scheduleDTO);
         scheduleService.updateById(scheduleDTO, memberCode);
         return ResponseEntity.ok()
@@ -83,9 +97,11 @@ public class ScheduleController {
                         .build());
     }
 
-
-    @DeleteMapping("/delete/{scheduleId}/{memberCode}") // api 연동 확인
-    public ResponseEntity<ResponseDTO> deleteById(@PathVariable int scheduleId, @PathVariable int memberCode){
+    @DeleteMapping("/delete/{scheduleId}") // api 연동 확인
+    public ResponseEntity<ResponseDTO> deleteById(@PathVariable int scheduleId,
+                                                  @AuthenticationPrincipal MemberDTO member){
+        int department = member.getDepartment().getDeptCode();
+        int memberCode = member.getMemberCode();
         log.info("[ScheduleController](deleteById) scheduleId : {} ", scheduleId);
 
         scheduleService.deleteById(scheduleId, memberCode);
@@ -97,10 +113,10 @@ public class ScheduleController {
                         .build());
     }
 
-
     // test join 부섴드 조인 오류
-    @GetMapping("/findScheduleSearch/{memberCode}")
-    public ResponseEntity<ResponseDTO> findScheduleSearch(@PathVariable Integer memberCode, @RequestParam String keyword){
+    @GetMapping("/findScheduleSearch")
+    public ResponseEntity<ResponseDTO> findScheduleSearch(@RequestParam String keyword,
+                                                          @AuthenticationPrincipal MemberDTO member){
 //        List<ScheduleDTO> scheduleList = scheduleService.findAllScheduleSearch(memberCode, keyword);
 
         return ResponseEntity.ok()
@@ -111,23 +127,25 @@ public class ScheduleController {
                         .build());
     }
 
-
-    @PostMapping("/regist/{memberCode}") // api 연동 확인
-    public ResponseEntity<ResponseDTO> insertSchedule(@RequestBody ScheduleDTO scheduleDTO, @PathVariable int memberCode){
+    @PostMapping("/regist") // api 연동 확인
+    public ResponseEntity<ResponseDTO> insertSchedule(@RequestBody ScheduleDTO scheduleDTO, @AuthenticationPrincipal MemberDTO member){
+        int department = member.getDepartment().getDeptCode();
+        int memberCode = member.getMemberCode();
         log.info("[ScheduleController](insertSchedule) scheduleDTO : {} ", scheduleDTO);
 
 //        serverApiService.scheduleInsertApi(scheduleDTO);
-
+        scheduleService.insertSchedule(scheduleDTO, memberCode);
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
                         .message("정상적으로 수정 되었습니다.")
-                        .data(scheduleService.insertSchedule(scheduleDTO, memberCode))
                         .build());
     }
 
-    @GetMapping("/reminder/{memberCode}")
-    public ResponseEntity<ResponseDTO> reminder(@PathVariable int memberCode){
+    @GetMapping("/reminder")
+    public ResponseEntity<ResponseDTO> reminder(@AuthenticationPrincipal MemberDTO member){
+        int department = member.getDepartment().getDeptCode();
+        int memberCode = member.getMemberCode();
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()

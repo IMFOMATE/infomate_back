@@ -2,6 +2,7 @@ package com.pro.infomate.member.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.pro.infomate.calendar.entity.Participant;
 import com.pro.infomate.work.entity.Off;
 import com.pro.infomate.work.entity.Work;
 import com.pro.infomate.addressbook.entity.Contact;
@@ -24,7 +25,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+//@ToString
 @SequenceGenerator(
         name = "MEMBER_CODE_GENERATOR",
         sequenceName = "SEQ_TBL_MEMBER_MEMBER_CODE",
@@ -72,16 +73,18 @@ public class Member {
     private String memberAddress;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "DEPT_CODE")
+    @JoinColumn(name = "DEPT_CODE", insertable = false,updatable = false)
     private Department department;
 
     @Column(name = "HIRE_DATE")
     private Timestamp hireDate;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "RANK_CODE")
+    @JoinColumn(name = "RANK_CODE", insertable = false,updatable = false)
     private Rank rank;
 
+    @Column(name = "RANK_CODE")
+    private int rankCode;
 
     @Column(name = "MEMBER_PIC")
     private String memberPic;
@@ -89,6 +92,9 @@ public class Member {
 
     @Column(name = "MEMBER_OFF")
     private int memberOff;
+
+    @Column(name = "DEPT_CODE")
+    private int deptCode;
 
     @JsonIgnore
     @OneToMany
@@ -105,12 +111,40 @@ public class Member {
     private List<Document> documentList = new ArrayList<>();
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2985bacd2ae8f2481e00f2805e6488c5bdeb5792
     @OneToMany(mappedBy = "member")
     private List<Work> workList;
 
     @OneToMany(mappedBy = "member")
     private List<Off> OffList;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "member")
+    private List<Participant> participantList;
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "memberCode=" + memberCode +
+                ", memberPassword='" + memberPassword + '\'' +
+                ", memberName='" + memberName + '\'' +
+                ", memberId='" + memberId + '\'' +
+                ", memberEmail='" + memberEmail + '\'' +
+                ", memberPhone='" + memberPhone + '\'' +
+                ", memberNo='" + memberNo + '\'' +
+                ", memberStatus='" + memberStatus + '\'' +
+                ", extensionNumber='" + extensionNumber + '\'' +
+                ", memberAddress='" + memberAddress + '\'' +
+                ", department=" + department +
+                ", hireDate=" + hireDate +
+                ", rank=" + rank +
+                ", memberPic='" + memberPic + '\'' +
+                ", memberOff=" + memberOff +
+                ", authList=" + authList +
+                '}';
+    }
 }
 

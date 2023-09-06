@@ -11,6 +11,10 @@ public class TokenDTO {
 
     private String grantType;
     private String memberName;
+    private String deptName;
+    private int deptCode;
+    private String rank;
+    private int memberCode;
     private String accessToken;
     private Long accessTokenExpiresIn;
 }
