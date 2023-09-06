@@ -35,8 +35,8 @@ public class ApprovalService {
   //결재 대기 문서 조회
   public List<DocumentListResponse> ApprovalDocumentList(int memberCode){
 
-      //회원의 결재대기문서 중 date값이 null인 문서만 가져와서
-     // 해당하는 문서의 결재리스트를 순서대로 가지고 오면서
+    //회원의 결재대기문서 중 date값이 null인 문서만 가져와서
+    // 해당하는 문서의 결재리스트를 순서대로 가지고 오면서
     //date가 null인 첫번째껄 가지고 와서 그 member와 내가 같을때만 보여주기
 
     List<Document> documents = documentRepository.findApprovalsDocument(memberCode);

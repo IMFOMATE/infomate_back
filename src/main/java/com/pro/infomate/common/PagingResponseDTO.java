@@ -24,4 +24,9 @@ public class PagingResponseDTO {
         this.data = data;
         this.status = httpStatus.value();
     }
+
+
+    public PagingResponseDTO() {
+
+    }
 }

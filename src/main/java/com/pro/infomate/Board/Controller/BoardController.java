@@ -33,16 +33,17 @@ class BoardController {
         log.info("[ProductController] selectPostListWithPaging Start ============ ");
         log.info("[ProductController] selectPostListWithPaging offset : {} ", offset);
 
-        int total = boardService.totalPost();
-
-        Criteria cri = new Criteria(Integer.valueOf(offset), 10);
-
-        PagingResponseDTO pagingResponseDTO = new PagingResponseDTO();
-        pagingResponseDTO.setData(boardService.postListPaging(cri));
-        pagingResponseDTO.setPageInfo(new PageDTO(cri, total));
-
-        log.info("[BoardController] boardPaging End =====================");
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", pagingResponseDTO));
+//        int total = boardService.totalPost();
+//
+//        Criteria cri = new Criteria(Integer.valueOf(offset), 10);
+//
+//        PagingResponseDTO pagingResponseDTO = new PagingResponseDTO();
+//        pagingResponseDTO.setData(boardService.postListPaging(cri));
+//        pagingResponseDTO.setPageInfo(new PageDTO(cri, total));
+//
+//        log.info("[BoardController] boardPaging End =====================");
+//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", pagingResponseDTO));
+        return null;
     }
 
 //    @GetMapping("/board/newpost")    // 게시판 (게시글 목록)

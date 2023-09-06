@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Slf4j
 public class ApprovalController {
-  
+
   private final ApprovalService approvalService;
 
   //결재 대기문서 리스트
@@ -32,11 +32,11 @@ public class ApprovalController {
                     .data(approvalService.ApprovalDocumentList(memberCode))
                     .build());
   }
-  
+
   // 승인
   @PatchMapping("/approve")
   public ResponseEntity<ResponseDTO> approve(@RequestBody ConfirmRequest confirmRequest){
-        approvalService.approve(confirmRequest);
+    approvalService.approve(confirmRequest);
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
                     .status(HttpStatus.OK)
