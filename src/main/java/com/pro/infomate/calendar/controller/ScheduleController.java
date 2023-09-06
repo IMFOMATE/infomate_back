@@ -1,10 +1,7 @@
 package com.pro.infomate.calendar.controller;
 
-import com.pro.infomate.calendar.dto.DayPerCountDTO;
 import com.pro.infomate.calendar.dto.ScheduleDTO;
 import com.pro.infomate.calendar.service.ScheduleService;
-import com.pro.infomate.common.ExpendsProps;
-import com.pro.infomate.common.ExpendsResponseDTO;
 import com.pro.infomate.common.ResponseDTO;
 import com.pro.infomate.member.dto.MemberDTO;
 import com.pro.infomate.member.service.EmployeeService;
@@ -119,12 +116,11 @@ public class ScheduleController {
         log.info("[ScheduleController](insertSchedule) scheduleDTO : {} ", scheduleDTO);
 
 //        serverApiService.scheduleInsertApi(scheduleDTO);
-
+        scheduleService.insertSchedule(scheduleDTO, memberCode);
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
                         .message("정상적으로 수정 되었습니다.")
-                        .data(scheduleService.insertSchedule(scheduleDTO, memberCode))
                         .build());
     }
 

@@ -60,8 +60,6 @@ public class SecurityConfig {
             return config;
         });
 
-//        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
-//        http.cors().configurationSource(corsConfigurationSource());
 
         // 개발용 csrf 허용
         http.csrf().disable()

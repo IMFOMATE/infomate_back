@@ -4,11 +4,16 @@ import com.pro.infomate.calendar.dto.CalendarDTO;
 import com.pro.infomate.calendar.dto.DayPerCountDTO;
 import com.pro.infomate.calendar.dto.ScheduleDTO;
 import com.pro.infomate.calendar.entity.Calendar;
+import com.pro.infomate.calendar.entity.Participant;
+import com.pro.infomate.calendar.entity.ParticipantPK;
 import com.pro.infomate.calendar.entity.Schedule;
 import com.pro.infomate.calendar.repository.CalendarRepository;
+import com.pro.infomate.calendar.repository.ParticipantRepository;
 import com.pro.infomate.calendar.repository.ScheduleRepository;
 import com.pro.infomate.exception.NotAuthenticationMember;
 import com.pro.infomate.exception.NotFindDataException;
+import com.pro.infomate.member.dto.MemberDTO;
+import com.pro.infomate.member.dto.MemberSumamryDTO;
 import com.pro.infomate.member.entity.Member;
 import com.pro.infomate.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -32,6 +38,7 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final MemberRepository memberRepository;
     private final CalendarRepository calendarRepository;
+    private final ParticipantRepository participantRepository;
     private final ModelMapper modelMapper;
 
 //    안씀
@@ -70,24 +77,33 @@ public class ScheduleService {
                     calendarDTO.setScheduleList(null);
 
                     scheduleDTO.setCalendar(calendarDTO);
-
+//                    scheduleDTO.setParticipantList(null);
                     scheduleDTO.setParticipantList(
                             scheduleDTO.getParticipantList().stream()
                                     .map(participantDTO -> {
                                         participantDTO.setSchedule(null);
+//                                        participantDTO.setMember(null);
+                                        MemberDTO memberDTO = new MemberDTO();
+                                        memberDTO.setMemberCode(participantDTO.getMember().getMemberCode());
+                                        memberDTO.setMemberName(participantDTO.getMember().getMemberName());
+
+                                        participantDTO.setMember(memberDTO);
+                                        log.info("[ScheduleService](findById) participantDTO : {}",participantDTO);
                                         return participantDTO;
-                                    }).collect(Collectors.toList()));
+                                    }).collect(Collectors.toList())
+                    );
 
                     return scheduleDTO;
+
                 }).findFirst().get();
     }
 
     @Transactional
-    public void updateById(ScheduleDTO schedule, int memberCode) {
-        log.info("[ScheduleService](updateById) schedule : {}",schedule);
+    public void updateById(ScheduleDTO scheduleDTO, int memberCode) {
+        log.info("[ScheduleService](updateById) schedule : {}",scheduleDTO);
 
         Schedule entitySchedule = scheduleRepository
-                .findById(schedule.getId())
+                .findById(scheduleDTO.getId())
                 .orElseThrow(() -> new NotFindDataException("일정을 찾을 수 없습니다"));
 
         Member member = memberRepository.findById(memberCode)
@@ -102,7 +118,15 @@ public class ScheduleService {
 
         log.info("[ScheduleService](updateById) entitySchedule : {}",entitySchedule);
 
-        entitySchedule.update(schedule);
+        List<Participant> participant = scheduleDTO.getParticipantList().stream().map(item -> modelMapper.map(item, Participant.class)).collect(Collectors.toList());
+        participant = participant.stream().map(participant1 -> {
+            participant1.setScheduleCode(scheduleDTO.getId());
+            return participant1;
+        }).collect(Collectors.toList());
+
+        participantRepository.deleteByScheduleCode(scheduleDTO.getId());
+        participantRepository.saveAll(participant);
+        entitySchedule.update(modelMapper.map(scheduleDTO, Schedule.class));
 
     }
 
@@ -121,7 +145,8 @@ public class ScheduleService {
             throw new NotAuthenticationMember("삭제할 권한이 존재하지 않습니다.");
         }
 
-        scheduleRepository.delete(schedule);
+//        participantRepository.deleteByScheduleCode(schedule.getId());
+        scheduleRepository.deleteById(scheduleId);
 
     }
 
@@ -134,7 +159,7 @@ public class ScheduleService {
     }
 
     @Transactional
-    public Object insertSchedule(ScheduleDTO scheduleDTO, int memberCode) {
+    public void insertSchedule(ScheduleDTO scheduleDTO, int memberCode) {
         log.info("[ScheduleService](insertSchedule) scheduleDTO : {}", scheduleDTO);
         log.info("[ScheduleService](insertSchedule) memberCode : {}", memberCode);
 
@@ -155,8 +180,24 @@ public class ScheduleService {
 
         Schedule schedule = modelMapper.map(scheduleDTO, Schedule.class);
 
+        log.info("[ScheduleService](insertSchedule) schedule : {}", schedule.getParticipantList());
+        schedule.setParticipantList(null);
+
+
+        scheduleRepository.save(schedule);
+
+
+        List<Participant> participant = scheduleDTO.getParticipantList().stream().map(item -> modelMapper.map(item, Participant.class)).collect(Collectors.toList());
+        participant = participant.stream().map(participant1 -> {
+            participant1.setScheduleCode(schedule.getId());
+            return participant1;
+        }).collect(Collectors.toList());
+
+
+        log.info("[ScheduleService](insertSchedule) participant : {}",participant);
+        participantRepository.saveAll(participant);
+//
         log.info("[ScheduleService](insertSchedule) schedule : {}",schedule);
-        return scheduleRepository.save(schedule);
     }
 
     public List<ScheduleDTO> reminder(int memberCode) {
