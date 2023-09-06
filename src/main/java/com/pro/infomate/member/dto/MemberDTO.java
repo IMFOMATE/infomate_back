@@ -2,7 +2,6 @@ package com.pro.infomate.member.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pro.infomate.department.dto.DepartmentDTO;
-import com.pro.infomate.department.entity.Department;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
