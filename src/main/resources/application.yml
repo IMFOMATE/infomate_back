@@ -45,7 +45,7 @@ logging:
     root: info
 
 image:
-  add-resources-locations: classpath:/static/productimgs/
+  add-resources-locations: classpath:/static/memberimgs/
   add-resources-handler: /productimgs/**
 
   image-dir: src/main/resources/static/productimgs
