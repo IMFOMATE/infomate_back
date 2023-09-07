@@ -1,4 +1,4 @@
-### 게시글 조회
+### 게시판 조회
 GET http://localhost:8989/brd/board
 Accept: */*
 Content-Type: application/json
@@ -14,7 +14,7 @@ Content-Type: application/json
 
 {
   "postCode": 0,
-  "postTitle": "안뇽",
+  "postTitle": "21312312dsa3",
   "postDate": "2023-08-29",
   "postContents": "안녕하세연",
   "boardCategory": "공지사항",
@@ -25,6 +25,37 @@ Content-Type: application/json
     "memberCode": 22
   }
 }
+
+### 게시글 조회
+GET http://localhost:8989/brd/board/post/1118
+Accept: */*
+Content-Type: application/json
+
+### 게시글 수정
+PUT http://localhost:8989/brd/board/1118/update
+Accept: */*
+Content-Type: application/json
+
+{
+  "postCode": 1115,
+  "postTitle": "안뇽하세요",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세용가리",
+  "boardCategory": "부서게시판",
+  "board": {
+    "boardCode": 102
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+
+
+### 게시글 삭제
+DELETE http://localhost:8989/board/1118/delete
+Accept: */*
+Content-Type: application/json
 
 ### 일반게시판 조회
 GET http://localhost:8989/board/common
@@ -37,3 +68,4 @@ Content-Type: application/json
 GET http://localhost:8989/board/anony
 Accept: */*
 Content-Type: application/json
+

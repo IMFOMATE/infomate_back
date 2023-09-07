@@ -51,13 +51,13 @@ public class CalendarService {
      * @return the list
      */
     public List<CalendarDTO> findAll(int memberCode, int departmentCode) {
-        log.info("[CalendarService](findAll) memberId : {} ",memberCode);
+        log.info("[CalendarService](findAll) memberId : {} ", memberCode);
 
         List<Calendar> calendarList = calendarRepository.findByMemberCode(memberCode, departmentCode);
-        log.info("[CalendarService](findAll) calendarList : {} ",calendarList);
+        log.info("[CalendarService](findAll) calendarList : {} ", calendarList);
 
         List<CalendarDTO> calendarDTOList = calendarList.stream()
-                .map(calendar -> modelMapper.map(calendar,CalendarDTO.class))
+                .map(calendar -> modelMapper.map(calendar, CalendarDTO.class))
                 .map(calendarDTO -> {
                     calendarDTO.setFavoriteCalendar(null);
                     calendarDTO.setMember(null);
@@ -72,11 +72,11 @@ public class CalendarService {
                                     }).collect(Collectors.toList())
                     );
 
-                    log.info("[CalendarService](findAll) calendarDTO : {} ",calendarDTO);
+                    log.info("[CalendarService](findAll) calendarDTO : {} ", calendarDTO);
                     return calendarDTO;
                 }).collect(Collectors.toList());
 
-        log.info("[CalendarService](findAll) calendarDTOList : {} ",calendarDTOList);
+        log.info("[CalendarService](findAll) calendarDTOList : {} ", calendarDTOList);
 
         return calendarDTOList;
     }
@@ -85,9 +85,10 @@ public class CalendarService {
      * Init default calendar.
      * 서버 통신 지연으로 기본캘린더가 여러개 생길 경우 기본캘린더를 삭제 후
      * indexNo가 가장 낮은 캘린더가 기본캘린더로 변경한다.
+     *
      * @param memberCode the member code
      */
-    public void InitDefaultCalendar(int memberCode){
+    public void InitDefaultCalendar(int memberCode) {
 
         List<Calendar> defaultAllCalendar = calendarRepository.findAllByMemberCodeAndDefaultCalendar(memberCode, true);
         if (defaultAllCalendar.size() > 1) {
@@ -100,9 +101,9 @@ public class CalendarService {
                     }).collect(Collectors.toList()));
 
             calendarRepository.flush();
-            Calendar calendar =  calendarRepository.findFirstByMemberCode(memberCode, Sort.by("indexNo")
-                    .ascending()).orElseThrow(()->
-                        new NotFindDataException("캘린더가 존재 하지 않습니다."));
+            Calendar calendar = calendarRepository.findFirstByMemberCode(memberCode, Sort.by("indexNo")
+                    .ascending()).orElseThrow(() ->
+                    new NotFindDataException("캘린더가 존재 하지 않습니다."));
             calendar.setDefaultCalendar(true);
             calendarRepository.save(calendar);
             calendarRepository.flush();
@@ -116,7 +117,7 @@ public class CalendarService {
      */
     @Transactional
     public void saveByCalendar(CalendarDTO calendar) {
-        if(calendar.getDefaultCalendar() != null && calendar.getDefaultCalendar()){
+        if (calendar.getDefaultCalendar() != null && calendar.getDefaultCalendar()) {
             Calendar defaultCalendar = calendarRepository
                     .findByMemberCodeAndDefaultCalendar(calendar.getMemberCode(), true)
                     .orElseThrow(() -> new NotFindDataException("캘린더를 찾을 수 없습니다"));
@@ -143,23 +144,46 @@ public class CalendarService {
      *
      * @param deptCode the dept code
      */
-    public void saveDepartmentCalendarRegist(int deptCode){
+    public void saveDepartmentCalendarRegist(int deptCode) {
         Optional<Calendar> isExist = calendarRepository.findByDepartmentCode(deptCode);
-        if(isExist.isPresent()) throw new InvalidRequestException("이미 부서 캘린더가 존재합니다.");
+        if (isExist.isPresent()) throw new InvalidRequestException("이미 부서 캘린더가 존재합니다.");
 
         Department department = departmentRepository
                 .findById(deptCode).orElseThrow(() -> new NotFindDataException("부서를 찾을 수 없습니다."));
 
-        Calendar newCalendar = new Calendar();
-        newCalendar.setName(department.getDeptName()+"일정");
-        newCalendar.setDepartmentCode(department.getDeptCode());
-        newCalendar.setLabelColor("#0000FF");
-        newCalendar.setCreateDate(LocalDateTime.now());
-        newCalendar.setDefaultCalendar(true);
-        newCalendar.setOpenStatus(false);
-        newCalendar.setIndexNo(1);
-        newCalendar.setMemberCode(0);
+        Calendar newCalendar = Calendar.builder()
+                .name(department.getDeptName() + "일정")
+                .departmentCode(department.getDeptCode())
+                .labelColor("#0000FF")
+                .createDate(LocalDateTime.now())
+                .defaultCalendar(true)
+                .openStatus(false)
+                .indexNo(1)
+                .memberCode(0)
+                .build();
+
         calendarRepository.save(newCalendar);
+    }
+
+    /**
+     * 계정 생성시 기본 캘린더 생성
+     *
+     * @param memberCode the member code
+     * @return code : success 1 or fail 0
+     */
+    public int saveFirstCalendarRegist(int memberCode) {
+
+        Calendar calendar = Calendar.builder()
+                .defaultCalendar(true)
+                .createDate(LocalDateTime.now())
+                .indexNo(1)
+                .name("캘린더")
+                .memberCode(memberCode)
+                .openStatus(false)
+                .build();
+
+        calendarRepository.save(calendar);
+        return calendar.getId() > 0 ? 1 : 0;
     }
 
     /**
@@ -175,7 +199,7 @@ public class CalendarService {
                 .findById(calendar.getId())
                 .orElseThrow(() -> new NotFindDataException("캘린더를 찾을 수 없습니다"));
 
-        log.info("[CalendarService](updateById) entityCalendar : {}",entityCalendar);
+        log.info("[CalendarService](updateById) entityCalendar : {}", entityCalendar);
 
         entityCalendar.update(calendar);
     }
@@ -187,15 +211,15 @@ public class CalendarService {
      * @param memberCode  the member code
      */
     @Transactional
-    public void updateDefaultCalender(CalendarDTO calendarDTO, int memberCode){
+    public void updateDefaultCalender(CalendarDTO calendarDTO, int memberCode) {
 
         log.info("[CalendarService](updateDefaultCalender) calendarDTO : {}", calendarDTO);
 
         InitDefaultCalendar(memberCode);
 
-        Optional<Calendar> prevDefaultCalendar = calendarRepository.findByMemberCodeAndDefaultCalendar(calendarDTO.getMemberCode(), true);
+        Optional<Calendar> prevDefaultCalendar = calendarRepository.findByMemberCodeAndDefaultCalendar(memberCode, true);
 
-        if(prevDefaultCalendar.isPresent()) {
+        if (prevDefaultCalendar.isPresent()) {
             log.info("[CalendarService](updateDefaultCalender) prevDefaultCalendar : {}", prevDefaultCalendar.get());
             prevDefaultCalendar.get().setDefaultCalendar(false);
         }
@@ -215,7 +239,7 @@ public class CalendarService {
      * @param info the info
      */
     @Transactional
-    public void updateCalendarIndexNo(Map<String, String> info){
+    public void updateCalendarIndexNo(Map<String, String> info, int memberCode) {
 
         log.info("[CalendarService](updateCalendarIndexNo) info : {}", info);
 
@@ -223,8 +247,8 @@ public class CalendarService {
 
         int tempSeq = cur.orElseThrow(() -> new NotFindDataException("캘린더를 찾을 수 없습니다.")).getIndexNo();
 
-        if(info.get("direction").equals("prev")){
-            Optional<Calendar> prev = calendarRepository.findFirstByMemberCodeAndIndexNoBefore(Integer.valueOf(info.get("memberCode")),tempSeq);
+        if (info.get("direction").equals("prev")) {
+            Optional<Calendar> prev = calendarRepository.findFirstByMemberCodeAndIndexNoBefore(memberCode, tempSeq);
             int prevIndexNo = prev.orElseThrow(() ->
                     new NotFindDataException("캘린더가 존재 하지 않습니다.")
             ).getIndexNo();
@@ -236,8 +260,8 @@ public class CalendarService {
             log.info("[CalendarService](updateCalendarIndexNo) tempSeq : {}", tempSeq);
 
 
-        }else if(info.get("direction").equals("next")){
-            Optional<Calendar> next = calendarRepository.findFirstByMemberCodeAndIndexNoAfter(Integer.valueOf(info.get("memberCode")),tempSeq, Sort.by("indexNo").ascending());
+        } else if (info.get("direction").equals("next")) {
+            Optional<Calendar> next = calendarRepository.findFirstByMemberCodeAndIndexNoAfter(Integer.valueOf(info.get("memberCode")), tempSeq, Sort.by("indexNo").ascending());
             int nextIndexNo = next.orElseThrow(() ->
                     new NotFindDataException("캘린더가 존재하지 않습니다.")).getIndexNo();
             cur.get().setIndexNo(nextIndexNo);
@@ -248,7 +272,7 @@ public class CalendarService {
             log.info("[CalendarService](updateCalendarIndexNo) tempSeq : {}", tempSeq);
 
 
-        }else {
+        } else {
             throw new InvalidRequestException("잘못된 요청입니다.");
         }
     }
@@ -256,25 +280,15 @@ public class CalendarService {
     /**
      * Delete by id.
      *
-     * @param calendarList the calendar list
+     * @param calendar the calendar list
      * @param memberCode   the member code
      */
     @Transactional
-    public void deleteById(List<Integer> calendarList, int memberCode) {
+    public void deleteById(Integer calendar, int memberCode) {
 
-        log.info("[CalendarService](deleteById) calendarList : {}", calendarList);
-
-        calendarList.forEach(item ->{
-            log.info("[CalendarService](deleteById) calendarList.forEach(1) : {}", item);
-            scheduleRepository.deleteAllByRefCalendar(item);
-
-            log.info("[CalendarService](deleteById) calendarList.forEach(2) : {}", item);
-            favotriteCalendarRepository.deleteByRefCalendar(item);
-
-            log.info("[CalendarService](deleteById) calendarList.forEach(3) : {}", item);
-            calendarRepository.deleteById(item);
-            log.info("[CalendarService](deleteById) calendarList.forEach(4) : {}", item);
-        });
+        scheduleRepository.deleteAllByRefCalendar(calendar);
+        favotriteCalendarRepository.deleteByRefCalendar(calendar);
+        calendarRepository.deleteById(calendar);
 
         // indexNo 재정렬 로직 추가
         // 삭제할 indexNo 기준 이후의 값들만 조회해서 수정
@@ -289,11 +303,11 @@ public class CalendarService {
         changeDefaultCalendar.setDefaultCalendar(true);
 
         Optional<Calendar> defaultCalendar = calendarRepository.findByMemberCodeAndDefaultCalendar(memberCode, true);
-        defaultCalendar.orElseThrow(()->
+        defaultCalendar.orElseThrow(() ->
                 new NotEnoughDateException("기본 캘린더가 존재 하지 않습니다."));
 
         Optional<Calendar> findFirstCalendar = calendarRepository.findFirstByMemberCode(memberCode, Sort.by("indexNo").ascending());
-        findFirstCalendar.orElseThrow(()->
+        findFirstCalendar.orElseThrow(() ->
                         new NotFindDataException("캘린더가 존재 하지 않습니다."))
                 .setDefaultCalendar(true);
 
@@ -302,9 +316,9 @@ public class CalendarService {
 
         int count = 1;
 
-        for (Calendar calendar : indexCalendar){
-            calendar.setIndexNo(count++);
-            newCalendar.add(calendar);
+        for (Calendar calendarTemp : indexCalendar) {
+            calendarTemp.setIndexNo(count++);
+            newCalendar.add(calendarTemp);
         }
 
         calendarRepository.saveAll(newCalendar);
@@ -321,35 +335,42 @@ public class CalendarService {
      */
     public Page<CalendarDTO> openCalendarList(Integer memberCode, Pageable pageable) {
 
-        Page<Calendar> calendarList = calendarRepository.findByDepartmentCodeAndOpenStatusAndMemberCodeNot(null ,true, memberCode, pageable);
-        log.info("[CalendarService](openCalendarList) calendarList : {}",calendarList);
+        Page<Calendar> calendarList = calendarRepository.findByDepartmentCodeAndOpenStatusAndMemberCodeNot(null, true, memberCode, pageable);
+        log.info("[CalendarService](openCalendarList) calendarList : {}", calendarList);
 
-        if(calendarList.getContent().size() == 0 ) throw new NotFindDataException("조회할 데이터가 없습니다.");
+        if (calendarList.getContent().size() == 0) throw new NotFindDataException("조회할 데이터가 없습니다.");
 
         return calendarList
                 .map(calendar -> {
-                   CalendarDTO calendarDTO = modelMapper.map(calendar, CalendarDTO.class);
+                    CalendarDTO calendarDTO = modelMapper.map(calendar, CalendarDTO.class);
 
-                   calendarDTO.setScheduleList(null);
+                    calendarDTO.setScheduleList(null);
 
-                   calendarDTO.setFavoriteCalendar(
-                           calendarDTO.getFavoriteCalendar().stream()
-                                   .map(favoriteCalendarDTO -> {
-                                       favoriteCalendarDTO.setCalendar(null);
-                                       favoriteCalendarDTO.getMember().setDepartment(null); // 부서관련 오류 처리 내용 확인 후 처리 옙정
-                                       return favoriteCalendarDTO;
+                    calendarDTO.setFavoriteCalendar(
+                            calendarDTO.getFavoriteCalendar().stream()
+                                    .map(favoriteCalendarDTO -> {
+                                        favoriteCalendarDTO.setCalendar(null);
 
-                                   }).collect(Collectors.toList()));
+                                        MemberDTO memberDTO = new MemberDTO();
+                                        memberDTO.setMemberCode(favoriteCalendarDTO.getMember().getMemberCode());
 
-                   MemberDTO memberDTO = new MemberDTO();
-                   memberDTO.setMemberName(calendarDTO.getMember().getMemberName());
-                   memberDTO.setMemberNo(calendarDTO.getMember().getMemberNo());
-                   memberDTO.setDepartment(null);
-                   calendarDTO.setMember(memberDTO);
+                                        favoriteCalendarDTO.setMember(memberDTO);
 
-                   log.info("[CalendarService](openCalendarList) calendarDTO : {}",calendarDTO);
+                                        return favoriteCalendarDTO;
 
-                   return calendarDTO;
+                                    }).collect(Collectors.toList()));
+
+                    MemberDTO memberDTO = new MemberDTO();
+                    memberDTO.setMemberName(calendarDTO.getMember().getMemberName());
+                    memberDTO.setMemberNo(calendarDTO.getMember().getMemberNo());
+                    memberDTO.setRank(calendarDTO.getMember().getRank());
+
+                    memberDTO.setDepartment(null);
+                    calendarDTO.setMember(memberDTO);
+
+                    log.info("[CalendarService](openCalendarList) calendarDTO : {}", calendarDTO);
+
+                    return calendarDTO;
                 });
 
     }
@@ -384,7 +405,7 @@ public class CalendarService {
      * @param departmentCode the department code
      * @return the list
      */
-    public List<CalendarDTO> myCalendarList(int memberCode,int departmentCode) {
+    public List<CalendarDTO> myCalendarList(int memberCode, int departmentCode) {
 
         List<Calendar> calendarList =
 //                calendarRepository.findByMemberCode(memberCode, null, Sort.by(Sort.Direction.ASC, "indexNo"));
