@@ -46,17 +46,6 @@ public class PaymentList {
   @JoinColumn(name = "DOCUMENT_ID")
   private Document document;
 
-//  public PaymentList(Long paymentCode, String paymentDate, String paymentSort, int paymentPrice, String paymentContent, String remarks, Payment document) {
-//    this.paymentCode = paymentCode;
-//    this.paymentDate = paymentDate;
-//    this.paymentSort = paymentSort;
-//    this.paymentPrice = paymentPrice;
-//    this.paymentContent = paymentContent;
-//    this.remarks = remarks;
-//    this.document = document;
-//  }
-
-
   public PaymentList(String paymentDate, String paymentSort, int paymentPrice, String paymentContent, String remarks, Payment document) {
     this.paymentDate = paymentDate;
     this.paymentSort = paymentSort;

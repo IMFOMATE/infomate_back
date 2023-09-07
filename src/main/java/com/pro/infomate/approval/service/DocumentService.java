@@ -60,7 +60,7 @@ public class DocumentService {
   @Transactional
   public VacationResponse vacationSave(
           int memberCode,
-          VacationRequest vacationRequest, String temp, List<MultipartFile> multipartFiles){
+          VacationRequest vacationRequest, List<MultipartFile> multipartFiles){
 
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
 
@@ -71,10 +71,6 @@ public class DocumentService {
     Vacation vacation = modelMapper.map(vacationRequest, Vacation.class);
     vacation.addMember(member);
     vacation.setCreatedDate(LocalDateTime.now());
-
-    if(temp != null){
-      vacation.setDocumentStatus(DocumentStatus.TEMPORARY);
-    }
 
     Vacation save = vacationDocumentRepository.save(vacation);
 
@@ -92,21 +88,39 @@ public class DocumentService {
         docRefRepository.save(ref);
       });
     }
-    // 기안 리스트
-    if(vacationRequest.getApprovalList() == null){
+
+    // 기안리스트가 없을 때 -> 현재 로그인사용자가 결재승인 및 문서 종로
+    if(vacation.getApprovalList() == null){
       Approval approval = Approval.builder().order(1).member(member).document(save).build();
       approval.setApprovalStatus(ApprovalStatus.APPROVAL);
       Approval saveapproval = approvalRepository.save(approval);
       saveapproval.setApprovalDate(save.getCreatedDate());
       save.setDocumentStatus(DocumentStatus.APPROVAL);
+    }
+    else{
+    //기안리스트가 있을때
+      List<Approval> approvals = vacationRequest.getApprovalList()
+              .stream()
+              .map(list -> {
+                Member byMemberId = memberRepository.findByMemberCode(list.getId());
+                Approval approval = Approval.builder()
+                        .order(list.getOrder())
+                        .member(byMemberId)
+                        .document(save)
+                        .build();
+                if (byMemberId.getMemberCode() == memberCode) {
+                  approval.setApprovalStatus(ApprovalStatus.APPROVAL);
+                  approval.setApprovalDate(LocalDateTime.now());
+                }
+                return approval;
+              })
+              .collect(Collectors.toList());
+        approvalRepository.saveAll(approvals);
 
-    }else{
-      vacationRequest.getApprovalList().forEach(list -> {
-        Member byMemberId = memberRepository.findByMemberCode(list.getId());
-        Approval approval = Approval.builder().order(list.getOrder()).member(byMemberId).document(save).build();
-
-        approvalRepository.save(approval);
-      });
+        //기안리스트가 있지만 1개만 있는데 자기자신일때
+      if (approvals.size() == 1 && approvals.get(0).getMember().getMemberCode() == memberCode) {
+        save.setDocumentStatus(DocumentStatus.APPROVAL);
+      }
     }
 
     if(multipartFiles != null){
@@ -131,18 +145,13 @@ public class DocumentService {
 
   //2. 기안서 등록
   @Transactional
-  public DraftResponse draftSave(int memberCode, DraftRequest draftRequest, String temp, List<MultipartFile> multipartFiles){
+  public DraftResponse draftSave(int memberCode, DraftRequest draftRequest, List<MultipartFile> multipartFiles){
 
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
 
     Draft draft = modelMapper.map(draftRequest, Draft.class);
     draft.addMember(member);
     draft.setDocumentStatus(DocumentStatus.WAITING);
-
-
-    if(temp != null){
-      draft.setDocumentStatus(DocumentStatus.TEMPORARY);
-    }
 
     Draft save = draftDocumentRepository.save(draft);
     save.setCreatedDate(LocalDateTime.now());
@@ -168,12 +177,27 @@ public class DocumentService {
       save.setDocumentStatus(DocumentStatus.APPROVAL);
 
     }else{
-      draftRequest.getApprovalList().forEach(list -> {
-        Member byMemberId = memberRepository.findByMemberCode(list.getId());
-        Approval approval = Approval.builder().order(list.getOrder()).member(byMemberId).document(save).build();
+      List<Approval> approvals = draftRequest.getApprovalList()
+              .stream()
+              .map(list -> {
+                Member byMemberId = memberRepository.findByMemberCode(list.getId());
+                Approval approval = Approval.builder()
+                        .order(list.getOrder())
+                        .member(byMemberId)
+                        .document(save)
+                        .build();
+                if (byMemberId.getMemberCode() == memberCode) {
+                  approval.setApprovalStatus(ApprovalStatus.APPROVAL);
+                  approval.setApprovalDate(LocalDateTime.now());
+                }
+                return approval;
+              })
+              .collect(Collectors.toList());
+          approvalRepository.saveAll(approvals);
 
-        approvalRepository.save(approval);
-      });
+      if (approvals.size() == 1 && approvals.get(0).getMember().getMemberCode() == memberCode) {
+        save.setDocumentStatus(DocumentStatus.APPROVAL);
+      }
     }
 
 
@@ -228,19 +252,20 @@ public class DocumentService {
   @Transactional
   public PaymentResponse paymentSave(
           int memberCode,
-          PaymentRequest paymentRequest, String temp, List<MultipartFile> multipartFiles){
+          PaymentRequest paymentRequest, List<MultipartFile> multipartFiles){
+    System.out.println("paymentRequest = " + paymentRequest);
 
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
-    System.out.println("paymentRequest = " + paymentRequest.getPaymentList());
+
     Payment payment = modelMapper.map(paymentRequest, Payment.class);
     payment.addMember(member);
+
     payment.setCreatedDate(LocalDateTime.now());
 
-    if(temp != null){
-      payment.setDocumentStatus(DocumentStatus.TEMPORARY);
-    }
 
+    payment.setDocumentStatus(DocumentStatus.WAITING);
     Payment save = paymentDocumentRepository.save(payment);
+    save.setCreatedDate(LocalDateTime.now());
 
     // 참조자
     if(paymentRequest.getRefList() != null){
@@ -253,7 +278,7 @@ public class DocumentService {
         docRefRepository.save(ref);
       });
     }
-    // 결재 리스트
+    // 기안리스트가 없을 때 -> 현재 로그인사용자가 결재승인 및 문서 종로
     if(paymentRequest.getApprovalList() == null){
       Approval approval = Approval.builder().order(1).member(member).document(save).build();
       approval.setApprovalStatus(ApprovalStatus.APPROVAL);
@@ -262,12 +287,28 @@ public class DocumentService {
       save.setDocumentStatus(DocumentStatus.APPROVAL);
 
     }else{
-      paymentRequest.getApprovalList().forEach(list -> {
-        Member byMemberId = memberRepository.findByMemberCode(list.getId());
-        Approval approval = Approval.builder().order(list.getOrder()).member(byMemberId).document(save).build();
+      List<Approval> approvals = paymentRequest.getApprovalList()
+              .stream()
+              .map(list -> {
+                Member byMemberId = memberRepository.findByMemberCode(list.getId());
+                Approval approval = Approval.builder()
+                        .order(list.getOrder())
+                        .member(byMemberId)
+                        .document(save)
+                        .build();
+                if (byMemberId.getMemberCode() == memberCode) {
+                  approval.setApprovalStatus(ApprovalStatus.APPROVAL);
+                  approval.setApprovalDate(LocalDateTime.now());
+                }
+                return approval;
+              })
+              .collect(Collectors.toList());
+      approvalRepository.saveAll(approvals);
 
-        approvalRepository.save(approval);
-      });
+      if (approvals.size() == 1 && approvals.get(0).getMember().getMemberCode() == memberCode) {
+        save.setDocumentStatus(DocumentStatus.APPROVAL);
+      }
+
     }
 
     //지출 리스트 저장
@@ -327,24 +368,6 @@ public class DocumentService {
             .build();
 
     System.out.println("condition = " + condition);
-
-    // 생각해보자 문서 보여줘야하는건
-    // insert 시 : 결재 요청, 임시저장, 취소, 결재선 선택
-    // 내가 작성한 문서는 : 재기안, 삭제, 상신취소, 목록, 다운로드/미리보기
-    // 결재해야하는 문서 : 결재, 반려, 목록, 다운로드/미리보기
-    // 다른 사람 문서 또는 참조된문서 :  다운로드/미리보기, 목록
-    // 우리부서 문서 : 재기안, 목록, 미리보기/다운로드
-
-    // insert 제외하고 공통적인 버튼 : 목록, 다운로드/미리보기
-    // 재기안이 되야되는 건 내가 작성한문서와 우리부서문서 => 재기안 누르면 데이터가지고 insert
-    // 결재여부가 true 일때 결재 반려 보여주기
-    // 재기안여부 true 일때 재기안버튼 보여주기
-    // 상신취소는 내문서이면서 결재 한사람이 없을떄 ?
-
-    // 결재 반려 재기안 삭제, 임시저장, 취소
-    // 미리보기 또는 다운로드
-
-    // 임시저장..........
 
 
     DocumentDetailResponse result = document.accept(visitor);
@@ -421,8 +444,6 @@ public class DocumentService {
 
   }
 
-
-
   // 문서삭제
   @Transactional
   public void deleteDocument(long documentId){
@@ -430,6 +451,25 @@ public class DocumentService {
     documentRepository.findById(documentId).orElseThrow(() -> new NotFindDataException("해당문서가 없습니다"));
     documentRepository.deleteById(documentId);
   }
+
+
+  //문서 임시저장
+  public void tempSave(Long documentCode){
+
+    //1. 임시저장 시 documentCode가 없으면 저장되고
+    //값들을 받아서 저장하는데 결재리스트는 waiting인 상태로
+    // 만약 결재리스트가 있는데
+
+    // 결재리스트가 없다면 본인만 저장
+
+
+    //2. 임시저장시 documentCode가 있으면 해당내용을 업데이트 시킨다.
+    Document document = documentRepository.findById(documentCode).orElseThrow();
+
+  }
+
+
+
 
 
 

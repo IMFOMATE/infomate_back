@@ -31,14 +31,13 @@ public class DocumentController {
   @PostMapping("/regist/vacation")
   public ResponseEntity<ResponseDTO> vacationRegist(
           @ModelAttribute VacationRequest vacationRequest,
-          @RequestParam(name = "temp",required = false) String temp,
           @ModelAttribute(name = "fileList") List<MultipartFile> fileList,
           @AuthenticationPrincipal MemberDTO memberDTO
   ){
 
     int memberCode = memberDTO.getMemberCode();
 
-    documentService.vacationSave(memberCode, vacationRequest, temp, fileList);
+    documentService.vacationSave(memberCode, vacationRequest, fileList);
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
@@ -51,7 +50,6 @@ public class DocumentController {
   @PostMapping("/regist/draft")
   public ResponseEntity<ResponseDTO> draftRegist(
           @ModelAttribute DraftRequest draftRequest,
-          @RequestParam(name = "temp",required = false) String temp,
           @ModelAttribute(name = "fileList") List<MultipartFile> fileList,
           @AuthenticationPrincipal MemberDTO memberDTO
   ){
@@ -61,7 +59,7 @@ public class DocumentController {
     int memberCode = memberDTO.getMemberCode();
 
 //
-    documentService.draftSave(memberCode, draftRequest, temp ,fileList);
+    documentService.draftSave(memberCode, draftRequest,fileList);
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
@@ -74,7 +72,6 @@ public class DocumentController {
   @PostMapping("/regist/payment")
   public ResponseEntity<ResponseDTO> paymentRegist(
           @ModelAttribute PaymentRequest paymentRequest,
-          @RequestParam(name = "temp", required = false) String temp,
           @ModelAttribute(name = "fileList") List<MultipartFile> fileList,
           @AuthenticationPrincipal MemberDTO memberDTO
   ){
@@ -82,13 +79,27 @@ public class DocumentController {
     int memberCode = memberDTO.getMemberCode();
     System.out.println("controller = " + paymentRequest.getPaymentList());
 
-    documentService.paymentSave(memberCode, paymentRequest, temp, fileList);
+    documentService.paymentSave(memberCode, paymentRequest, fileList);
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
                     .status(HttpStatus.OK)
                     .message("success")
                     .build());
+  }
+
+
+  //임시저장
+  @PostMapping("/regist/temp/{documentCode}")
+  public ResponseEntity<ResponseDTO> tempRegist(
+          @PathVariable(required = false) Long documentCode
+  ){
+
+
+
+
+
+    return null;
   }
 
 
