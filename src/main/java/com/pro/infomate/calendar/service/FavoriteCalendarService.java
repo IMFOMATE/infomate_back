@@ -27,113 +27,113 @@ import java.util.Optional;
 @Slf4j
 public class FavoriteCalendarService {
 
-    private final FavotriteCalendarRepository favotriteCalendarRepository;
+  private final FavotriteCalendarRepository favotriteCalendarRepository;
 
-    private final CalendarRepository calendarRepository;
+  private final CalendarRepository calendarRepository;
 
-    private final ModelMapper modelMapper;
+  private final ModelMapper modelMapper;
 
-    public Page<FavoriteCalendarDTO> findAllByFavoriteCalendar(Integer memberCode, Pageable pageable){
+  public Page<FavoriteCalendarDTO> findAllByFavoriteCalendar(Integer memberCode, Pageable pageable){
 
-        Page<FavoriteCalendar> favoriteCalendarList = favotriteCalendarRepository.findByCalendarByMemberCode(memberCode, pageable);
+    Page<FavoriteCalendar> favoriteCalendarList = favotriteCalendarRepository.findByCalendarByMemberCode(memberCode, pageable);
 
-        log.info("[FavoriteCalendarService](findAllByFavoriteCalendar) calendarList : {}",favoriteCalendarList);
+    log.info("[FavoriteCalendarService](findAllByFavoriteCalendar) calendarList : {}",favoriteCalendarList);
 
-        Page<FavoriteCalendarDTO> favoriteCalendarDTOList = favoriteCalendarList
-                .map(favoriteCalendar -> modelMapper.map(favoriteCalendar, FavoriteCalendarDTO.class))
-                .map(favoriteCalendarDTO -> {
+    Page<FavoriteCalendarDTO> favoriteCalendarDTOList = favoriteCalendarList
+            .map(favoriteCalendar -> modelMapper.map(favoriteCalendar, FavoriteCalendarDTO.class))
+            .map(favoriteCalendarDTO -> {
 
-                    CalendarDTO calendarDTO = favoriteCalendarDTO.getCalendar();
-                    calendarDTO.setMember(null);
-                    calendarDTO.setFavoriteCalendar(null);
-                    calendarDTO.setScheduleList(null);
-                    favoriteCalendarDTO.setCalendar(calendarDTO);
+              CalendarDTO calendarDTO = favoriteCalendarDTO.getCalendar();
+              calendarDTO.setMember(null);
+              calendarDTO.setFavoriteCalendar(null);
+              calendarDTO.setScheduleList(null);
+              favoriteCalendarDTO.setCalendar(calendarDTO);
 
-                    MemberDTO memberDTO = new MemberDTO();
-                    memberDTO.setMemberName(favoriteCalendarDTO.getMember().getMemberName());
-                    memberDTO.setMemberNo(favoriteCalendarDTO.getMember().getMemberNo());
-                    favoriteCalendarDTO.setMember(memberDTO);
+              MemberDTO memberDTO = new MemberDTO();
+              memberDTO.setMemberName(favoriteCalendarDTO.getMember().getMemberName());
+              memberDTO.setMemberNo(favoriteCalendarDTO.getMember().getMemberNo());
+              favoriteCalendarDTO.setMember(memberDTO);
 
-                    return favoriteCalendarDTO;
-                });
+              return favoriteCalendarDTO;
+            });
 
-        log.info("[FavoriteCalendarService](findAllByFavoriteCalendar) favoriteCalendarDTOList : {}",favoriteCalendarDTOList);
+    log.info("[FavoriteCalendarService](findAllByFavoriteCalendar) favoriteCalendarDTOList : {}",favoriteCalendarDTOList);
 
-        return favoriteCalendarDTOList;
+    return favoriteCalendarDTOList;
 
-    }
+  }
 
-    public Page<FavoriteCalendarDTO> findAllByMemberCode(Integer memberCode, Pageable pageable) {
-        Page<FavoriteCalendar> favoriteCalendars = favotriteCalendarRepository.findAllByMemberCode(memberCode, pageable);
-        log.info("[FavoriteCalendarService](findAllByMemberCode) favoriteCalendars : {}", favoriteCalendars);
+  public Page<FavoriteCalendarDTO> findAllByMemberCode(Integer memberCode, Pageable pageable) {
+    Page<FavoriteCalendar> favoriteCalendars = favotriteCalendarRepository.findAllByMemberCode(memberCode, pageable);
+    log.info("[FavoriteCalendarService](findAllByMemberCode) favoriteCalendars : {}", favoriteCalendars);
 
-        if(favoriteCalendars == null || favoriteCalendars.getSize() == 0 ) throw new NotFindDataException("데이터가 없습니다.");
+    if(favoriteCalendars == null || favoriteCalendars.getSize() == 0 ) throw new NotFindDataException("데이터가 없습니다.");
 
 
-        return favoriteCalendars
-                .map(favoriteCalendar -> modelMapper.map(favoriteCalendar,FavoriteCalendarDTO.class))
-                .map(favoriteCalendarDTO -> {
-                    favoriteCalendarDTO.getCalendar().setFavoriteCalendar(null);
+    return favoriteCalendars
+            .map(favoriteCalendar -> modelMapper.map(favoriteCalendar,FavoriteCalendarDTO.class))
+            .map(favoriteCalendarDTO -> {
+              favoriteCalendarDTO.getCalendar().setFavoriteCalendar(null);
 
-                    MemberDTO calMemberDTO = new MemberDTO();
-                    calMemberDTO.setMemberCode(favoriteCalendarDTO.getCalendar().getMember().getMemberCode());
-                    calMemberDTO.setMemberName(favoriteCalendarDTO.getCalendar().getMember().getMemberName());
-                    calMemberDTO.setRank(favoriteCalendarDTO.getCalendar().getMember().getRank());
+              MemberDTO calMemberDTO = new MemberDTO();
+              calMemberDTO.setMemberCode(favoriteCalendarDTO.getCalendar().getMember().getMemberCode());
+              calMemberDTO.setMemberName(favoriteCalendarDTO.getCalendar().getMember().getMemberName());
+              calMemberDTO.setRank(favoriteCalendarDTO.getCalendar().getMember().getRank());
 
-                    log.info("[FavoriteCalendarService](findAllByMemberCode) calMemberDTO : {}", calMemberDTO);
+              log.info("[FavoriteCalendarService](findAllByMemberCode) calMemberDTO : {}", calMemberDTO);
 
-                    favoriteCalendarDTO.getCalendar().setMember(calMemberDTO);
-                    favoriteCalendarDTO.setMember(null);
-                    favoriteCalendarDTO.getCalendar().setScheduleList(null);
+              favoriteCalendarDTO.getCalendar().setMember(calMemberDTO);
+              favoriteCalendarDTO.setMember(null);
+              favoriteCalendarDTO.getCalendar().setScheduleList(null);
 
 //                    MemberDTO memberDTO = new MemberDTO();
 //                    memberDTO.setMemberNo(favoriteCalendarDTO.getMember().getMemberNo());
 //                    memberDTO.setMemberName(favoriteCalendarDTO.getMember().getMemberName());
-
+//
 //                    favoriteCalendarDTO.setMember(memberDTO);
-                    return favoriteCalendarDTO;
-                });
-    }
+              return favoriteCalendarDTO;
+            });
+  }
 
-    @Transactional
-    public void updateApprovalStatusById(List<FavoriteCalendarDTO> favoriteList) {
+  @Transactional
+  public void updateApprovalStatusById(List<FavoriteCalendarDTO> favoriteList) {
 
-        favoriteList.stream().forEach(favorite -> {
-            FavoriteCalendar favoriteCalendar = favotriteCalendarRepository
-                    .findById(favorite.getId())
-                    .orElseThrow(() -> new NotFindDataException("캘린더를 찾을 수 없습니다"));
+    favoriteList.stream().forEach(favorite -> {
+      FavoriteCalendar favoriteCalendar = favotriteCalendarRepository
+              .findById(favorite.getId())
+              .orElseThrow(() -> new NotFindDataException("캘린더를 찾을 수 없습니다"));
 
-            favoriteCalendar.setApprovalStatus(favorite.getApprovalStatus());
-        });
-    }
+      favoriteCalendar.setApprovalStatus(favorite.getApprovalStatus());
+    });
+  }
 
-    @Transactional
-    public void deleteFavoriteCalendarById(List<Integer> favoriteId) {
-        favotriteCalendarRepository.deleteAllById(favoriteId);
-    }
+  @Transactional
+  public void deleteFavoriteCalendarById(List<Integer> favoriteId) {
+    favotriteCalendarRepository.deleteAllById(favoriteId);
+  }
 
-    @Transactional
-    public void saveFollowCalendar(List<FavoriteCalendarDTO> favoriteCalendarDTO) {
+  @Transactional
+  public void saveFollowCalendar(List<FavoriteCalendarDTO> favoriteCalendarDTO) {
 
-        favoriteCalendarDTO.forEach(favoriteCalendarDTO1 -> {
-            Optional<FavoriteCalendar> favoriteCalendar = favotriteCalendarRepository
-                    .findByMemberCodeAndRefCalendar(favoriteCalendarDTO1.getMemberCode(), favoriteCalendarDTO1.getRefCalendar());
-            if(favoriteCalendar.isPresent()) throw new AlreadyRequstException("이미 요청한 캘린더가 포함되어 있습니다.");
+    favoriteCalendarDTO.forEach(favoriteCalendarDTO1 -> {
+      Optional<FavoriteCalendar> favoriteCalendar = favotriteCalendarRepository
+              .findByMemberCodeAndRefCalendar(favoriteCalendarDTO1.getMemberCode(), favoriteCalendarDTO1.getRefCalendar());
+      if(favoriteCalendar.isPresent()) throw new AlreadyRequstException("이미 요청한 캘린더가 포함되어 있습니다.");
 
-        });
+    });
 
-        favoriteCalendarDTO.stream()
-                .map(favoriteCalendar -> modelMapper.map(favoriteCalendar, FavoriteCalendar.class))
-                .forEach(favoriteCalendar -> {
-                    Calendar calendar = calendarRepository
-                            .findById(favoriteCalendar.getRefCalendar())
-                            .orElseThrow(() -> new NotFindDataException("캘린더를 찾을 수 없습니다"));
+    favoriteCalendarDTO.stream()
+            .map(favoriteCalendar -> modelMapper.map(favoriteCalendar, FavoriteCalendar.class))
+            .forEach(favoriteCalendar -> {
+              Calendar calendar = calendarRepository
+                      .findById(favoriteCalendar.getRefCalendar())
+                      .orElseThrow(() -> new NotFindDataException("캘린더를 찾을 수 없습니다"));
 
-                    if(!calendar.getOpenStatus()) throw new NotFindDataException("캘린더를 찾을 수 없거나 비공개된 캘린더 입니다");
-                    favoriteCalendar.setApprovalStatus(ApprovalStatus.WAIT);
-                    favoriteCalendar.setRequestDate(LocalDateTime.now());
+              if(!calendar.getOpenStatus()) throw new NotFindDataException("캘린더를 찾을 수 없거나 비공개된 캘린더 입니다");
+              favoriteCalendar.setApprovalStatus(ApprovalStatus.WAIT);
+              favoriteCalendar.setRequestDate(LocalDateTime.now());
 
-                    favotriteCalendarRepository.save(favoriteCalendar);
-                });
-    }
+              favotriteCalendarRepository.save(favoriteCalendar);
+            });
+  }
 }

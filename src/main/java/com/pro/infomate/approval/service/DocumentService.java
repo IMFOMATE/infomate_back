@@ -98,7 +98,7 @@ public class DocumentService {
       save.setDocumentStatus(DocumentStatus.APPROVAL);
     }
     else{
-    //기안리스트가 있을때
+      //기안리스트가 있을때
       List<Approval> approvals = vacationRequest.getApprovalList()
               .stream()
               .map(list -> {
@@ -115,9 +115,9 @@ public class DocumentService {
                 return approval;
               })
               .collect(Collectors.toList());
-        approvalRepository.saveAll(approvals);
+      approvalRepository.saveAll(approvals);
 
-        //기안리스트가 있지만 1개만 있는데 자기자신일때
+      //기안리스트가 있지만 1개만 있는데 자기자신일때
       if (approvals.size() == 1 && approvals.get(0).getMember().getMemberCode() == memberCode) {
         save.setDocumentStatus(DocumentStatus.APPROVAL);
       }
@@ -193,7 +193,7 @@ public class DocumentService {
                 return approval;
               })
               .collect(Collectors.toList());
-          approvalRepository.saveAll(approvals);
+      approvalRepository.saveAll(approvals);
 
       if (approvals.size() == 1 && approvals.get(0).getMember().getMemberCode() == memberCode) {
         save.setDocumentStatus(DocumentStatus.APPROVAL);
@@ -215,13 +215,13 @@ public class DocumentService {
       });
 
       List<DocumentFile> newFiles = existingFiles.stream().map(ex->{
-                DocumentFile file = DocumentFile.builder()
-                        .fileName(ex.getFileName())
-                        .fileType(ex.getFileType())
-                        .fileSize(ex.getFileSize())
-                        .originalName(ex.getOriginalName())
-                        .document(save).build();
-                return file;
+        DocumentFile file = DocumentFile.builder()
+                .fileName(ex.getFileName())
+                .fileType(ex.getFileType())
+                .fileSize(ex.getFileSize())
+                .originalName(ex.getOriginalName())
+                .document(save).build();
+        return file;
       }).collect(Collectors.toList());
 
       documentFileRepository.saveAll(newFiles);
@@ -489,7 +489,3 @@ public class DocumentService {
 
 
 }
-
-
-
-

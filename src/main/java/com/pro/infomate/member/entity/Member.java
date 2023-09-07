@@ -25,7 +25,6 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Getter
 @Setter
-//@ToString
 @SequenceGenerator(
         name = "MEMBER_CODE_GENERATOR",
         sequenceName = "SEQ_TBL_MEMBER_MEMBER_CODE",
@@ -73,16 +72,18 @@ public class Member {
     private String memberAddress;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "DEPT_CODE")
+    @JoinColumn(name = "DEPT_CODE",insertable = false,updatable = false)
     private Department department;
 
     @Column(name = "HIRE_DATE")
     private Timestamp hireDate;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "RANK_CODE")
+    @JoinColumn(name = "RANK_CODE", insertable = false,updatable = false)
     private Rank rank;
 
+    @Column(name = "RANK_CODE")
+    private int rankCode;
 
     @Column(name = "MEMBER_PIC")
     private String memberPic;
@@ -141,4 +142,3 @@ public class Member {
                 '}';
     }
 }
-
