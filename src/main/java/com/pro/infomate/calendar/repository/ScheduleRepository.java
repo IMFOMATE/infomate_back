@@ -36,7 +36,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
                      "JOIN s.calendar c "+
                     "WHERE c.memberCode = :memberCode " +
                       "AND s.startDate BETWEEN :startDay AND :endDay " +
-                    "GROUP BY s.startDate ")
+                    "GROUP BY trunc(s.startDate) ")
     List<DayPerCountDTO> dayPerCount(LocalDateTime startDay, LocalDateTime endDay, int memberCode);
 
 // 부서 코드 조인으로 인한 member 엔티티 후 수정 예정
