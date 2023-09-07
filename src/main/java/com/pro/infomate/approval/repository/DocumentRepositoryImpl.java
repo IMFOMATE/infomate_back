@@ -19,10 +19,11 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.pro.infomate.approval.entity.QApproval.*;
+import static com.pro.infomate.approval.entity.QApproval.approval;
 import static com.pro.infomate.approval.entity.QDocument.*;
 import static com.pro.infomate.department.entity.QDepartment.department;
-import static com.pro.infomate.member.entity.QMember.*;
+import static com.pro.infomate.member.entity.QMember.member;
+
 
 @RequiredArgsConstructor
 public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
