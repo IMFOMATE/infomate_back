@@ -248,7 +248,7 @@ public class CalendarService {
         int tempSeq = cur.orElseThrow(() -> new NotFindDataException("캘린더를 찾을 수 없습니다.")).getIndexNo();
 
         if (info.get("direction").equals("prev")) {
-            Optional<Calendar> prev = calendarRepository.findFirstByMemberCodeAndIndexNoBefore(memberCode, tempSeq);
+            Optional<Calendar> prev = calendarRepository.findFirstByMemberCodeAndIndexNoBefore(memberCode, tempSeq, Sort.by("indexNo").descending());
             int prevIndexNo = prev.orElseThrow(() ->
                     new NotFindDataException("캘린더가 존재 하지 않습니다.")
             ).getIndexNo();
@@ -261,7 +261,7 @@ public class CalendarService {
 
 
         } else if (info.get("direction").equals("next")) {
-            Optional<Calendar> next = calendarRepository.findFirstByMemberCodeAndIndexNoAfter(Integer.valueOf(info.get("memberCode")), tempSeq, Sort.by("indexNo").ascending());
+            Optional<Calendar> next = calendarRepository.findFirstByMemberCodeAndIndexNoAfter(memberCode, tempSeq, Sort.by("indexNo").ascending());
             int nextIndexNo = next.orElseThrow(() ->
                     new NotFindDataException("캘린더가 존재하지 않습니다.")).getIndexNo();
             cur.get().setIndexNo(nextIndexNo);
@@ -290,10 +290,6 @@ public class CalendarService {
         favotriteCalendarRepository.deleteByRefCalendar(calendar);
         calendarRepository.deleteById(calendar);
 
-        // indexNo 재정렬 로직 추가
-        // 삭제할 indexNo 기준 이후의 값들만 조회해서 수정
-
-        // 통신오류로 기본캘린더가 여러개 입력되었을 경우
         InitDefaultCalendar(memberCode);
 
         Calendar changeDefaultCalendar = calendarRepository

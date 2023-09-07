@@ -22,7 +22,7 @@ public interface CalendarRepository extends JpaRepository<Calendar, Integer> {
 
     Page<Calendar> findByDepartmentCodeAndOpenStatusAndMemberCodeNot(Integer departmentCode, boolean openStatus, Integer memberCode, Pageable pageable);
 
-    Optional<Calendar> findFirstByMemberCodeAndIndexNoBefore(Integer id, Integer indexNo);
+    Optional<Calendar> findFirstByMemberCodeAndIndexNoBefore(Integer id, Integer indexNo, Sort sort);
     Optional<Calendar> findFirstByMemberCodeAndIndexNoAfter(Integer id, Integer indexNo, Sort sort);
 //    @Query(value = "SELECT s FROM Calendar s " +
 //                     "JOIN Member m on m.memberCode = s.memberCode " +
