@@ -52,7 +52,7 @@ public class Approval {
 
 
   @Builder
-  public Approval(int order, Member member,Document document){
+  public Approval(int order, Member member, Document document){
     this.order = order;
     this.member = member;
     this.document = document;
