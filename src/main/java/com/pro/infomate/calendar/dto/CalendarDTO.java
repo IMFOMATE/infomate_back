@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class  CalendarDTO {
+public class CalendarDTO {
 
     private int id;
     private String name;

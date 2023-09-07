@@ -5,8 +5,12 @@ import com.pro.infomate.calendar.dto.ScheduleDTO;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -59,30 +63,31 @@ public class Schedule {
     @Column(name = "IMPORTANT")
     private Boolean important;
 
-    @OneToMany
-    @JoinColumn(name = "REF_SCHDL_ID")
+//    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY, cascade = {CascadeType.ALL, CascadeType.REMOVE})
+//    @JoinColumn(name = "REF_SCHDL_ID")
     private List<Participant> participantList;
 
     @Column(name = "REF_CLNDR_ID")
-    private int refCalendar;
+    private Integer refCalendar;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Calendar.class)
     @JoinColumn(name = "REF_CLNDR_ID",updatable = false, insertable = false)
     private Calendar calendar;
 
-    public void update(ScheduleDTO scheduleDTO){
-        if(scheduleDTO.getTitle() != null) this.title = scheduleDTO.getTitle();
-        if(scheduleDTO.getStartDate() != null) this.startDate = scheduleDTO.getStartDate();
-        if(scheduleDTO.getEndDate() != null) this.endDate = scheduleDTO.getEndDate();
-        if(scheduleDTO.getContent() != null) this.content = scheduleDTO.getContent();
-        if(scheduleDTO.getAddress() != null) this.address = scheduleDTO.getAddress();
-        if(scheduleDTO.getAllDay() != null) this.allDay = scheduleDTO.getAllDay();
-        if(scheduleDTO.getCorpSchdl() != null) this.corpSchdl = scheduleDTO.getCorpSchdl();
-        if(scheduleDTO.getRepeat() != null) this.repeat = scheduleDTO.getRepeat();
-        if(scheduleDTO.getImportant() != null) this.important = scheduleDTO.getImportant();
-        if(scheduleDTO.getRefCalendar() != null) this.refCalendar = scheduleDTO.getRefCalendar();
+    public void update(Schedule schedule){
+        if(schedule.getTitle() != null) this.title = schedule.getTitle();
+        if(schedule.getStartDate() != null) this.startDate = schedule.getStartDate();
+        if(schedule.getEndDate() != null) this.endDate = schedule.getEndDate();
+        if(schedule.getContent() != null) this.content = schedule.getContent();
+        if(schedule.getAddress() != null) this.address = schedule.getAddress();
+        if(schedule.getAllDay() != null) this.allDay = schedule.getAllDay();
+        if(schedule.getCorpSchdl() != null) this.corpSchdl = schedule.getCorpSchdl();
+        if(schedule.getRepeat() != null) this.repeat = schedule.getRepeat();
+        if(schedule.getImportant() != null) this.important = schedule.getImportant();
+        if(schedule.getRefCalendar() != null) this.refCalendar = schedule.getRefCalendar();
+//        if(schedule.getParticipantList().size() > 0) this.setParticipantList(schedule.getParticipantList());
     }
-
     @Override
     public String toString() {
         return "Schedule{" +

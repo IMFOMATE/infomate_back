@@ -47,13 +47,15 @@ public class Post {
 //    private int memberCode;
 
     @ManyToOne
-    @JoinColumn(name = "BOARD_CODE", updatable = false, insertable = false)
+    @JoinColumn(name = "BOARD_CODE" ,insertable = false,updatable = false)
     private Board board;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<BoardFile> files = new ArrayList<>();
+    @OneToMany
+    @JoinColumn(name = "BOARD_FILE")
+    private List<BoardFile> boardFile;
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_CODE")
     private Member member;
+
 }
