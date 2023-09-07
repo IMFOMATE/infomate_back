@@ -74,12 +74,12 @@ public class DeptController {
   }
 
 
-  public ResponseEntity<ResponseDTO> selectSearchDeptList(
-          @RequestParam(name = "s", defaultValue = "all") String search){
-
-    return ResponseEntity.ok()
-            .body(new ResponseDTO(HttpStatus.OK, "검색 성공", departmentService.selectDept(search)));
-  }
+//  public ResponseEntity<ResponseDTO> selectSearchDeptList(
+//          @RequestParam(name = "s", defaultValue = "all") String search){
+//
+//    return ResponseEntity.ok()
+//            .body(new ResponseDTO(HttpStatus.OK, "검색 성공", departmentService.selectDept(search)));
+//  }
 
 
   @GetMapping("/participantList")

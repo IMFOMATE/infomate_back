@@ -1,10 +1,7 @@
 package com.pro.infomate.department.service;
 
 import com.pro.infomate.common.Criteria;
-import com.pro.infomate.department.dto.DepartmentDTO;
-import com.pro.infomate.department.dto.DepartmentListResponse;
-import com.pro.infomate.department.dto.DeptListResponse;
-import com.pro.infomate.department.dto.TreeViewResponse;
+import com.pro.infomate.department.dto.*;
 import com.pro.infomate.department.entity.Department;
 import com.pro.infomate.department.repository.DepartmentRepository;
 import com.pro.infomate.member.dto.MemberDTO;
@@ -231,7 +228,6 @@ public class DepartmentService {
 //
 //  }
 
-//=======
 //    log.info("[DepartmentService] selectDeptList Start ======================");
 //
 //    List<Department> departmentListSearchValue = departmentRepository.findByDeptName(search);
@@ -244,12 +240,16 @@ public class DepartmentService {
 //    return departmentDTOlist;
 //  }
 //
-//  public List<DepartmentExpendDTO> participantList() {
-//    List<Department> departmentList = departmentRepository.findAll();
-//    log.info("[DepartmentService](participantList) departmentList : {}", departmentList);
-//    return departmentList.stream()
-//            .map(department -> modelMapper.map(department, DepartmentExpendDTO.class))
-//            .collect(Collectors.toList());
-//  }
-//>>>>>>> 2985bacd2ae8f2481e00f2805e6488c5bdeb5792
-//}
+
+
+  public List<DepartmentExpendDTO> participantList() {
+    List<Department> departmentList = departmentRepository.findAll();
+    log.info("[DepartmentService](participantList) departmentList : {}", departmentList);
+    return departmentList.stream()
+            .map(department -> modelMapper.map(department, DepartmentExpendDTO.class))
+            .collect(Collectors.toList());
+  }
+
+
+
+}
