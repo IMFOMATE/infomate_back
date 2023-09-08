@@ -14,7 +14,7 @@ public class ContactDTO {
 
     private Integer contactCode;
 
-    private MultipartFile contactPhoto;
+    private String contactPhoto;
 
     private String company;
 

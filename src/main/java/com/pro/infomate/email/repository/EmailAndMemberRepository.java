@@ -9,4 +9,6 @@ import java.util.List;
 public interface EmailAndMemberRepository extends JpaRepository<Email, Integer> {
     @Query("SELECT c FROM Email c join c.member m where m.memberCode = :memberCode")
     List<Email> findByMemberCode(Integer memberCode);
+
+
 }

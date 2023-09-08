@@ -2,6 +2,8 @@ package com.pro.infomate.email.dto;
 
 import lombok.*;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -13,9 +15,7 @@ public class PhotoFileDTO {
 
     private Integer mailCode;
 
-    private String fileDate;
-
-    private String fileSourceName;
+    private Date fileDate;
 
     private String fileModificationName;
 }
