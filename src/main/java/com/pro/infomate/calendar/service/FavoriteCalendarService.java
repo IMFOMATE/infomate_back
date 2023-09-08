@@ -86,11 +86,6 @@ public class FavoriteCalendarService {
                     favoriteCalendarDTO.setMember(null);
                     favoriteCalendarDTO.getCalendar().setScheduleList(null);
 
-//                    MemberDTO memberDTO = new MemberDTO();
-//                    memberDTO.setMemberNo(favoriteCalendarDTO.getMember().getMemberNo());
-//                    memberDTO.setMemberName(favoriteCalendarDTO.getMember().getMemberName());
-
-//                    favoriteCalendarDTO.setMember(memberDTO);
                     return favoriteCalendarDTO;
                 });
     }

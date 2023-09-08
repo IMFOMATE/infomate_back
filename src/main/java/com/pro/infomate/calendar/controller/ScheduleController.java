@@ -86,7 +86,7 @@ public class ScheduleController {
     @PatchMapping("/update") // api 연동 확인
     public ResponseEntity<ResponseDTO> updateById(@RequestBody ScheduleDTO scheduleDTO,
                                                   @AuthenticationPrincipal MemberDTO member){
-        int department = member.getDepartment().getDeptCode();
+
         int memberCode = member.getMemberCode();
         log.info("[ScheduleController](updateById) scheduleDTO : {} ", scheduleDTO);
         scheduleService.updateById(scheduleDTO, memberCode);
@@ -100,7 +100,7 @@ public class ScheduleController {
     @DeleteMapping("/delete/{scheduleId}") // api 연동 확인
     public ResponseEntity<ResponseDTO> deleteById(@PathVariable int scheduleId,
                                                   @AuthenticationPrincipal MemberDTO member){
-        int department = member.getDepartment().getDeptCode();
+
         int memberCode = member.getMemberCode();
         log.info("[ScheduleController](deleteById) scheduleId : {} ", scheduleId);
 
@@ -114,17 +114,16 @@ public class ScheduleController {
     }
 
     // test join 부섴드 조인 오류
-    @GetMapping("/findScheduleSearch")
-    public ResponseEntity<ResponseDTO> findScheduleSearch(@RequestParam String keyword,
-                                                          @AuthenticationPrincipal MemberDTO member){
-
-        return ResponseEntity.ok()
-                .body(ResponseDTO.builder()
-                        .status(HttpStatus.OK)
-                        .message("success")
-//                        .data(scheduleList)
-                        .build());
-    }
+//    @GetMapping("/findScheduleSearch")
+//    public ResponseEntity<ResponseDTO> findScheduleSearch(@RequestParam String keyword,
+//                                                          @AuthenticationPrincipal MemberDTO member){
+//
+//        return ResponseEntity.ok()
+//                .body(ResponseDTO.builder()
+//                        .status(HttpStatus.OK)
+//                        .message("success")
+//                        .build());
+//    }
 
     @PostMapping("/regist") // api 연동 확인
     public ResponseEntity<ResponseDTO> insertSchedule(@RequestBody ScheduleDTO scheduleDTO, @AuthenticationPrincipal MemberDTO member){

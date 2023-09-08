@@ -92,7 +92,6 @@ public class CalendarController {
     @PatchMapping("/update") // api 연동 확인
     public ResponseEntity<ResponseDTO> updateByCalendar(@RequestBody CalendarDTO calendar, @AuthenticationPrincipal MemberDTO member){
 
-        int department = member.getDepartment().getDeptCode();
         int memberCode = member.getMemberCode();
 
         log.info("[CalendarController](updateByCalendar) calendar : {}",calendar);
@@ -123,7 +122,7 @@ public class CalendarController {
     @PatchMapping("/changeIndexNo") // api 연동 확인
     public ResponseEntity<ResponseDTO> updateCalendarIndexNo(@RequestBody Map<String, String> info, @AuthenticationPrincipal MemberDTO member){
 
-        int department = member.getDepartment().getDeptCode();
+
         int memberCode = member.getMemberCode();
         log.info("[CalendarController](updateDefaultByCalendar) info: {} ",info);
         calendarService.updateCalendarIndexNo(info, memberCode); // userId 수정 요망
@@ -137,7 +136,7 @@ public class CalendarController {
     @DeleteMapping("/delete/{calendar}") // api 연동 확인
     public ResponseEntity<ResponseDTO> deleteByCalendar(@PathVariable Integer calendar, @AuthenticationPrincipal MemberDTO member ){
         log.info("[CalendarController](deleteByCalendar) member : ", member);
-//        int department = member.getDepartment().getDeptCode();
+
         int memberCode = member.getMemberCode();
 
         log.info("[CalendarController](deleteByCalendar) calendarList : ", calendar);
@@ -186,7 +185,6 @@ public class CalendarController {
     @GetMapping("/summary")
     public ResponseEntity<ResponseDTO> findSummaryCalendar(@AuthenticationPrincipal MemberDTO member){
 
-        int department = member.getDepartment().getDeptCode();
         int memberCode = member.getMemberCode();
 
         log.info("[CalendarController](findSummaryCalendar) memberCode : ", memberCode);
@@ -202,13 +200,6 @@ public class CalendarController {
                         .message("success")
                         .data(calendarSummaryDTOList)
                         .build());
-    }
-
-
-
-    @GetMapping("/test/{memberCode}")
-    public void saveFirstCalendarRegist(@PathVariable int memberCode){
-        calendarService.saveFirstCalendarRegist(memberCode);
     }
 
 }
