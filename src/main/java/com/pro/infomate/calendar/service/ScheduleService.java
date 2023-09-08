@@ -164,19 +164,19 @@ public class ScheduleService {
 
         Schedule schedule = modelMapper.map(scheduleDTO, Schedule.class);
 
-        log.info("[ScheduleService](insertSchedule) schedule : {}", schedule.getParticipantList());
+        log.info("[ScheduleService](insertSchedule)  schedule.getParticipantList() : {}", schedule.getParticipantList());
         schedule.setParticipantList(null);
 
         scheduleRepository.save(schedule);
 
-        if(schedule.getParticipantList() == null) return;
+        if(scheduleDTO.getParticipantList() == null) return;
 
         List<Participant> participant = scheduleDTO.getParticipantList().stream().map(item -> modelMapper.map(item, Participant.class)).collect(Collectors.toList());
         participant = participant.stream().map(participant1 -> {
             participant1.setScheduleCode(schedule.getId());
             return participant1;
         }).collect(Collectors.toList());
-
+        log.info("[ScheduleService](insertSchedule) schedule.getId() : {}", schedule.getId());
         participantRepository.saveAll(participant);
         log.info("[ScheduleService](insertSchedule) schedule : {}",schedule);
     }

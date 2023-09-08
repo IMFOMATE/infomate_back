@@ -39,42 +39,4 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
                     "GROUP BY trunc(s.startDate) ")
     List<DayPerCountDTO> dayPerCount(LocalDateTime startDay, LocalDateTime endDay, int memberCode);
 
-// 부서 코드 조인으로 인한 member 엔티티 후 수정 예정
-//    @Query(value = "SELECT s "+
-//                     "FROM Schedule s " +
-//                     "JOIN Calendar c " +
-//                    "WHERE c.memberCode = :memberCode " +
-//                      "AND c.departmentCode IS NULL " +
-//                       "OR c.departmentCode = 0 " +
-//                       "OR c.departmentCode IN (SELECT m.memberCode " +
-//                                                 "FROM Member m " +
-//                                                "WHERE m.memberCode = :memberCode) " +
-//                      "AND Schedule.title LIKE '%' || :keyword || '%' " +
-//                       "OR Schedule.content LIKE '%' || :keyword || '%' " +
-//                    "ORDER BY s.endDate DESC")
-//    List<Schedule> findAllBySubjectAndContentSearch(int memberCode, String Keyword);
-
-//    List<Schedule> findAllByRefCalendarId(Integer calendarId);
-
-//    @Query(value = "SELECT sc2 " +
-//                    "FROM Schedule sc2 " +
-//                    "WHERE sc2.id IN "+
-//                    "(SELECT MAX(sc.id) as id " +
-//                            "FROM Schedule sc " +
-//                            "JOIN Calendar c " +
-//                            // join 사용자 entitry 예정
-//                           "WHERE c.userID = :userId " +
-//                           "GROUP BY sc.endDate)"
-//    )
-//    List<Schedule> findRecentScheduleByUserId(Integer userId);
-
-//    @Query(value = "SELECT sc " +
-//            "FROM Schedule sc " +
-//            "JOIN Calendar c " +
-//            "JOIN FavoriteCalendar fc " +
-//            "WHERE " + // 유저 pk 같은 것
-//            "OR sc.address Like '%' || :keyword || '%' " +
-//            "OR sc.subject Like '%' || :keyword || '%' " +
-//            "OR sc.content Like '%' || :keyword || '%' ")
-//    List<Schedule> findScheduleSearch(String keyword, Integer userId);
 }

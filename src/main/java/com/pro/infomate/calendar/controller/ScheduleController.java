@@ -117,7 +117,6 @@ public class ScheduleController {
     @GetMapping("/findScheduleSearch")
     public ResponseEntity<ResponseDTO> findScheduleSearch(@RequestParam String keyword,
                                                           @AuthenticationPrincipal MemberDTO member){
-//        List<ScheduleDTO> scheduleList = scheduleService.findAllScheduleSearch(memberCode, keyword);
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
@@ -133,7 +132,6 @@ public class ScheduleController {
         int memberCode = member.getMemberCode();
         log.info("[ScheduleController](insertSchedule) scheduleDTO : {} ", scheduleDTO);
 
-//        serverApiService.scheduleInsertApi(scheduleDTO);
         scheduleService.insertSchedule(scheduleDTO, memberCode);
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
