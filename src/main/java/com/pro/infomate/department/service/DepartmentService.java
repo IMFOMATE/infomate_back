@@ -246,7 +246,7 @@ public class DepartmentService {
 
 
   public List<DepartmentExpendDTO> participantList() {
-    List<Department> departmentList = departmentRepository.findAll();
+    List<Department> departmentList = departmentRepository.findAllByDeptCodeAfter(0);
     log.info("[DepartmentService](participantList) departmentList : {}", departmentList);
     return departmentList.stream()
             .map(department -> modelMapper.map(department, DepartmentExpendDTO.class))

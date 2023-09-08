@@ -16,4 +16,6 @@ public interface DepartmentRepository extends JpaRepository<Department, Integer>
 
 //    List<Department> findByDeptName(String search);
 
+    List<Department> findAllByDeptCodeAfter(int deptCode);
+
 }
