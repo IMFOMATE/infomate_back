@@ -101,10 +101,12 @@ public class CalendarService {
                     }).collect(Collectors.toList()));
 
             calendarRepository.flush();
+
             Calendar calendar = calendarRepository.findFirstByMemberCode(memberCode, Sort.by("indexNo")
                     .ascending()).orElseThrow(() ->
                     new NotFindDataException("캘린더가 존재 하지 않습니다."));
             calendar.setDefaultCalendar(true);
+
             calendarRepository.save(calendar);
             calendarRepository.flush();
         }
