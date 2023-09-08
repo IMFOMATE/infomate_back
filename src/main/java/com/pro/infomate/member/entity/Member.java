@@ -82,9 +82,12 @@ public class Member {
     @JoinColumn(name = "RANK_CODE")
     private Rank rank;
 
+
     @Column(name = "MEMBER_PIC")
     private String memberPic;
 
+    @Column(name = "MEMBER_PIC_ORIGIN")
+    private String memberPicOrigin;
 
     @Column(name = "MEMBER_OFF")
     private int memberOff;

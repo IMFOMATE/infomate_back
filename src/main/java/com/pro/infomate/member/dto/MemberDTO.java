@@ -41,12 +41,17 @@ public class MemberDTO implements UserDetails {
 
     private DepartmentDTO department;
 
+    private int deptCode;
+
     private String memberPic;
 
     private RankDTO rank;
 
+    private int rankCode;
+
     private int memberOff;
 
+    private String memberPicOrigin;
 
     @JsonIgnore
     private List<AuthListDTO> authList;
@@ -87,5 +92,24 @@ public class MemberDTO implements UserDetails {
     @Override
     public boolean isEnabled() {
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "MemberDTO{" +
+                "memberCode=" + memberCode +
+                ", memberPassword='" + memberPassword + '\'' +
+                ", memberName='" + memberName + '\'' +
+                ", memberId='" + memberId + '\'' +
+                ", memberEmail='" + memberEmail + '\'' +
+                ", memberPhone='" + memberPhone + '\'' +
+                ", memberNo='" + memberNo + '\'' +
+                ", memberStatus='" + memberStatus + '\'' +
+                ", extensionNumber='" + extensionNumber + '\'' +
+                ", memberAddress='" + memberAddress + '\'' +
+                ", hireDate=" + hireDate +
+                ", memberPic='" + memberPic + '\'' +
+                ", memberOff=" + memberOff +
+                '}';
     }
 }
