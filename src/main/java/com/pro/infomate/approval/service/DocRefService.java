@@ -8,6 +8,8 @@ import com.pro.infomate.member.entity.Member;
 import com.pro.infomate.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +44,13 @@ public class DocRefService {
   }
 
   // 페이징 참조문서 조회
+  public Page<DocumentListResponse> refPagingList(String status, int memberCode, Pageable pageable){
+
+    return docRefRepository.refPagingList(status,memberCode,pageable);
+
+
+  }
+
 
 
 

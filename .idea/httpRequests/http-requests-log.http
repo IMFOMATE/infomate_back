@@ -1,84 +1,36 @@
-<<<<<<< HEAD
-GET http://localhost:8989/department/dept/search?s=인사
-Accept: */*
-=======
-GET http://localhost:8989/brd/board
-Accept: */*
-Content-Type: application/json
->>>>>>> 2985bacd2ae8f2481e00f2805e6488c5bdeb5792
+GET http://localhost:8989/document/approval/43
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<<<<<<< HEAD
-<> 2023-09-06T215732.200.json
+<> 2023-08-31T112157.200.json
 
 ###
 
-GET http://localhost:8989/department/dept/search?s=총
-Accept: */*
-=======
-<> 2023-09-01T125305.200.json
-
-###
-
-GET http://localhost:8989/brd/board
-Accept: */*
-Content-Type: application/json
->>>>>>> 2985bacd2ae8f2481e00f2805e6488c5bdeb5792
+GET http://localhost:8989/approval
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<<<<<<< HEAD
-<> 2023-09-06T215723.200.json
+<> 2023-08-31T002016.500.json
 
 ###
 
-GET http://localhost:8989/dept
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T215719.404.json
+GET http://localhost:8989/department/emp/list
 =======
 <> 2023-09-01T121836.500.json
->>>>>>> 2985bacd2ae8f2481e00f2805e6488c5bdeb5792
 
 ###
 
-GET http://localhost:8989/department/emp/listall
+GET http://localhost:8989/brd/board
 Accept: */*
-<<<<<<< HEAD
-=======
 Content-Type: application/json
->>>>>>> 2985bacd2ae8f2481e00f2805e6488c5bdeb5792
+>>>>>>> 27b3904af9e4c6be15acb3e4c3602ba8cfbe9f3b
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<<<<<<< HEAD
-<> 2023-09-06T215715.200.json
-
-###
-
-GET http://localhost:8989/department/emp/listall
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T215710.200.json
-
-###
-
-GET http://localhost:8989/department/dept
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T180830.200.json
+<> 2023-08-29T173533.200.json
 
 ###
 
@@ -92,7 +44,7 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 
 ###
 
-GET http://localhost:8989/dept
+GET http://localhost:8989/department/emp/list
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
@@ -106,84 +58,7 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-09-06T174244.200.json
-
-###
-
-GET http://localhost:8989/department/emp/listall
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T174205.200.json
-
-###
-
-GET http://localhost:8989/department/emp/listall
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T173953.500.json
-
-###
-
-GET http://localhost:8989/department/emp/listall
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T173738.500.json
-
-###
-
-GET http://localhost:8989/department/emp/list
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T173656.200.json
-
-###
-
-GET http://localhost:8989/department/treeview
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T161501.200.json
-
-###
-
-GET http://localhost:8989/department/emp/list
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T160907.200.json
-
-###
-
-GET http://localhost:8989/department/dept/list
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T160209.200.json
-
-###
-
-GET http://localhost:8989/department/emp/listall
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T160206.200.json
+<> 2023-09-01T123803.200.json
 
 ###
 
@@ -192,7 +67,7 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-09-06T160201.200.json
+<> 2023-09-01T122759.200.json
 
 ###
 
@@ -201,87 +76,7 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-09-06T160136.200.json
-
-###
-
-GET http://localhost:8989/department/emp/listall
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T153259.200.json
-
-###
-
-GET http://localhost:8989/department/dept/list
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T152913.200.json
-
-###
-
-GET http://localhost:8989/department/emp/listall
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T152319.500.json
-
-###
-
-GET http://localhost:8989/department/emp/listall
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T152045.404.json
-
-###
-
-GET http://localhost:8989/department/emp/listall/test
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T152009.500.json
-
-###
-
-GET http://localhost:8989/department/emp/listall/test
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T151727.500.json
-
-###
-
-GET http://localhost:8989/department/emp/listall/test
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T151716.500.json
-
-###
-
-GET http://localhost:8989/department/dept
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T131809.200.json
+<> 2023-09-01T120832.200.json
 
 ###
 
@@ -290,7 +85,25 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-09-06T125216.200.json
+<> 2023-09-01T120818.200.json
+
+###
+
+GET http://localhost:8989/department/emp/list
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-09-01T120411.200.json
+
+###
+
+GET http://localhost:8989/department/emp/list
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-09-01T115758.500.json
 
 ###
 
@@ -299,27 +112,7 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-09-06T123430.200.json
-
-###
-
-GET http://localhost:8989/department/emp/listall
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T115806.200.json
-
-###
-
-GET http://localhost:8989/emp/listall
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T115749.404.json
+<> 2023-09-01T103741.200.json
 
 ###
 
@@ -328,16 +121,7 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-09-06T115136.200.json
-
-###
-
-GET http://localhost:8989/emp/info/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T115008.200.json
+<> 2023-09-01T103605.500.json
 
 ###
 
@@ -346,27 +130,7 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-09-06T114649.200.json
-
-###
-
-GET http://localhost:8989/department/dept/list
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T114645.200.json
-
-###
-
-GET http://localhost:8989/department/dept/list
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T114353.200.json
+<> 2023-09-01T102923.200.json
 
 ###
 
@@ -375,116 +139,7 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-09-06T114151.200.json
-
-###
-
-GET http://localhost:8989/department/dept/list
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T113300.200.json
-
-###
-
-GET http://localhost:8989/department/dept/list
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T103259.200.json
-
-###
-
-GET http://localhost:8989/department/dept/list
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T103152.200.json
-
-###
-
-GET http://localhost:8989/dept/list
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T103127.404.json
-
-###
-
-GET http://localhost:8989/dept/list
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T103011.404.json
-
-###
-
-GET http://localhost:8989/dept/list
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T103007.404.json
-
-###
-
-GET http://localhost:8989/dept/list
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T102954.404.json
-
-###
-
-GET http://localhost:8989/department/dept
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T100825.200.json
-
-###
-
-GET http://localhost:8989/department/dept/search?s=총
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T100817.200.json
-
-###
-
-GET http://localhost:8989/department/dept
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T100450.500.json
-
-###
-
-GET http://localhost:8989/department/treeview
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T095156.200.json
+<> 2023-08-31T174833.200.json
 
 ###
 
@@ -493,13 +148,91 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-09-06T094946.200.json
+<> 2023-08-31T171122.200.json
 
 ###
 
-GET http://localhost:8989/department/dept/search?s=총
+GET http://localhost:8989/department/emp/list
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-08-31T170751.200.json
+
+###
+
+GET http://localhost:8989/department/emp/list
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-08-31T170042.200.json
+
+###
+
+GET http://localhost:8989/department/emp/list
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-08-31T164913.200.json
+
+###
+
+GET http://localhost:8989/department/emp/list
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-08-31T163312.200.json
+
+###
+
+GET http://localhost:8989/department/emp/list
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-08-31T163201.200.json
+
+###
+
+GET http://localhost:8989/schedule/all/2
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-08-31T155410.200.json
+
+###
+
+GET http://localhost:8989/department/emp/list
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-08-31T150601.200.json
+
+###
+
+GET http://localhost:8989/department/emp/list
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-08-31T150327.200.json
+
+###
+
+GET http://localhost:8989/emp/list
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-08-31T145456.404.json
 =======
 <> 2023-09-01T121808.500.json
+>>>>>>> 27b3904af9e4c6be15acb3e4c3602ba8cfbe9f3b
 
 ###
 
@@ -508,16 +241,17 @@ GET http://localhost:8989/emp/info/2
 =======
 <<<<<<< HEAD
 POST http://localhost:8989/board/posting
->>>>>>> 2985bacd2ae8f2481e00f2805e6488c5bdeb5792
 Accept: */*
+Content-Type: application/json
+Content-Length: 223
+=======
+GET http://localhost:8989/addressBook/contact/2
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-09-06T094906.200.json
+<> 2023-08-29T191713.200.json
 
-<<<<<<< HEAD
-=======
 ###
 
 GET http://localhost:8989/addressBook/contact/2
@@ -566,6 +300,7 @@ User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
 {
+<<<<<<< HEAD
   "postCode": 0,
   "postTitle": "안뇽",
   "postDate": "2023-08-29",
@@ -731,7 +466,20 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 ###
 
 GET http://localhost:8989/emp/info/2
-
+=======
+{
+<<<<<<< HEAD
+  "postCode": 0,
+  "postTitle": "안뇽",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세연",
+  "boardCategory": "공지사항",
+  "board": {
+    "boardCode": 101
+  },
+  "member": {
+    "memberCode": 22
+  }
 }
 
 <> 2023-08-30T121628.200.json
@@ -777,7 +525,20 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 ###
 
 GET http://localhost:8989/emp/info/2
-
+=======
+{
+<<<<<<< HEAD
+  "postCode": 0,
+  "postTitle": "안뇽",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세연",
+  "boardCategory": "공지사항",
+  "board": {
+    "boardCode": 101
+  },
+  "member": {
+    "memberCode": 22
+  }
 }
 
 <> 2023-08-30T121504.200.json
@@ -865,6 +626,8 @@ Content-Disposition: form-data; name="pName"
 
 ###
 
+<<<<<<< HEAD
+=======
 POST http://localhost:8989/board/posting
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 Accept: */*
@@ -905,7 +668,20 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 ###
 
 GET http://localhost:8989/emp/info/2
-
+=======
+{
+<<<<<<< HEAD
+  "postCode": 0,
+  "postTitle": "안뇽",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세연",
+  "boardCategory": "공지사항",
+  "board": {
+    "boardCode": 101
+  },
+  "member": {
+    "memberCode": 22
+  }
 }
 
 <> 2023-08-30T080309.415.json
@@ -973,7 +749,20 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 ###
 
 GET http://localhost:8989/emp/info/2
-
+=======
+{
+<<<<<<< HEAD
+  "postCode": 0,
+  "postTitle": "안뇽",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세연",
+  "boardCategory": "공지사항",
+  "board": {
+    "boardCode": 101
+  },
+  "member": {
+    "memberCode": 22
+  }
 }
 
 <> 2023-08-29T220327.200.json
@@ -1019,7 +808,20 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 ###
 
 GET http://localhost:8989/emp/info/2
-
+=======
+{
+<<<<<<< HEAD
+  "postCode": 0,
+  "postTitle": "안뇽",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세연",
+  "boardCategory": "공지사항",
+  "board": {
+    "boardCode": 101
+  },
+  "member": {
+    "memberCode": 22
+  }
 }
 
 <> 2023-08-29T215701.200.json
@@ -1065,7 +867,20 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 ###
 
 GET http://localhost:8989/emp/info/2
-
+=======
+{
+<<<<<<< HEAD
+  "postCode": 0,
+  "postTitle": "안뇽",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세연",
+  "boardCategory": "공지사항",
+  "board": {
+    "boardCode": 101
+  },
+  "member": {
+    "memberCode": 22
+  }
 }
 
 <> 2023-08-29T212924.200.json
@@ -1112,7 +927,20 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 ###
 
 GET http://localhost:8989/emp/info/2
-
+=======
+{
+<<<<<<< HEAD
+  "postCode": 0,
+  "postTitle": "안뇽",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세연",
+  "boardCategory": "공지사항",
+  "board": {
+    "boardCode": 101
+  },
+  "member": {
+    "memberCode": 22
+  }
 }
 
 <> 2023-08-29T212916.500.json
@@ -1124,66 +952,98 @@ Content-Type: multipart/form-data; boundary=WebAppBoundary
 Accept: */*
 Content-Type: application/json
 Content-Length: 223
-  "company": "좋은회사",
-  "department": "좋은부서",
-  "contactName": "아무나",
-  "contactPhone": "010-1234-5679",
-  "contactEmail": "qwe@naver.com",
-  "companyPhone": "회사전화",
-  "companyAddress": "회사 주소",
-  "memo": "ㅁㄷ홈ㅈㅁㅈㄹ",
-  "memberCode": 2,
-  "contactLike": "N"
+=======
+  "memberPassword": "pass01",
+  "memberName": "동덕",
+  "memberId": "dbrs96",
+  "memberEmail": "dong@duckdin.com",
+  "memberPhone": "010-1234-5678",
+  "memberNo": "1996-10-27",
+  "memberStatus": "Y",
+  "memberAddress": "경기도 고양시 일산서구",
+  "hireDate": "2023-08-28T12:00:00Z",
+  "deptCode": 1,
+  "rank": 1,
+  "memberOff": 10
 }
 
-<> 2023-08-29T190454.400.json
+<> 2023-08-28T180707.500.json
 
 ###
 
 POST http://localhost:8989/auth/signup
 Content-Type: application/json
-Content-Length: 178
+Accept: */*
+Content-Length: 348
+>>>>>>> c9199d8e83bec2b26652b68fa92e51c1207da5e6
+>>>>>>> 9b43f91e0443c7197b6c7438be37b47d19d65f14
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
+<<<<<<< HEAD
+<> 2023-08-31T122820.200.json
+
+###
+
+GET http://localhost:8989/emp/info/2
+=======
 {
-"mailContent": "무슨말",
-"mailDate": "2023-08-23 00:00:00",
-"memberCode": 2,
-"mailStatus": "Y",
-"mailTitle": "제에목",
-"mailLike": "Y",
-"receiverMail": "qwg2@naver.com"
+<<<<<<< HEAD
+  "postCode": 0,
+  "postTitle": "안뇽",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세연",
+  "boardCategory": "공지사항",
+  "board": {
+    "boardCode": 101
+  },
+  "member": {
+    "memberCode": 22
+  }
 }
 
-<> 2023-08-29T190442.200.json
+<> 2023-08-29T212913.415.json
 
 ###
 
-GET http://localhost:8989/mail/mailList/2
+POST http://localhost:8989/board/posting
+Content-Type: multipart/form-data;
+Accept: */*
+Content-Type: application/json
+Content-Length: 223
+=======
+  "memberPassword": "pass01",
+  "memberName": "동덕",
+  "memberId": "dbrs96",
+  "memberEmail": "dong@duckdin.com",
+  "memberPhone": "010-1234-5678",
+  "memberNo": "1996-10-27",
+  "memberStatus": "Y",
+  "memberAddress": "경기도 고양시 일산서구",
+  "hireDate": "2023-08-28T12:00:00Z",
+  "department": 1,
+  "rank": 1,
+  "memberOff": 10
+}
+
+<> 2023-08-28T180614.500.json
+
+###
+
+POST http://localhost:8989/auth/signup
+Content-Type: application/json
+Accept: */*
+Content-Length: 375
+>>>>>>> c9199d8e83bec2b26652b68fa92e51c1207da5e6
+>>>>>>> 9b43f91e0443c7197b6c7438be37b47d19d65f14
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-08-29T190439.500.json
+<<<<<<< HEAD
+<> 2023-08-31T113805.200.json
 
 ###
 
-GET http://localhost:8989/addressBook/contact/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-29T190114.500.json
-
-###
-
-GET http://localhost:8989/addressBook/contact/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-29T190113.500.json
-
->>>>>>> 2985bacd2ae8f2481e00f2805e6488c5bdeb5792
+>>>>>>> 27b3904af9e4c6be15acb3e4c3602ba8cfbe9f3b

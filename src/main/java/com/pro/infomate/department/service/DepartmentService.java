@@ -85,6 +85,7 @@ public class DepartmentService {
                       .fileType("person")
                       .rank(member.getRank().getRankName())
                       .profile(member.getMemberPic())
+                      .memberCode(member.getMemberCode())
                       .build())
               .build();
       memberNodes.add(memberNode);
@@ -93,23 +94,23 @@ public class DepartmentService {
   }
 
 
-  private List<DeptListResponse> createDeptList(Department dept, int count){      // 부서 리스트 넣어주기
+  private List<DeptListResponse> createDeptList(Department dept, int count) {      // 부서 리스트 넣어주기
     List<Department> all = departmentRepository.findAll();
     List<DeptListResponse> memberList = new ArrayList<>();
 
-    for (Member member : dept.getMembers()){
+    for (Member member : dept.getMembers()) {
       DeptListResponse deptList = DeptListResponse.builder()
-                      .id(++count)
-                      .data(DeptListResponse.DepartDTO.builder()
-                            .empName(member.getMemberName())
-                            .empNum(member.getMemberId())
-                            .deptName(member.getDepartment().getDeptName())
-                            .rankName(member.getRank().getRankName())
-                            .empCode(member.getMemberCode())
-                            .rank(member.getRank().getRankPlace())
-                            .deptCode(member.getDepartment().getDeptCode())
-                            .build()
-                            ).build();
+              .id(++count)
+              .data(DeptListResponse.DepartDTO.builder()
+                      .empName(member.getMemberName())
+                      .empNum(member.getMemberId())
+                      .deptName(member.getDepartment().getDeptName())
+                      .rankName(member.getRank().getRankName())
+                      .empCode(member.getMemberCode())
+                      .rank(member.getRank().getRankPlace())
+                      .deptCode(member.getDepartment().getDeptCode())
+                      .build()
+              ).build();
       memberList.add(deptList);
     }
     log.info("{}=============",memberList);
@@ -228,6 +229,7 @@ public class DepartmentService {
 //
 //  }
 
+//=======
 //    log.info("[DepartmentService] selectDeptList Start ======================");
 //
 //    List<Department> departmentListSearchValue = departmentRepository.findByDeptName(search);
@@ -240,6 +242,7 @@ public class DepartmentService {
 //    return departmentDTOlist;
 //  }
 //
+
 
 
   public List<DepartmentExpendDTO> participantList() {

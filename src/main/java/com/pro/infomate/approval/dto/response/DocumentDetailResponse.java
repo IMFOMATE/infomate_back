@@ -32,11 +32,15 @@ public class DocumentDetailResponse {
   private String content; // 내용
 
   private String documentKind; // 문서종류
+  
+  private String emergency; // 긴급여부
 
   private List<DocFileResponse> fileList; // 첨부파일
 
   private List<ApprovalResponse> approvalList; //결재 리스트
 
   private List<RefMemberResponse> refList; // 참조자
+
+  private DocumentCondition condition ;
 
 }

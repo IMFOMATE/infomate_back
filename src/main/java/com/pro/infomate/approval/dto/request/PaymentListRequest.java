@@ -13,28 +13,26 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class PaymentListRequest {
 
-    @NotBlank
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime paymentDate; // 지출 날짜
+  private String paymentDate; // 지출 날짜
 
-    @NotBlank
-    private String paymentSort; // 지출 종류
+  @NotBlank
+  private String paymentSort; // 지출 종류
 
-    @NotBlank
-    private int paymentPrice; // 지출 금액
+  @NotBlank
+  private int paymentPrice; // 지출 금액
 
-    @NotBlank
-    @Max(value = 50)
-    private String paymentContent; // 지출 내용
+  @NotBlank
+  @Max(value = 50)
+  private String paymentContent; // 지출 내용
 
-    private String remarks; //비고
+  private String remarks; //비고
 
-    @Builder
-    public PaymentListRequest(LocalDateTime paymentDate, String paymentSort, int paymentPrice, String paymentContent, String remarks) {
-        this.paymentDate = paymentDate;
-        this.paymentSort = paymentSort;
-        this.paymentPrice = paymentPrice;
-        this.paymentContent = paymentContent;
-        this.remarks = remarks;
-    }
+  @Builder
+  public PaymentListRequest(String paymentDate, String paymentSort, int paymentPrice, String paymentContent, String remarks) {
+    this.paymentDate = paymentDate;
+    this.paymentSort = paymentSort;
+    this.paymentPrice = paymentPrice;
+    this.paymentContent = paymentContent;
+    this.remarks = remarks;
+  }
 }

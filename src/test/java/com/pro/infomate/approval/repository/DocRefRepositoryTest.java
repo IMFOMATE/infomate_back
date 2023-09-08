@@ -59,7 +59,7 @@ class DocRefRepositoryTest {
 
     PageRequest pageRequest = PageRequest.of(0, 5);
 
-    Page<DocumentListResponse> documentListResponses = docRefRepository.refPagingList(memberCode, pageRequest);
+    Page<DocumentListResponse> documentListResponses = docRefRepository.refPagingList(null,memberCode, pageRequest);
     System.out.println("Total = " + documentListResponses.getTotalPages());
     System.out.println("documentListResponses.getTotalElements() = " + documentListResponses.getTotalElements());
      documentListResponses.getContent().forEach(System.out::println);

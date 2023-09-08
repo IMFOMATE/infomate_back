@@ -81,5 +81,10 @@ public class ApiExceptionAdvice {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new Response(HttpStatus.BAD_REQUEST, e.getMessage(),e.getMessage()));
     }
+    @ExceptionHandler(FileDownloadException.class)
+    public ResponseEntity<Response> handleFileDownloadException(FileDownloadException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new Response(HttpStatus.NOT_FOUND, "fail", e.getMessage()));
+    }
 
 }
