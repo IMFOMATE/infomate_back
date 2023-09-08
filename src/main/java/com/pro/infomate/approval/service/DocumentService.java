@@ -36,16 +36,12 @@ import java.util.stream.Stream;
 public class DocumentService {
 
   private final DocumentRepository<Document> documentRepository;
-  private final DocumentRepository<Vacation> vacationDocumentRepository;
-  private final DocumentRepository<Payment> paymentDocumentRepository;
-  private final DocumentRepository<Draft> draftDocumentRepository;
   private final DocumentFileRepository documentFileRepository;
   private final MemberRepository memberRepository;
 
   private final ApprovalRepository approvalRepository;
   private final DocRefRepository docRefRepository;
 
-  private final PaymentListRepository paymentListRepository;
 
   private final DocumentToDTOVisitor visitor;
 
@@ -168,20 +164,37 @@ public class DocumentService {
   }
 
   // 메인대시보드용
-  public List<DocumentListResponse> mainCredit(int memberCode){
+  public MainCreditResponse mainCredit(int memberCode){
     List<Document> documents = documentRepository.findApprovalsDocument(memberCode);
+
+    int approvalCount = documentRepository.findByMemberDocuments(memberCode);
+
+
+    int countBeforeLimit = (int)documents.stream()
+            .map(approvalRepository::findTopByDocumentAndApprovalDateIsNullOrderByOrderAsc)
+            .filter(approval -> approval != null && approval.getMember().getMemberCode() == memberCode)
+            .map(Approval::getDocument)
+            .filter(document -> document.getDocumentStatus() == DocumentStatus.WAITING)
+            .count();
 
     List<Document> approvedDocuments = documents.stream()
             .map(approvalRepository::findTopByDocumentAndApprovalDateIsNullOrderByOrderAsc)
             .filter(approval -> approval != null && approval.getMember().getMemberCode() == memberCode)
             .map(Approval::getDocument)
             .filter(document -> document.getDocumentStatus() == DocumentStatus.WAITING )
-            .limit(3)
+            .limit(2)
             .collect(Collectors.toList());
 
     List<DocumentListResponse> creditList = approvedDocuments.stream().map(DocumentListResponse::new).collect(Collectors.toList());
 
-    return creditList;
+    MainCreditResponse mainResp = MainCreditResponse.builder()
+            .approvalCount(approvalCount)
+            .doneList(0)
+            .creditCount(countBeforeLimit)
+            .creditList(creditList)
+            .build();
+
+    return mainResp;
   }
 
 
@@ -292,6 +305,7 @@ public class DocumentService {
       files = FileUploadUtils.saveMultiFiles(FILES_DIR, multipartFiles);
       List<DocumentFile> fileList = files.stream().map(file -> new DocumentFile(file, save)).collect(Collectors.toList());
       documentFileRepository.saveAll(fileList);
+
     } catch (Exception e) {
       FileUploadUtils.deleteMultiFiles(FILES_DIR, files);
       throw new RuntimeException("파일업로드 실패");

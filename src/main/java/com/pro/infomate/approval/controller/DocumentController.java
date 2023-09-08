@@ -208,7 +208,7 @@ public class DocumentController {
   }
 
 
-  // 홈 화면 용 리스트
+  // 홈 화면용 리스트
   @GetMapping("/credit")
   public ResponseEntity<ResponseDTO> mainCredit(
           @AuthenticationPrincipal MemberDTO memberDTO){

@@ -20,6 +20,10 @@ public interface DocumentRepository<T extends Document> extends JpaRepository<T,
   // 2. 내 기안문서 페이징
   Page<Document> findByMember(Member member, Pageable pageable);
 
+  @Query("select count(d) from Document d where d.member.memberCode = :memberCode")
+  int findByMemberDocuments(@Param("memberCode") int memberCode);
+
+
   @Override
   @EntityGraph(attributePaths = {"member"})
   Optional<T> findById(Long aLong);
