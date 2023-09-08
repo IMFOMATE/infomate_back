@@ -56,7 +56,7 @@ public class DepartmentService {
     for (Department dept : allDept) {
       result.add(createDepartmentNode(dept));
       result.addAll(createMemberNodes(dept, count));
-      count += dept.getMembers().size(); // Increment the counter by the number of members
+      count += dept.getMembers().size(); //
     }
     return result;
   }

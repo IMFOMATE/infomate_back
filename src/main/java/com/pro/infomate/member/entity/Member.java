@@ -25,6 +25,9 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Getter
 @Setter
+
+//@ToString
+
 @SequenceGenerator(
         name = "MEMBER_CODE_GENERATOR",
         sequenceName = "SEQ_TBL_MEMBER_MEMBER_CODE",
