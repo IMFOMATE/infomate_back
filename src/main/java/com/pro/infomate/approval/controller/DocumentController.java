@@ -2,6 +2,12 @@ package com.pro.infomate.approval.controller;
 
 import com.pro.infomate.approval.dto.request.*;
 import com.pro.infomate.approval.dto.response.DocumentListResponse;
+import com.pro.infomate.approval.dto.response.DraftResponse;
+import com.pro.infomate.approval.dto.response.PaymentResponse;
+import com.pro.infomate.approval.dto.response.VacationResponse;
+import com.pro.infomate.approval.entity.Draft;
+import com.pro.infomate.approval.entity.Payment;
+import com.pro.infomate.approval.entity.Vacation;
 import com.pro.infomate.approval.service.DocRefService;
 import com.pro.infomate.approval.service.DocumentService;
 import com.pro.infomate.common.*;
@@ -37,7 +43,7 @@ public class DocumentController {
 
     int memberCode = memberDTO.getMemberCode();
 
-    documentService.vacationSave(memberCode, vacationRequest, fileList);
+    documentService.saveDocument(memberCode, vacationRequest, fileList, Vacation.class, VacationResponse.class);
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
@@ -59,7 +65,7 @@ public class DocumentController {
     int memberCode = memberDTO.getMemberCode();
 
 //
-    documentService.draftSave(memberCode, draftRequest,fileList);
+    documentService.saveDocument(memberCode, draftRequest, fileList, Draft.class, DraftResponse.class);
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
@@ -77,9 +83,9 @@ public class DocumentController {
   ){
 
     int memberCode = memberDTO.getMemberCode();
-    System.out.println("controller = " + paymentRequest.getPaymentList());
 
-    documentService.paymentSave(memberCode, paymentRequest, fileList);
+    System.out.println("controller = " + paymentRequest.getPaymentList());
+    documentService.saveDocument(memberCode, paymentRequest, fileList, Payment.class, PaymentResponse.class);
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
@@ -202,5 +208,18 @@ public class DocumentController {
   }
 
 
+  // 홈 화면 용 리스트
+  @GetMapping("/credit")
+  public ResponseEntity<ResponseDTO> mainCredit(
+          @AuthenticationPrincipal MemberDTO memberDTO){
+
+    return ResponseEntity.ok()
+            .body(ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .message("success")
+                    .data(documentService.mainCredit(memberDTO.getMemberCode()))
+                    .build());
+
+  }
 
 }

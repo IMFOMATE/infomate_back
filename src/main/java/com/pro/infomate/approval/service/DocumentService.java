@@ -56,293 +56,24 @@ public class DocumentService {
   @Value("${files.files-url}")
   private String FILES_URL;
 
-  //1. 휴가문서 등록
+  //1. 문서 저장
   @Transactional
-  public VacationResponse vacationSave(
-          int memberCode,
-          VacationRequest vacationRequest, List<MultipartFile> multipartFiles){
+  public <T extends DocumentRequest, R extends DocumentDetailResponse> R saveDocument(
+          int memberCode, T documentRequest, List<MultipartFile> multipartFiles, Class<? extends Document> documentClass, Class<R> responseClass) {
 
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
 
-    if(member.getMemberOff() < 0 ){ //조건하나 더 넣어주기 신청한 일수랑 남은 휴가수 빼서!
-      throw new NotEnoughDateException("휴가일수가 부족합니다.");
-    }
+    Document document = createDocument(member, documentRequest, documentClass);
+    Document save = documentRepository.save(document);
 
-    Vacation vacation = modelMapper.map(vacationRequest, Vacation.class);
-    vacation.addMember(member);
-    vacation.setCreatedDate(LocalDateTime.now());
+    createRefer(documentRequest, save);
+    createApprovals(documentRequest, member, save,memberCode);
+    processFiles(multipartFiles, save);
 
-    Vacation save = vacationDocumentRepository.save(vacation);
-
-    System.out.println("vacation = " + vacation.getId());
-    System.out.println("vacation = " + vacation.getCreatedDate());
-
-    // 참조자
-    if(vacationRequest.getRefList() != null){
-      List<Integer> result = vacationRequest.getRefList().stream().map(RefRequest::getId).collect(Collectors.toList());
-
-      List<Member> memberList = memberRepository.findByMemberCodeIn(result);
-
-      memberList.forEach(m->{
-        DocRef ref = DocRef.builder().document(save).member(m).build();
-        docRefRepository.save(ref);
-      });
-    }
-
-    // 기안리스트가 없을 때 -> 현재 로그인사용자가 결재승인 및 문서 종로
-    if(vacation.getApprovalList() == null){
-      Approval approval = Approval.builder().order(1).member(member).document(save).build();
-      approval.setApprovalStatus(ApprovalStatus.APPROVAL);
-      Approval saveapproval = approvalRepository.save(approval);
-      saveapproval.setApprovalDate(save.getCreatedDate());
-      save.setDocumentStatus(DocumentStatus.APPROVAL);
-    }
-    else{
-      //기안리스트가 있을때
-      List<Approval> approvals = vacationRequest.getApprovalList()
-              .stream()
-              .map(list -> {
-                Member byMemberId = memberRepository.findByMemberCode(list.getId());
-                Approval approval = Approval.builder()
-                        .order(list.getOrder())
-                        .member(byMemberId)
-                        .document(save)
-                        .build();
-                if (byMemberId.getMemberCode() == memberCode) {
-                  approval.setApprovalStatus(ApprovalStatus.APPROVAL);
-                  approval.setApprovalDate(LocalDateTime.now());
-                }
-                return approval;
-              })
-              .collect(Collectors.toList());
-      approvalRepository.saveAll(approvals);
-
-      //기안리스트가 있지만 1개만 있는데 자기자신일때
-      if (approvals.size() == 1 && approvals.get(0).getMember().getMemberCode() == memberCode) {
-        save.setDocumentStatus(DocumentStatus.APPROVAL);
-      }
-    }
-
-    if(multipartFiles != null){
-      List<DocFileResponse> files = null;
-
-      //파일 저장
-      try{
-        files = FileUploadUtils.saveMultiFiles(FILES_DIR, multipartFiles);
-
-        List<DocumentFile> fileList = files.stream().map(file -> new DocumentFile(file, save)).collect(Collectors.toList());
-        documentFileRepository.saveAll(fileList);
-
-      }catch (Exception e){
-        FileUploadUtils.deleteMultiFiles(FILES_DIR, files);
-        throw new RuntimeException("파일업로드 실패");
-      }
-    }
-
-    return modelMapper.map(save, VacationResponse.class);
-
+    return modelMapper.map(save, responseClass);
   }
 
-  //2. 기안서 등록
-  @Transactional
-  public DraftResponse draftSave(int memberCode, DraftRequest draftRequest, List<MultipartFile> multipartFiles){
-
-    Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
-
-    Draft draft = modelMapper.map(draftRequest, Draft.class);
-    draft.addMember(member);
-    draft.setDocumentStatus(DocumentStatus.WAITING);
-
-    Draft save = draftDocumentRepository.save(draft);
-    save.setCreatedDate(LocalDateTime.now());
-
-    // 참조자
-    if(draftRequest.getRefList() != null){
-      List<Integer> result = draftRequest.getRefList().stream().map(RefRequest::getId).collect(Collectors.toList());
-
-      List<Member> memberList = memberRepository.findByMemberCodeIn(result);
-
-      memberList.forEach(m->{
-        DocRef ref = DocRef.builder().document(save).member(m).build();
-        docRefRepository.save(ref);
-      });
-    }
-
-    // 기안 리스트
-    if(draftRequest.getApprovalList() == null){
-      Approval approval = Approval.builder().order(1).member(member).document(save).build();
-      approval.setApprovalStatus(ApprovalStatus.APPROVAL);
-      Approval saveapproval = approvalRepository.save(approval);
-      saveapproval.setApprovalDate(save.getCreatedDate());
-      save.setDocumentStatus(DocumentStatus.APPROVAL);
-
-    }else{
-      List<Approval> approvals = draftRequest.getApprovalList()
-              .stream()
-              .map(list -> {
-                Member byMemberId = memberRepository.findByMemberCode(list.getId());
-                Approval approval = Approval.builder()
-                        .order(list.getOrder())
-                        .member(byMemberId)
-                        .document(save)
-                        .build();
-                if (byMemberId.getMemberCode() == memberCode) {
-                  approval.setApprovalStatus(ApprovalStatus.APPROVAL);
-                  approval.setApprovalDate(LocalDateTime.now());
-                }
-                return approval;
-              })
-              .collect(Collectors.toList());
-      approvalRepository.saveAll(approvals);
-
-      if (approvals.size() == 1 && approvals.get(0).getMember().getMemberCode() == memberCode) {
-        save.setDocumentStatus(DocumentStatus.APPROVAL);
-      }
-    }
-
-
-    if (draftRequest.getExistList() != null && !draftRequest.getExistList().isEmpty()) {
-      List<Long> existList = draftRequest.getExistList().stream()
-              .map(Integer::longValue)
-              .collect(Collectors.toList());
-      System.out.println("existList = " + existList);
-
-      List<DocumentFile> existingFiles = documentFileRepository.findAllById(existList);
-      existingFiles.forEach(f -> {
-        System.out.println("f. = " + f.getFileName());
-        System.out.println("f. = " + f.getOriginalName());
-
-      });
-
-      List<DocumentFile> newFiles = existingFiles.stream().map(ex->{
-        DocumentFile file = DocumentFile.builder()
-                .fileName(ex.getFileName())
-                .fileType(ex.getFileType())
-                .fileSize(ex.getFileSize())
-                .originalName(ex.getOriginalName())
-                .document(save).build();
-        return file;
-      }).collect(Collectors.toList());
-
-      documentFileRepository.saveAll(newFiles);
-    }
-
-
-    if(multipartFiles != null){
-      List<DocFileResponse> files = null;
-
-      //파일 저장
-      try{
-        files = FileUploadUtils.saveMultiFiles(FILES_DIR, multipartFiles);
-
-        List<DocumentFile> fileList = files.stream().map(file -> new DocumentFile(file, save)).collect(Collectors.toList());
-        documentFileRepository.saveAll(fileList);
-
-      }catch (Exception e){
-        FileUploadUtils.deleteMultiFiles(FILES_DIR, files);
-        throw new RuntimeException("파일업로드 실패");
-      }
-    }
-
-    return modelMapper.map(save, DraftResponse.class);
-
-  }
-
-  //3. 지출결의서 등록
-  @Transactional
-  public PaymentResponse paymentSave(
-          int memberCode,
-          PaymentRequest paymentRequest, List<MultipartFile> multipartFiles){
-    System.out.println("paymentRequest = " + paymentRequest);
-
-    Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
-
-    Payment payment = modelMapper.map(paymentRequest, Payment.class);
-    payment.addMember(member);
-
-    payment.setCreatedDate(LocalDateTime.now());
-
-
-    payment.setDocumentStatus(DocumentStatus.WAITING);
-    Payment save = paymentDocumentRepository.save(payment);
-    save.setCreatedDate(LocalDateTime.now());
-
-    // 참조자
-    if(paymentRequest.getRefList() != null){
-      List<Integer> result = paymentRequest.getRefList().stream().map(RefRequest::getId).collect(Collectors.toList());
-
-      List<Member> memberList = memberRepository.findByMemberCodeIn(result);
-
-      memberList.forEach(m->{
-        DocRef ref = DocRef.builder().document(save).member(m).build();
-        docRefRepository.save(ref);
-      });
-    }
-    // 기안리스트가 없을 때 -> 현재 로그인사용자가 결재승인 및 문서 종로
-    if(paymentRequest.getApprovalList() == null){
-      Approval approval = Approval.builder().order(1).member(member).document(save).build();
-      approval.setApprovalStatus(ApprovalStatus.APPROVAL);
-      Approval saveapproval = approvalRepository.save(approval);
-      saveapproval.setApprovalDate(save.getCreatedDate());
-      save.setDocumentStatus(DocumentStatus.APPROVAL);
-
-    }else{
-      List<Approval> approvals = paymentRequest.getApprovalList()
-              .stream()
-              .map(list -> {
-                Member byMemberId = memberRepository.findByMemberCode(list.getId());
-                Approval approval = Approval.builder()
-                        .order(list.getOrder())
-                        .member(byMemberId)
-                        .document(save)
-                        .build();
-                if (byMemberId.getMemberCode() == memberCode) {
-                  approval.setApprovalStatus(ApprovalStatus.APPROVAL);
-                  approval.setApprovalDate(LocalDateTime.now());
-                }
-                return approval;
-              })
-              .collect(Collectors.toList());
-      approvalRepository.saveAll(approvals);
-
-      if (approvals.size() == 1 && approvals.get(0).getMember().getMemberCode() == memberCode) {
-        save.setDocumentStatus(DocumentStatus.APPROVAL);
-      }
-
-    }
-
-    //지출 리스트 저장
-    if(paymentRequest.getPaymentList() != null){
-      paymentRequest.getPaymentList().forEach(list -> {
-
-        PaymentList paymentList = new PaymentList(list.getPaymentDate(), list.getPaymentSort(), list.getPaymentPrice(), list.getPaymentContent(), list.getRemarks(), save);
-        save.addPaymentList(paymentList);
-
-        paymentListRepository.save(paymentList);
-      });
-    }
-
-    //파일 저장
-    if(multipartFiles != null){
-      List<DocFileResponse> files = null;
-
-      //파일 저장
-      try{
-        files = FileUploadUtils.saveMultiFiles(FILES_DIR, multipartFiles);
-
-        List<DocumentFile> fileList = files.stream().map(file -> new DocumentFile(file, save)).collect(Collectors.toList());
-        documentFileRepository.saveAll(fileList);
-
-      }catch (Exception e){
-        FileUploadUtils.deleteMultiFiles(FILES_DIR, files);
-        throw new RuntimeException("파일업로드 실패");
-      }
-    }
-
-    return modelMapper.map(save, PaymentResponse.class);
-  }
-
-  //4. 문서 세부
+  //2. 문서 세부
   @Transactional
   public DocumentDetailResponse findById(long documentId, int memberCode) {
 
@@ -364,10 +95,11 @@ public class DocumentService {
     DocumentCondition condition = DocumentCondition.builder()
             .isDept(document.getMember().getDepartment().equals(nowMember.getDepartment()))
             .isCredit(approval != null && approval.getMember().getMemberCode() == memberCode)
-            .isCancel(document.getMember().equals(nowMember) && allApprovalDatesNull)
+            .isRemove(document.getMember().equals(nowMember) && allApprovalDatesNull)
             .build();
 
-    System.out.println("condition = " + condition);
+  // 취소할수있을때는 apporval이 전부가 Wating일때
+    //삭제는 전부 Wating이거나 REJECT당했을때
 
 
     DocumentDetailResponse result = document.accept(visitor);
@@ -377,7 +109,7 @@ public class DocumentService {
 
   }
 
-  //5. 문서 리스트 top 5개
+  //3. 문서 리스트 top 5개 main
   public ApprovalHomeResponse top5List(int memberCode){
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
     //일단...
@@ -410,7 +142,7 @@ public class DocumentService {
             .build();
   }
 
-  //6. 기안문서 페이징
+  //4. 기안문서 페이징
   public Page<DocumentListResponse> approvalList(String status, int memberCode, Pageable pageable){
 
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
@@ -419,7 +151,7 @@ public class DocumentService {
 
   }
 
-  //7. 결재 대기 페이징
+  //5. 결재 대기 페이징
   public Page<DocumentListResponse> creditList(int memberCode, Pageable pageable) {
     List<Document> documents = documentRepository.findApprovalsDocument(memberCode);
 
@@ -435,16 +167,33 @@ public class DocumentService {
     return creditPaging.map(DocumentListResponse::new);
   }
 
-  // 부서문서
+  // 메인대시보드용
+  public List<DocumentListResponse> mainCredit(int memberCode){
+    List<Document> documents = documentRepository.findApprovalsDocument(memberCode);
+
+    List<Document> approvedDocuments = documents.stream()
+            .map(approvalRepository::findTopByDocumentAndApprovalDateIsNullOrderByOrderAsc)
+            .filter(approval -> approval != null && approval.getMember().getMemberCode() == memberCode)
+            .map(Approval::getDocument)
+            .filter(document -> document.getDocumentStatus() == DocumentStatus.WAITING )
+            .limit(3)
+            .collect(Collectors.toList());
+
+    List<DocumentListResponse> creditList = approvedDocuments.stream().map(DocumentListResponse::new).collect(Collectors.toList());
+
+    return creditList;
+  }
+
+
+  //6. 부서문서
   public Page<DocumentListResponse> deptList(int memberCode, Pageable pageable) {
 
     Page<DocumentListResponse> deptResult = documentRepository.findByDeptDoc(memberCode, pageable);
 
     return new PageImpl<>(deptResult.getContent(), pageable, deptResult.getTotalElements());
-
   }
 
-  // 문서삭제
+  //7. 문서삭제
   @Transactional
   public void deleteDocument(long documentId){
 
@@ -452,25 +201,103 @@ public class DocumentService {
     documentRepository.deleteById(documentId);
   }
 
+  //8. 결재 취소
+//  @Transactional
+//  public void cancelApproval(Long documentId){
+//    Document document = documentRepository.findById(documentId).orElseThrow(() -> new NotFindDataException("해당문서가 없습니다"));
+//
+//    document.getApprovalList().;
+//
+//  }
+
 
   //문서 임시저장
-  public void tempSave(Long documentCode){
+  public <T extends DocumentRequest> void tempSave(Long documentCode, T documentRequest ){
 
-    //1. 임시저장 시 documentCode가 없으면 저장되고
-    //값들을 받아서 저장하는데 결재리스트는 waiting인 상태로
-    // 만약 결재리스트가 있는데
 
-    // 결재리스트가 없다면 본인만 저장
+    // 1. 임시저장 시 documentCode가 없으면 저장되고
+    // 값들을 받아서 저장하는데 문서상태는 temporary, 결재리스트는 waiting인 상태로
+
+    //
 
 
     //2. 임시저장시 documentCode가 있으면 해당내용을 업데이트 시킨다.
-    Document document = documentRepository.findById(documentCode).orElseThrow();
+    // 결재 리스트와 참조문서가 수정되었을 수 있기 때문에 approval, ref를 지우고 새롭게 들어온 값을 insert 하는 로직
 
   }
 
+ //문서 만들기
+  private <T extends DocumentRequest, E extends Document> E createDocument(Member member, T documentRequest, Class<E> entityClass) {
 
+    E document = modelMapper.map(documentRequest, entityClass);
 
+    document.addMember(member);
+    document.setCreatedDate(LocalDateTime.now());
+    return document;
+  }
 
+  //참조 저장
+  private void createRefer(DocumentRequest documentRequest, Document save) {
+    if(documentRequest.getRefList() == null) return;
+
+    List<Integer> result = documentRequest.getRefList().stream().map(RefRequest::getId).collect(Collectors.toList());
+    List<Member> memberList = memberRepository.findByMemberCodeIn(result);
+
+    memberList.forEach(m -> {
+      DocRef ref = DocRef.builder().document(save).member(m).build();
+      docRefRepository.save(ref);
+    });
+  }
+
+  // 결재 리스트 저장
+  private void createApprovals(DocumentRequest documentRequest, Member member, Document save, int memberCode) {
+    if (save.getApprovalList() == null) {
+      Approval approval = Approval.builder().order(1).member(member).document(save).build();
+      approval.setApprovalStatus(ApprovalStatus.APPROVAL);
+      Approval savedApproval = approvalRepository.save(approval);
+      savedApproval.setApprovalDate(save.getCreatedDate());
+      save.setDocumentStatus(DocumentStatus.APPROVAL);
+    } else {
+      List<Approval> approvals = documentRequest.getApprovalList()
+              .stream()
+              .map(list -> {
+                Member byMemberId = memberRepository.findByMemberCode(list.getId());
+                Approval approval = Approval.builder()
+                        .order(list.getOrder())
+                        .member(byMemberId)
+                        .document(save)
+                        .build();
+                if (byMemberId.getMemberCode() == memberCode) {
+                  approval.setApprovalStatus(ApprovalStatus.APPROVAL);
+                  approval.setApprovalDate(LocalDateTime.now());
+                }
+                return approval;
+              })
+              .collect(Collectors.toList());
+      approvalRepository.saveAll(approvals);
+
+      if (approvals.size() == 1 && approvals.get(0).getMember().getMemberCode() == memberCode) {
+        save.setDocumentStatus(DocumentStatus.APPROVAL);
+      }
+    }
+  }
+
+  // 파일 저장
+  private void processFiles(List<MultipartFile> multipartFiles, Document save) {
+
+    if(multipartFiles == null) return;
+
+    List<DocFileResponse> files = null;
+    try {
+      files = FileUploadUtils.saveMultiFiles(FILES_DIR, multipartFiles);
+      List<DocumentFile> fileList = files.stream().map(file -> new DocumentFile(file, save)).collect(Collectors.toList());
+      documentFileRepository.saveAll(fileList);
+    } catch (Exception e) {
+      FileUploadUtils.deleteMultiFiles(FILES_DIR, files);
+      throw new RuntimeException("파일업로드 실패");
+    }
+
+  }
 
 
   private DocumentDetailResponse mapDocumentToDTO(Document document) {
