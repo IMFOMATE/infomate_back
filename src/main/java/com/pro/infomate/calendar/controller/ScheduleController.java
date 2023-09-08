@@ -113,18 +113,6 @@ public class ScheduleController {
                         .build());
     }
 
-    // test join 부섴드 조인 오류
-//    @GetMapping("/findScheduleSearch")
-//    public ResponseEntity<ResponseDTO> findScheduleSearch(@RequestParam String keyword,
-//                                                          @AuthenticationPrincipal MemberDTO member){
-//
-//        return ResponseEntity.ok()
-//                .body(ResponseDTO.builder()
-//                        .status(HttpStatus.OK)
-//                        .message("success")
-//                        .build());
-//    }
-
     @PostMapping("/regist") // api 연동 확인
     public ResponseEntity<ResponseDTO> insertSchedule(@RequestBody ScheduleDTO scheduleDTO, @AuthenticationPrincipal MemberDTO member){
         int department = member.getDepartment().getDeptCode();

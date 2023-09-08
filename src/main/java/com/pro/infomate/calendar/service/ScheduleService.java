@@ -174,7 +174,7 @@ public class ScheduleService {
         log.info("[ScheduleService](reminder) today : {}",today);
 
         List<Schedule> scheduleList =
-                scheduleRepository.findThreeDays(memberCode, today.atStartOfDay(), today.plusDays(2).atTime(LocalTime.MAX));
+                scheduleRepository.findThreeDays(memberCode, today.atStartOfDay(), today.plusDays(3).atTime(LocalTime.MAX));
 
         log.info("[ScheduleService](reminder) scheduleList : {}",scheduleList);
 
@@ -182,6 +182,7 @@ public class ScheduleService {
                 .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
                 .map(scheduleDTO -> {
                     scheduleDTO.setCalendar(null);
+                    scheduleDTO.setParticipantList(null);
                     return scheduleDTO;
                 })
                 .collect(Collectors.toList());
