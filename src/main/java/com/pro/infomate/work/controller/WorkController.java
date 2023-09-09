@@ -17,13 +17,12 @@ public class WorkController {
   private final WorkService workService;
 
   //1. 출근
-  @PostMapping("/attend/{memberCode}")
+  @PostMapping("/attend")
   public ResponseEntity<ResponseDTO> workAttend(
-//          @AuthenticationPrincipal MemberDTO memberDTO
-          @PathVariable int memberCode
+          @AuthenticationPrincipal MemberDTO memberDTO
   ){
-    workService.attend(memberCode);
-//    workService.attend(memberDTO.getMemberCode());
+
+    workService.attend(memberDTO.getMemberCode());
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()

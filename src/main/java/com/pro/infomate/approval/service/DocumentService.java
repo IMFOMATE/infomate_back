@@ -88,15 +88,15 @@ public class DocumentService {
     boolean allApprovalDatesNull = approvalList.stream()
             .allMatch(app -> app.getApprovalDate() == null);
 
+    boolean isRemove = document.getMember().equals(nowMember) &&
+            (allApprovalDatesNull || approvalList.stream().anyMatch(app ->  ApprovalStatus.REJECT.equals(app.getApprovalStatus())));
+
     DocumentCondition condition = DocumentCondition.builder()
             .isDept(document.getMember().getDepartment().equals(nowMember.getDepartment()))
             .isCredit(approval != null && approval.getMember().getMemberCode() == memberCode)
-            .isRemove(document.getMember().equals(nowMember) && allApprovalDatesNull)
+            .isRemove(isRemove)
+            .isCancel(document.getMember().equals(nowMember) && allApprovalDatesNull)
             .build();
-
-  // 취소할수있을때는 apporval이 전부가 Wating일때
-    //삭제는 전부 Wating이거나 REJECT당했을때
-
 
     DocumentDetailResponse result = document.accept(visitor);
     result.setCondition(condition);
@@ -214,28 +214,56 @@ public class DocumentService {
     documentRepository.deleteById(documentId);
   }
 
-  //8. 결재 취소
-//  @Transactional
-//  public void cancelApproval(Long documentId){
-//    Document document = documentRepository.findById(documentId).orElseThrow(() -> new NotFindDataException("해당문서가 없습니다"));
-//
-//    document.getApprovalList().;
-//
-//  }
+//  8. 결재 취소
+  @Transactional
+  public void cancelApproval(Long documentId, int memberCode){
+    Document document = documentRepository.findById(documentId).orElseThrow(() -> new NotFindDataException("해당문서가 없습니다"));
+    Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
+    System.out.println("memberCode = " + memberCode);
+
+    boolean allApprovalDatesNull = document.getApprovalList().stream()
+            .allMatch(app -> app.getApprovalDate() == null);
+    System.out.println("allApprovalDatesNull = " + allApprovalDatesNull);
+    boolean isCancel = document.getMember().equals(member) && allApprovalDatesNull;
+    System.out.println("isCancel = " + isCancel);
+    //만약 해당조건이 아니면 바로 에러
+    if(!isCancel) throw new NotEnoughDateException("결재를 취소 할 수 없습니다");
+
+    //취소 가능하다면
+    //1. 임시저장으로 바꾸자
+    document.setDocumentStatus(DocumentStatus.TEMPORARY);
+
+  }
 
 
   //문서 임시저장
-  public <T extends DocumentRequest> void tempSave(Long documentCode, T documentRequest ){
-
+  @Transactional
+  public <T extends DocumentRequest, E extends Document> void tempSave(Long documentCode, int memberCode, T documentRequest, Class<E> entityClass ,List<MultipartFile> multipartFiles){
+    Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
 
     // 1. 임시저장 시 documentCode가 없으면 저장되고
     // 값들을 받아서 저장하는데 문서상태는 temporary, 결재리스트는 waiting인 상태로
 
-    //
+    if(documentCode == null){
+      E document = createDocument(member, documentRequest, entityClass);
+      document.setDocumentStatus(DocumentStatus.TEMPORARY);
+      Document save = documentRepository.save(document);
 
+      createRefer(documentRequest, save);
+      createApprovals(documentRequest, member, save,memberCode);
+      processFiles(multipartFiles, save);
+      return;
+    }
 
     //2. 임시저장시 documentCode가 있으면 해당내용을 업데이트 시킨다.
     // 결재 리스트와 참조문서가 수정되었을 수 있기 때문에 approval, ref를 지우고 새롭게 들어온 값을 insert 하는 로직
+    Document existingDocument = documentRepository.findById(documentCode)
+            .orElseThrow(() -> new NotFindDataException("해당 문서는 존재하지 않습니다"));
+    approvalRepository.deleteByDocument(existingDocument);
+    docRefRepository.deleteByDocument(existingDocument);
+
+    existingDocument = updateDocument(existingDocument, documentRequest, entityClass);
+
 
   }
 
@@ -310,7 +338,17 @@ public class DocumentService {
       FileUploadUtils.deleteMultiFiles(FILES_DIR, files);
       throw new RuntimeException("파일업로드 실패");
     }
+  }
 
+  // 문서 수정
+  private <T extends DocumentRequest, E extends Document> E updateDocument(
+          Document existingDocument, T documentRequest, Class<E> entityClass) {
+    E document = modelMapper.map(documentRequest, entityClass);
+    document.setDocumentStatus(DocumentStatus.TEMPORARY);
+    document.setCreatedDate(LocalDateTime.now());
+
+
+    return document;
   }
 
 

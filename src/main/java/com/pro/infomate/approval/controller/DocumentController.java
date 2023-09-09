@@ -96,16 +96,27 @@ public class DocumentController {
 
 
   //임시저장
-  @PostMapping("/regist/temp/{documentCode}")
+  @PostMapping("/regist/temp/{documentCode}/{type}")
   public ResponseEntity<ResponseDTO> tempRegist(
-          @PathVariable(required = false) Long documentCode
+          @PathVariable(required = false) Long documentCode,
+          @PathVariable(required = true) String type
   ){
 
+    switch (type){
+      case "vacation":
+
+        break;
+      case "drft":
+
+        break;
+      case "payment":
+
+        break;
+
+    }
 
 
-
-
-    return null;
+      return null;
   }
 
 
@@ -123,6 +134,26 @@ public class DocumentController {
                     .message("success")
                     .build());
   }
+
+  //취소
+  @PatchMapping("/cancel/{documentId}")
+  public ResponseEntity<ResponseDTO> cancelDocument(
+          @PathVariable long documentId,
+          @AuthenticationPrincipal MemberDTO memberDTO
+  ){
+
+    System.out.println("documentId = " + documentId);
+    log.info("memberDTO ={}", memberDTO);
+
+    documentService.cancelApproval(documentId, memberDTO.getMemberCode());
+
+    return ResponseEntity.ok()
+            .body(ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .message("success")
+                    .build());
+  }
+
 
   //결재 메인
   @GetMapping("/main")
