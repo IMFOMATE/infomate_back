@@ -5,6 +5,8 @@ import com.pro.infomate.member.entity.Member;
 import com.pro.infomate.member.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,4 +30,6 @@ public class MemberService {
         log.info("[MemberService]  selectMyInfo   End =============== ");
         return modelMapper.map(member, MemberDTO.class);
     }
+
+
 }

@@ -215,7 +215,8 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 
 ###
 
-GET http://localhost:8989/department/emp/list
+GET http://localhost:8989/dept/list
+Accept: */*
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
@@ -335,8 +336,7 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 POST http://localhost:8989/addressBook/addContact
 Accept: */*
 Content-Type: application/json
-Content-Length: 310
->>>>>>> c9199d8e83bec2b26652b68fa92e51c1207da5e6
+>>>>>>> 2985bacd2ae8f2481e00f2805e6488c5bdeb5792
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
@@ -791,20 +791,7 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 ###
 
 GET http://localhost:8989/emp/info/2
-=======
-{
-<<<<<<< HEAD
-  "postCode": 0,
-  "postTitle": "안뇽",
-  "postDate": "2023-08-29",
-  "postContents": "안녕하세연",
-  "boardCategory": "공지사항",
-  "board": {
-    "boardCode": 101
-  },
-  "member": {
-    "memberCode": 22
-  }
+
 }
 
 <> 2023-08-29T220327.200.json
