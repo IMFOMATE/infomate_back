@@ -91,21 +91,5 @@ class DocumentRepositoryTest {
 
     document.getApprovalList().forEach(d-> System.out.println("d.getId() = " + d.getId()));
   }
-  
-  @Test
-  @DisplayName("findAllApproval")
-  void findAllApproval() {
-    PageRequest of = PageRequest.of(0, 10);
-
-    Page<DocumentListResponse> allApproval = documentRepository.findAllApproval(null, 2, of);
-
-    allApproval.forEach(a -> System.out.println("a.getId() = " + a.getId()));
-
-  }
-  
-
-
-  
-  
 
 }

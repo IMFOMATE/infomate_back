@@ -1,9 +1,7 @@
 ### main
-GET http://localhost:8989/document/main/2
+GET http://localhost:8989/document/main
 Accept: */*
 
-### 기안문서
-GET http://localhost:8989/document/approval/43
 
 ### 결재문서 상세 조회
 GET http://localhost:8989/document/56
