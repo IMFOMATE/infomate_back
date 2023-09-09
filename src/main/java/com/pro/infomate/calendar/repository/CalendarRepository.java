@@ -14,7 +14,8 @@ import java.util.Optional;
 
 public interface CalendarRepository extends JpaRepository<Calendar, Integer> {
 
-    Optional<Calendar> findByMemberCodeAndDefaultCalendar(Integer memberCoode, Boolean defaultCalendar);
+    Optional<Calendar> findByMemberCodeAndDefaultCalendar(Integer memberCode, Boolean defaultCalendar);
+    Optional<Calendar> findAllByMemberCodeAndDefaultCalendar(Integer memberCode, Boolean defaultCalendar);
 
     Optional<Calendar> findFirstByMemberCode(int memberCode, Sort sort);
 

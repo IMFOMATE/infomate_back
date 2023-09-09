@@ -233,6 +233,7 @@ public class CalendarService {
         log.info("[CalendarService](updateDefaultCalender) afterDefaultCalendar : {}", afterDefaultCalendar);
 
         afterDefaultCalendar.setDefaultCalendar(true);
+
     }
 
     /**
@@ -300,9 +301,13 @@ public class CalendarService {
 
         changeDefaultCalendar.setDefaultCalendar(true);
 
-        Optional<Calendar> defaultCalendar = calendarRepository.findByMemberCodeAndDefaultCalendar(memberCode, true);
-        defaultCalendar.orElseThrow(() ->
-                new NotEnoughDateException("기본 캘린더가 존재 하지 않습니다."));
+//        Optional<Calendar> defaultCalendar = calendarRepository.findByMemberCodeAndDefaultCalendar(memberCode, true);
+//        defaultCalendar.orElseThrow(() ->
+//                new NotEnoughDateException("기본 캘린더가 존재 하지 않습니다."));
+
+        List<Calendar> defaultCalendar = calendarRepository.findAllByMemberCodeAndDefaultCalendar(memberCode, true);
+        if(defaultCalendar.size() < 1) throw  new NotEnoughDateException("기본 캘린더가 존재 하지 않습니다.");
+        log.info("[CalendarService](deleteById) defaultCalendar : {}", defaultCalendar);
 
         Optional<Calendar> findFirstCalendar = calendarRepository.findFirstByMemberCode(memberCode, Sort.by("indexNo").ascending());
         findFirstCalendar.orElseThrow(() ->

@@ -69,7 +69,8 @@ public class CalendarController {
     }
 
     @PostMapping("/regist") // api 연동 확인
-    public ResponseEntity<ResponseDTO> saveByCalendar(@RequestBody CalendarDTO calendar, @AuthenticationPrincipal MemberDTO member ){
+    public ResponseEntity<ResponseDTO> saveByCalendar(@RequestBody CalendarDTO calendar,
+                                                      @AuthenticationPrincipal MemberDTO member ){
 
         calendar.setMemberCode(member.getMemberCode());
 
@@ -90,7 +91,8 @@ public class CalendarController {
 
 
     @PatchMapping("/update") // api 연동 확인
-    public ResponseEntity<ResponseDTO> updateByCalendar(@RequestBody CalendarDTO calendar, @AuthenticationPrincipal MemberDTO member){
+    public ResponseEntity<ResponseDTO> updateByCalendar(@RequestBody CalendarDTO calendar,
+                                                        @AuthenticationPrincipal MemberDTO member){
 
         int memberCode = member.getMemberCode();
 
@@ -106,7 +108,8 @@ public class CalendarController {
     }
 
     @PatchMapping("/updateDafault") // api 연동 확인
-    public ResponseEntity<ResponseDTO> updateDefaultByCalendar(@RequestBody CalendarDTO calendarDTO, @AuthenticationPrincipal MemberDTO member){
+    public ResponseEntity<ResponseDTO> updateDefaultByCalendar(@RequestBody CalendarDTO calendarDTO,
+                                                               @AuthenticationPrincipal MemberDTO member){
 
         int memberCode = member.getMemberCode();
 
@@ -120,7 +123,8 @@ public class CalendarController {
     }
 
     @PatchMapping("/changeIndexNo") // api 연동 확인
-    public ResponseEntity<ResponseDTO> updateCalendarIndexNo(@RequestBody Map<String, String> info, @AuthenticationPrincipal MemberDTO member){
+    public ResponseEntity<ResponseDTO> updateCalendarIndexNo(@RequestBody Map<String, String> info,
+                                                             @AuthenticationPrincipal MemberDTO member){
 
 
         int memberCode = member.getMemberCode();
@@ -134,13 +138,14 @@ public class CalendarController {
     }
 
     @DeleteMapping("/delete/{calendar}") // api 연동 확인
-    public ResponseEntity<ResponseDTO> deleteByCalendar(@PathVariable Integer calendar, @AuthenticationPrincipal MemberDTO member ){
-        log.info("[CalendarController](deleteByCalendar) member : ", member);
+    public ResponseEntity<ResponseDTO> deleteByCalendar(@PathVariable Integer calendar,
+                                                        @AuthenticationPrincipal MemberDTO member ){
+        log.info("[CalendarController](deleteByCalendar) member : {} ", member);
 
         int memberCode = member.getMemberCode();
 
-        log.info("[CalendarController](deleteByCalendar) calendarList : ", calendar);
-        log.info("[CalendarController](deleteByCalendar) memberCode : ", memberCode);
+        log.info("[CalendarController](deleteByCalendar) calendar : {}", calendar);
+        log.info("[CalendarController](deleteByCalendar) memberCode : {}", memberCode);
 
         calendarService.deleteById(calendar, memberCode);
 
