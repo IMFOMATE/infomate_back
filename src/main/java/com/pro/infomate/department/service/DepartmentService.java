@@ -7,6 +7,7 @@ import com.pro.infomate.department.dto.DeptListResponse;
 import com.pro.infomate.department.dto.TreeViewResponse;
 import com.pro.infomate.department.entity.Department;
 import com.pro.infomate.department.repository.DepartmentRepository;
+import com.pro.infomate.exception.NotFindDataException;
 import com.pro.infomate.member.dto.MemberDTO;
 import com.pro.infomate.member.entity.Member;
 import com.pro.infomate.member.repository.MemberRepository;
@@ -16,6 +17,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.*;
 //import org.springframework.data.domain.Pageable;
 //import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -185,7 +187,7 @@ public class DepartmentService {
   public List<MemberDTO> selectEmpAll() {         // 멤버 전체조회
     List<Member> employeeAll = memberRepository.findAll();
 
-    return employeeAll.stream().map(emp -> modelMapper.map(emp, MemberDTO.class)).collect(Collectors.toList());
+    return employeeAll.stream().map(member -> modelMapper.map(member, MemberDTO.class)).collect(Collectors.toList());
   }
 
   public List<DepartmentListResponse> selectDeptPart(Department dept) {
@@ -199,7 +201,6 @@ public class DepartmentService {
               .deptCode(member.getDepartment().getDeptCode())
               .deptName(member.getDepartment().getDeptName())
 //              .memberName(member.getMemberName())
-              .count(member.getMemberCode())
               .build();
       result.add(deptList);
     }
@@ -208,48 +209,57 @@ public class DepartmentService {
   }
 
 
-  public List<DepartmentListResponse> selectPartList(){
+  public List<DepartmentListResponse> selectPartList() {
 
     List<Department> partList = departmentRepository.findAll();
     List<DepartmentListResponse> result = new ArrayList<>();
 
-    int count = partList.size();
-    for(Department dept : partList) {
-      result.addAll(selectDeptPart(dept));
-    }
-    return result;
+    return null;
   }
 
 
-//  public List<DepartmentListResponse> testPartList(){
-//    List<Department> testList = departmentRepository.findAll();
-//    List<Member> memberList = memberRepository.findAll();
-//    List<DepartmentListResponse> testResult = new ArrayList<>();
-//
-//
-//
-//
-//  }
+  public Page<MemberDTO> openEmpList( Pageable pageable, String findSearch ) {
 
-//=======
-//    log.info("[DepartmentService] selectDeptList Start ======================");
-//
-//    List<Department> departmentListSearchValue = departmentRepository.findByDeptName(search);
-//
-//    List<DepartmentDTO> departmentDTOlist = departmentListSearchValue.stream()
-//            .map(department -> modelMapper.map(department, DepartmentDTO.class)).collect(Collectors.toList());
-//
-//    log.info("[DepartmentService] selectDeptList End ========================");
-//
-//    return departmentDTOlist;
-//  }
-//
-//  public List<DepartmentExpendDTO> participantList() {
-//    List<Department> departmentList = departmentRepository.findAll();
-//    log.info("[DepartmentService](participantList) departmentList : {}", departmentList);
-//    return departmentList.stream()
-//            .map(department -> modelMapper.map(department, DepartmentExpendDTO.class))
-//            .collect(Collectors.toList());
-//  }
-//>>>>>>> 2985bacd2ae8f2481e00f2805e6488c5bdeb5792
-//}
+//    Page<Member> empList = memberRepository.findByMemberCode(memberCode, pageable);
+
+    Page<Member> empList = null;
+    if(findSearch.equals("all")){
+      empList = memberRepository.findAll(pageable);
+    } else {
+      empList = memberRepository.findByMemberNameContaining(findSearch, pageable);
+    }
+
+//    if(empList.getContent().size() == 0) throw new NotFindDataException("조회할 데이터가 없습니다.");
+    log.info("[DepartmentService] openEmpList =========== findSearch {}", findSearch);
+
+    return empList.map(member-> modelMapper.map(member, MemberDTO.class));
+
+  }
+
+  @Transactional
+  public String updateDept(DepartmentDTO departmentDTO) {
+    log.info("[DepartmentService] updateDept Start ============================= ");
+    log.info("[DepartmentService] departmentDTO : {} " , departmentDTO );
+
+//    int result = 0;
+
+    Department department = departmentRepository.findById(departmentDTO.getDeptCode()).get();
+    log.info("[DepartmentService] department : {} ", department);
+
+    department.setDeptName(departmentDTO.getDeptName());
+
+  return null;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
