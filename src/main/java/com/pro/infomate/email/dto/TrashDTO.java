@@ -9,7 +9,7 @@ import lombok.*;
 @ToString
 public class TrashDTO {
 
-    private int trashCode;
+    private Integer trashCode;
 
-    private int mailCode;
+    private Integer mailCode;
 }

@@ -51,6 +51,8 @@ public class MemberDTO implements UserDetails {
 
     private int memberOff;
 
+    private String memberPicOrigin;
+
     @JsonIgnore
     private List<AuthListDTO> authList;
 

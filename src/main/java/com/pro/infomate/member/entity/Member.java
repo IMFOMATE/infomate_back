@@ -25,7 +25,9 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Getter
 @Setter
+
 //@ToString
+
 @SequenceGenerator(
         name = "MEMBER_CODE_GENERATOR",
         sequenceName = "SEQ_TBL_MEMBER_MEMBER_CODE",
@@ -73,28 +75,25 @@ public class Member {
     private String memberAddress;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "DEPT_CODE", insertable = false,updatable = false)
+    @JoinColumn(name = "DEPT_CODE")
     private Department department;
 
     @Column(name = "HIRE_DATE")
     private Timestamp hireDate;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "RANK_CODE", insertable = false,updatable = false)
+    @JoinColumn(name = "RANK_CODE")
     private Rank rank;
 
-    @Column(name = "RANK_CODE")
-    private int rankCode;
 
     @Column(name = "MEMBER_PIC")
     private String memberPic;
 
+    @Column(name = "MEMBER_PIC_ORIGIN")
+    private String memberPicOrigin;
 
     @Column(name = "MEMBER_OFF")
     private int memberOff;
-
-    @Column(name = "DEPT_CODE")
-    private int deptCode;
 
     @JsonIgnore
     @OneToMany
@@ -109,7 +108,6 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Document> documentList = new ArrayList<>();
-
 
 
     @OneToMany(mappedBy = "member")

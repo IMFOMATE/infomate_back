@@ -24,7 +24,7 @@ public class Trash {
             strategy = GenerationType.SEQUENCE,
             generator = "SEQ_TBL_FILE_GENERATOR"
     )
-    private int trashCode;
+    private Integer trashCode;
 
     @ManyToOne
     @JoinColumn(name = "MAIL_CODE", nullable = false)

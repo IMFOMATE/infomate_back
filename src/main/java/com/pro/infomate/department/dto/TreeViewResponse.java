@@ -31,14 +31,16 @@ public class TreeViewResponse {
 
     private String fileType;
     private String rank;
-
     private String profile;
 
+    private int memberCode;
+
     @Builder
-    public TreeDTO(String fileType, String rank,String profile) {
+    public TreeDTO(String fileType, String rank,String profile,int memberCode) {
       this.fileType = fileType;
       this.rank = rank;
       this.profile = profile;
+      this.memberCode = memberCode;
     }
   }
 }

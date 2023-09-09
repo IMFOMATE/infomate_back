@@ -6,5 +6,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface DocRefRepositoryCustom {
 
-  Page<DocumentListResponse> refPagingList(int memberCode, Pageable pageable);
+  Page<DocumentListResponse> refPagingList(String status, int memberCode, Pageable pageable);
 }

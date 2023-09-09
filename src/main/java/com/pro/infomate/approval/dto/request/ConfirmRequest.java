@@ -11,9 +11,10 @@ public class ConfirmRequest {
 
   private Long documentCode;
 
-  private int memberCode;
+  private Integer memberCode;
 
   private String comment;
+
 
   @Builder
   public ConfirmRequest(Long documentCode, Integer memberCode, String comment) {
@@ -21,4 +22,11 @@ public class ConfirmRequest {
     this.memberCode = memberCode;
     this.comment = comment;
   }
+
+  public ConfirmRequest(Long documentCode, String comment) {
+    this.documentCode = documentCode;
+    this.comment = comment;
+  }
 }
+
+
