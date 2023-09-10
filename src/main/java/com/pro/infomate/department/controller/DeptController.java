@@ -85,6 +85,15 @@ public class DeptController {
   }
 
 
+//  public ResponseEntity<ResponseDTO> selectSearchDeptList(
+//          @RequestParam(name = "s", defaultValue = "all") String search){
+//
+//    return ResponseEntity.ok()
+//            .body(new ResponseDTO(HttpStatus.OK, "검색 성공", departmentService.selectDept(search)));
+//  }
+
+
+
 
 
   // 페이지
@@ -158,9 +167,28 @@ public class DeptController {
   }
 
 
-  // 조직도 수정하기
-  @PutMapping("/dept")
-  public ResponseEntity<ResponseDTO> updateDept(@ModelAttribute DepartmentDTO departmentDTO){
+
+  // 부서 생성
+  @PostMapping("/regist")
+  public ResponseEntity<ResponseDTO> saveByDepartment(@ModelAttribute DepartmentDTO departmentDTO){
+
+    return ResponseEntity.ok()
+            .body(new ResponseDTO(HttpStatus.OK, "부서 입력 성공", departmentService.saveByDepartment(departmentDTO)));
+
+
+  }
+
+
+
+
+//   조직도 수정하기
+  @PutMapping("/save")
+  public ResponseEntity<ResponseDTO> updateDept(@RequestBody DepartmentDTO departmentDTO){
+
+    log.info("[DeptController] (updateDept) departmentDTO : {}", departmentDTO);
+
+    departmentService.updateDept(departmentDTO);
+
     return ResponseEntity.ok()
             .body(new ResponseDTO(HttpStatus.OK , "조직도 수정 완료", departmentService.updateDept(departmentDTO)));
 

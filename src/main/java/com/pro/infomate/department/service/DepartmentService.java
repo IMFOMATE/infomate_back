@@ -18,6 +18,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -234,32 +235,74 @@ public class DepartmentService {
 
   }
 
+
+  // 부서 신규 생성
   @Transactional
-  public String updateDept(DepartmentDTO departmentDTO) {
-    log.info("[DepartmentService] updateDept Start ============================= ");
-    log.info("[DepartmentService] departmentDTO : {} " , departmentDTO );
+  public String saveByDepartment(DepartmentDTO departmentDTO) {
 
-//    int result = 0;
+    log.info("[DepartmentService] saveByDepartment Start ====================");
+    log.info("[DepartmentService] departmentDTO : " + departmentDTO);
 
-    Department department = departmentRepository.findById(departmentDTO.getDeptCode()).get();
-    log.info("[DepartmentService] department : {} ", department);
+    int result = 0;
 
-    department.setDeptName(departmentDTO.getDeptName());
+    try {
 
-  return null;
+      Department saveDepartment = modelMapper.map(departmentDTO, Department.class);
+
+      departmentRepository.save(saveDepartment);
+
+    } catch (Exception e){
+
+      log.info("확인");
+
+      throw new RuntimeException(e);
+    }
+
+    log.info("[DepartmentService] saveByDepartment End ===================");
+
+    return (result > 0)? "실패" : "성공";
   }
 
 
 
 
+  // 부서명 수정
+  @Transactional
+  public void updateDept(DepartmentDTO department){
+    log.info("[DepartmentService] (updateDept) department : {}", department);
+
+    Department entityDept = departmentRepository.findById(department.getDeptCode()).get();
+
+    log.info("[DepartmentService] (updateById) entityDept : {}", entityDept);
+
+    entityDept.update(department);
+  }
+
+//  public void delete(int deptCode) {
+//
+//
+//    departmentRepository.deleteById(deptCode);
+//  }
 
 
 
 
+//  public void deleteById(int deptCode, DepartmentDTO department) {
+//
+//    log.info("[DepartmentService] (deleteDept) department : {}", department);
+//
+//    Department entityDept = departmentRepository.findById(department.getDeptCode()).get();
+//
+//    log.info("[DepartmentService] (deleteDept) entityDept : {}", entityDept);
+//
+//  }
+
+
+}
 
 
 
-//=======
+
 //    log.info("[DepartmentService] selectDeptList Start ======================");
 //
 //    List<Department> departmentListSearchValue = departmentRepository.findByDeptName(search);
@@ -286,3 +329,4 @@ public class DepartmentService {
 
 
 }
+
