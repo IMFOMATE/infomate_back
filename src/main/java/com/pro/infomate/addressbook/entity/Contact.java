@@ -28,7 +28,7 @@ public class Contact {
             strategy = GenerationType.SEQUENCE,
             generator = "SEQ_TBL_CONTACT_GENERATOR"
     )
-    private Long contactCode;
+    private Integer contactCode;
 
     @Column(name = "CONTACT_PHOTO")
     private String contactPhoto;
