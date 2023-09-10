@@ -96,11 +96,13 @@ public class DocumentController {
 
 
   //임시저장
-  @PostMapping("/regist/temp/{documentCode}/{type}")
+  @PostMapping("/regist/temp/{type}/{documentCode}")
   public ResponseEntity<ResponseDTO> tempRegist(
           @PathVariable(required = false) Long documentCode,
-          @PathVariable(required = true) String type
-  ){
+          @PathVariable(required = true) String type,
+          @ModelAttribute DocumentRequest documentRequest,
+          @ModelAttribute(name = "fileList") List<MultipartFile> fileList
+          ){
 
     switch (type){
       case "vacation":

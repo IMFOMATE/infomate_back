@@ -63,7 +63,7 @@ public class DocumentService {
     Document save = documentRepository.save(document);
 
     createRefer(documentRequest, save);
-    createApprovals(documentRequest, member, save,memberCode);
+    createApprovals(documentRequest, member, save, memberCode);
     processFiles(multipartFiles, save);
 
     return modelMapper.map(save, responseClass);
@@ -238,7 +238,7 @@ public class DocumentService {
 
   //문서 임시저장
   @Transactional
-  public <T extends DocumentRequest, E extends Document> void tempSave(Long documentCode, int memberCode, T documentRequest, Class<E> entityClass ,List<MultipartFile> multipartFiles){
+  public <T extends DocumentRequest, E extends Document> void tempSave(Long documentCode, int memberCode, T documentRequest, Class<E> entityClass , List<MultipartFile> multipartFiles){
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
 
     // 1. 임시저장 시 documentCode가 없으면 저장되고
@@ -250,7 +250,7 @@ public class DocumentService {
       Document save = documentRepository.save(document);
 
       createRefer(documentRequest, save);
-      createApprovals(documentRequest, member, save,memberCode);
+      createApprovals(documentRequest, member, save, memberCode);
       processFiles(multipartFiles, save);
       return;
     }
@@ -263,7 +263,6 @@ public class DocumentService {
     docRefRepository.deleteByDocument(existingDocument);
 
     existingDocument = updateDocument(existingDocument, documentRequest, entityClass);
-
 
   }
 
@@ -340,13 +339,50 @@ public class DocumentService {
     }
   }
 
-  // 문서 수정
-  private <T extends DocumentRequest, E extends Document> E updateDocument(
-          Document existingDocument, T documentRequest, Class<E> entityClass) {
+  // 문서 임시저장
+  private <T extends DocumentRequest, E extends Document> E updateDocument(Document existingDocument, T documentRequest, Class<E> entityClass) {
+
     E document = modelMapper.map(documentRequest, entityClass);
     document.setDocumentStatus(DocumentStatus.TEMPORARY);
     document.setCreatedDate(LocalDateTime.now());
 
+    switch (entityClass.getSimpleName()) {
+      case "Vacation":
+          Vacation vacation = (Vacation) document;
+          VacationRequest vacationRequest = (VacationRequest) documentRequest;
+
+          vacation.setTitle(vacationRequest.getTitle());
+          vacation.setContent(vacationRequest.getContent());
+          vacation.setSort(vacationRequest.getSort());
+          vacation.setStartDate(vacationRequest.getStartDate());
+          vacation.setEndDate(vacationRequest.getEndDate());
+          vacation.setEmergency(vacationRequest.getEmergency());
+        break;
+      case "Draft":
+        Draft draft = (Draft) existingDocument;
+        DraftRequest draftRequest = (DraftRequest) documentRequest;
+
+        draft.setTitle(draftRequest.getTitle());
+        draft.setContent(draftRequest.getContent());
+        draft.setStartDate(draftRequest.getStartDate());
+        draft.setEmergency(draftRequest.getEmergency());
+        draft.setCoDept(draftRequest.getCoDept());
+
+        break;
+      case "Payment":
+        Payment payment = (Payment) existingDocument; // Cast to the specific Document type
+        PaymentRequest paymentRequest = (PaymentRequest) documentRequest;
+
+        payment.setTitle(paymentRequest.getTitle());
+        payment.setContent(paymentRequest.getContent());
+        payment.setEmergency(paymentRequest.getEmergency());
+
+
+
+        break;
+      default:
+        throw new IllegalArgumentException("Invalid entityClass");
+    }
 
     return document;
   }

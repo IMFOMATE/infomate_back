@@ -19,6 +19,8 @@ public class DepartmentDTO {
 
     private String deptName;
 
+    private int deptOrder;
+
     @JsonIgnore
     private List<MemberDTO> members;
 

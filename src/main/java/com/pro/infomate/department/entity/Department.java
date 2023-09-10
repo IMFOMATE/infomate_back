@@ -29,6 +29,9 @@ public class Department {
   @Column(name = "DEPT_NAME")
   private String deptName;
 
+  @Column(name = "DEPT_ORDER")
+  private Integer deptOrder;
+
 //  @JsonIgnore
   @OneToMany(mappedBy = "department")
   private List<Member> members;

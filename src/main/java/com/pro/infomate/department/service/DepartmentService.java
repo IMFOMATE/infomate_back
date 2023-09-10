@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,15 +57,21 @@ public class DepartmentService {
     for (Department dept : allDept) {
       result.add(createDepartmentNode(dept));
       result.addAll(createMemberNodes(dept, count));
-      count += dept.getMembers().size(); // Increment the counter by the number of members
+      count += dept.getMembers().size();
     }
+
+    result.sort(Comparator.comparing(TreeViewResponse::getId));
+
     return result;
+
   }
 
   //부서 매핑
   private TreeViewResponse createDepartmentNode(Department dept) {
+    System.out.println("dept.getDeptOrder() = " + dept.getDeptOrder());
+    System.out.println("dept.getDeptName() = " + dept.getDeptName());
     return TreeViewResponse.builder()
-            .id(dept.getDeptCode())
+            .id(dept.getDeptOrder())
             .parent(0)
             .droppable(true)
             .text(dept.getDeptName())
@@ -78,7 +85,7 @@ public class DepartmentService {
     for (Member member : dept.getMembers()) {
       TreeViewResponse memberNode = TreeViewResponse.builder()
               .id(++count)
-              .parent(dept.getDeptCode())
+              .parent(dept.getDeptOrder())
               .droppable(false)
               .text(member.getMemberName())
               .data(TreeViewResponse.TreeDTO.builder()
