@@ -11,6 +11,7 @@ import com.pro.infomate.member.repository.MemberRepository;
 import com.pro.infomate.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,9 +27,9 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class DeptController {
 
+
   private final DepartmentService departmentService;
 
-  private final MemberService memberService;
 
   //////////////////////////* 직원 조회 *//////////////////////
   @GetMapping("/emp/list")
@@ -147,16 +148,69 @@ public class DeptController {
   }
 
 
-  // 조직도 수정하기
-  @PutMapping("/dept")
-  public ResponseEntity<ResponseDTO> updateDept(@ModelAttribute DepartmentDTO departmentDTO){
+
+  // 부서 생성
+  @PostMapping("/regist")
+  public ResponseEntity<ResponseDTO> saveByDepartment(@ModelAttribute DepartmentDTO departmentDTO){
+
     return ResponseEntity.ok()
-            .body(new ResponseDTO(HttpStatus.OK , "조직도 수정 완료", departmentService.updateDept(departmentDTO)));
+            .body(new ResponseDTO(HttpStatus.OK, "부서 입력 성공", departmentService.saveByDepartment(departmentDTO)));
 
 
   }
 
 
+
+
+//   조직도 수정하기
+  @PutMapping("/save")
+  public ResponseEntity<ResponseDTO> updateDept(@RequestBody DepartmentDTO departmentDTO){
+
+    log.info("[DeptController] (updateDept) departmentDTO : {}", departmentDTO);
+
+    departmentService.updateDept(departmentDTO);
+
+    return ResponseEntity.ok()
+            .body(ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .message("정상 수정")
+                    .build());
+
+  }
+
+
+
+  // 조직도 삭제하기
+//  @PatchMapping("/delete/{deptCode}")
+//  public ResponseEntity<ResponseDTO> deleteDept(@PathVariable int deptCode, DepartmentDTO departmentDTO){
+//
+//    log.info("[DeptController] (deleteByCode) departmentDTO:", departmentDTO);
+//    log.info("[DeptController] (deleteByCode) deptCode:", deptCode);
+//
+//
+//    departmentService.deleteById(deptCode);
+//
+//    return ResponseEntity.ok()
+//            .body(ResponseDTO.builder()
+//                    .status(HttpStatus.OK)
+//                    .message("정상 삭제 완료")
+//                    .build());
+//
+//  }
+
+
+
+//  @GetMapping("/delete/{deptCode}")
+//  public ResponseEntity<ResponseDTO> delete(@PathVariable int deptCode){
+//
+//    departmentService.delete(deptCode);
+//
+//    return ResponseEntity.ok()
+//            .body(ResponseDTO.builder()
+//                    .status(HttpStatus.OK)
+//                    .message("삭제 완료")
+//                    .build());
+//  }
 
 
 }

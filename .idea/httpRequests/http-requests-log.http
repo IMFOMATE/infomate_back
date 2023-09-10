@@ -4,7 +4,7 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-09-09T011322.200.json
+<> 2023-09-11T005738.200.json
 
 ###
 
@@ -14,34 +14,7 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-09-08T185058.200.json
-
-###
-
-GET http://localhost:8989/department/openEmpList
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-08T161046.200.json
-
-###
-
-GET http://localhost:8989/department/openEmpList
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-08T155518.200.json
-
-###
-
-GET http://localhost:8989/department/openEmpList
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-08T151547.200.json
+<> 2023-09-11T003852.200.json
 
 ###
 
@@ -51,16 +24,7 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-09-08T125205.200.json
-
-###
-
-GET http://localhost:8989/department/emp/list
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-08T125010.200.json
+<> 2023-09-11T003705.200.json
 
 ###
 
@@ -70,209 +34,7 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-09-08T124921.200.json
-
-###
-
-GET http://localhost:8989/department/emp/list
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-08T124851.200.json
-
-###
-
-GET http://localhost:8989/department/openEmpList?s=홍
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-08T120209.200.json
-
-###
-
-GET http://localhost:8989/department/openEmpList?s=홍
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-08T115346.200.json
-
-###
-
-GET http://localhost:8989/department/openEmpList?s=a
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-08T115334.200.json
-
-###
-
-GET http://localhost:8989/department/emp/listall
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-08T115318.200.json
-
-###
-
-GET http://localhost:8989/department/openEmpList?s=인사
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-08T115217.200.json
-
-###
-
-GET http://localhost:8989/department/openEmpList/search?s=인사
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-08T115201.404.json
-
-###
-
-GET http://localhost:8989/department/openEmpList?s=인사
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-08T115130.200.json
-
-###
-
-GET http://localhost:8989/department/openEmpList
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-08T115049.200.json
-
-###
-
-GET http://localhost:8989/department/openEmpList
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-07T190839.200.json
-
-###
-
-GET http://localhost:8989/department/dept/search?s=인사
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-07T183242.404.json
-
-###
-
-GET http://localhost:8989/department/dept/search?s=인사
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-07T182351.404.json
-
-###
-
-GET http://localhost:8989/department/openEmpList
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-07T152903.200.json
-
-###
-
-GET http://localhost:8989/department/openEmpList
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-07T152842.200.json
-
-###
-
-GET http://localhost:8989/department/openEmpList
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-07T151057.200.json
-
-###
-
-GET http://localhost:8989/department/openEmpList
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-07T140849.200.json
-
-###
-
-GET http://localhost:8989/department/emp/listall
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-07T131844.200.json
-
-###
-
-GET http://localhost:8989/department/emp/list
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-07T121632.200.json
-
-###
-
-GET http://localhost:8989/department/treeview
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-07T010719.200.json
-
-###
-
-GET http://localhost:8989/emp/info/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T225623.200.json
-
-###
-
-GET http://localhost:8989/emp/info/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T225603.200.json
-
-###
-
-GET http://localhost:8989/emp/info/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T225005.200.json
+<> 2023-09-11T000334.200.json
 
 ###
 
@@ -282,7 +44,7 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-09-06T224238.200.json
+<> 2023-09-10T234943.200.json
 
 ###
 
@@ -292,176 +54,69 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-09-06T222549.200.json
+<> 2023-09-10T234014.200.json
 
 ###
 
-<<<<<<< HEAD
-GET http://localhost:8989/department/dept/search?s=인사
+GET http://localhost:8989/department/dept/list
 Accept: */*
-=======
-GET http://localhost:8989/brd/board
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-09-10T132346.200.json
+
+###
+
+POST http://localhost:8989/department/regist
 Accept: */*
 Content-Type: application/json
->>>>>>> 2985bacd2ae8f2481e00f2805e6488c5bdeb5792
+Content-Length: 53
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<<<<<<< HEAD
-<> 2023-09-06T215732.200.json
+{
+  "deptName": "데이터들어가는팀테스트"
+}
+
+<> 2023-09-10T132324.200.json
 
 ###
 
-GET http://localhost:8989/department/dept/search?s=총
-Accept: */*
-=======
-<> 2023-09-01T125305.200.json
-
-###
-
-GET http://localhost:8989/brd/board
+POST http://localhost:8989/department/regist
 Accept: */*
 Content-Type: application/json
->>>>>>> 2985bacd2ae8f2481e00f2805e6488c5bdeb5792
+Content-Length: 53
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<<<<<<< HEAD
-<> 2023-09-06T215723.200.json
+{
+  "deptName": "데이터들어가는팀테스트"
+}
+
+<> 2023-09-10T132301.200.json
 
 ###
 
-GET http://localhost:8989/dept
+GET http://localhost:8989/emp/info/8
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-09-06T215719.404.json
-=======
-<> 2023-09-01T121836.500.json
->>>>>>> 2985bacd2ae8f2481e00f2805e6488c5bdeb5792
+<> 2023-09-10T013534.500.json
 
 ###
 
-GET http://localhost:8989/department/emp/listall
+GET http://localhost:8989/department/delete/24
 Accept: */*
-<<<<<<< HEAD
-=======
 Content-Type: application/json
->>>>>>> 2985bacd2ae8f2481e00f2805e6488c5bdeb5792
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<<<<<<< HEAD
-<> 2023-09-06T215715.200.json
-
-###
-
-GET http://localhost:8989/department/emp/listall
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T215710.200.json
-
-###
-
-GET http://localhost:8989/department/dept
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T180830.200.json
-
-###
-
-GET http://localhost:8989/department/dept
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T180544.200.json
-
-###
-
-GET http://localhost:8989/dept
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T175812.404.json
-
-###
-
-GET http://localhost:8989/department/treeview
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T174244.200.json
-
-###
-
-GET http://localhost:8989/department/emp/listall
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T174205.200.json
-
-###
-
-GET http://localhost:8989/department/emp/listall
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T173953.500.json
-
-###
-
-GET http://localhost:8989/department/emp/listall
-Accept: */*
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T173738.500.json
-
-###
-
-GET http://localhost:8989/department/emp/list
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T173656.200.json
-
-###
-
-GET http://localhost:8989/department/treeview
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T161501.200.json
-
-###
-
-GET http://localhost:8989/department/emp/list
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-09-06T160907.200.json
+<> 2023-09-10T013319.404.json
 
 ###
 
@@ -471,15 +126,558 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-09-06T160209.200.json
+<> 2023-09-10T005353.200.json
 
 ###
 
-GET http://localhost:8989/department/emp/listall
+PUT http://localhost:8989/department/save
+Accept: */*
+Content-Type: application/json
+Content-Length: 67
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "deptCode" : 26,
+  "deptName" : "테스트 수정 완료 팀"
+}
+
+<> 2023-09-10T005345.200.json
+
+###
+
+GET http://localhost:8989/department/dept/list
 Accept: */*
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<> 2023-09-06T160206.200.json
+<> 2023-09-10T005327.200.json
+
+###
+
+PUT http://localhost:8989/department/save
+Accept: */*
+Content-Type: application/json
+Content-Length: 44
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "deptCode" : 26,
+  "deptName" : "asdf"
+}
+
+<> 2023-09-10T005311.200.json
+
+###
+
+PUT http://localhost:8989/department/save
+Accept: */*
+Content-Type: application/json
+Content-Length: 44
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "deptCode" : 26,
+  "deptName" : "asdf"
+}
+
+<> 2023-09-10T005050.200.json
+
+###
+
+GET http://localhost:8989/department/dept/list
+Accept: */*
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-09-10T005004.200.json
+
+###
+
+PUT http://localhost:8989/department/save
+Accept: */*
+Content-Type: application/json
+Content-Length: 57
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "deptCode" : 24,
+  "deptName" : "영업지원 1팀"
+}
+
+<> 2023-09-10T004947.200.json
+
+###
+
+PUT http://localhost:8989/department/save
+Accept: */*
+Content-Type: application/json
+Content-Length: 57
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "deptCode" : 24,
+  "deptName" : "영업지원 1팀"
+}
+
+<> 2023-09-10T003513.500.json
+
+###
+
+PUT http://localhost:8989/department/save
+Accept: */*
+Content-Type: application/json
+Content-Length: 57
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "deptCode" : 24,
+  "deptName" : "영업지원 1팀"
+}
+
+<> 2023-09-10T003347.500.json
+
+###
+
+GET http://localhost:8989/department/dept/list
+Accept: */*
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-09-10T003333.200.json
+
+###
+
+GET http://localhost:8989/department/dept/list
+Accept: */*
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-09-10T002633.200.json
+
+###
+
+POST http://localhost:8989/department/regist
+Accept: */*
+Content-Type: application/json
+Content-Length: 41
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "deptName": "온라인 영업 8팀"
+}
+
+<> 2023-09-10T002607.200.json
+
+###
+
+PUT http://localhost:8989/department/save
+Accept: */*
+Content-Type: application/json
+Content-Length: 57
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "deptCode" : 24,
+  "deptName" : "영업지원 1팀"
+}
+
+<> 2023-09-10T002330.500.json
+
+###
+
+GET http://localhost:8989/department/dept/list
+Accept: */*
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-09-10T002313.200.json
+
+###
+
+PUT http://localhost:8989/department/save
+Accept: */*
+Content-Type: application/json
+Content-Length: 56
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "deptCode" : 0,
+  "deptName" : "영업지원 1팀"
+}
+
+<> 2023-09-10T002258.500.json
+
+###
+
+PUT http://localhost:8989/department/save
+Accept: */*
+Content-Type: application/json
+Content-Length: 56
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "deptCode" : 0,
+  "deptName" : "영업지원 1팀"
+}
+
+<> 2023-09-10T000817.500.json
+
+###
+
+PUT http://localhost:8989/department/save
+Accept: */*
+Content-Type: application/json
+Content-Length: 56
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "deptCode" : 0,
+  "deptName" : "영업지원 1팀"
+}
+
+<> 2023-09-10T000615.500.json
+
+###
+
+PUT http://localhost:8989/department/save
+Accept: */*
+Content-Type: application/json
+Content-Length: 56
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "deptCode" : 0,
+  "deptName" : "영업지원 1팀"
+}
+
+<> 2023-09-10T000315.500.json
+
+###
+
+GET http://localhost:8989/department/dept/list
+Accept: */*
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-09-10T000253.200.json
+
+###
+
+POST http://localhost:8989/department/regist
+Accept: */*
+Content-Type: application/json
+Content-Length: 41
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "deptName": "온라인 영업 4팀"
+}
+
+<> 2023-09-10T000238.200.json
+
+###
+
+POST http://localhost:8989/department/regist
+Accept: */*
+Content-Type: application/json
+Content-Length: 41
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "deptName": "온라인 영업 2팀"
+}
+
+<> 2023-09-10T000150.200.json
+
+###
+
+PUT http://localhost:8989/department/save
+Accept: */*
+Content-Type: application/json
+Content-Length: 56
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "deptCode" : 0,
+  "deptName" : "영업지원 1팀"
+}
+
+<> 2023-09-09T233653.500.json
+
+###
+
+GET http://localhost:8989/department/dept/list
+Accept: */*
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-09-09T231400.200.json
+
+###
+
+POST http://localhost:8989/department/regist
+Accept: */*
+Content-Type: application/json
+Content-Length: 41
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "deptName": "온라인 영업 1팀"
+}
+
+<> 2023-09-09T231354.200.json
+
+###
+
+POST http://localhost:8989/department/insert
+Accept: */*
+Content-Type: application/json
+Content-Length: 41
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "deptName": "온라인 영업 1팀"
+}
+
+<> 2023-09-09T231100.404.json
+
+###
+
+POST http://localhost:8989/department/insert
+Accept: */*
+Content-Type: application/json
+Content-Length: 41
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "deptName": "온라인 영업 1팀"
+}
+
+<> 2023-09-09T231054.404.json
+
+###
+
+POST http://localhost:8989/department/insert
+Accept: */*
+Content-Type: application/json
+Content-Length: 41
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "deptName": "온라인 영업 1팀"
+}
+
+<> 2023-09-09T231034.404.json
+
+###
+
+GET http://localhost:8989/department/dept/list
+Accept: */*
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-09-09T230908.200.json
+
+###
+
+POST http://localhost:8989/department/regist
+Accept: */*
+Content-Type: application/json
+Content-Length: 42
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+
+  "deptName": "온라인 영업 3팀"
+}
+
+<> 2023-09-09T230900.200.json
+
+###
+
+GET http://localhost:8989/department/dept/list
+Accept: */*
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-09-09T230830.200.json
+
+###
+
+POST http://localhost:8989/department/regist
+Accept: */*
+Content-Type: application/json
+Content-Length: 34
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+
+  "deptName": "테스트팀2"
+}
+
+<> 2023-09-09T230736.200.json
+
+###
+
+GET http://localhost:8989/department/dept/list
+Accept: */*
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-09-09T230721.200.json
+
+###
+
+POST http://localhost:8989/department/regist
+Accept: */*
+Content-Type: application/json
+Content-Length: 33
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+
+  "deptName": "테스트팀"
+}
+
+<> 2023-09-09T230656.200.json
+
+###
+
+POST http://localhost:8989/department/regist
+Accept: */*
+Content-Type: application/json
+Content-Length: 33
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+
+  "deptName": "테스트팀"
+}
+
+<> 2023-09-09T225338.200.json
+
+###
+
+GET http://localhost:8989/department/dept/list
+Accept: */*
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-09-09T225318.200.json
+
+###
+
+POST http://localhost:8989/department/regist
+Accept: */*
+Content-Type: application/json
+Content-Length: 52
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "deptCode" : 99
+  "deptName" : "테스트팀1"
+}
+
+<> 2023-09-09T225308.400.json
+
+###
+
+GET http://localhost:8989/department/dept/list
+Accept: */*
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-09-09T225243.200.json
+
+###
+
+POST http://localhost:8989/department/regist
+Accept: */*
+Content-Type: application/json
+Content-Length: 34
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "deptName" : "테스트팀1"
+}
+
+<> 2023-09-09T225231.200.json
+
+###
+
+POST http://localhost:8989/department/regist
+Accept: */*
+Content-Type: application/json
+Content-Length: 35
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "deptName" : "테스트팀1"
+}
+
+<> 2023-09-09T225020.404.json
 
