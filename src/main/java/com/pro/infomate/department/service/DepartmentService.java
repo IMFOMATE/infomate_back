@@ -1,10 +1,7 @@
 package com.pro.infomate.department.service;
 
 import com.pro.infomate.common.Criteria;
-import com.pro.infomate.department.dto.DepartmentDTO;
-import com.pro.infomate.department.dto.DepartmentListResponse;
-import com.pro.infomate.department.dto.DeptListResponse;
-import com.pro.infomate.department.dto.TreeViewResponse;
+import com.pro.infomate.department.dto.*;
 import com.pro.infomate.department.entity.Department;
 import com.pro.infomate.department.repository.DepartmentRepository;
 import com.pro.infomate.exception.NotFindDataException;
@@ -62,7 +59,7 @@ public class DepartmentService {
     for (Department dept : allDept) {
       result.add(createDepartmentNode(dept));
       result.addAll(createMemberNodes(dept, count));
-      count += dept.getMembers().size(); // Increment the counter by the number of members
+      count += dept.getMembers().size(); //
     }
     return result;
   }
@@ -91,6 +88,7 @@ public class DepartmentService {
                       .fileType("person")
                       .rank(member.getRank().getRankName())
                       .profile(member.getMemberPic())
+                      .memberCode(member.getMemberCode())
                       .build())
               .build();
       memberNodes.add(memberNode);
@@ -99,23 +97,23 @@ public class DepartmentService {
   }
 
 
-  private List<DeptListResponse> createDeptList(Department dept, int count){      // 부서 리스트 넣어주기
+  private List<DeptListResponse> createDeptList(Department dept, int count) {      // 부서 리스트 넣어주기
     List<Department> all = departmentRepository.findAll();
     List<DeptListResponse> memberList = new ArrayList<>();
 
-    for (Member member : dept.getMembers()){
+    for (Member member : dept.getMembers()) {
       DeptListResponse deptList = DeptListResponse.builder()
-                      .id(++count)
-                      .data(DeptListResponse.DepartDTO.builder()
-                            .empName(member.getMemberName())
-                            .empNum(member.getMemberId())
-                            .deptName(member.getDepartment().getDeptName())
-                            .rankName(member.getRank().getRankName())
-                            .empCode(member.getMemberCode())
-                            .rank(member.getRank().getRankPlace())
-                            .deptCode(member.getDepartment().getDeptCode())
-                            .build()
-                            ).build();
+              .id(++count)
+              .data(DeptListResponse.DepartDTO.builder()
+                      .empName(member.getMemberName())
+                      .empNum(member.getMemberId())
+                      .deptName(member.getDepartment().getDeptName())
+                      .rankName(member.getRank().getRankName())
+                      .empCode(member.getMemberCode())
+                      .rank(member.getRank().getRankPlace())
+                      .deptCode(member.getDepartment().getDeptCode())
+                      .build()
+              ).build();
       memberList.add(deptList);
     }
     log.info("{}=============",memberList);
@@ -299,6 +297,7 @@ public class DepartmentService {
 //
 //  }
 
+<<<<<<< HEAD
 
 
 
@@ -316,3 +315,32 @@ public class DepartmentService {
 
 
 
+=======
+//=======
+//    log.info("[DepartmentService] selectDeptList Start ======================");
+//
+//    List<Department> departmentListSearchValue = departmentRepository.findByDeptName(search);
+//
+//    List<DepartmentDTO> departmentDTOlist = departmentListSearchValue.stream()
+//            .map(department -> modelMapper.map(department, DepartmentDTO.class)).collect(Collectors.toList());
+//
+//    log.info("[DepartmentService] selectDeptList End ========================");
+//
+//    return departmentDTOlist;
+//  }
+//
+
+
+
+  public List<DepartmentExpendDTO> participantList() {
+    List<Department> departmentList = departmentRepository.findAllByDeptCodeAfter(0);
+    log.info("[DepartmentService](participantList) departmentList : {}", departmentList);
+    return departmentList.stream()
+            .map(department -> modelMapper.map(department, DepartmentExpendDTO.class))
+            .collect(Collectors.toList());
+  }
+
+
+
+}
+>>>>>>> df8b801fa5228c817bdbb09314fbe9dcbd61b3ab

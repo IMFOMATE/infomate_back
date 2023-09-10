@@ -6,17 +6,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface DocumentRepositoryCustom {
 
   Page<DocumentListResponse> findByDeptDoc(int memberCode, Pageable pageable);
 
+  //결재.......
   List<Document> findApprovalsDocument(int memberCode);
 
-  public List<Document> findCredit(int memberCode);
 
-  public Page<Document> findCreditWithPaging(int memberCode, Pageable pageable);
+  public Page<DocumentListResponse> findAllApproval(String status, int memberCode, Pageable pageable);
+
+
 
 
   }

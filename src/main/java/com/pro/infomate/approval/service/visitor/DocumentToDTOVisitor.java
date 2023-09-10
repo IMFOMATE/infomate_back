@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 public class DocumentToDTOVisitor implements DocumentVisitor<DocumentDetailResponse> {
   private MemberResponse mapMemberResponse(Member member) {
     return MemberResponse.builder()
+            .memberCode(member.getMemberCode())
             .memberName(member.getMemberName())
             .deptName(member.getDepartment().getDeptName())
             .build();
@@ -25,6 +26,8 @@ public class DocumentToDTOVisitor implements DocumentVisitor<DocumentDetailRespo
               return ApprovalResponse.builder()
                       .memberCode(approvalMember.getMemberCode())
                       .rankName(approvalMember.getRank().getRankName())
+                      .profile(approvalMember.getMemberPic())
+                      .approvalStatus(approval.getApprovalStatus().toString())
                       .memberName(approvalMember.getMemberName())
                       .comment(approval.getComment())
                       .approvalDate(approval.getApprovalDate())
@@ -38,7 +41,10 @@ public class DocumentToDTOVisitor implements DocumentVisitor<DocumentDetailRespo
     return files.stream()
             .map(file -> DocFileResponse.builder()
                     .fileCode(file.getFileCode())
+                    .originalName(file.getOriginalName())
                     .fileName(file.getFileName())
+                    .fileType(file.getFileType())
+                    .fileSize(file.getFileSize())
                     .build())
             .collect(Collectors.toList());
   }
@@ -48,7 +54,9 @@ public class DocumentToDTOVisitor implements DocumentVisitor<DocumentDetailRespo
             .map(docRef -> {
               Member result = docRef.getMember();
               return RefMemberResponse.builder()
+                      .memberCode(result.getMemberCode())
                       .memberName(result.getMemberName())
+                      .profile(result.getMemberPic())
                       .rankName(result.getRank().getRankName())
                       .build();
             })
@@ -67,6 +75,7 @@ public class DocumentToDTOVisitor implements DocumentVisitor<DocumentDetailRespo
             .title(vacation.getTitle())
             .createdDate(vacation.getCreatedDate())
             .documentStatus(vacation.getDocumentStatus())
+            .emergency(vacation.getEmergency())
             .member(mapMemberResponse(member))
             .content(vacation.getContent())
             .fileList(fileList)
@@ -75,7 +84,6 @@ public class DocumentToDTOVisitor implements DocumentVisitor<DocumentDetailRespo
             .documentKind(vacation.getDocumentKind())
             .startDate(vacation.getStartDate())
             .endDate(vacation.getEndDate())
-            .reason(vacation.getReason())
             .sort(vacation.getSort())
             .build();
   }
@@ -103,6 +111,7 @@ public class DocumentToDTOVisitor implements DocumentVisitor<DocumentDetailRespo
             .id(payment.getId())
             .title(payment.getTitle())
             .createdDate(payment.getCreatedDate())
+            .emergency(payment.getEmergency())
             .documentStatus(payment.getDocumentStatus())
             .member(mapMemberResponse(member))
             .content(payment.getContent())
@@ -127,14 +136,15 @@ public class DocumentToDTOVisitor implements DocumentVisitor<DocumentDetailRespo
             .title(draft.getTitle())
             .createdDate(draft.getCreatedDate())
             .documentStatus(draft.getDocumentStatus())
+            .emergency(draft.getEmergency())
             .member(mapMemberResponse(member))
+            .startDate(draft.getStartDate())
             .content(draft.getContent())
             .fileList(fileList)
             .approvalList(approvalList)
             .documentKind(draft.getDocumentKind())
             .refList(refList)
             .coDept(draft.getCoDept())
-            .startDate(draft.getStartDate())
             .build();
   }
 }

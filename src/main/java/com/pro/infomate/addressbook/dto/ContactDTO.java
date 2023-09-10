@@ -12,9 +12,9 @@ import java.io.File;
 @ToString
 public class ContactDTO {
 
-    private Long contactCode;
+    private Integer contactCode;
 
-    private MultipartFile contactPhoto;
+    private String contactPhoto;
 
     private String company;
 
@@ -32,7 +32,7 @@ public class ContactDTO {
 
     private String memo;
 
-    private int memberCode;
+    private Integer memberCode;
 
     private char contactLike;
 

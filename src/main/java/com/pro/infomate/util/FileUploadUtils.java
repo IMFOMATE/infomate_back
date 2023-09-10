@@ -1,5 +1,6 @@
 package com.pro.infomate.util;
 
+import com.pro.infomate.approval.dto.response.DocFileResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.core.io.Resource;
@@ -11,6 +12,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 public class FileUploadUtils {
@@ -53,5 +57,57 @@ public class FileUploadUtils {
         }
 
         return result;
+    }
+
+    public static List<DocFileResponse> saveMultiFiles(String uploadDir, List<MultipartFile> multipartFiles) throws IOException {
+        Path uploadPath = Paths.get(uploadDir);
+
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        List<DocFileResponse> savedFile = new ArrayList<>();
+
+        for (MultipartFile multipartFile : multipartFiles) {
+
+            //필요데이터
+            String originalFileName = multipartFile.getOriginalFilename();
+            String type = FilenameUtils.getExtension(originalFileName);
+            String replaceFileName = UUID.randomUUID().toString() + "." + FilenameUtils.getExtension(originalFileName);
+            long size = multipartFile.getSize();
+
+            //파일 dto에
+            DocFileResponse file = new DocFileResponse();
+            file.setOriginalName(originalFileName);
+            file.setFileType(type);
+            file.setFileName(replaceFileName);
+            file.setFileSize(size);
+
+            try (InputStream inputStream = multipartFile.getInputStream()) {
+                Path filePath = uploadPath.resolve(replaceFileName);
+                Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+
+                savedFile.add(file);
+            } catch (IOException ex) {
+                throw new IOException("Could not save file: " + originalFileName, ex);
+            }
+        }
+        return savedFile;
+    }
+
+    public static boolean deleteMultiFiles(String uploadDir, List<DocFileResponse> files) {
+        boolean allDeleted = true;
+
+        for (DocFileResponse file : files) {
+            Path filePath = Paths.get(uploadDir).resolve(file.getFileName());
+
+            try {
+                Files.delete(filePath);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                allDeleted = false;
+            }
+        }
+        return allDeleted;
     }
 }

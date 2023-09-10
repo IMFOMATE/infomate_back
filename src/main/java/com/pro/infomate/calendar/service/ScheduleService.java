@@ -5,7 +5,6 @@ import com.pro.infomate.calendar.dto.DayPerCountDTO;
 import com.pro.infomate.calendar.dto.ScheduleDTO;
 import com.pro.infomate.calendar.entity.Calendar;
 import com.pro.infomate.calendar.entity.Participant;
-import com.pro.infomate.calendar.entity.ParticipantPK;
 import com.pro.infomate.calendar.entity.Schedule;
 import com.pro.infomate.calendar.repository.CalendarRepository;
 import com.pro.infomate.calendar.repository.ParticipantRepository;
@@ -13,7 +12,6 @@ import com.pro.infomate.calendar.repository.ScheduleRepository;
 import com.pro.infomate.exception.NotAuthenticationMember;
 import com.pro.infomate.exception.NotFindDataException;
 import com.pro.infomate.member.dto.MemberDTO;
-import com.pro.infomate.member.dto.MemberSumamryDTO;
 import com.pro.infomate.member.entity.Member;
 import com.pro.infomate.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -59,12 +55,11 @@ public class ScheduleService {
                     calendarDTO.setScheduleList(null);
 
                     scheduleDTO.setCalendar(calendarDTO);
-//                    scheduleDTO.setParticipantList(null);
+
                     scheduleDTO.setParticipantList(
                             scheduleDTO.getParticipantList().stream()
                                     .map(participantDTO -> {
                                         participantDTO.setSchedule(null);
-//                                        participantDTO.setMember(null);
                                         MemberDTO memberDTO = new MemberDTO();
                                         memberDTO.setMemberCode(participantDTO.getMember().getMemberCode());
                                         memberDTO.setMemberName(participantDTO.getMember().getMemberName());
@@ -129,17 +124,8 @@ public class ScheduleService {
             throw new NotAuthenticationMember("삭제할 권한이 존재하지 않습니다.");
         }
 
-//        participantRepository.deleteByScheduleCode(schedule.getId());
         scheduleRepository.deleteById(scheduleId);
 
-    }
-
-    public List<ScheduleDTO> findScheduleSearch(String keyword, Integer userId) {
-//        List<Schedule> scheduleList = scheduleRepository.findScheduleSearch(keyword, userId);
-        List<Schedule> scheduleList = new ArrayList<>();
-        return scheduleList.stream()
-                .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
-                .collect(Collectors.toList());
     }
 
     @Transactional
@@ -164,19 +150,19 @@ public class ScheduleService {
 
         Schedule schedule = modelMapper.map(scheduleDTO, Schedule.class);
 
-        log.info("[ScheduleService](insertSchedule) schedule : {}", schedule.getParticipantList());
+        log.info("[ScheduleService](insertSchedule)  schedule.getParticipantList() : {}", schedule.getParticipantList());
         schedule.setParticipantList(null);
 
         scheduleRepository.save(schedule);
 
-        if(schedule.getParticipantList() == null) return;
+        if(scheduleDTO.getParticipantList() == null) return;
 
         List<Participant> participant = scheduleDTO.getParticipantList().stream().map(item -> modelMapper.map(item, Participant.class)).collect(Collectors.toList());
         participant = participant.stream().map(participant1 -> {
             participant1.setScheduleCode(schedule.getId());
             return participant1;
         }).collect(Collectors.toList());
-
+        log.info("[ScheduleService](insertSchedule) schedule.getId() : {}", schedule.getId());
         participantRepository.saveAll(participant);
         log.info("[ScheduleService](insertSchedule) schedule : {}",schedule);
     }
@@ -188,7 +174,7 @@ public class ScheduleService {
         log.info("[ScheduleService](reminder) today : {}",today);
 
         List<Schedule> scheduleList =
-                scheduleRepository.findThreeDays(memberCode, today.atStartOfDay(), today.plusDays(2).atTime(LocalTime.MAX));
+                scheduleRepository.findThreeDays(memberCode, today.atStartOfDay(), today.plusDays(3).atTime(LocalTime.MAX));
 
         log.info("[ScheduleService](reminder) scheduleList : {}",scheduleList);
 
@@ -196,40 +182,18 @@ public class ScheduleService {
                 .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
                 .map(scheduleDTO -> {
                     scheduleDTO.setCalendar(null);
+                    scheduleDTO.setParticipantList(null);
                     return scheduleDTO;
                 })
                 .collect(Collectors.toList());
     }
 
     public List<DayPerCountDTO> dayPerCount(LocalDate startDay, LocalDate endDay, int memberCode) {
-//        List<Object[]> daysCount = scheduleRepository.dayPerCount(startDay, endDay, memberCode);
+
         List<DayPerCountDTO> daysCount  = scheduleRepository.dayPerCount(startDay.atStartOfDay(), endDay.atStartOfDay(), memberCode);
         log.info("[ScheduleService](dayPerCount) daysCount : {}", daysCount);
 
-//        List<DayPerCountDTO> dayPerCountDTOS = new ArrayList<>();
-//        for (Object[] item : daysCount){
-//            dayPerCountDTOS.add(new DayPerCountDTO(LocalDateTime.parse((String) item[1]), (Long) item[0]));
-//        }
-
-
-//        log.info("[ScheduleService](dayPerCount) dayPerCountDTOS : {}", dayPerCountDTOS);
         return daysCount;
     }
-// member 엔티티 완료 된 후 수정
-//    public List<ScheduleDTO> findAllScheduleSearch(int memberCode, String keyword){
-//        List<Schedule> scheduleList = scheduleRepository.findAllBySubjectAndContentSearch(memberCode, keyword);
-//
-//        log.info("[ScheduleService](reminder) scheduleList : {}", scheduleList);
-//
-//        return scheduleList.stream()
-//                .map(schedule -> modelMapper.map(schedule, ScheduleDTO.class))
-//                .map(scheduleDTO -> {
-//                    scheduleDTO.setCalendar(null);
-//                    return scheduleDTO;
-//                })
-//                .collect(Collectors.toList());
-//
-//        return null;
-//
-//    }
+
 }

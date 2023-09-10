@@ -12,8 +12,11 @@ spring:
   servlet:
     multipart:
       enabled: true
-      max-file-size: 10MB
-      max-request-size: 10MB
+      max-file-size: 100MB
+      max-request-size: 100MB
+  web:
+    resources:
+      static-locations: classpath:/productimgs/
 
   jpa:
     generate-ddl: false
@@ -47,7 +50,16 @@ image:
   add-resource-locations: classpath:/static/productimgs/
   add-resource-handler: /productimgs/**
 
-  image-dir: src/main/resource/static/productimgs
-  image-url: http://localhost:8989/productimgs/
+
+#  image-dir: src/main/resources/static/productimgs
+#  image-url: http://localhost:8989/productimgs/
+
+  image-dir: C:/dev/02_subSources/img/
+  image-url: http://localhost:8989/imgs/
 
 
+files:
+  add-resource-locations: classpath:/static/files/
+  add-resource-handler: /files/document/**
+  files-dir: src/main/resources/static/files
+  files-url: http://localhost:8989/file/download/

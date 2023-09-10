@@ -1,6 +1,5 @@
 package com.pro.infomate.calendar.entity;
 
-
 import com.pro.infomate.calendar.dto.CalendarDTO;
 import com.pro.infomate.member.entity.Member;
 import lombok.*;

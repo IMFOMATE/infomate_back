@@ -4,6 +4,7 @@ import com.pro.infomate.approval.dto.response.DocumentDetailResponse;
 import com.pro.infomate.approval.service.visitor.DocumentVisitor;
 import com.pro.infomate.member.entity.Member;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import java.util.List;
 @Entity
 @Table(name = "TBL_DOCUMENT")
 @Inheritance(strategy = InheritanceType.JOINED)
+@DynamicInsert
 @DiscriminatorColumn(name = "DOCUMENT_KIND", discriminatorType = DiscriminatorType.STRING)
 @SequenceGenerator(
         name = "DOCUMENT_ID_GENERATOR",
@@ -35,7 +37,7 @@ public abstract class Document {
   @Column(name = "DOCUMENT_TITLE", nullable = false)
   private String title;
 
-  @Column(name = "DOCUMENT_DATE", nullable = false)
+  @Column(name = "DOCUMENT_DATE")
   private LocalDateTime createdDate;
 
   @Enumerated(EnumType.STRING)
@@ -48,9 +50,6 @@ public abstract class Document {
 
   @Column(name = "EMERGENCY")
   private String emergency;
-
-  @Column(name="TEMP_STATUS")
-  private String tempStatus;
 
   @Column(name = "DOCUMENT_KIND", insertable = false, updatable = false)
   private String documentKind;
@@ -67,7 +66,6 @@ public abstract class Document {
 
   @OneToMany(mappedBy = "document", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<DocRef> refList= new ArrayList<>();
-
 
   //편의 메소드
   public void addFile(DocumentFile file){

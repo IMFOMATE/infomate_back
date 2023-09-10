@@ -86,6 +86,28 @@ public class DeptController {
   }
 
 
+<<<<<<< HEAD
+=======
+//  public ResponseEntity<ResponseDTO> selectSearchDeptList(
+//          @RequestParam(name = "s", defaultValue = "all") String search){
+//
+//    return ResponseEntity.ok()
+//            .body(new ResponseDTO(HttpStatus.OK, "검색 성공", departmentService.selectDept(search)));
+//  }
+
+
+  @GetMapping("/participantList")
+  public ResponseEntity<ResponseDTO> participantList(){
+
+    return ResponseEntity.ok().body(
+            ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .data(departmentService.participantList())
+                    .build()
+    );
+  }
+
+>>>>>>> df8b801fa5228c817bdbb09314fbe9dcbd61b3ab
 
 
   // 페이지

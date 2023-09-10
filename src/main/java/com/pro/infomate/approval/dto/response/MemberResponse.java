@@ -7,12 +7,15 @@ import lombok.*;
 @NoArgsConstructor
 public class MemberResponse {
 
-    private String memberName;
+  private int memberCode;
 
-    private String deptName;
-    @Builder
-    public MemberResponse(String memberName, String deptName) {
-        this.memberName = memberName;
-        this.deptName = deptName;
-    }
+  private String memberName;
+
+  private String deptName;
+  @Builder
+  public MemberResponse(int memberCode, String memberName, String deptName) {
+    this.memberCode = memberCode;
+    this.memberName = memberName;
+    this.deptName = deptName;
+  }
 }

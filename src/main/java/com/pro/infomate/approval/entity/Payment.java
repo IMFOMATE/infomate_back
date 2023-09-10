@@ -19,7 +19,7 @@ import java.util.List;
 @DiscriminatorValue("payment")
 public class Payment extends Document{
 
-  @OneToMany(mappedBy = "paymentCode", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "document", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<PaymentList> paymentList = new ArrayList<>();
 
   public void addPaymentList(PaymentList paymentList){
@@ -29,6 +29,7 @@ public class Payment extends Document{
       paymentList.setDocument(this);
     }
   }
+
   @Override
   public DocumentDetailResponse accept(DocumentVisitor<DocumentDetailResponse> visitor) {
     return visitor.visit(this);

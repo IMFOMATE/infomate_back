@@ -31,15 +31,18 @@ public class DocumentListResponse {
   
   private String documentKind; // 문서종류
 
+  private String auth; // 작성자
+
   @Builder
   @QueryProjection
-  public DocumentListResponse(Long id, String title, DocumentStatus documentStatus, String emergency, LocalDateTime createdDate, String documentKind) {
+  public DocumentListResponse(Long id, String title, DocumentStatus documentStatus, String emergency, LocalDateTime createdDate, String documentKind, String auth) {
     this.id = id;
     this.title = title;
     this.status = documentStatus;
     this.emergency = emergency;
     this.createdDate = createdDate;
     this.documentKind = documentKind;
+    this.auth = auth;
   }
 
   public DocumentListResponse(Document document){
@@ -49,6 +52,7 @@ public class DocumentListResponse {
     this.emergency = document.getEmergency();
     this.createdDate = document.getCreatedDate();
     this.documentKind = document.getDocumentKind();
+    this.auth = document.getMember().getMemberName();
   }
 
 }

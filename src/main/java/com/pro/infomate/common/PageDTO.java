@@ -15,11 +15,11 @@ public class PageDTO {
 
     private boolean next, prev;     // 이전, 다음 버튼 존재 여부
 
-    private int total;              // 행 전체 개수
+    private long total;              // 행 전체 개수
 
     private Criteria cri;           // 검색
 
-    public PageDTO(Criteria cri, int total) {
+    public PageDTO(Criteria cri, long total) {
 
         /* cri, total 초기화 */
         this.cri = cri;

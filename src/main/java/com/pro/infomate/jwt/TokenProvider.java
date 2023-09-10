@@ -4,6 +4,7 @@ import com.pro.infomate.exception.TokenException;
 import com.pro.infomate.member.dto.TokenDTO;
 import com.pro.infomate.member.entity.AuthList;
 import com.pro.infomate.member.entity.Member;
+
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -54,6 +55,12 @@ public class TokenProvider {
         Claims claims = Jwts.claims().setSubject(member.getMemberId());
 
         claims.put(AUTHORITIES_KEY, roles);
+        claims.put("department", member.getDepartment().getDeptName());
+        claims.put("memberName", member.getMemberName());
+        claims.put("rankName", member.getRank().getRankName());
+
+
+
 
         long now = System.currentTimeMillis();
 
@@ -72,6 +79,7 @@ public class TokenProvider {
                                 member.getDepartment().getDeptCode(),
                                 member.getRank().getRankName(),
                                 member.getMemberCode(),
+                                member.getMemberPic(),
                                 accessToken,
                                 accessTokenExpiresIn.getTime()
                             );

@@ -9,9 +9,9 @@ import lombok.*;
 @ToString
 public class MailReferenceDTO {
 
-    private int mailCode;
+    private Integer mailCode;
 
-    private int memberCode;
+    private Integer memberCode;
 
-    private int referenceCode;
+    private Integer referenceCode;
 }

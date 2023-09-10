@@ -18,8 +18,7 @@ import java.time.LocalDateTime;
 public class PaymentListResponse {
 
     @NotBlank
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime paymentDate; // 지출 날짜
+    private String paymentDate; // 지출 날짜
 
     @NotBlank
     private String paymentSort; // 지출 종류
@@ -34,7 +33,7 @@ public class PaymentListResponse {
     private String remarks; //비고
 
     @Builder
-    public PaymentListResponse(LocalDateTime paymentDate, String paymentSort, int paymentPrice, String paymentContent, String remarks) {
+    public PaymentListResponse(String paymentDate, String paymentSort, int paymentPrice, String paymentContent, String remarks) {
         this.paymentDate = paymentDate;
         this.paymentSort = paymentSort;
         this.paymentPrice = paymentPrice;
