@@ -25,4 +25,6 @@ public class EmailDTO {
     private String mailTitle;
 
     private String receiverMail;
+
+    private Integer trashCode;
 }
