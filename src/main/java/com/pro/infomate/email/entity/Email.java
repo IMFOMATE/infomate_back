@@ -1,5 +1,6 @@
 package com.pro.infomate.email.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pro.infomate.member.entity.Member;
 import lombok.*;
 
@@ -38,6 +39,7 @@ public class Email {
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_CODE", nullable = false)
+    @JsonIgnore
     private Member member;
 
     @Column(name = "MAIL_STATUS")

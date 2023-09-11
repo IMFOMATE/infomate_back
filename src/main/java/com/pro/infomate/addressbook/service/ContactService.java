@@ -167,7 +167,6 @@ public class ContactService {
             contactList.get(i).setContactPhoto(IMAGE_URL + contactList.get(i).getContactPhoto());
         }
 
-
         System.out.println("contactList = " + contactList);
 
 
