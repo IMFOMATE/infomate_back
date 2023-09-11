@@ -65,12 +65,13 @@ public class DocumentController {
     int memberCode = memberDTO.getMemberCode();
 
 //
-    documentService.saveDocument(memberCode, draftRequest, fileList, Draft.class, DraftResponse.class);
+    DraftResponse draftResponse = documentService.saveDocument(memberCode, draftRequest, fileList, Draft.class, DraftResponse.class);
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
                     .status(HttpStatus.OK)
                     .message("success")
+                    .data(draftResponse.getTitle() + "등록완료")
                     .build());
   }
 
@@ -98,27 +99,79 @@ public class DocumentController {
   //임시저장
   @PostMapping("/regist/temp/{type}/{documentCode}")
   public ResponseEntity<ResponseDTO> tempRegist(
-          @PathVariable(required = false) Long documentCode,
+          @PathVariable(required = false) String documentCode,
           @PathVariable(required = true) String type,
-          @ModelAttribute DocumentRequest documentRequest,
-          @ModelAttribute(name = "fileList") List<MultipartFile> fileList
+          @ModelAttribute DraftRequest documentRequest,
+          @ModelAttribute(name = "fileList") List<MultipartFile> fileList,
+          @AuthenticationPrincipal MemberDTO memberDTO
           ){
 
-    switch (type){
-      case "vacation":
+    Long id = documentCode.equals("null") ? null : Long.valueOf(documentCode);
 
-        break;
-      case "drft":
+    return ResponseEntity.ok()
+            .body(ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .message("success")
+                    .build());
+  }
 
-        break;
-      case "payment":
+  @PostMapping("/temp/draft/{documentCode}")
+  public ResponseEntity<ResponseDTO> tempRegistDraft(
+          @PathVariable(required = false) String documentCode,
+          @ModelAttribute DraftRequest documentRequest,
+          @ModelAttribute(name = "fileList") List<MultipartFile> fileList,
+          @AuthenticationPrincipal MemberDTO memberDTO,
+          @RequestParam(required = false) Boolean isSave
+  ) {
+    Long id = documentCode.equals("null") ? null : Long.valueOf(documentCode);
 
-        break;
+    documentService.tempSave(id, memberDTO.getMemberCode(), documentRequest, Draft.class, fileList, isSave);
 
-    }
+    return ResponseEntity.ok()
+            .body(ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .message("success")
+                    .build());
+  }
 
 
-      return null;
+  @PostMapping("/temp/vacation/{documentCode}")
+  public ResponseEntity<ResponseDTO> tempRegistVacation(
+          @PathVariable(required = false) String documentCode,
+          @ModelAttribute VacationRequest documentRequest,
+          @ModelAttribute(name = "fileList") List<MultipartFile> fileList,
+          @AuthenticationPrincipal MemberDTO memberDTO,
+          @RequestParam(required = false) Boolean isSave
+  ) {
+    Long id = documentCode.equals("null") ? null : Long.valueOf(documentCode);
+
+    documentService.tempSave(id, memberDTO.getMemberCode(), documentRequest, Draft.class, fileList, isSave);
+
+
+    return ResponseEntity.ok()
+            .body(ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .message("success")
+                    .build());
+  }
+
+  @PostMapping("/temp/payment/{documentCode}")
+  public ResponseEntity<ResponseDTO> tempRegistPayment(
+          @PathVariable(required = false) String documentCode,
+          @ModelAttribute PaymentRequest documentRequest,
+          @ModelAttribute(name = "fileList") List<MultipartFile> fileList,
+          @AuthenticationPrincipal MemberDTO memberDTO,
+          @RequestParam(required = false) Boolean isSave
+  ) {
+    Long id = documentCode.equals("null") ? null : Long.valueOf(documentCode);
+
+    documentService.tempSave(id, memberDTO.getMemberCode(), documentRequest, Draft.class, fileList, isSave);
+
+    return ResponseEntity.ok()
+            .body(ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .message("success")
+                    .build());
   }
 
 

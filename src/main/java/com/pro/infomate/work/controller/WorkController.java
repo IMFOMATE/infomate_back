@@ -2,12 +2,16 @@ package com.pro.infomate.work.controller;
 
 import com.pro.infomate.common.ResponseDTO;
 import com.pro.infomate.member.dto.MemberDTO;
+import com.pro.infomate.work.dto.response.WorkResponse;
 import com.pro.infomate.work.service.WorkService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,7 +42,7 @@ public class WorkController {
           @AuthenticationPrincipal MemberDTO memberDTO
   ){
 
-
+    workService.finish(memberDTO.getMemberCode());
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
@@ -47,5 +51,21 @@ public class WorkController {
                     .data("퇴근완료했습니다.")
                     .build());
   }
+
+
+  @GetMapping("/today")
+  public ResponseEntity<ResponseDTO> getWork(
+          @AuthenticationPrincipal MemberDTO memberDTO
+  ){
+    WorkResponse byDate = workService.findByDate(LocalDate.now(), memberDTO.getMemberCode());
+
+    return ResponseEntity.ok()
+            .body(ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .message("success")
+                    .data(byDate)
+                    .build());
+  }
+
 
 }

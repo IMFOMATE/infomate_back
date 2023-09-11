@@ -21,7 +21,6 @@ public class WorkDTO {  // 근무
     private Timestamp yearMonth;    // 일자인데.. 이름을 걍 이렇게 쓰는걸로
 
     private String workStatus;
-    // 근무상태 - 내근, 외근, 결근, 근무시간미달
 
     private int memberCode;
 }

@@ -12,4 +12,5 @@ public interface WorkRepository extends JpaRepository<Work, Integer> {
   public Optional<Work> findByYearMonth(LocalDate date);
 
 
+
 }
