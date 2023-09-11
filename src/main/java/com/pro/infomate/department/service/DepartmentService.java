@@ -1,5 +1,6 @@
 package com.pro.infomate.department.service;
 
+import com.pro.infomate.calendar.service.CalendarService;
 import com.pro.infomate.common.Criteria;
 import com.pro.infomate.department.dto.*;
 import com.pro.infomate.department.entity.Department;
@@ -29,9 +30,13 @@ import java.util.stream.Collectors;
 @Slf4j
 public class DepartmentService {
 
+
+
   private final DepartmentRepository departmentRepository;
 
   private final MemberRepository memberRepository;
+
+  private final CalendarService calendarService;
 
   private final ModelMapper modelMapper;
 
