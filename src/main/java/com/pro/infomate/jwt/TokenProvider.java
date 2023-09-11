@@ -80,6 +80,7 @@ public class TokenProvider {
                                 member.getRank().getRankName(),
                                 member.getMemberCode(),
                                 member.getMemberPic(),
+                                member.getMemberPicDefault(),
                                 accessToken,
                                 accessTokenExpiresIn.getTime()
                             );
