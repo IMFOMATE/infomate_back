@@ -91,7 +91,7 @@ public class Member {
     private String memberPic;
 
     @Column(name = "MEMBER_PIC_ORIGIN")
-    private String memberPicOrigin;
+    private String memberPicDefault;
 
     @Column(name = "MEMBER_OFF")
     private int memberOff;

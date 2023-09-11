@@ -87,6 +87,7 @@ public class AuthService {
 
         /* 프로필 사진 조회 */
         tokenDTO.setMemberPic(IMAGE_URL + tokenDTO.getMemberPic());
+        tokenDTO.setMemberPicDefault(IMAGE_URL + tokenDTO.getMemberPicDefault());
 
         log.info("[AuthService] login End ==================================");
 
@@ -112,7 +113,7 @@ public class AuthService {
 
         Member registMember = modelMapper.map(memberDTO, Member.class);
         registMember.setMemberPic(replaceFileName);
-        registMember.setMemberPicOrigin(originalFileName);
+        registMember.setMemberPicDefault(originalFileName);
         registMember.setDepartment(deparment);
         registMember.setRank(rank);
 
