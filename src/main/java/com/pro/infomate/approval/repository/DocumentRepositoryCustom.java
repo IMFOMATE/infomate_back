@@ -11,7 +11,6 @@ public interface DocumentRepositoryCustom {
 
   Page<DocumentListResponse> findByDeptDoc(int memberCode, Pageable pageable);
 
-  //결재.......
   List<Document> findApprovalsDocument(int memberCode);
 
 

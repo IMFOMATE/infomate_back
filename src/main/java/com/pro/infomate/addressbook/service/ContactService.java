@@ -16,14 +16,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -66,7 +62,7 @@ public class ContactService {
 
 
 //         임시 멤버코드
-        contact.setMemberCode(2);
+//        contact.setMemberCode(2);
 
         String imageName = UUID.randomUUID().toString().replace("-", "");
 
@@ -129,26 +125,26 @@ public class ContactService {
 
 
 
-    public int selectAddressBookTotal() {
+    public int selectAddressBookTotal(Integer memberCode) {
 
-        List<Contact> contactList = contactRepository.findByContactTotleMemberCode(2);
-
-
+        List<Contact> contactList = contactRepository.findByContactTotleMemberCode(memberCode);
 
 
-        return contactList.size();
-    }
 
-    public int selectContactLikeTotal() {
-
-        List<Contact> contactList = contactRepository.findByContactLikeTotal('Y');
 
         return contactList.size();
     }
 
+    public int selectContactLikeTotal(Integer memberCode) {
+
+        List<Contact> contactList = contactRepository.findByContactLikeTotal(memberCode);
+
+        return contactList.size();
+    }
 
 
-    public Object selectAddressBookListPaging(Criteria cri) {
+
+    public Object selectAddressBookListPaging(Criteria cri, Integer memberCode) {
 
         int index = cri.getPageNum() - 1;
         int count = cri.getAmount();
@@ -157,7 +153,7 @@ public class ContactService {
 
         System.out.println("paging" + paging);
 
-        Page<Contact> result = contactRepository.findByMemberMemberCode(2, paging);
+        Page<Contact> result = contactRepository.findByMemberMemberCode(memberCode, paging);
 
         System.out.println("result = " + result);
 
@@ -166,7 +162,6 @@ public class ContactService {
         for (int i = 0; i < contactList.size(); i++) {
             contactList.get(i).setContactPhoto(IMAGE_URL + contactList.get(i).getContactPhoto());
         }
-
 
         System.out.println("contactList = " + contactList);
 
@@ -177,16 +172,19 @@ public class ContactService {
 
     }
 
-    public Object selectContactLikeListPaging(Criteria cri) {
+    public Object selectContactLikeListPaging(Criteria cri, Integer memberCode) {
+
+        System.out.println("?" + memberCode);
 
         int index = cri.getPageNum() - 1;
         int count = cri.getAmount();
+
 
         Pageable paging = PageRequest.of(index, count, Sort.by("contactCode").descending());
 
         System.out.println("paging" + paging);
 
-        Page<Contact> result = contactRepository.findByContactLike('Y', paging);
+        Page<Contact> result = contactRepository.findByContactLikeAndMemberMemberCode(memberCode, paging);
 
         System.out.println("result = " + result);
 

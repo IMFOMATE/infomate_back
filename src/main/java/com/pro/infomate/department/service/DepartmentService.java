@@ -208,13 +208,13 @@ public class DepartmentService {
   }
 
 
-//  public List<DepartmentListResponse> selectPartList() {
-//
-//    List<Department> partList = departmentRepository.findAll();
-//    List<DepartmentListResponse> result = new ArrayList<>();
-//
-//    return null;
-//  }
+  public List<DepartmentListResponse> selectPartList() {
+
+    List<Department> partList = departmentRepository.findAll();
+    List<DepartmentListResponse> result = new ArrayList<>();
+
+    return null;
+  }
 
 
   public Page<MemberDTO> openEmpList( Pageable pageable, String findSearch ) {
@@ -245,22 +245,20 @@ public class DepartmentService {
 
     int result = 0;
 
+    try {
 
+      Department saveDepartment = modelMapper.map(departmentDTO, Department.class);
 
+      departmentRepository.save(saveDepartment);
 
+      calendarService.saveDepartmentCalendarRegist(saveDepartment.getDeptCode());
 
-//    try {
-//
-//      Department saveDepartment = modelMapper.map(departmentDTO, Department.class);
-//
-//      departmentRepository.save(saveDepartment);
-//
-//    } catch (Exception e){
-//
-//      log.info("확인");
-//
-//      throw new RuntimeException(e);
-//    }
+    } catch (Exception e){
+
+      log.info("확인");
+
+      throw new RuntimeException(e);
+    }
 
     log.info("[DepartmentService] saveByDepartment End ===================");
 
@@ -282,34 +280,10 @@ public class DepartmentService {
     entityDept.update(department);
   }
 
-//  public void delete(int deptCode) {
-//
-//
-//    departmentRepository.deleteById(deptCode);
-//  }
 
 
 
 
-  public void deleteById(int deptCode, DepartmentDTO department) {
-
-    log.info("[DepartmentService] (deleteDept) department : {}", department);
-
-    try{
-
-      int departmentCodeDelet = department.getDeptCode();
-
-      departmentRepository.deleteById(departmentCodeDelet);
-    } catch(Exception e) {
-      throw new RuntimeException("부서 삭제 에러" + e.getMessage(), e);
-    }
-
-
-//    Department entityDept = departmentRepository.findById(department.getDeptCode()).get();
-
-//    log.info("[DepartmentService] (deleteDept) entityDept : {}", departmentCodeDelet);
-
-  }
 
 
 
@@ -322,20 +296,7 @@ public class DepartmentService {
             .collect(Collectors.toList());
   }
 
-  public void delete(int deptCode) {
-  }
+
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 

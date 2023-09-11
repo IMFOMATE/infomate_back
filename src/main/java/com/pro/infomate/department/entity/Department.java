@@ -31,7 +31,7 @@ public class Department {
   private String deptName;
 
   @Column(name = "DEPT_ORDER")
-  private int deptOrder;
+  private Integer deptOrder;
 
 //  @JsonIgnore
   @OneToMany(mappedBy = "department")

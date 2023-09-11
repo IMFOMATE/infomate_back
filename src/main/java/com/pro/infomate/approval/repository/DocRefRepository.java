@@ -20,6 +20,7 @@ public interface DocRefRepository extends JpaRepository<DocRef,Long>, DocRefRepo
   @EntityGraph(attributePaths = {"member"})
   List<DocRef> findByDocument(Document document);
 
+  void deleteByDocument(Document document);
 
 
 }
