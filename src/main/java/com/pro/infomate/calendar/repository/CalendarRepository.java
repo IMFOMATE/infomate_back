@@ -22,17 +22,8 @@ public interface CalendarRepository extends JpaRepository<Calendar, Integer> {
 
     Page<Calendar> findByDepartmentCodeAndOpenStatusAndMemberCodeNot(Integer departmentCode, boolean openStatus, Integer memberCode, Pageable pageable);
 
-    Optional<Calendar> findFirstByMemberCodeAndIndexNoBefore(Integer id, Integer indexNo);
+    Optional<Calendar> findFirstByMemberCodeAndIndexNoBefore(Integer id, Integer indexNo, Sort sort);
     Optional<Calendar> findFirstByMemberCodeAndIndexNoAfter(Integer id, Integer indexNo, Sort sort);
-//    @Query(value = "SELECT s FROM Calendar s " +
-//                     "JOIN Member m on m.memberCode = s.memberCode " +
-//                    "LEFT JOIN FavoriteCalendar f on f.memberCode = :memberCode " +
-//                    "WHERE NOT s.memberCode = :memberCode " +
-//                    "AND s.openStatus = true " +
-//                    "AND s.departmentCode IS NULL"
-//    )
-//    List<Calendar> findByPublicCalendarList(Integer memberCode);
-
 
     @Query(value = "SELECT c FROM Calendar c " +
                     "WHERE c.memberCode = :memberCode " +
@@ -44,8 +35,6 @@ public interface CalendarRepository extends JpaRepository<Calendar, Integer> {
                       "AND c.openStatus = true " +
                     "ORDER BY c.indexNo ASC ")
     List<Calendar> findByMemberCode(int memberCode, int departmentCode);
-
-//    List<Calendar> findAllByMemberCodeAndDepartmentCode(int memberCode, Integer departmentCode, Sort indexNo);
 
     @Query(value = "SELECT COUNT(s.id) AS amount, " +
                           "TRUNC(s.endDate) AS day " +

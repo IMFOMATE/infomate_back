@@ -4,6 +4,7 @@ import com.pro.infomate.common.Criteria;
 import com.pro.infomate.department.dto.*;
 import com.pro.infomate.department.entity.Department;
 import com.pro.infomate.department.repository.DepartmentRepository;
+import com.pro.infomate.exception.NotFindDataException;
 import com.pro.infomate.member.dto.MemberDTO;
 import com.pro.infomate.member.entity.Member;
 import com.pro.infomate.member.repository.MemberRepository;
@@ -13,9 +14,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.*;
 //import org.springframework.data.domain.Pageable;
 //import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -63,13 +66,10 @@ public class DepartmentService {
     result.sort(Comparator.comparing(TreeViewResponse::getId));
 
     return result;
-
   }
 
   //부서 매핑
   private TreeViewResponse createDepartmentNode(Department dept) {
-    System.out.println("dept.getDeptOrder() = " + dept.getDeptOrder());
-    System.out.println("dept.getDeptName() = " + dept.getDeptName());
     return TreeViewResponse.builder()
             .id(dept.getDeptOrder())
             .parent(0)
@@ -190,7 +190,7 @@ public class DepartmentService {
   public List<MemberDTO> selectEmpAll() {         // 멤버 전체조회
     List<Member> employeeAll = memberRepository.findAll();
 
-    return employeeAll.stream().map(emp -> modelMapper.map(emp, MemberDTO.class)).collect(Collectors.toList());
+    return employeeAll.stream().map(member -> modelMapper.map(member, MemberDTO.class)).collect(Collectors.toList());
   }
 
   public List<DepartmentListResponse> selectDeptPart(Department dept) {
@@ -204,7 +204,6 @@ public class DepartmentService {
               .deptCode(member.getDepartment().getDeptCode())
               .deptName(member.getDepartment().getDeptName())
 //              .memberName(member.getMemberName())
-              .count(member.getMemberCode())
               .build();
       result.add(deptList);
     }
@@ -213,30 +212,101 @@ public class DepartmentService {
   }
 
 
-  public List<DepartmentListResponse> selectPartList(){
+  public List<DepartmentListResponse> selectPartList() {
 
     List<Department> partList = departmentRepository.findAll();
     List<DepartmentListResponse> result = new ArrayList<>();
 
-    int count = partList.size();
-    for(Department dept : partList) {
-      result.addAll(selectDeptPart(dept));
-    }
-    return result;
+    return null;
   }
 
 
-//  public List<DepartmentListResponse> testPartList(){
-//    List<Department> testList = departmentRepository.findAll();
-//    List<Member> memberList = memberRepository.findAll();
-//    List<DepartmentListResponse> testResult = new ArrayList<>();
+  public Page<MemberDTO> openEmpList( Pageable pageable, String findSearch ) {
+
+//    Page<Member> empList = memberRepository.findByMemberCode(memberCode, pageable);
+
+    Page<Member> empList = null;
+    if(findSearch.equals("all")){
+      empList = memberRepository.findAll(pageable);
+    } else {
+      empList = memberRepository.findByMemberNameContaining(findSearch, pageable);
+    }
+
+//    if(empList.getContent().size() == 0) throw new NotFindDataException("조회할 데이터가 없습니다.");
+    log.info("[DepartmentService] openEmpList =========== findSearch {}", findSearch);
+
+    return empList.map(member-> modelMapper.map(member, MemberDTO.class));
+
+  }
+
+
+  // 부서 신규 생성
+  @Transactional
+  public String saveByDepartment(DepartmentDTO departmentDTO) {
+
+    log.info("[DepartmentService] saveByDepartment Start ====================");
+    log.info("[DepartmentService] departmentDTO : " + departmentDTO);
+
+    int result = 0;
+
+    try {
+
+      Department saveDepartment = modelMapper.map(departmentDTO, Department.class);
+
+      departmentRepository.save(saveDepartment);
+
+    } catch (Exception e){
+
+      log.info("확인");
+
+      throw new RuntimeException(e);
+    }
+
+    log.info("[DepartmentService] saveByDepartment End ===================");
+
+    return (result > 0)? "실패" : "성공";
+  }
+
+
+
+
+  // 부서명 수정
+  @Transactional
+  public void updateDept(DepartmentDTO department){
+    log.info("[DepartmentService] (updateDept) department : {}", department);
+
+    Department entityDept = departmentRepository.findById(department.getDeptCode()).get();
+
+    log.info("[DepartmentService] (updateById) entityDept : {}", entityDept);
+
+    entityDept.update(department);
+  }
+
+//  public void delete(int deptCode) {
 //
 //
+//    departmentRepository.deleteById(deptCode);
+//  }
+
+
+
+
+//  public void deleteById(int deptCode, DepartmentDTO department) {
 //
+//    log.info("[DepartmentService] (deleteDept) department : {}", department);
+//
+//    Department entityDept = departmentRepository.findById(department.getDeptCode()).get();
+//
+//    log.info("[DepartmentService] (deleteDept) entityDept : {}", entityDept);
 //
 //  }
 
-//=======
+
+}
+
+
+
+
 //    log.info("[DepartmentService] selectDeptList Start ======================");
 //
 //    List<Department> departmentListSearchValue = departmentRepository.findByDeptName(search);
@@ -253,7 +323,7 @@ public class DepartmentService {
 
 
   public List<DepartmentExpendDTO> participantList() {
-    List<Department> departmentList = departmentRepository.findAll();
+    List<Department> departmentList = departmentRepository.findAllByDeptCodeAfter(0);
     log.info("[DepartmentService](participantList) departmentList : {}", departmentList);
     return departmentList.stream()
             .map(department -> modelMapper.map(department, DepartmentExpendDTO.class))
@@ -263,3 +333,4 @@ public class DepartmentService {
 
 
 }
+

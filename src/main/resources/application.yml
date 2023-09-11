@@ -28,6 +28,8 @@ spring:
       hibernate:
         format_sql: true
         default_batch_fetch_size: 100
+        temp:
+          use_jdbc_metadata_defaults: false
   data:
     web:
       pageable:
@@ -48,8 +50,13 @@ image:
   add-resource-locations: classpath:/static/productimgs/
   add-resource-handler: /productimgs/**
 
-  image-dir: src/main/resources/static/productimgs
-  image-url: http://localhost:8989/productimgs/
+
+#  image-dir: src/main/resources/static/productimgs
+#  image-url: http://localhost:8989/productimgs/
+
+  image-dir: C:/dev/02_subSources/img/
+  image-url: http://localhost:8989/imgs/
+
 
 files:
   add-resource-locations: classpath:/static/files/

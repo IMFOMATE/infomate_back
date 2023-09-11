@@ -1,8 +1,10 @@
 package com.pro.infomate.department.dto;
 
-import com.pro.infomate.member.dto.MemberDTO;
 import com.pro.infomate.member.dto.MemberSumamryDTO;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
