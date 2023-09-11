@@ -67,9 +67,19 @@ public class ScheduleController {
         MemberDTO memberDTO = employeeService.selectMemberInfo(memberCode);
 
         log.info("[ScheduleController](findById) memberDTO : {} ", memberDTO);
+        log.info("[ScheduleController](findById) memberDTO.getDepartment().getDeptCode() : {} ", memberDTO.getDepartment().getDeptCode());
 
-        boolean compare = schedule.getCalendar().getMemberCode().equals(memberCode)
-                || schedule.getCalendar().getDepartmentCode().equals(memberDTO.getDepartment().getDeptCode());
+        boolean compare = false;
+
+        if(schedule.getCalendar().getMemberCode().equals(memberCode)
+                && schedule.getCalendar().getDepartmentCode() == null)
+            compare = true;
+        else if(schedule.getCalendar().getDepartmentCode() != null
+                && schedule.getCalendar().getDepartmentCode().equals(memberDTO.getDepartment().getDeptCode())){
+            compare = true;
+        } else{
+            compare = false;
+        }
 
         ExpendsProps expendsProps = ExpendsProps.builder()
                 .compare(compare)
@@ -104,9 +114,10 @@ public class ScheduleController {
                                                   @AuthenticationPrincipal MemberDTO member){
 
         int memberCode = member.getMemberCode();
+        int deptCode = member.getDepartment().getDeptCode();
         log.info("[ScheduleController](deleteById) scheduleId : {} ", scheduleId);
 
-        scheduleService.deleteById(scheduleId, memberCode);
+        scheduleService.deleteById(scheduleId, memberCode, deptCode);
 
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
