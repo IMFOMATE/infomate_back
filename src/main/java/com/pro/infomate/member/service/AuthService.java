@@ -85,6 +85,9 @@ public class AuthService {
         TokenDTO tokenDTO = tokenProvider.generateTokenDTO(member);
         log.info("[AuthService] tokenDTO {} =======> ", tokenDTO);
 
+        /* 프로필 사진 조회 */
+        tokenDTO.setMemberPic(IMAGE_URL + tokenDTO.getMemberPic());
+
         log.info("[AuthService] login End ==================================");
 
         return tokenDTO;

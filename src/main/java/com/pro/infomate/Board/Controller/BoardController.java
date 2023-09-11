@@ -36,17 +36,32 @@ class BoardController {
         log.info("[ProductController] selectPostListWithPaging Start ============ ");
         log.info("[ProductController] selectPostListWithPaging offset : {} ", offset);
 
-//        int total = boardService.totalPost();
-//
-//        Criteria cri = new Criteria(Integer.valueOf(offset), 10);
-//
-//        PagingResponseDTO pagingResponseDTO = new PagingResponseDTO();
-//        pagingResponseDTO.setData(boardService.postListPaging(cri));
-//        pagingResponseDTO.setPageInfo(new PageDTO(cri, total));
-//
-//        log.info("[BoardController] boardPaging End =====================");
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", pagingResponseDTO));
-        return null;
+        int total = boardService.totalPost();
+
+        Criteria cri = new Criteria(Integer.valueOf(offset), 10);
+
+        PagingResponseDTO pagingResponseDTO = new PagingResponseDTO();
+        pagingResponseDTO.setData(boardService.postListPaging(cri));
+        pagingResponseDTO.setPageInfo(new PageDTO(cri, total));
+
+        log.info("[BoardController] boardPaging End =====================");
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", pagingResponseDTO));
+    }
+
+    @GetMapping("/miniboard")
+    public ResponseEntity<ResponseDTO> miniBoard(
+            @RequestParam(name = "offset", defaultValue = "1") String offset){
+
+        int total = boardService.totalPost();
+
+        Criteria cri = new Criteria(Integer.valueOf(offset), 5);
+
+        PagingResponseDTO pagingResponseDTO = new PagingResponseDTO();
+        pagingResponseDTO.setData(boardService.postListPaging(cri));
+        pagingResponseDTO.setPageInfo(new PageDTO(cri, total));
+
+        log.info("[BoardController] boardPaging End =====================");
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", pagingResponseDTO));
     }
 
     @GetMapping("/board/post/{postCode}")  // 글 상세 페이지

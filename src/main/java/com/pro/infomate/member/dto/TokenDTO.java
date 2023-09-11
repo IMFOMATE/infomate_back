@@ -15,6 +15,7 @@ public class TokenDTO {
     private int deptCode;
     private String rank;
     private int memberCode;
+    private String memberPic;
     private String accessToken;
     private Long accessTokenExpiresIn;
 }

@@ -13,6 +13,7 @@ public interface DepartmentRepository extends JpaRepository<Department, Integer>
 
     List<Department> findByDeptName(String deptName);
 
+//    List<Department> findByCode(int deptCode);
 
 //    List<Department> findByDeptName(String search);
 
