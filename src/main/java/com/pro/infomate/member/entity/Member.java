@@ -110,10 +110,7 @@ public class Member {
     private List<Document> documentList = new ArrayList<>();
 
 
-<<<<<<< HEAD
 
-=======
->>>>>>> df8b801fa5228c817bdbb09314fbe9dcbd61b3ab
     @OneToMany(mappedBy = "member")
     private List<Work> workList;
 

@@ -66,17 +66,12 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
             .join(member.department, department)
             .where(
                     document.documentStatus.eq(DocumentStatus.APPROVAL)
-<<<<<<< HEAD
-            .and(department.deptCode.in(subQueryDeptCodes)))
-=======
                             .and(department.deptCode.in(subQueryDeptCodes)))
->>>>>>> df8b801fa5228c817bdbb09314fbe9dcbd61b3ab
             .fetchOne();
 
     return new PageImpl<>(content,pageable, count);
 
   }
-
 
   @Override
   public List<Document> findApprovalsDocument(int memberCode) {

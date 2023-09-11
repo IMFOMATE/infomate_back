@@ -33,7 +33,7 @@ public class DeptController {
 
   //////////////////////////* 직원 조회 *//////////////////////
   @GetMapping("/emp/list")
-  public ResponseEntity<ResponseDTO> deptList(){
+  public ResponseEntity<ResponseDTO> deptList() {
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder().status(HttpStatus.OK).message("조회성공").data(departmentService.selectDeptList()).build());
@@ -50,7 +50,7 @@ public class DeptController {
 
   //////////////////* 직원 전체 조회 */
   @GetMapping("/emp/listall")
-  public ResponseEntity<ResponseDTO> employeeList(){
+  public ResponseEntity<ResponseDTO> employeeList() {
 
     return ResponseEntity.ok()
             .body(new ResponseDTO(HttpStatus.OK, "모든 부서 리스트 조회 성공",
@@ -59,11 +59,10 @@ public class DeptController {
   }
 
 
-
   //////////////////////////* 부서 조회 *//////////////////////
 
   @GetMapping("/dept/list")
-  public ResponseEntity<ResponseDTO> selectDeptAll(){
+  public ResponseEntity<ResponseDTO> selectDeptAll() {
 
     return ResponseEntity.ok()
             .body(new ResponseDTO(HttpStatus.OK, "모든 부서 리스트 조회 성공",
@@ -71,10 +70,8 @@ public class DeptController {
   }
 
 
-
-
   @GetMapping("/treeview")
-  public ResponseEntity<ResponseDTO> deptTreeView(){
+  public ResponseEntity<ResponseDTO> deptTreeView() {
 
 
     return ResponseEntity.ok()
@@ -86,8 +83,6 @@ public class DeptController {
   }
 
 
-<<<<<<< HEAD
-=======
 //  public ResponseEntity<ResponseDTO> selectSearchDeptList(
 //          @RequestParam(name = "s", defaultValue = "all") String search){
 //
@@ -97,7 +92,7 @@ public class DeptController {
 
 
   @GetMapping("/participantList")
-  public ResponseEntity<ResponseDTO> participantList(){
+  public ResponseEntity<ResponseDTO> participantList() {
 
     return ResponseEntity.ok().body(
             ResponseDTO.builder()
@@ -106,8 +101,6 @@ public class DeptController {
                     .build()
     );
   }
-
->>>>>>> df8b801fa5228c817bdbb09314fbe9dcbd61b3ab
 
 
   // 페이지
@@ -138,14 +131,14 @@ public class DeptController {
   // 페이징
   @GetMapping("/openEmpList")
   public ResponseEntity<PagingResponseDTO> findOpenEmpList(@PageableDefault(size = 10, sort = "memberCode", direction = Sort.Direction.DESC) Pageable pageable, MemberDTO member,
-                                                           @RequestParam(name = "s", defaultValue = "all") String findSearch){
+                                                           @RequestParam(name = "s", defaultValue = "all") String findSearch) {
 
     int memberCode = member.getMemberCode();
 
     log.info("[DeptController] (findOpenEmpLIst) pageable : {}", pageable);
 
     pageable = PageRequest.of(
-            pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() -1 ,   // 페이지넘버
+            pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,   // 페이지넘버
             pageable.getPageSize(),                                               // 페이지 사이즈
             pageable.getSort());                                                  // 페이지당 갯수
 
@@ -154,7 +147,7 @@ public class DeptController {
     log.info("[DeptController] (findOpenEmpList) memberDTOPage.getSize() : {}", mamberDTOPage.getSize());
     log.info("[DeptController] (findOpenEmpList) memberDTOPage.getContent() : {}", mamberDTOPage.getContent());
 
-    PageDTO pageDTO = new PageDTO(new Criteria(pageable.getPageNumber(), pageable.getPageSize()),mamberDTOPage.getTotalPages());
+    PageDTO pageDTO = new PageDTO(new Criteria(pageable.getPageNumber(), pageable.getPageSize()), mamberDTOPage.getTotalPages());
     log.info("[DeptController] (findOpenEmpList) pageDTO : {}", pageDTO);
     log.info("[DeptController] (findOpenEmpList) findSearch : {}", findSearch);
     log.info("[DeptController] (findOpenEmpList) memberDTOPage : {}", mamberDTOPage);
@@ -170,10 +163,9 @@ public class DeptController {
   }
 
 
-
   // 부서 생성
   @PostMapping("/regist")
-  public ResponseEntity<ResponseDTO> saveByDepartment(@ModelAttribute DepartmentDTO departmentDTO){
+  public ResponseEntity<ResponseDTO> saveByDepartment(@ModelAttribute DepartmentDTO departmentDTO) {
 
     return ResponseEntity.ok()
             .body(new ResponseDTO(HttpStatus.OK, "부서 입력 성공", departmentService.saveByDepartment(departmentDTO)));
@@ -182,11 +174,9 @@ public class DeptController {
   }
 
 
-
-
-//   조직도 수정하기
+  //   조직도 수정하기
   @PutMapping("/save")
-  public ResponseEntity<ResponseDTO> updateDept(@RequestBody DepartmentDTO departmentDTO){
+  public ResponseEntity<ResponseDTO> updateDept(@RequestBody DepartmentDTO departmentDTO) {
 
     log.info("[DeptController] (updateDept) departmentDTO : {}", departmentDTO);
 
@@ -199,7 +189,6 @@ public class DeptController {
                     .build());
 
   }
-
 
 
   // 조직도 삭제하기
@@ -221,23 +210,26 @@ public class DeptController {
 //  }
 
 
+  @DeleteMapping("/delete/{deptCode}")
+  public ResponseEntity<ResponseDTO> delete(@PathVariable int deptCode) {
 
-//  @GetMapping("/delete/{deptCode}")
-//  public ResponseEntity<ResponseDTO> delete(@PathVariable int deptCode){
-//
-//    departmentService.delete(deptCode);
-//
-//    return ResponseEntity.ok()
-//            .body(ResponseDTO.builder()
-//                    .status(HttpStatus.OK)
-//                    .message("삭제 완료")
-//                    .build());
-//  }
+
+      // DepartmentDTO 객체를 생성하고 deptCode를 설정합니다.
+      DepartmentDTO departmentDTO = new DepartmentDTO();
+      departmentDTO.setDeptCode(deptCode);
+
+      // DepartmentService의 deleteById 메서드 호출
+      departmentService.deleteById(deptCode, departmentDTO);
+
+      // 삭제 완료 응답 반환
+      return ResponseEntity.ok()
+              .body(ResponseDTO.builder()
+                      .status(HttpStatus.OK)
+                      .message("삭제 완료")
+                      .build());
+
+  }
 
 
 }
-
-
-
-
 

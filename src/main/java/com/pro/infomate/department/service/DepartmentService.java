@@ -245,18 +245,22 @@ public class DepartmentService {
 
     int result = 0;
 
-    try {
 
-      Department saveDepartment = modelMapper.map(departmentDTO, Department.class);
 
-      departmentRepository.save(saveDepartment);
 
-    } catch (Exception e){
 
-      log.info("확인");
-
-      throw new RuntimeException(e);
-    }
+//    try {
+//
+//      Department saveDepartment = modelMapper.map(departmentDTO, Department.class);
+//
+//      departmentRepository.save(saveDepartment);
+//
+//    } catch (Exception e){
+//
+//      log.info("확인");
+//
+//      throw new RuntimeException(e);
+//    }
 
     log.info("[DepartmentService] saveByDepartment End ===================");
 
@@ -287,48 +291,26 @@ public class DepartmentService {
 
 
 
-//  public void deleteById(int deptCode, DepartmentDTO department) {
-//
-//    log.info("[DepartmentService] (deleteDept) department : {}", department);
-//
+  public void deleteById(int deptCode, DepartmentDTO department) {
+
+    log.info("[DepartmentService] (deleteDept) department : {}", department);
+
+    try{
+
+      int departmentCodeDelet = department.getDeptCode();
+
+      departmentRepository.deleteById(departmentCodeDelet);
+    } catch(Exception e) {
+      throw new RuntimeException("부서 삭제 에러" + e.getMessage(), e);
+    }
+
+
 //    Department entityDept = departmentRepository.findById(department.getDeptCode()).get();
-//
-//    log.info("[DepartmentService] (deleteDept) entityDept : {}", entityDept);
-//
-//  }
 
-<<<<<<< HEAD
+//    log.info("[DepartmentService] (deleteDept) entityDept : {}", departmentCodeDelet);
 
+  }
 
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-=======
-//=======
-//    log.info("[DepartmentService] selectDeptList Start ======================");
-//
-//    List<Department> departmentListSearchValue = departmentRepository.findByDeptName(search);
-//
-//    List<DepartmentDTO> departmentDTOlist = departmentListSearchValue.stream()
-//            .map(department -> modelMapper.map(department, DepartmentDTO.class)).collect(Collectors.toList());
-//
-//    log.info("[DepartmentService] selectDeptList End ========================");
-//
-//    return departmentDTOlist;
-//  }
-//
 
 
 
@@ -340,7 +322,20 @@ public class DepartmentService {
             .collect(Collectors.toList());
   }
 
-
-
+  public void delete(int deptCode) {
+  }
 }
->>>>>>> df8b801fa5228c817bdbb09314fbe9dcbd61b3ab
+
+
+
+
+
+
+
+
+
+
+
+
+
+
