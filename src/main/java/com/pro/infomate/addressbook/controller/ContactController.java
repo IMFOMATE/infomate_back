@@ -51,12 +51,12 @@ public class ContactController {
 
         switch (title) {
             case "전체연락처" :
-                contactList = contactService.selectAddressBookListPaging(cri);
-                total = contactService.selectAddressBookTotal();
+                contactList = contactService.selectAddressBookListPaging(cri , memberCode);
+                total = contactService.selectAddressBookTotal(memberCode);
                 break;
             case "즐겨찾기" :
-                contactList = contactService.selectContactLikeListPaging(cri);
-                total = contactService.selectContactLikeTotal();
+                contactList = contactService.selectContactLikeListPaging(cri , memberCode);
+                total = contactService.selectContactLikeTotal(memberCode);
                 break;
             default:
         }
@@ -84,7 +84,7 @@ public class ContactController {
     }
 
 
-    @PostMapping("/addContact")
+    @PostMapping("/addContact/{memberCode}")
 
     public ResponseEntity<ResponseDTO> registAddressBook(@RequestParam String contactName
                                                         , @RequestParam String company
@@ -95,11 +95,13 @@ public class ContactController {
                                                         , @RequestParam String companyAddress
                                                         , @RequestParam String memo
                                                         , @RequestParam char contactLike
-                                                        , @RequestParam MultipartFile contactPhoto) {
+                                                        , @RequestParam MultipartFile contactPhoto
+                                                        , @PathVariable Integer memberCode) {
 
 
         ContactDTO contact = new ContactDTO();
 
+        contact.setMemberCode(memberCode);
         contact.setContactName(contactName);
         contact.setCompany(company);
         contact.setDepartment(department);

@@ -23,6 +23,8 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
     @Query("SELECT MAX(a.memberCode) FROM Member a")
     int maxMemberCode();
 
+
+
 //  @Query("SELECT c FROM Member c WHERE c.memberName = :member")
 //  Member findByMemberName(Object o);
 

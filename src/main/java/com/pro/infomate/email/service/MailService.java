@@ -145,18 +145,21 @@ public class MailService {
         // 파일
         PhotoFileDTO photoFile = new PhotoFileDTO();
 
+        // 받는사람 이름
         List<Object> member = (List) map.get("receiverMail");
 
 
         for (int i = 0; i < member.size() ; i++) {
 
             Contact contacts  = contactRepository.findByContactName(member.get(i));
+//            if(contacts.isPresent()){
 
-            if(contacts == null) {
 //                Member memberEntity = memberRepository.findByMemberName(member.get(i));
-
+//
 //                emailDTO.setReceiverMail(memberEntity.getMemberEmail());
-            }
+//            }else
+
+
             emailDTO.setReceiverMail(contacts.getContactEmail());
 
             Email emailEntity = modelMapper.map(emailDTO , Email.class);
@@ -259,7 +262,9 @@ public class MailService {
         for (Member member : memberList) {
             for (Email email : emailEntity) {
                 if (member.getMemberEmail().equals(email.getReceiverMail())) {
-                    matchingEmails.add(email);
+                    if(email.getTrash() == null){
+                        matchingEmails.add(email);
+                    }
                 }
             }
         }
@@ -343,7 +348,9 @@ public class MailService {
                 if (member.getMemberEmail().equals(email.getReceiverMail())) {
                     System.out.println("상태값"+email.getMailStatus());
                     if(email.getMailStatus() == 'N') {
-                        matchingEmails.add(email);
+                        if(email.getTrash() == null) {
+                            matchingEmails.add(email);
+                        }
                     }
                 }
             }
@@ -428,7 +435,9 @@ public class MailService {
                 if (member.getMemberEmail().equals(email.getReceiverMail())) {
                     System.out.println("상태값"+email.getMailStatus());
                     if(email.getMailStatus() == 'Y') {
-                        matchingEmails.add(email);
+                        if(email.getTrash() == null) {
+                            matchingEmails.add(email);
+                        }
                     }
                 }
             }
@@ -484,14 +493,106 @@ public class MailService {
 
     }
 
+    @Transactional
     public void deleteMail(Integer mailCode) {
 
         Email email = emailAndMemberRepository.findById(mailCode).get();
 
         Trash trash = new Trash();
+
         trash.setMail(email);
 
         trashRepository.save(trash);
+
+        email.setTrash(trash);
+
+
+
+    }
+
+    @Transactional
+    public void updateMail(Integer mailCode) {
+
+        Email email = emailAndMemberRepository.findById(mailCode).get();
+
+        email.setMailStatus('Y');
+
+        System.out.println("업데이트" + email.getMailStatus());
+    }
+
+
+    public Map<String, Object> selectTrash(Integer memberCode) {
+
+        List<Member> memberEntity = memberRepository.findAllById(Collections.singleton(memberCode));
+        List<Email> emailEntity = emailAndMemberRepository.findAll();
+
+        List<Email> matchingEmails = new ArrayList<>();
+
+        List<Optional<Member>> sendMemberName = new ArrayList<>();
+
+        for (Member member : memberEntity) {
+            for (Email email : emailEntity) {
+                if (member.getMemberEmail().equals(email.getReceiverMail())) {
+                    if (email.getTrash() != null) {
+                        matchingEmails.add(email);
+                    }
+                }
+            }
+        }
+
+
+        System.out.println("matchingEmails" + matchingEmails);
+
+        for (int i = 0; i < matchingEmails.size(); i++) {
+
+            Optional<Member> member = memberRepository.findById(matchingEmails.get(i).getMember().getMemberCode());
+
+            sendMemberName.add(member);
+        }
+
+        System.out.println("sendMemberName" + sendMemberName);
+
+        matchingEmails.stream().map(email -> modelMapper.map(email, EmailDTO.class)).collect(Collectors.toList());
+        sendMemberName.stream().map(member -> modelMapper.map(member, MemberDTO.class)).collect(Collectors.toList());
+
+        List<EmailDTO> emailDTO =  matchingEmails.stream().map(email -> modelMapper.map(email, EmailDTO.class)).collect(Collectors.toList());;
+        List<MemberDTO> memberDTO = sendMemberName.stream().map(member -> modelMapper.map(member, MemberDTO.class)).collect(Collectors.toList());
+
+        Map<String , Object> map = new HashMap<>();
+        map.put("matchingEmails", emailDTO);
+        map.put("sendMemberName", memberDTO);
+
+        System.out.println("map" + map.get("matchingEmails"));
+        System.out.println("giwon" + map.get("sendMemberName"));
+
+        return map;
+
+
+
+    }
+
+
+    @Transactional
+    public void deleteTrash(Integer memberCode) {
+
+        List<Member> memberEntity = memberRepository.findAllById(Collections.singleton(memberCode));
+        List<Email> emailEntity = emailAndMemberRepository.findAll();
+
+//        List<Email> matchingEmails = new ArrayList<>();
+
+        List<Optional<Member>> sendMemberName = new ArrayList<>();
+
+        for (Member member : memberEntity) {
+            for (Email email : emailEntity) {
+                if (member.getMemberEmail().equals(email.getReceiverMail())) {
+                    if (email.getTrash() != null) {
+                        trashRepository.deleteByMailMailCode(email.getMailCode());
+                        System.out.println("이거" + email);
+                        emailAndMemberRepository.deleteById(email.getMailCode());
+                    }
+                }
+            }
+        }
 
 
 
