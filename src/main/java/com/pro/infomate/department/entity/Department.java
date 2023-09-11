@@ -1,6 +1,7 @@
 package com.pro.infomate.department.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.pro.infomate.department.dto.DepartmentDTO;
 import com.pro.infomate.member.entity.Member;
 import lombok.*;
 
@@ -29,8 +30,15 @@ public class Department {
   @Column(name = "DEPT_NAME")
   private String deptName;
 
+  @Column(name = "DEPT_ORDER")
+  private Integer deptOrder;
+
 //  @JsonIgnore
   @OneToMany(mappedBy = "department")
   private List<Member> members;
+
+  public void update(DepartmentDTO departmentDTO){
+    if(departmentDTO.getDeptName() != null) this.deptName = departmentDTO.getDeptName();
+  }
 
 }

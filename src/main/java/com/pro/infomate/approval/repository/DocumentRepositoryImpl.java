@@ -73,7 +73,6 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
 
   }
 
-
   @Override
   public List<Document> findApprovalsDocument(int memberCode) {
     BooleanExpression approvalConditions = approval.member.memberCode.eq(memberCode)

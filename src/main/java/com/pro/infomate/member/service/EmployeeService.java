@@ -26,7 +26,7 @@ public class EmployeeService {
         Member member = memberRepository.findById(memberCode).get();
         log.info("[EmployeeService] {}  =====", memberCode);
         MemberDTO memberDTO = modelMapper.map(member, MemberDTO.class);
-//        log.info("[EmployeeService] {}  =====", memberDTO);
+        log.info("[EmployeeService] {}  =====", memberDTO);
 
         log.info("[EmployeeService] selectMemberInfo End ==================");
 

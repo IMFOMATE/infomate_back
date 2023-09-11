@@ -1,12 +1,15 @@
 package com.pro.infomate.member.repository;
 
+import com.pro.infomate.department.entity.Department;
 import com.pro.infomate.member.entity.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Integer> {
 
@@ -23,8 +26,9 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
     @Query("SELECT MAX(a.memberCode) FROM Member a")
     int maxMemberCode();
 
-//  @Query("SELECT c FROM Member c WHERE c.memberName = :member")
-//  Member findByMemberName(Object o);
+//    Page<Member> findByMemberCode(int memberCode, Pageable pageable);
+
+    Page<Member> findByMemberNameContaining(String findSearch, Pageable pageable);
 
 //  boolean findByMemberEmail(String memberEmail);
 }
