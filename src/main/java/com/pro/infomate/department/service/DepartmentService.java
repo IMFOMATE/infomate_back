@@ -1,5 +1,6 @@
 package com.pro.infomate.department.service;
 
+import com.pro.infomate.calendar.service.CalendarService;
 import com.pro.infomate.common.Criteria;
 import com.pro.infomate.department.dto.*;
 import com.pro.infomate.department.entity.Department;
@@ -34,6 +35,8 @@ public class DepartmentService {
   private final MemberRepository memberRepository;
 
   private final ModelMapper modelMapper;
+
+  private final CalendarService calendarService;
 
   public List<DeptListResponse> selectDeptList() {
     log.info("[DepartmentService] selectDeptList Start ====================== ");
@@ -251,6 +254,9 @@ public class DepartmentService {
 
       departmentRepository.save(saveDepartment);
 
+      // 부서 생성시 부서 캐린더 생성
+      calendarService.saveDepartmentCalendarRegist(saveDepartment.getDeptCode());
+
     } catch (Exception e){
 
       log.info("확인");
@@ -298,7 +304,7 @@ public class DepartmentService {
 //  }
 
 
-}
+//}
 
 
 
