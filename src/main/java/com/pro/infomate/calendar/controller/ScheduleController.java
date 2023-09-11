@@ -66,6 +66,8 @@ public class ScheduleController {
 
         MemberDTO memberDTO = employeeService.selectMemberInfo(memberCode);
 
+        log.info("[ScheduleController](findById) memberDTO : {} ", memberDTO);
+
         boolean compare = schedule.getCalendar().getMemberCode().equals(memberCode)
                 || schedule.getCalendar().getDepartmentCode().equals(memberDTO.getDepartment().getDeptCode());
 
