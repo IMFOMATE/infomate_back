@@ -283,47 +283,7 @@ public class DepartmentService {
     entityDept.update(department);
   }
 
-//  public void delete(int deptCode) {
-//
-//
-//    departmentRepository.deleteById(deptCode);
-//  }
 
-
-
-
-//  public void deleteById(int deptCode, DepartmentDTO department) {
-//
-//    log.info("[DepartmentService] (deleteDept) department : {}", department);
-//
-//    Department entityDept = departmentRepository.findById(department.getDeptCode()).get();
-//
-//    log.info("[DepartmentService] (deleteDept) entityDept : {}", entityDept);
-//
-//  }
-
-
-<<<<<<< HEAD
-
-=======
-//}
->>>>>>> 7f3a2eb8756ddf4299aecc2e24946e96833b73b4
-
-
-
-
-//    log.info("[DepartmentService] selectDeptList Start ======================");
-//
-//    List<Department> departmentListSearchValue = departmentRepository.findByDeptName(search);
-//
-//    List<DepartmentDTO> departmentDTOlist = departmentListSearchValue.stream()
-//            .map(department -> modelMapper.map(department, DepartmentDTO.class)).collect(Collectors.toList());
-//
-//    log.info("[DepartmentService] selectDeptList End ========================");
-//
-//    return departmentDTOlist;
-//  }
-//
 
 
 
