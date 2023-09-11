@@ -34,9 +34,9 @@ public class DepartmentService {
 
   private final MemberRepository memberRepository;
 
-  private final ModelMapper modelMapper;
-
   private final CalendarService calendarService;
+
+  private final ModelMapper modelMapper;
 
   public List<DeptListResponse> selectDeptList() {
     log.info("[DepartmentService] selectDeptList Start ====================== ");
@@ -254,7 +254,6 @@ public class DepartmentService {
 
       departmentRepository.save(saveDepartment);
 
-      // 부서 생성시 부서 캐린더 생성
       calendarService.saveDepartmentCalendarRegist(saveDepartment.getDeptCode());
 
     } catch (Exception e){

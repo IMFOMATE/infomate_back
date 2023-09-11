@@ -65,12 +65,13 @@ public class DocumentController {
     int memberCode = memberDTO.getMemberCode();
 
 //
-    documentService.saveDocument(memberCode, draftRequest, fileList, Draft.class, DraftResponse.class);
+    DraftResponse draftResponse = documentService.saveDocument(memberCode, draftRequest, fileList, Draft.class, DraftResponse.class);
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
                     .status(HttpStatus.OK)
                     .message("success")
+                    .data(draftResponse.getTitle() + "등록완료")
                     .build());
   }
 
@@ -96,16 +97,81 @@ public class DocumentController {
 
 
   //임시저장
-  @PostMapping("/regist/temp/{documentCode}")
+  @PostMapping("/regist/temp/{type}/{documentCode}")
   public ResponseEntity<ResponseDTO> tempRegist(
-          @PathVariable(required = false) Long documentCode
-  ){
+          @PathVariable(required = false) String documentCode,
+          @PathVariable(required = true) String type,
+          @ModelAttribute DraftRequest documentRequest,
+          @ModelAttribute(name = "fileList") List<MultipartFile> fileList,
+          @AuthenticationPrincipal MemberDTO memberDTO
+          ){
+
+    Long id = documentCode.equals("null") ? null : Long.valueOf(documentCode);
+
+    return ResponseEntity.ok()
+            .body(ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .message("success")
+                    .build());
+  }
+
+  @PostMapping("/temp/draft/{documentCode}")
+  public ResponseEntity<ResponseDTO> tempRegistDraft(
+          @PathVariable(required = false) String documentCode,
+          @ModelAttribute DraftRequest documentRequest,
+          @ModelAttribute(name = "fileList") List<MultipartFile> fileList,
+          @AuthenticationPrincipal MemberDTO memberDTO,
+          @RequestParam(required = false) Boolean isSave
+  ) {
+    Long id = documentCode.equals("null") ? null : Long.valueOf(documentCode);
+
+    documentService.tempSave(id, memberDTO.getMemberCode(), documentRequest, Draft.class, fileList, isSave);
+
+    return ResponseEntity.ok()
+            .body(ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .message("success")
+                    .build());
+  }
 
 
+  @PostMapping("/temp/vacation/{documentCode}")
+  public ResponseEntity<ResponseDTO> tempRegistVacation(
+          @PathVariable(required = false) String documentCode,
+          @ModelAttribute VacationRequest documentRequest,
+          @ModelAttribute(name = "fileList") List<MultipartFile> fileList,
+          @AuthenticationPrincipal MemberDTO memberDTO,
+          @RequestParam(required = false) Boolean isSave
+  ) {
+    Long id = documentCode.equals("null") ? null : Long.valueOf(documentCode);
+
+    documentService.tempSave(id, memberDTO.getMemberCode(), documentRequest, Draft.class, fileList, isSave);
 
 
+    return ResponseEntity.ok()
+            .body(ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .message("success")
+                    .build());
+  }
 
-    return null;
+  @PostMapping("/temp/payment/{documentCode}")
+  public ResponseEntity<ResponseDTO> tempRegistPayment(
+          @PathVariable(required = false) String documentCode,
+          @ModelAttribute PaymentRequest documentRequest,
+          @ModelAttribute(name = "fileList") List<MultipartFile> fileList,
+          @AuthenticationPrincipal MemberDTO memberDTO,
+          @RequestParam(required = false) Boolean isSave
+  ) {
+    Long id = documentCode.equals("null") ? null : Long.valueOf(documentCode);
+
+    documentService.tempSave(id, memberDTO.getMemberCode(), documentRequest, Draft.class, fileList, isSave);
+
+    return ResponseEntity.ok()
+            .body(ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .message("success")
+                    .build());
   }
 
 
@@ -123,6 +189,26 @@ public class DocumentController {
                     .message("success")
                     .build());
   }
+
+  //취소
+  @PatchMapping("/cancel/{documentId}")
+  public ResponseEntity<ResponseDTO> cancelDocument(
+          @PathVariable long documentId,
+          @AuthenticationPrincipal MemberDTO memberDTO
+  ){
+
+    System.out.println("documentId = " + documentId);
+    log.info("memberDTO ={}", memberDTO);
+
+    documentService.cancelApproval(documentId, memberDTO.getMemberCode());
+
+    return ResponseEntity.ok()
+            .body(ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .message("success")
+                    .build());
+  }
+
 
   //결재 메인
   @GetMapping("/main")
@@ -208,7 +294,7 @@ public class DocumentController {
   }
 
 
-  // 홈 화면 용 리스트
+  // 홈 화면용 리스트
   @GetMapping("/credit")
   public ResponseEntity<ResponseDTO> mainCredit(
           @AuthenticationPrincipal MemberDTO memberDTO){

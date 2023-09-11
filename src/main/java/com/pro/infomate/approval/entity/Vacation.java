@@ -1,5 +1,6 @@
 package com.pro.infomate.approval.entity;
 
+import com.pro.infomate.approval.dto.request.VacationRequest;
 import com.pro.infomate.approval.dto.response.DocumentDetailResponse;
 import com.pro.infomate.approval.service.visitor.DocumentVisitor;
 import lombok.*;
@@ -32,6 +33,7 @@ public class Vacation extends Document{
   public DocumentDetailResponse accept(DocumentVisitor<DocumentDetailResponse> visitor) {
     return visitor.visit(this);
   }
+
 }
 
 
