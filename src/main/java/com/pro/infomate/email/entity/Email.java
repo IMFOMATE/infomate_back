@@ -51,4 +51,9 @@ public class Email {
     @Column(name = "RECEIVER_MAIL")
     private String receiverMail;
 
+
+    @OneToOne
+    @JoinColumn(name = "TRASH_CODE")
+    private Trash trash;
+
 }

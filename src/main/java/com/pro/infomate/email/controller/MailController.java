@@ -10,6 +10,7 @@ import com.pro.infomate.common.PageDTO;
 import com.pro.infomate.common.PagingResponseDTO;
 import com.pro.infomate.common.ResponseDTO;
 import com.pro.infomate.email.dto.EmailDTO;
+import com.pro.infomate.email.entity.Email;
 import com.pro.infomate.email.service.MailService;
 import com.pro.infomate.member.dto.MemberDTO;
 import com.pro.infomate.util.FileUploadUtils;
@@ -199,6 +200,51 @@ public class MailController {
                         .build());
     }
 
+    @PutMapping("updateMail/{mailCode}")
+    public ResponseEntity<ResponseDTO> updateMail(@PathVariable Integer mailCode) {
+
+        System.out.println("mailCode = " + mailCode);
+
+        mailService.updateMail(mailCode);
+
+        return ResponseEntity.ok()
+                .body(ResponseDTO.builder()
+                        .status(HttpStatus.valueOf(HttpStatus.CREATED.value()))
+                        .message("success")
+                        .build());
+    }
+
+    @GetMapping("selectTrash/{memberCode}")
+    public ResponseEntity<ResponseDTO> selectTrash(@PathVariable Integer memberCode) {
+
+        System.out.println("memberCode "  + memberCode);
+
+        Map<String ,Object> email = mailService.selectTrash(memberCode);
+
+        System.out.println("tq" + email);
+
+
+        return ResponseEntity.ok()
+                .body(ResponseDTO.builder()
+                        .status(HttpStatus.valueOf(HttpStatus.CREATED.value()))
+                        .message("success")
+                        .data(email)
+                        .build());
+    }
+
+    @DeleteMapping("deleteTrash/{memberCode}")
+    public ResponseEntity<ResponseDTO> deleteTrash(@PathVariable Integer memberCode) {
+
+        System.out.println("memberCode = " + memberCode);
+
+        mailService.deleteTrash(memberCode);
+
+        return ResponseEntity.ok()
+                .body(ResponseDTO.builder()
+                        .status(HttpStatus.valueOf(HttpStatus.CREATED.value()))
+                        .message("success")
+                        .build());
+    }
 
 }
 
