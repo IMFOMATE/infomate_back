@@ -50,6 +50,8 @@ public class ScheduleService {
                 .map(value -> modelMapper.map(value, ScheduleDTO.class))
                 .map(scheduleDTO -> {
                     CalendarDTO calendarDTO = scheduleDTO.getCalendar();
+
+                    calendarDTO.setDepartmentCode(scheduleDTO.getCalendar().getMember().getDepartment().getDeptCode());
                     calendarDTO.setMember(null);
                     calendarDTO.setFavoriteCalendar(null);
                     calendarDTO.setScheduleList(null);

@@ -46,7 +46,8 @@ public class PaymentList {
   @JoinColumn(name = "DOCUMENT_ID")
   private Document document;
 
-  public PaymentList(String paymentDate, String paymentSort, int paymentPrice, String paymentContent, String remarks, Payment document) {
+  @Builder
+  public PaymentList(String paymentDate, String paymentSort, int paymentPrice, String paymentContent, String remarks, Document document) {
     this.paymentDate = paymentDate;
     this.paymentSort = paymentSort;
     this.paymentPrice = paymentPrice;

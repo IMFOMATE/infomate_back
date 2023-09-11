@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
+
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,7 +31,7 @@ public class TokenProvider {
 
     private static final String BEARER_TYPE = "Bearer";
 
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 100;
 
     private final Key key;
 
@@ -53,7 +54,6 @@ public class TokenProvider {
         log.info("[TokenProvider] authorities  {}", roles);
 
         Claims claims = Jwts.claims().setSubject(member.getMemberId());
-
         claims.put(AUTHORITIES_KEY, roles);
         claims.put("department", member.getDepartment().getDeptName());
         claims.put("memberName", member.getMemberName());

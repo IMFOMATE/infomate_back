@@ -87,4 +87,23 @@ public class ApiExceptionAdvice {
                 .body(new Response(HttpStatus.NOT_FOUND, "fail", e.getMessage()));
     }
 
+    @ExceptionHandler(WorkAlreadyExistsException.class)
+    public ResponseEntity<Response> alreadyRequestException(WorkAlreadyExistsException e){
+
+        log.info("[ApiExceptionAdvice](WorkAlreadyExistsException) error : {} ", e);
+
+        return ResponseEntity.status(HttpStatus.ALREADY_REPORTED)
+                .body(new Response(HttpStatus.ALREADY_REPORTED, e.getMessage(),e.getMessage()));
+    }
+
+    @ExceptionHandler(CannotFinishWorkException.class)
+    public ResponseEntity<Response> cannotFinishWorkException(CannotFinishWorkException e){
+
+        log.info("[ApiExceptionAdvice](cannotFinishWorkException) error : {} ", e);
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new Response(HttpStatus.BAD_REQUEST, e.getMessage(),e.getMessage()));
+    }
+
+
 }

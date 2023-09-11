@@ -1,5 +1,6 @@
 package com.pro.infomate.department.service;
 
+import com.pro.infomate.calendar.service.CalendarService;
 import com.pro.infomate.common.Criteria;
 import com.pro.infomate.department.dto.*;
 import com.pro.infomate.department.entity.Department;
@@ -32,6 +33,8 @@ public class DepartmentService {
   private final DepartmentRepository departmentRepository;
 
   private final MemberRepository memberRepository;
+
+  private final CalendarService calendarService;
 
   private final ModelMapper modelMapper;
 
@@ -251,6 +254,8 @@ public class DepartmentService {
 
       departmentRepository.save(saveDepartment);
 
+      calendarService.saveDepartmentCalendarRegist(saveDepartment.getDeptCode());
+
     } catch (Exception e){
 
       log.info("확인");
@@ -298,7 +303,11 @@ public class DepartmentService {
 //  }
 
 
+<<<<<<< HEAD
 
+=======
+//}
+>>>>>>> 7f3a2eb8756ddf4299aecc2e24946e96833b73b4
 
 
 

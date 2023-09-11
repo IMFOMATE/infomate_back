@@ -36,9 +36,6 @@ import java.util.stream.Stream;
 public class DocumentService {
 
   private final DocumentRepository<Document> documentRepository;
-  private final DocumentRepository<Vacation> vacationDocumentRepository;
-  private final DocumentRepository<Payment> paymentDocumentRepository;
-  private final DocumentRepository<Draft> draftDocumentRepository;
   private final DocumentFileRepository documentFileRepository;
   private final MemberRepository memberRepository;
 
@@ -46,7 +43,6 @@ public class DocumentService {
   private final DocRefRepository docRefRepository;
 
   private final PaymentListRepository paymentListRepository;
-
   private final DocumentToDTOVisitor visitor;
 
   private final ModelMapper modelMapper;
@@ -67,8 +63,12 @@ public class DocumentService {
     Document save = documentRepository.save(document);
 
     createRefer(documentRequest, save);
-    createApprovals(documentRequest, member, save,memberCode);
+    createApprovals(documentRequest, member, save, memberCode,false);
     processFiles(multipartFiles, save);
+
+    if (documentClass == Payment.class) {
+      createPaymentList(((PaymentRequest) documentRequest).getPaymentList(), save);
+    }
 
     return modelMapper.map(save, responseClass);
   }
@@ -92,15 +92,15 @@ public class DocumentService {
     boolean allApprovalDatesNull = approvalList.stream()
             .allMatch(app -> app.getApprovalDate() == null);
 
+    boolean isRemove = document.getMember().equals(nowMember) &&
+            (allApprovalDatesNull || approvalList.stream().anyMatch(app ->  ApprovalStatus.REJECT.equals(app.getApprovalStatus())));
+
     DocumentCondition condition = DocumentCondition.builder()
             .isDept(document.getMember().getDepartment().equals(nowMember.getDepartment()))
             .isCredit(approval != null && approval.getMember().getMemberCode() == memberCode)
-            .isRemove(document.getMember().equals(nowMember) && allApprovalDatesNull)
+            .isRemove(isRemove)
+            .isCancel(document.getMember().equals(nowMember) && allApprovalDatesNull)
             .build();
-
-  // 취소할수있을때는 apporval이 전부가 Wating일때
-    //삭제는 전부 Wating이거나 REJECT당했을때
-
 
     DocumentDetailResponse result = document.accept(visitor);
     result.setCondition(condition);
@@ -168,20 +168,37 @@ public class DocumentService {
   }
 
   // 메인대시보드용
-  public List<DocumentListResponse> mainCredit(int memberCode){
+  public MainCreditResponse mainCredit(int memberCode){
     List<Document> documents = documentRepository.findApprovalsDocument(memberCode);
+
+    int approvalCount = documentRepository.findByMemberDocuments(memberCode);
+
+
+    int countBeforeLimit = (int)documents.stream()
+            .map(approvalRepository::findTopByDocumentAndApprovalDateIsNullOrderByOrderAsc)
+            .filter(approval -> approval != null && approval.getMember().getMemberCode() == memberCode)
+            .map(Approval::getDocument)
+            .filter(document -> document.getDocumentStatus() == DocumentStatus.WAITING)
+            .count();
 
     List<Document> approvedDocuments = documents.stream()
             .map(approvalRepository::findTopByDocumentAndApprovalDateIsNullOrderByOrderAsc)
             .filter(approval -> approval != null && approval.getMember().getMemberCode() == memberCode)
             .map(Approval::getDocument)
             .filter(document -> document.getDocumentStatus() == DocumentStatus.WAITING )
-            .limit(3)
+            .limit(2)
             .collect(Collectors.toList());
 
     List<DocumentListResponse> creditList = approvedDocuments.stream().map(DocumentListResponse::new).collect(Collectors.toList());
 
-    return creditList;
+    MainCreditResponse mainResp = MainCreditResponse.builder()
+            .approvalCount(approvalCount)
+            .doneList(0)
+            .creditCount(countBeforeLimit)
+            .creditList(creditList)
+            .build();
+
+    return mainResp;
   }
 
 
@@ -201,28 +218,78 @@ public class DocumentService {
     documentRepository.deleteById(documentId);
   }
 
-  //8. 결재 취소
-//  @Transactional
-//  public void cancelApproval(Long documentId){
-//    Document document = documentRepository.findById(documentId).orElseThrow(() -> new NotFindDataException("해당문서가 없습니다"));
-//
-//    document.getApprovalList().;
-//
-//  }
+//  8. 결재 취소
+  @Transactional
+  public void cancelApproval(Long documentId, int memberCode){
+    Document document = documentRepository.findById(documentId).orElseThrow(() -> new NotFindDataException("해당문서가 없습니다"));
+    Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
+    System.out.println("memberCode = " + memberCode);
+
+    boolean allApprovalDatesNull = document.getApprovalList().stream()
+            .allMatch(app -> app.getApprovalDate() == null);
+    System.out.println("allApprovalDatesNull = " + allApprovalDatesNull);
+    boolean isCancel = document.getMember().equals(member) && allApprovalDatesNull;
+    System.out.println("isCancel = " + isCancel);
+    //만약 해당조건이 아니면 바로 에러
+    if(!isCancel) throw new NotEnoughDateException("결재를 취소 할 수 없습니다");
+
+    //취소 가능하다면
+    //1. 임시저장으로 바꾸자
+    document.setDocumentStatus(DocumentStatus.TEMPORARY);
+
+  }
 
 
   //문서 임시저장
-  public <T extends DocumentRequest> void tempSave(Long documentCode, T documentRequest ){
-
+  @Transactional
+  public <T extends DocumentRequest, E extends Document> void tempSave(
+          Long documentCode,
+          int memberCode,
+          T documentRequest,
+          Class<E> entityClass,
+          List<MultipartFile> multipartFiles,
+          Boolean isSave
+  ){
+    Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
 
     // 1. 임시저장 시 documentCode가 없으면 저장되고
     // 값들을 받아서 저장하는데 문서상태는 temporary, 결재리스트는 waiting인 상태로
 
-    //
+    if(documentCode == null && !isSave){
+      System.out.println("documentRequest = " + documentRequest);
+      E document = createDocument(member, documentRequest, entityClass);
+      document.setDocumentStatus(DocumentStatus.TEMPORARY);
+      Document save = documentRepository.save(document);
 
+      createRefer(documentRequest, save);
+      createApprovals(documentRequest, member, save, memberCode,true);
+      processFiles(multipartFiles, save);
+
+      if (entityClass == Payment.class) {
+        createPaymentList(((PaymentRequest) documentRequest).getPaymentList(), save);
+      }
+
+      return;
+    }
 
     //2. 임시저장시 documentCode가 있으면 해당내용을 업데이트 시킨다.
     // 결재 리스트와 참조문서가 수정되었을 수 있기 때문에 approval, ref를 지우고 새롭게 들어온 값을 insert 하는 로직
+    Document existingDocument = documentRepository.findById(documentCode)
+            .orElseThrow(() -> new NotFindDataException("해당 문서는 존재하지 않습니다"));
+    approvalRepository.deleteByDocument(existingDocument);
+    docRefRepository.deleteByDocument(existingDocument);
+    if (entityClass == Payment.class) {
+      paymentListRepository.deleteByDocument(existingDocument);
+    }
+
+    existingDocument = updateDocument(existingDocument, documentRequest, entityClass,isSave);
+    createRefer(documentRequest, existingDocument);
+    createApprovals(documentRequest, member, existingDocument, memberCode, true);
+    processFiles(multipartFiles, existingDocument);
+
+    if (entityClass == Payment.class) {
+      createPaymentList(((PaymentRequest)documentRequest).getPaymentList(), existingDocument);
+    }
 
   }
 
@@ -250,33 +317,22 @@ public class DocumentService {
   }
 
   // 결재 리스트 저장
-  private void createApprovals(DocumentRequest documentRequest, Member member, Document save, int memberCode) {
+  private void createApprovals(DocumentRequest documentRequest, Member member, Document save, int memberCode, boolean istemp) {
     if (save.getApprovalList() == null) {
       Approval approval = Approval.builder().order(1).member(member).document(save).build();
-      approval.setApprovalStatus(ApprovalStatus.APPROVAL);
+      approval.setApprovalStatus(istemp ? ApprovalStatus.WAITING : ApprovalStatus.APPROVAL);
       Approval savedApproval = approvalRepository.save(approval);
+
       savedApproval.setApprovalDate(save.getCreatedDate());
-      save.setDocumentStatus(DocumentStatus.APPROVAL);
+      save.setDocumentStatus(istemp ? DocumentStatus.TEMPORARY : DocumentStatus.APPROVAL);
     } else {
       List<Approval> approvals = documentRequest.getApprovalList()
               .stream()
-              .map(list -> {
-                Member byMemberId = memberRepository.findByMemberCode(list.getId());
-                Approval approval = Approval.builder()
-                        .order(list.getOrder())
-                        .member(byMemberId)
-                        .document(save)
-                        .build();
-                if (byMemberId.getMemberCode() == memberCode) {
-                  approval.setApprovalStatus(ApprovalStatus.APPROVAL);
-                  approval.setApprovalDate(LocalDateTime.now());
-                }
-                return approval;
-              })
+              .map(list -> createApprovalFromInfo(list,member,save,memberCode))
               .collect(Collectors.toList());
       approvalRepository.saveAll(approvals);
 
-      if (approvals.size() == 1 && approvals.get(0).getMember().getMemberCode() == memberCode) {
+      if (approvals.size() == 1 && approvals.get(0).getMember().getMemberCode() == memberCode && !istemp) {
         save.setDocumentStatus(DocumentStatus.APPROVAL);
       }
     }
@@ -292,11 +348,96 @@ public class DocumentService {
       files = FileUploadUtils.saveMultiFiles(FILES_DIR, multipartFiles);
       List<DocumentFile> fileList = files.stream().map(file -> new DocumentFile(file, save)).collect(Collectors.toList());
       documentFileRepository.saveAll(fileList);
+
     } catch (Exception e) {
       FileUploadUtils.deleteMultiFiles(FILES_DIR, files);
       throw new RuntimeException("파일업로드 실패");
     }
+  }
 
+  private void createPaymentList(List<PaymentListRequest> paymentList, Document save){
+    List<PaymentList> paymentEntities = paymentList.stream()
+
+            .map(paymentListRequest -> {
+              PaymentList payment = PaymentList.builder()
+                      .paymentDate(paymentListRequest.getPaymentDate())
+                      .paymentSort(paymentListRequest.getPaymentSort())
+                      .paymentPrice(paymentListRequest.getPaymentPrice())
+                      .paymentContent(paymentListRequest.getPaymentContent())
+                      .remarks(paymentListRequest.getRemarks())
+                      .document(save)
+                      .build();
+              return payment;
+            })
+            .collect(Collectors.toList());
+
+    paymentListRepository.saveAll(paymentEntities);
+
+  }
+
+  //approval 매핑
+  private Approval createApprovalFromInfo(ApprovalRequest approvalrequest, Member member, Document save, int memberCode) {
+    Member byMemberId = memberRepository.findByMemberCode(approvalrequest.getId());
+    ApprovalStatus approvalStatus = (byMemberId.getMemberCode() == memberCode) ? ApprovalStatus.APPROVAL : ApprovalStatus.WAITING;
+
+    return Approval.builder()
+            .order(approvalrequest.getOrder())
+            .member(byMemberId)
+            .document(save)
+            .approvalStatus(approvalStatus)
+            .approvalDate((approvalStatus == ApprovalStatus.APPROVAL) ? LocalDateTime.now() : null)
+            .build();
+  }
+
+
+  // 문서 임시저장
+  private <T extends DocumentRequest> Document updateDocument(Document existingDocument, T documentRequest, Class<?> entityClass,Boolean isSave) {
+
+    if(isSave) existingDocument.setDocumentStatus(DocumentStatus.WAITING);
+
+    existingDocument.setDocumentStatus(DocumentStatus.TEMPORARY);
+    existingDocument.setCreatedDate(LocalDateTime.now());
+
+    switch (entityClass.getSimpleName()) {
+      case "Vacation":
+          Vacation vacation = (Vacation) existingDocument;
+
+          VacationRequest vacationRequest = (VacationRequest) documentRequest;
+
+          vacation.setTitle(vacationRequest.getTitle());
+          vacation.setContent(vacationRequest.getContent());
+          vacation.setSort(vacationRequest.getSort());
+          vacation.setStartDate(vacationRequest.getStartDate());
+          vacation.setEndDate(vacationRequest.getEndDate());
+          vacation.setEmergency(vacationRequest.getEmergency());
+        break;
+      case "Draft":
+        Draft draft = (Draft) existingDocument;
+        System.out.println("draft.getMember().getMemberCode() = " + draft.getMember().getMemberCode());
+
+          DraftRequest draftRequest = (DraftRequest) documentRequest;
+
+          draft.setTitle(draftRequest.getTitle());
+          draft.setContent(draftRequest.getContent());
+          draft.setStartDate(draftRequest.getStartDate());
+          draft.setEmergency(draftRequest.getEmergency());
+          draft.setCoDept(draftRequest.getCoDept());
+
+        break;
+      case "Payment":
+        Payment payment = (Payment) existingDocument;
+        PaymentRequest paymentRequest = (PaymentRequest) documentRequest;
+
+        payment.setTitle(paymentRequest.getTitle());
+        payment.setContent(paymentRequest.getContent());
+        payment.setEmergency(paymentRequest.getEmergency());
+
+        break;
+      default:
+        throw new IllegalArgumentException("Invalid entityClass");
+    }
+
+    return existingDocument;
   }
 
 

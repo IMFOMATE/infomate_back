@@ -168,33 +168,30 @@ public class DeptController {
 
 
 
-  // 부서 생성
   @PostMapping("/regist")
-  public ResponseEntity<ResponseDTO> saveByDepartment(@ModelAttribute DepartmentDTO departmentDTO){
+  public ResponseEntity<ResponseDTO> saveByDepartment(@ModelAttribute DepartmentDTO departmentDTO) {
 
     return ResponseEntity.ok()
             .body(new ResponseDTO(HttpStatus.OK, "부서 입력 성공", departmentService.saveByDepartment(departmentDTO)));
-
-
   }
 
 
 
 
-//   조직도 수정하기
   @PutMapping("/save")
-  public ResponseEntity<ResponseDTO> updateDept(@RequestBody DepartmentDTO departmentDTO){
+  public ResponseEntity<ResponseDTO> updateDept(@RequestBody DepartmentDTO departmentDTO) {
 
     log.info("[DeptController] (updateDept) departmentDTO : {}", departmentDTO);
 
     departmentService.updateDept(departmentDTO);
 
     return ResponseEntity.ok()
-            .body(new ResponseDTO(HttpStatus.OK , "조직도 수정 완료", departmentService.updateDept(departmentDTO)));
-
+            .body(ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .message("정상 수정")
+                    .build());
 
   }
-
 
 
 

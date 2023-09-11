@@ -76,6 +76,7 @@ public class Member {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DEPT_CODE")
+    @JsonIgnore
     private Department department;
 
     @Column(name = "HIRE_DATE")

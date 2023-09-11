@@ -52,10 +52,12 @@ public class Approval {
 
 
   @Builder
-  public Approval(int order, Member member, Document document){
+  public Approval(int order, Member member, ApprovalStatus approvalStatus, Document document, LocalDateTime approvalDate){
     this.order = order;
     this.member = member;
     this.document = document;
+    this.approvalStatus = approvalStatus;
+    this.approvalDate = approvalDate;
   }
 
 }
