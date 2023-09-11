@@ -113,7 +113,7 @@ public class AuthService {
 
         Member registMember = modelMapper.map(memberDTO, Member.class);
         registMember.setMemberPic(replaceFileName);
-        registMember.setMemberPicOrigin(originalFileName);
+        registMember.setMemberPicDefault(originalFileName);
         registMember.setDepartment(deparment);
         registMember.setRank(rank);
 
