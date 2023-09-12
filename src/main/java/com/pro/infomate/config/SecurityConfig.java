@@ -45,7 +45,10 @@ public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer(){
         return (web) -> web.ignoring()
-                .antMatchers("/css/**", "/js/**","/images","/lib/**","/productimgs/**");
+
+                .antMatchers("/css/**", "/js/**","/images","/lib/**","/productimgs/**","/files/**","/imgs/**");
+
+
     }
 
     @Bean
@@ -69,8 +72,8 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .antMatchers("/").authenticated()
-                .antMatchers(HttpMethod.OPTIONS, "*").permitAll()
-//                .antMatchers("/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.OPTIONS, "/**").hasAnyRole("ADMIN", "USER")
+//                .antMatchers("/**").hasAnyRole("ADMIN", "USER")
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -81,21 +84,6 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-//    @Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//
-//        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-//        configuration.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE"));
-//        configuration.setAllowedHeaders(Arrays.asList("Access-Control-Allow-Origin", "Content-type"
-//                , "Access-Control-Allow-Headers", "Authorization"
-//                , "X-Requested-With"));
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//
-//        return source;
-//    }
 
 }
 

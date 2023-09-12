@@ -4,6 +4,7 @@ import com.pro.infomate.exception.TokenException;
 import com.pro.infomate.member.dto.TokenDTO;
 import com.pro.infomate.member.entity.AuthList;
 import com.pro.infomate.member.entity.Member;
+
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -15,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+
 
 import java.security.Key;
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ public class TokenProvider {
 
     private static final String BEARER_TYPE = "Bearer";
 
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 100;
 
     private final Key key;
 
@@ -52,8 +54,13 @@ public class TokenProvider {
         log.info("[TokenProvider] authorities  {}", roles);
 
         Claims claims = Jwts.claims().setSubject(member.getMemberId());
-
         claims.put(AUTHORITIES_KEY, roles);
+        claims.put("department", member.getDepartment().getDeptName());
+        claims.put("memberName", member.getMemberName());
+        claims.put("rankName", member.getRank().getRankName());
+
+
+
 
         long now = System.currentTimeMillis();
 
@@ -65,7 +72,24 @@ public class TokenProvider {
                 .compact();
         log.info("[TokenProvider] generateTokenDTO End = == = = = = = == = = = = == = = == = = == = ");
 
-        return new TokenDTO(BEARER_TYPE, member.getMemberName(), member.getDepartment().getDeptName(), member.getRank().getRankName(), accessToken, accessTokenExpiresIn.getTime());
+        return new TokenDTO(
+                                BEARER_TYPE,
+                                member.getMemberName(),
+                                member.getDepartment().getDeptName(),
+                                member.getDepartment().getDeptCode(),
+                                member.getRank().getRankName(),
+                                member.getMemberCode(),
+                                member.getMemberId(),
+                                member.getMemberEmail(),
+                                member.getMemberPhone(),
+                                member.getMemberNo(),
+                                member.getExtensionNumber(),
+                                member.getHireDate(),
+                                member.getMemberPic(),
+                                member.getMemberPicDefault(),
+                                accessToken,
+                                accessTokenExpiresIn.getTime()
+                            );
     }
 
     public String getUserId(String token){

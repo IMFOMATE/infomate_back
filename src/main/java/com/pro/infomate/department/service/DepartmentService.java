@@ -1,20 +1,25 @@
 package com.pro.infomate.department.service;
 
-import com.pro.infomate.department.dto.DepartmentDTO;
-import com.pro.infomate.department.dto.DepartmentExpendDTO;
-import com.pro.infomate.department.dto.DeptListResponse;
-import com.pro.infomate.department.dto.TreeViewResponse;
+import com.pro.infomate.calendar.service.CalendarService;
+import com.pro.infomate.common.Criteria;
+import com.pro.infomate.department.dto.*;
 import com.pro.infomate.department.entity.Department;
 import com.pro.infomate.department.repository.DepartmentRepository;
+import com.pro.infomate.exception.NotFindDataException;
 import com.pro.infomate.member.dto.MemberDTO;
 import com.pro.infomate.member.entity.Member;
 import com.pro.infomate.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.*;
+//import org.springframework.data.domain.Pageable;
+//import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,9 +30,13 @@ import java.util.stream.Collectors;
 @Slf4j
 public class DepartmentService {
 
+
+
   private final DepartmentRepository departmentRepository;
 
   private final MemberRepository memberRepository;
+
+  private final CalendarService calendarService;
 
   private final ModelMapper modelMapper;
 
@@ -55,7 +64,7 @@ public class DepartmentService {
     for (Department dept : allDept) {
       result.add(createDepartmentNode(dept));
       result.addAll(createMemberNodes(dept, count));
-      count += dept.getMembers().size(); // Increment the counter by the number of members
+      count += dept.getMembers().size(); //
     }
     return result;
   }
@@ -63,7 +72,7 @@ public class DepartmentService {
   //부서 매핑
   private TreeViewResponse createDepartmentNode(Department dept) {
     return TreeViewResponse.builder()
-            .id(dept.getDeptCode())
+            .id(dept.getDeptOrder())
             .parent(0)
             .droppable(true)
             .text(dept.getDeptName())
@@ -77,13 +86,14 @@ public class DepartmentService {
     for (Member member : dept.getMembers()) {
       TreeViewResponse memberNode = TreeViewResponse.builder()
               .id(++count)
-              .parent(dept.getDeptCode())
+              .parent(dept.getDeptOrder())
               .droppable(false)
               .text(member.getMemberName())
               .data(TreeViewResponse.TreeDTO.builder()
                       .fileType("person")
                       .rank(member.getRank().getRankName())
                       .profile(member.getMemberPic())
+                      .memberCode(member.getMemberCode())
                       .build())
               .build();
       memberNodes.add(memberNode);
@@ -92,50 +102,225 @@ public class DepartmentService {
   }
 
 
-  private List<DeptListResponse> createDeptList(Department dept, int count){      // 부서 리스트 넣어주기
+  private List<DeptListResponse> createDeptList(Department dept, int count) {      // 부서 리스트 넣어주기
     List<Department> all = departmentRepository.findAll();
     List<DeptListResponse> memberList = new ArrayList<>();
 
-    for (Member member : dept.getMembers()){
+    for (Member member : dept.getMembers()) {
       DeptListResponse deptList = DeptListResponse.builder()
-                      .id(++count)
-                      .data(DeptListResponse.DepartDTO.builder()
-                            .empName(member.getMemberName())
-                            .empNum(member.getMemberId())
-                            .deptName(member.getDepartment().getDeptName())
-                            .rankName(member.getRank().getRankName())
-                            .empCode(member.getMemberCode())
-                            .rank(member.getRank().getRankPlace())
-                            .build()
-                            ).build();
+              .id(++count)
+              .data(DeptListResponse.DepartDTO.builder()
+                      .empName(member.getMemberName())
+                      .empNum(member.getMemberId())
+                      .deptName(member.getDepartment().getDeptName())
+                      .rankName(member.getRank().getRankName())
+                      .empCode(member.getMemberCode())
+                      .rank(member.getRank().getRankPlace())
+                      .deptCode(member.getDepartment().getDeptCode())
+                      .build()
+              ).build();
       memberList.add(deptList);
     }
     log.info("{}=============",memberList);
 
     return memberList;
 
+
   }
 
 
-  public List<DepartmentDTO> selectDept(String search) {
+  //////////////////////////////  페이징
 
-    log.info("[DepartmentService] selectDeptList Start ======================");
+  public int selectDeptTotal() {      // 멤버 카운트
 
-    List<Department> departmentListSearchValue = departmentRepository.findByDeptName(search);
+    log.info("[DepartmentService] selectDeptTotal Start ========================== ");
 
-    List<DepartmentDTO> departmentDTOlist = departmentListSearchValue.stream()
+    List<Member> memberList = memberRepository.findAll();
+    log.info("[DepartmentService] departmentList.size : {} ", memberList.size());
+    log.info("[DepartmentService] selectDeptTotal End ========================== ");
+
+    return memberList.size();
+
+  }
+
+
+
+  public Object selectDeptListWithPaging(Criteria cri) {
+    log.info("[DepartmentService] selectDeptListWithPaging Start ========================== ");
+    int index = cri.getPageNum() -1;
+    int count = cri.getAmount();
+    Pageable paging = PageRequest.of(index, count, Sort.by("memberCode").descending());
+
+    Page<Member> result = memberRepository.findAll(paging);
+    List<Member> memberList =(List<Member>) result.getContent();
+
+    // 이미지 관련 꺼내오기
+
+
+    log.info("[DepartmentService] selectDeptListWithPaging End ========================== ");
+    return memberList.stream().map(member -> modelMapper.map(member, MemberDTO.class)).collect(Collectors.toList());
+  }
+
+  public List<DepartmentDTO> selectSearchDeptList(String search) {
+    log.info("[DepartmentService] selectSearchDeptList Start ========================== ");
+    log.info("[DepartmentService] Search {} ", search);
+
+    List<Department> departmentListWithSearchValue = departmentRepository.findByDeptNameContaining(search);
+
+    List<DepartmentDTO> departmentDTOList = departmentListWithSearchValue.stream()
             .map(department -> modelMapper.map(department, DepartmentDTO.class)).collect(Collectors.toList());
 
-    log.info("[DepartmentService] selectDeptList End ========================");
+    for(int i = 0; i < departmentDTOList.size(); i++){
+      departmentDTOList.get(i).setDeptName(departmentDTOList.get(i).getDeptName());
+    }
+    log.info("[DepartmentService] selectSearchDeptList End ========================== ");
 
-    return departmentDTOlist;
+    return departmentDTOList;
   }
 
+
+    public List<DepartmentDTO> selectDeptAll() {      // 부서 전체 조회
+
+      List<Department> deptListAll = departmentRepository.findAll();
+
+
+
+      return deptListAll.stream().map(department -> modelMapper.map(department, DepartmentDTO.class)).collect(Collectors.toList());
+    }
+
+  public List<MemberDTO> selectEmpAll() {         // 멤버 전체조회
+    List<Member> employeeAll = memberRepository.findAll();
+
+    return employeeAll.stream().map(member -> modelMapper.map(member, MemberDTO.class)).collect(Collectors.toList());
+  }
+
+  public List<DepartmentListResponse> selectDeptPart(Department dept) {
+
+    List<Department> deptPartAll = departmentRepository.findAll();
+    List<DepartmentListResponse> result = new ArrayList<>();
+
+    for(Member member : dept.getMembers() ){
+
+      DepartmentListResponse deptList = DepartmentListResponse.builder()
+              .deptCode(member.getDepartment().getDeptCode())
+              .deptName(member.getDepartment().getDeptName())
+//              .memberName(member.getMemberName())
+              .build();
+      result.add(deptList);
+    }
+
+    return result;
+  }
+
+
+  public List<DepartmentListResponse> selectPartList() {
+
+    List<Department> partList = departmentRepository.findAll();
+    List<DepartmentListResponse> result = new ArrayList<>();
+
+    return null;
+  }
+
+
+  public Page<MemberDTO> openEmpList( Pageable pageable, String findSearch ) {
+
+//    Page<Member> empList = memberRepository.findByMemberCode(memberCode, pageable);
+
+    Page<Member> empList = null;
+    if(findSearch.equals("all")){
+      empList = memberRepository.findAll(pageable);
+    } else {
+      empList = memberRepository.findByMemberNameContaining(findSearch, pageable);
+    }
+
+//    if(empList.getContent().size() == 0) throw new NotFindDataException("조회할 데이터가 없습니다.");
+    log.info("[DepartmentService] openEmpList =========== findSearch {}", findSearch);
+
+    return empList.map(member-> modelMapper.map(member, MemberDTO.class));
+
+  }
+
+
+  // 부서 신규 생성
+  @Transactional
+  public String saveByDepartment(DepartmentDTO departmentDTO) {
+
+    log.info("[DepartmentService] saveByDepartment Start ====================");
+    log.info("[DepartmentService] departmentDTO : " + departmentDTO);
+
+    int result = 0;
+
+    Long maxCode = departmentRepository.findMaxId();
+    log.info("[DepartmentService] maxCode : {} ", maxCode);
+    int newCode = (int)(maxCode + 1) ;
+    log.info("[DepartmentService] newCode : {} ", newCode);
+    try {
+
+      Department saveDepartment = modelMapper.map(departmentDTO, Department.class);
+
+      saveDepartment.setDeptOrder(newCode);
+
+      log.info("[DepartmentService] saveDepartment : {} ", saveDepartment);
+      departmentRepository.save(saveDepartment);
+
+      calendarService.saveDepartmentCalendarRegist(saveDepartment.getDeptCode());
+
+    } catch (Exception e){
+
+      log.info("확인");
+
+      throw new RuntimeException(e);
+    }
+
+    log.info("[DepartmentService] saveByDepartment End ===================");
+
+    return (result > 0)? "실패" : "성공";
+  }
+
+
+
+
+  // 부서명 수정
+  @Transactional
+  public String updateDept(DepartmentDTO department){
+    log.info("[DepartmentService] (updateDept) department : {}", department);
+
+    Department entityDept = departmentRepository.findById(department.getDeptCode()).get();
+
+    log.info("[DepartmentService] (updateById) entityDept : {}", entityDept);
+
+    entityDept.update(department);
+
+    return null;
+  }
+
+
+
+
+
   public List<DepartmentExpendDTO> participantList() {
-    List<Department> departmentList = departmentRepository.findAll();
+    List<Department> departmentList = departmentRepository.findAllByDeptCodeAfter(0);
     log.info("[DepartmentService](participantList) departmentList : {}", departmentList);
     return departmentList.stream()
             .map(department -> modelMapper.map(department, DepartmentExpendDTO.class))
             .collect(Collectors.toList());
   }
+
+
+//  @Transactional
+//  public void deletDept(int deptCode) {
+//
+//    Department department = departmentRepository.deleteById(deptCode);
+//
+//  }
 }
+
+
+
+
+
+
+
+
+
+

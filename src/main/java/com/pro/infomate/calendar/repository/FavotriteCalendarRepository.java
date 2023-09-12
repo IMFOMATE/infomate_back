@@ -12,11 +12,12 @@ public interface FavotriteCalendarRepository extends JpaRepository<FavoriteCalen
 
 
     @Query(value = "SELECT f " +
-            "FROM FavoriteCalendar f " +
-            "WHERE f.refCalendar IN (SELECT c.id " +
-                                      "FROM Calendar c " +
-                                     "WHERE c.openStatus IS TRUE " +
-                                       "AND NOT c.memberCode = :memberCode)")
+                     "FROM FavoriteCalendar f " +
+                    "WHERE f.memberCode = :memberCode " +
+                      "AND f.refCalendar IN (SELECT c.id " +
+                                              "FROM Calendar c " +
+                                             "WHERE c.openStatus IS TRUE " +
+                                               "AND NOT c.memberCode = :memberCode)")
     Page<FavoriteCalendar> findAllByMemberCode(Integer memberCode, Pageable pageable);
 
     void deleteByRefCalendar(Integer calendarNo);

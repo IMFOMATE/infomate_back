@@ -44,16 +44,17 @@ public class FavoriteCalendarService {
                 .map(favoriteCalendarDTO -> {
 
                     CalendarDTO calendarDTO = favoriteCalendarDTO.getCalendar();
-                    calendarDTO.setMember(null);
                     calendarDTO.setFavoriteCalendar(null);
                     calendarDTO.setScheduleList(null);
-                    favoriteCalendarDTO.setCalendar(calendarDTO);
+
 
                     MemberDTO memberDTO = new MemberDTO();
                     memberDTO.setMemberName(favoriteCalendarDTO.getMember().getMemberName());
                     memberDTO.setMemberNo(favoriteCalendarDTO.getMember().getMemberNo());
-                    favoriteCalendarDTO.setMember(memberDTO);
+                    memberDTO.setRank(favoriteCalendarDTO.getCalendar().getMember().getRank());
+                    calendarDTO.setMember(memberDTO);
 
+                    favoriteCalendarDTO.setCalendar(calendarDTO);
                     return favoriteCalendarDTO;
                 });
 
@@ -65,19 +66,27 @@ public class FavoriteCalendarService {
 
     public Page<FavoriteCalendarDTO> findAllByMemberCode(Integer memberCode, Pageable pageable) {
         Page<FavoriteCalendar> favoriteCalendars = favotriteCalendarRepository.findAllByMemberCode(memberCode, pageable);
+        log.info("[FavoriteCalendarService](findAllByMemberCode) favoriteCalendars : {}", favoriteCalendars);
+
+        if(favoriteCalendars == null || favoriteCalendars.getSize() == 0 ) throw new NotFindDataException("데이터가 없습니다.");
+
 
         return favoriteCalendars
                 .map(favoriteCalendar -> modelMapper.map(favoriteCalendar,FavoriteCalendarDTO.class))
                 .map(favoriteCalendarDTO -> {
                     favoriteCalendarDTO.getCalendar().setFavoriteCalendar(null);
-                    favoriteCalendarDTO.getCalendar().setMember(null);
+
+                    MemberDTO calMemberDTO = new MemberDTO();
+                    calMemberDTO.setMemberCode(favoriteCalendarDTO.getCalendar().getMember().getMemberCode());
+                    calMemberDTO.setMemberName(favoriteCalendarDTO.getCalendar().getMember().getMemberName());
+                    calMemberDTO.setRank(favoriteCalendarDTO.getCalendar().getMember().getRank());
+
+                    log.info("[FavoriteCalendarService](findAllByMemberCode) calMemberDTO : {}", calMemberDTO);
+
+                    favoriteCalendarDTO.getCalendar().setMember(calMemberDTO);
+                    favoriteCalendarDTO.setMember(null);
                     favoriteCalendarDTO.getCalendar().setScheduleList(null);
 
-                    MemberDTO memberDTO = new MemberDTO();
-                    memberDTO.setMemberNo(favoriteCalendarDTO.getMember().getMemberNo());
-                    memberDTO.setMemberName(favoriteCalendarDTO.getMember().getMemberName());
-
-                    favoriteCalendarDTO.setMember(memberDTO);
                     return favoriteCalendarDTO;
                 });
     }

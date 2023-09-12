@@ -1,9 +1,12 @@
 package com.pro.infomate.email.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pro.infomate.member.entity.Member;
 import lombok.*;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity
 @Table(name = "TBL_MAIL")
@@ -26,16 +29,17 @@ public class Email {
             strategy = GenerationType.SEQUENCE,
             generator = "SEQ_TBL_MAIL_GENERATOR"
     )
-    private Long mailCode;
+    private Integer mailCode;
 
     @Column(name = "MAIL_CONTENT")
     private String mailContent;
 
     @Column(name = "MAIL_DATE")
-    private String mailDate;
+    private Date mailDate;
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_CODE", nullable = false)
+    @JsonIgnore
     private Member member;
 
     @Column(name = "MAIL_STATUS")
@@ -44,10 +48,12 @@ public class Email {
     @Column(name = "MAIL_TITLE")
     private String mailTitle;
 
-    @Column(name = "MAIL_LIKE")
-    private char mailLike;
-
     @Column(name = "RECEIVER_MAIL")
     private String receiverMail;
+
+
+    @OneToOne
+    @JoinColumn(name = "TRASH_CODE")
+    private Trash trash;
 
 }

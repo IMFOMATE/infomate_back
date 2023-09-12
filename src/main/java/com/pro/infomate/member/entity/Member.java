@@ -14,10 +14,10 @@ import com.pro.infomate.email.entity.Email;
 import lombok.*;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.sql.Timestamp;
 
 @Entity
 @Table(name = "TBL_MEMBER")
@@ -25,7 +25,9 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+
+//@ToString
+
 @SequenceGenerator(
         name = "MEMBER_CODE_GENERATOR",
         sequenceName = "SEQ_TBL_MEMBER_MEMBER_CODE",
@@ -74,10 +76,11 @@ public class Member {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DEPT_CODE")
+    @JsonIgnore
     private Department department;
 
     @Column(name = "HIRE_DATE")
-    private Timestamp hireDate;
+    private Date hireDate;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "RANK_CODE")
@@ -87,6 +90,8 @@ public class Member {
     @Column(name = "MEMBER_PIC")
     private String memberPic;
 
+    @Column(name = "MEMBER_PIC_ORIGIN")
+    private String memberPicDefault;
 
     @Column(name = "MEMBER_OFF")
     private int memberOff;
@@ -104,6 +109,7 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Document> documentList = new ArrayList<>();
+
 
 
     @OneToMany(mappedBy = "member")
@@ -138,4 +144,3 @@ public class Member {
                 '}';
     }
 }
-

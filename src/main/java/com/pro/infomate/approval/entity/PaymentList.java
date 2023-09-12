@@ -1,8 +1,10 @@
 package com.pro.infomate.approval.entity;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.awt.*;
 import java.time.LocalDateTime;
 
 @Getter
@@ -10,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "TBL_PAYMENTLIST")
+//@DynamicInsert
 @SequenceGenerator(
         name = "PAYMENT_CODE_GENERATOR",
         sequenceName = "SEQ_TBL_PAYMENTLIST_PAYMENT_CODE",
@@ -24,7 +27,7 @@ public class PaymentList {
   private Long paymentCode;
 
   @Column(name = "PAYMENT_DATE")
-  private LocalDateTime paymentDate;
+  private String paymentDate;
 
   @Column(name = "PAYMENT_SORT")
   private String paymentSort;
@@ -38,14 +41,13 @@ public class PaymentList {
   @Column(name = "REMARKS")
   private String remarks;
 
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "DOCUMENT_ID")
   private Document document;
 
   @Builder
-
-  public PaymentList(Long paymentCode, LocalDateTime paymentDate, String paymentSort, int paymentPrice, String paymentContent, String remarks, Document document) {
-    this.paymentCode = paymentCode;
+  public PaymentList(String paymentDate, String paymentSort, int paymentPrice, String paymentContent, String remarks, Document document) {
     this.paymentDate = paymentDate;
     this.paymentSort = paymentSort;
     this.paymentPrice = paymentPrice;
@@ -54,3 +56,4 @@ public class PaymentList {
     this.document = document;
   }
 }
+

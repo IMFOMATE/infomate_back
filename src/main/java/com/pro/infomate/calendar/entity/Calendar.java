@@ -1,6 +1,5 @@
 package com.pro.infomate.calendar.entity;
 
-
 import com.pro.infomate.calendar.dto.CalendarDTO;
 import com.pro.infomate.member.entity.Member;
 import lombok.*;
@@ -22,6 +21,9 @@ import java.util.List;
         sequenceName = "SEQ_TBL_CLNDR_CLNDR_CODE",
         initialValue = 1, allocationSize = 1
 )
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Calendar {
 
     @Id

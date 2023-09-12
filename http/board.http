@@ -27,7 +27,7 @@ Content-Type: application/json
 }
 
 ### 게시글 조회
-GET http://localhost:8989/brd/board/post/1118
+GET http://localhost:8989/brd/board/post/1111
 Accept: */*
 Content-Type: application/json
 
@@ -53,7 +53,7 @@ Content-Type: application/json
 
 
 ### 게시글 삭제
-DELETE http://localhost:8989/board/1118/delete
+DELETE http://localhost:8989/board/82/delete
 Accept: */*
 Content-Type: application/json
 

@@ -29,5 +29,4 @@ public class Board {
     @OneToMany
     private List<Post> posts;
 
-
 }

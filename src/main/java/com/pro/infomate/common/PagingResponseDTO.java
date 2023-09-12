@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
+//@NoArgsConstructor
 public class PagingResponseDTO {
 
     private PageDTO pageInfo; //페이지 정보
@@ -21,5 +21,10 @@ public class PagingResponseDTO {
         this.message = message;
         this.data = data;
         this.status = httpStatus.value();
+    }
+
+
+    public PagingResponseDTO() {
+
     }
 }

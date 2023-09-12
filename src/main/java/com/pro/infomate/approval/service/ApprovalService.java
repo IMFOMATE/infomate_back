@@ -3,6 +3,7 @@ package com.pro.infomate.approval.service;
 import com.pro.infomate.approval.dto.request.ConfirmRequest;
 import com.pro.infomate.approval.dto.response.DocumentListResponse;
 import com.pro.infomate.approval.entity.Approval;
+import com.pro.infomate.approval.entity.ApprovalStatus;
 import com.pro.infomate.approval.entity.Document;
 import com.pro.infomate.approval.entity.DocumentStatus;
 import com.pro.infomate.approval.repository.ApprovalRepository;
@@ -35,8 +36,8 @@ public class ApprovalService {
   //결재 대기 문서 조회
   public List<DocumentListResponse> ApprovalDocumentList(int memberCode){
 
-      //회원의 결재대기문서 중 date값이 null인 문서만 가져와서
-     // 해당하는 문서의 결재리스트를 순서대로 가지고 오면서
+    //회원의 결재대기문서 중 date값이 null인 문서만 가져와서
+    // 해당하는 문서의 결재리스트를 순서대로 가지고 오면서
     //date가 null인 첫번째껄 가지고 와서 그 member와 내가 같을때만 보여주기
 
     List<Document> documents = documentRepository.findApprovalsDocument(memberCode);
@@ -48,28 +49,41 @@ public class ApprovalService {
             .filter(document -> document.getDocumentStatus() == DocumentStatus.WAITING )
             .collect(Collectors.toList());
 
-    return approvedDocuments.stream().map((element) -> modelMapper.map(element, DocumentListResponse.class)).collect(Collectors.toList());
+    return approvedDocuments.stream().map(DocumentListResponse::new).collect(Collectors.toList());
 
   }
 
   //2. 결재 승인
   //해당문서의 결재리스트에서 order가 1인데 null이거나
   //order
+  @Transactional
   public void approve(ConfirmRequest confirmRequest){
     Document document = documentRepository.findById(confirmRequest.getDocumentCode()).orElseThrow(() -> new NotFindDataException("요청하신 문서를 찾을 수 없습니다"));
     List<Approval> approvalList = document.getApprovalList();
 
     Member member = memberRepository.findByMemberCode(confirmRequest.getMemberCode());
 
+    System.out.println("confirmRequest = " + confirmRequest);
     approvalList.stream()
             .filter(approval -> approval.getMember().equals(member))
             .forEach(approval -> {
               approval.setComment(confirmRequest.getComment());
               approval.setApprovalDate(LocalDateTime.now());
+              approval.setApprovalStatus(ApprovalStatus.APPROVAL);
             });
+
+    boolean allNotNull = approvalList.stream()
+            .allMatch(approval -> approval.getApprovalDate() != null);
+
+    if(allNotNull){
+      document.setDocumentStatus(DocumentStatus.APPROVAL);
+    }
+
+
   }
 
   //4. 결재 반려
+  @Transactional
   public void reject(ConfirmRequest confirmRequest){
     Document document = documentRepository.findById(confirmRequest.getDocumentCode()).orElseThrow(() -> new NotFindDataException("요청하신 문서를 찾을 수 없습니다"));
     List<Approval> approvalList = document.getApprovalList();
@@ -82,15 +96,15 @@ public class ApprovalService {
             .forEach(approval -> {
               approval.setComment(confirmRequest.getComment());
               approval.setApprovalDate(LocalDateTime.now());
+              approval.setApprovalStatus(ApprovalStatus.REJECT);
             });
   }
 
   //5. 상신 취소
-  public void cancel(long documentId){
+  public void cancel(Long documentId){
     Document document = documentRepository.findById(documentId).orElseThrow(() -> new NotFindDataException("요청하신 문서를 찾을 수 없습니다"));
 
     document.setDocumentStatus(DocumentStatus.TEMPORARY);
-
   }
 
 

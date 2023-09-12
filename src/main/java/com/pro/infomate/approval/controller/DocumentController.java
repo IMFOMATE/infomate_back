@@ -1,38 +1,49 @@
 package com.pro.infomate.approval.controller;
 
-
-import com.pro.infomate.approval.dto.request.DraftRequest;
-import com.pro.infomate.approval.dto.request.PaymentRequest;
-import com.pro.infomate.approval.dto.request.VacationRequest;
+import com.pro.infomate.approval.dto.request.*;
+import com.pro.infomate.approval.dto.response.DocumentListResponse;
+import com.pro.infomate.approval.dto.response.DraftResponse;
+import com.pro.infomate.approval.dto.response.PaymentResponse;
+import com.pro.infomate.approval.dto.response.VacationResponse;
+import com.pro.infomate.approval.entity.Draft;
+import com.pro.infomate.approval.entity.Payment;
+import com.pro.infomate.approval.entity.Vacation;
+import com.pro.infomate.approval.service.DocRefService;
 import com.pro.infomate.approval.service.DocumentService;
-import com.pro.infomate.common.PagingResponseDTO;
-import com.pro.infomate.common.ResponseDTO;
+import com.pro.infomate.common.*;
+import com.pro.infomate.member.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Slf4j
 @RestController
 @RequestMapping("/document")
 @RequiredArgsConstructor
 public class DocumentController {
-
   private final DocumentService documentService;
+  private final DocRefService docRefService;
 
 
   // 휴가 문서 등록
   @PostMapping("/regist/vacation")
   public ResponseEntity<ResponseDTO> vacationRegist(
-          @RequestBody VacationRequest vacationRequest,
-          @RequestParam(name = "temp",required = false) String temp
+          @ModelAttribute VacationRequest vacationRequest,
+          @ModelAttribute(name = "fileList") List<MultipartFile> fileList,
+          @AuthenticationPrincipal MemberDTO memberDTO
   ){
 
-    //일단은 code로 사용
-    int memberCode = 22;
+    int memberCode = memberDTO.getMemberCode();
 
-    documentService.vacationSave(memberCode, vacationRequest, temp);
+    documentService.saveDocument(memberCode, vacationRequest, fileList, Vacation.class, VacationResponse.class);
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
@@ -44,32 +55,38 @@ public class DocumentController {
   // 기안 문서 등록
   @PostMapping("/regist/draft")
   public ResponseEntity<ResponseDTO> draftRegist(
-          @RequestBody DraftRequest draftRequest,
-          @RequestParam(name = "temp",required = false) String temp
+          @ModelAttribute DraftRequest draftRequest,
+          @ModelAttribute(name = "fileList") List<MultipartFile> fileList,
+          @AuthenticationPrincipal MemberDTO memberDTO
   ){
-    //일단은 code로 사용
-    int memberCode = 43;
 
-    documentService.draftSave(memberCode, draftRequest, temp);
+    System.out.println("form = " + draftRequest);
+
+    int memberCode = memberDTO.getMemberCode();
+
+//
+    DraftResponse draftResponse = documentService.saveDocument(memberCode, draftRequest, fileList, Draft.class, DraftResponse.class);
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
                     .status(HttpStatus.OK)
                     .message("success")
+                    .data(draftResponse.getTitle() + "등록완료")
                     .build());
   }
 
   // 지출결의서 등록
   @PostMapping("/regist/payment")
   public ResponseEntity<ResponseDTO> paymentRegist(
-          @RequestBody PaymentRequest paymentRequest,
-          @RequestParam(name = "temp",required = false) String temp
+          @ModelAttribute PaymentRequest paymentRequest,
+          @ModelAttribute(name = "fileList") List<MultipartFile> fileList,
+          @AuthenticationPrincipal MemberDTO memberDTO
   ){
 
-    //일단은 code로 사용
-    int memberCode = 2;
+    int memberCode = memberDTO.getMemberCode();
 
-    documentService.paymentSave(memberCode, paymentRequest,temp );
+    System.out.println("controller = " + paymentRequest.getPaymentList());
+    documentService.saveDocument(memberCode, paymentRequest, fileList, Payment.class, PaymentResponse.class);
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
@@ -79,26 +96,112 @@ public class DocumentController {
   }
 
 
-  // 문서세부내용
-  @GetMapping("/{documentId}")
-  public ResponseEntity<ResponseDTO> documentDetail(@PathVariable long documentId){
-    log.info("documentId = {}",documentId);
+  //임시저장
+  @PostMapping("/regist/temp/{type}/{documentCode}")
+  public ResponseEntity<ResponseDTO> tempRegist(
+          @PathVariable(required = false) String documentCode,
+          @PathVariable(required = true) String type,
+          @ModelAttribute DraftRequest documentRequest,
+          @ModelAttribute(name = "fileList") List<MultipartFile> fileList,
+          @AuthenticationPrincipal MemberDTO memberDTO
+          ){
+
+    Long id = documentCode.equals("null") ? null : Long.valueOf(documentCode);
+
+
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
                     .status(HttpStatus.OK)
                     .message("success")
-                    .data(documentService.findById(documentId))
+                    .build());
+  }
+
+  @PatchMapping("/temp/draft/{documentCode}")
+  public ResponseEntity<ResponseDTO> tempRegistDraft(
+          @PathVariable(required = false) String documentCode,
+          @ModelAttribute DraftRequest documentRequest,
+          @ModelAttribute(name = "fileList") List<MultipartFile> fileList,
+          @AuthenticationPrincipal MemberDTO memberDTO,
+          @RequestParam(required = false) Boolean isSave
+  ) {
+    Long id = documentCode.equals("null") ? null : Long.valueOf(documentCode);
+    System.out.println("isSave = " + isSave);
+    documentService.tempSave(id, memberDTO.getMemberCode(), documentRequest, Draft.class, fileList, isSave);
+
+    return ResponseEntity.ok()
+            .body(ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .message("success")
+                    .build());
+  }
+
+
+  @PatchMapping("/temp/vacation/{documentCode}")
+  public ResponseEntity<ResponseDTO> tempRegistVacation(
+          @PathVariable(required = false) String documentCode,
+          @ModelAttribute VacationRequest documentRequest,
+          @ModelAttribute(name = "fileList") List<MultipartFile> fileList,
+          @AuthenticationPrincipal MemberDTO memberDTO,
+          @RequestParam(required = false) Boolean isSave
+  ) {
+    Long id = documentCode.equals("null") ? null : Long.valueOf(documentCode);
+
+    documentService.tempSave(id, memberDTO.getMemberCode(), documentRequest, Vacation.class, fileList, isSave);
+
+    return ResponseEntity.ok()
+            .body(ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .message("success")
+                    .build());
+  }
+
+  @PatchMapping("/temp/payment/{documentCode}")
+  public ResponseEntity<ResponseDTO> tempRegistPayment(
+          @PathVariable(required = false) String documentCode,
+          @ModelAttribute PaymentRequest documentRequest,
+          @ModelAttribute(name = "fileList") List<MultipartFile> fileList,
+          @AuthenticationPrincipal MemberDTO memberDTO,
+          @RequestParam(required = false) Boolean isSave
+  ) {
+    Long id = documentCode.equals("null") ? null : Long.valueOf(documentCode);
+
+    documentService.tempSave(id, memberDTO.getMemberCode(), documentRequest, Payment.class, fileList, isSave);
+
+    return ResponseEntity.ok()
+            .body(ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .message("success")
                     .build());
   }
 
 
   // 문서 삭제
-  @DeleteMapping("/delete")
-  public ResponseEntity<ResponseDTO> deleteDocument(long documentId){
+  @DeleteMapping("/delete/{documentId}")
+  public ResponseEntity<ResponseDTO> deleteDocument(@PathVariable long documentId){
 
-    log.info("[DocumentController] documentId={}", documentId);
+    System.out.println("documentId = " + documentId);
+
     documentService.deleteDocument(documentId);
+
+    return ResponseEntity.ok()
+            .body(ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .message("success")
+                    .build());
+  }
+
+  //취소
+  @PatchMapping("/cancel/{documentId}")
+  public ResponseEntity<ResponseDTO> cancelDocument(
+          @PathVariable long documentId,
+          @AuthenticationPrincipal MemberDTO memberDTO
+  ){
+
+    System.out.println("documentId = " + documentId);
+    log.info("memberDTO ={}", memberDTO);
+
+    documentService.cancelApproval(documentId, memberDTO.getMemberCode());
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
@@ -109,29 +212,101 @@ public class DocumentController {
 
 
   //결재 메인
-  @GetMapping("/main/")
-  public ResponseEntity<ResponseDTO> documentMain(){
-
-    int memberCode = 2;
+  @GetMapping("/main")
+  public ResponseEntity<ResponseDTO> documentMain(
+          @AuthenticationPrincipal MemberDTO memberDTO
+          ){
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
                     .status(HttpStatus.OK)
                     .message("success")
-                    .data(documentService.top5List(memberCode))
+                    .data(documentService.top5List(memberDTO.getMemberCode()))
                     .build());
   }
 
-  // 기안문서
-  @GetMapping("/approval")
-  public ResponseEntity<PagingResponseDTO> approvalAllList(){
-    int memberCode = 2;
+  // 상태별 리스트
+  @GetMapping("/approval/{docStatus}")
+  public ResponseEntity<PagingResponseDTO> approvalList(
+          @PathVariable String docStatus,
+          @AuthenticationPrincipal MemberDTO memberDTO,
+          @RequestParam(required = false, name = "status") String status,
+          Pageable pageable
+          ){
 
-//    documentService.approvalList()
+    log.info("[DocumentController] memberDTO={}", memberDTO);
+    int memberCode = memberDTO.getMemberCode();
+    log.info("[DocumentController] status={}", status);
+    log.info("[DocumentController] docStatus={}", docStatus);
 
-    return null;
+    Criteria criteria = new Criteria(pageable.getPageNumber()+1, pageable.getPageSize());
+
+    Page<DocumentListResponse> documents = null;
+
+    switch (docStatus.toUpperCase()){
+      case "APPROVAL":
+        documents = documentService.approvalList(status, memberCode, pageable);
+        break;
+      case "REF":
+        documents = docRefService.refPagingList(status, memberCode, pageable);
+        break;
+      case "TEMPORARY":
+        documents = documentService.approvalList("TEMPORARY", memberCode, pageable);
+        break;
+      case "CREDIT":
+        documents = documentService.creditList(memberCode, pageable);
+        break;
+      case "DEPT":
+        documents = documentService.deptList(memberCode, pageable);
+        System.out.println("documents = " + documents);
+        break;
+    }
+
+    PageDTO pageDTO = new PageDTO(criteria, documents.getTotalElements());
+    PagingResponseDTO result = PagingResponseDTO.builder()
+            .pageInfo(pageDTO)
+            .data(documents.getContent())
+            .message("success")
+            .httpStatus(HttpStatus.OK)
+            .build();
+
+    return ResponseEntity.ok()
+            .body(result);
   }
 
 
+  // 문서세부내용
+  @GetMapping("/{documentId}")
+  public ResponseEntity<ResponseDTO> documentDetail(
+          @PathVariable long documentId,
+          @AuthenticationPrincipal MemberDTO memberDTO
+  ){
+    log.info("documentId = {}",documentId);
+    log.info("memberDTO={}",memberDTO);
+
+    int memberCode = memberDTO.getMemberCode();
+
+    return ResponseEntity.ok()
+            .body(ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .message("success")
+                    .data(documentService.findById(documentId,memberCode))
+                    .build());
+  }
+
+
+  // 홈 화면용 리스트
+  @GetMapping("/credit")
+  public ResponseEntity<ResponseDTO> mainCredit(
+          @AuthenticationPrincipal MemberDTO memberDTO){
+
+    return ResponseEntity.ok()
+            .body(ResponseDTO.builder()
+                    .status(HttpStatus.OK)
+                    .message("success")
+                    .data(documentService.mainCredit(memberDTO.getMemberCode()))
+                    .build());
+
+  }
 
 }

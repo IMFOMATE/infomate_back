@@ -25,7 +25,7 @@ public class MailReference {
             strategy = GenerationType.SEQUENCE,
             generator = "SEQ_TBL_REFERENCE_GENERATOR"
     )
-    private int referenceCode;
+    private Integer referenceCode;
 
     @ManyToOne
     @JoinColumn(name = "MAIL_CODE", nullable = false)

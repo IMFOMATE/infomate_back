@@ -3,10 +3,76 @@ GET http://localhost:8989/department/treeview
 
 
 ### 회원조회
-GET http://localhost:8989/emp/info/2
+GET http://localhost:8989/emp/info/481
 
 
-### 부서조회
-GET http://localhost:8989/department/emp/list
+#### 직원부서조회 ###
+#GET http://localhost:8989/department/emp/list
+
+
+#### 부서 검색하기
+#GET http://localhost:8989/department/dept/search?s=인사
+#Accept: */*
+
+
+### 직원 토탈
+GET http://localhost:8989/department/dept
+Accept: */*
+
+
+### 부서 전체 조회
+GET http://localhost:8989/department/dept/list
+Accept: */*
+
+### 멤버전체조회 ###
+GET http://localhost:8989/department/emp/listall
+Accept: */*
+
+
+
+
+
+### 페지징
+GET http://localhost:8989/department/openEmpList
+
+
+
+
+### 부서 생성
+POST http://localhost:8989/department/regist
+Accept: */*
+Content-Type: application/json
+
+{
+  "deptName": "확인용"
+}
+
+
+
+
+
+### 부서 수정
+PUT http://localhost:8989/department/save
+Accept: */*
+Content-Type: application/json
+
+{
+  "deptCode" : 26,
+  "deptName" : "테스트 수정 완료 팀"
+}
+
+
+
+### 부서 삭제
+DELETE http://localhost:8989/department/delete/
+Accept: */*
+Content-Type: application/json
+
+
+
+
+
+
+
 
 

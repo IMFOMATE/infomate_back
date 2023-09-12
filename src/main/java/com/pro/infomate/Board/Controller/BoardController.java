@@ -136,3 +136,4 @@ class BoardController {
         return ResponseEntity.ok(Common);
     }
 }
+

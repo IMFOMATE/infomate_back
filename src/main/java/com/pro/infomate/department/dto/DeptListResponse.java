@@ -36,15 +36,22 @@ public class DeptListResponse {
 
         private int rank;
 
+        private int deptCode;           //부서 코드
+
+        private int count; // 부서멤버수
+
         @Builder
-        public DepartDTO(String empName, String empNum, String deptName, String rankName, int empCode, int rank) {
+        public DepartDTO(String empName, String empNum, String deptName, String rankName, int empCode, int rank, int deptCode, int count) {
             this.empName = empName;
             this.empNum = empNum;
             this.deptName = deptName;
             this.rankName = rankName;
             this.empCode = empCode;
             this.rank = rank;
+            this.deptCode = deptCode;
+            this.count = count;
         }
+
     }
 
 }
