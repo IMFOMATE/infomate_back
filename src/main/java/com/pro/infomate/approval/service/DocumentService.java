@@ -282,7 +282,7 @@ public class DocumentService {
       paymentListRepository.deleteByDocument(existingDocument);
     }
 
-    existingDocument = updateDocument(existingDocument, documentRequest, entityClass,isSave);
+    existingDocument = updateDocument(existingDocument, documentRequest, entityClass, isSave);
     createRefer(documentRequest, existingDocument);
     createApprovals(documentRequest, member, existingDocument, memberCode, true);
     processFiles(multipartFiles, existingDocument);
@@ -393,9 +393,12 @@ public class DocumentService {
   // 문서 임시저장
   private <T extends DocumentRequest> Document updateDocument(Document existingDocument, T documentRequest, Class<?> entityClass,Boolean isSave) {
 
-    if(isSave) existingDocument.setDocumentStatus(DocumentStatus.WAITING);
+    if(isSave){
+      existingDocument.setDocumentStatus(DocumentStatus.WAITING);
+    }else{
+      existingDocument.setDocumentStatus(DocumentStatus.TEMPORARY);
+    }
 
-    existingDocument.setDocumentStatus(DocumentStatus.TEMPORARY);
     existingDocument.setCreatedDate(LocalDateTime.now());
 
     switch (entityClass.getSimpleName()) {
@@ -421,7 +424,7 @@ public class DocumentService {
           draft.setContent(draftRequest.getContent());
           draft.setStartDate(draftRequest.getStartDate());
           draft.setEmergency(draftRequest.getEmergency());
-          draft.setCoDept(draftRequest.getCoDept());
+          draft.setCoDept(draftRequest.getCoDept().equals("null") ? "" : draftRequest.getCoDept());
 
         break;
       case "Payment":

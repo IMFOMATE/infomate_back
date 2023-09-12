@@ -110,10 +110,10 @@ class BoardController {
 //        return  ResponseEntity.ok("resultMessage");
     }
 
-    @DeleteMapping("board/{postCode}/delete")   // 게시글 삭제
+    @DeleteMapping("board/delete/{postCode}")   // 게시글 삭제
     public ResponseEntity<ResponseDTO> deletePost(@PathVariable Integer postCode) {
         try {
-            boardService.deleteById(postCode);
+            boardService.deletePost(postCode);
             return ResponseEntity.ok()
                     .body(ResponseDTO.builder()
                             .status(HttpStatus.OK)
@@ -130,37 +130,10 @@ class BoardController {
     }
 
 
-
-
-
-
-
-
-    @GetMapping("/board/notice")  // 공지사항
-        public ResponseEntity<ResponseDTO> boardNotice () {
-
-            return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지사항 조회 성공", boardService.boardNotice()));
-        }
-
-
-        @GetMapping("/board/common")  // 일반게시판
-        public ResponseEntity<ResponseDTO> boardCommon () {
-
-            return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일반게시판 조회 성공", boardService.boardCommon()));
-        }
-
-
-        @GetMapping("/board/anony")   // 익명게시판
-        public ResponseEntity<ResponseDTO> boardAnony () {
-
-            return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "익명게시판 조회 성공", boardService.boardAnony()));
-        }
-
-
-        @GetMapping("/board/dept")   // 부서게시판
-        public ResponseEntity<ResponseDTO> boardDept () {
-
-            return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "부서게시판 조회 성공", boardService.boardDept()));
-        }
-
+    @GetMapping("/common")      // 게시판 카테고리 나누기
+    public ResponseEntity<List<PostDTO>> getCommon() {
+        List<PostDTO> Common = boardService.getCommon();
+        return ResponseEntity.ok(Common);
     }
+}
+

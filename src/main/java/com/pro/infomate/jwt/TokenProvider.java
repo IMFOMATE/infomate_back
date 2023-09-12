@@ -79,7 +79,14 @@ public class TokenProvider {
                                 member.getDepartment().getDeptCode(),
                                 member.getRank().getRankName(),
                                 member.getMemberCode(),
+                                member.getMemberId(),
+                                member.getMemberEmail(),
+                                member.getMemberPhone(),
+                                member.getMemberNo(),
+                                member.getExtensionNumber(),
+                                member.getHireDate(),
                                 member.getMemberPic(),
+                                member.getMemberPicDefault(),
                                 accessToken,
                                 accessTokenExpiresIn.getTime()
                             );

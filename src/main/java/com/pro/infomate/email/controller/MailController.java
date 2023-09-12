@@ -10,6 +10,7 @@ import com.pro.infomate.common.PageDTO;
 import com.pro.infomate.common.PagingResponseDTO;
 import com.pro.infomate.common.ResponseDTO;
 import com.pro.infomate.email.dto.EmailDTO;
+import com.pro.infomate.email.dto.PhotoFileDTO;
 import com.pro.infomate.email.entity.Email;
 import com.pro.infomate.email.service.MailService;
 import com.pro.infomate.member.dto.MemberDTO;
@@ -21,7 +22,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 
 import java.io.File;
 import java.io.IOException;
@@ -94,21 +94,64 @@ public class MailController {
 
     }
 
+
+
+    @GetMapping("/miniMail/{memberCode}/{title}")
+    public ResponseEntity<ResponseDTO> selectAddressBookMini(@PathVariable Integer memberCode
+            , @RequestParam(name = "offset", defaultValue = "1" , required = false) String offset
+            , @PathVariable String title) {
+
+        System.out.println("memberCode " + memberCode);
+
+        System.out.println("title" + title);
+
+        int total = 0;
+
+        Criteria cri = new Criteria(Integer.valueOf(offset), 5);
+
+        Object mailList = null;
+
+        mailList = mailService.selectAllMail(memberCode,cri);
+        total = mailService.selectMailTotal(memberCode);
+
+
+        PagingResponseDTO pagingResponseDTO = new PagingResponseDTO();
+        /* 1. offset의 번호에 맞는 페이지에 뿌려줄 Product들 */
+        pagingResponseDTO.setData(mailList);
+        /* 2. PageDTO : 화면에서 페이징 처리에 필요한 정보들 */
+        pagingResponseDTO.setPageInfo(new PageDTO(cri, total));
+
+
+        return ResponseEntity.ok()
+                .body(ResponseDTO.builder()
+                        .status(HttpStatus.valueOf(HttpStatus.OK.value()))
+                        .message("success")
+                        .data(pagingResponseDTO)
+                        .build());
+
+    }
+
+
+
+
     @PostMapping("/postMail")
-    public ResponseEntity<ResponseDTO> sendMail(@RequestParam List receiverMail,
-                                                @RequestParam List mailReference,
+    public ResponseEntity<ResponseDTO> sendMail(@RequestParam Integer memberCode,
+                                                @RequestParam List receiverMail,
+
                                                 @RequestParam String mailTitle,
                                                 @RequestParam(required=false) List<MultipartFile> mailFile,
                                                 @RequestParam String mailContent) {
 
         System.out.println("receiverMail = " + receiverMail);
         System.out.println("mailFile = " + mailFile);
+        System.out.println("memberCode = " + memberCode);
 
 
         Map<String , Object> map = new HashMap<>();
 
+        map.put("memberCode", memberCode);
         map.put("receiverMail", receiverMail);
-        map.put("mailReference", mailReference);
+
         map.put("mailTitle", mailTitle);
         map.put("mailFile" , mailFile);
         map.put("mailContent", mailContent);
@@ -243,6 +286,40 @@ public class MailController {
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.valueOf(HttpStatus.CREATED.value()))
                         .message("success")
+                        .build());
+    }
+
+    @PutMapping("updateTrash/{memberCode}")
+    public ResponseEntity<ResponseDTO> updateTrash(@PathVariable Integer memberCode) {
+
+        System.out.println("memberCode = " + memberCode);
+
+        mailService.updateTrash(memberCode);
+
+        return ResponseEntity.ok()
+                .body(ResponseDTO.builder()
+                        .status(HttpStatus.valueOf(HttpStatus.CREATED.value()))
+                        .message("success")
+                        .build());
+    }
+
+
+    @GetMapping("selectFile/{mailCode}")
+    public ResponseEntity<ResponseDTO> selectMailFile(@PathVariable Integer mailCode) {
+
+        System.out.println("mailCode = " + mailCode);
+
+        List<PhotoFileDTO> file = mailService.selectMailFile(mailCode);
+
+
+
+
+
+        return ResponseEntity.ok()
+                .body(ResponseDTO.builder()
+                        .status(HttpStatus.valueOf(HttpStatus.CREATED.value()))
+                        .message("success")
+                        .data(file)
                         .build());
     }
 
