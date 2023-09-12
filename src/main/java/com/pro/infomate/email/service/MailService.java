@@ -6,7 +6,6 @@ import com.pro.infomate.addressbook.repository.ContactRepository;
 import com.pro.infomate.common.Criteria;
 import com.pro.infomate.email.dto.EmailDTO;
 import com.pro.infomate.email.dto.PhotoFileDTO;
-import com.pro.infomate.email.dto.TrashDTO;
 import com.pro.infomate.email.entity.Email;
 import com.pro.infomate.email.entity.PhotoFile;
 import com.pro.infomate.email.entity.Trash;
@@ -133,7 +132,7 @@ public class MailService {
 
         // 이메일
         EmailDTO emailDTO = new EmailDTO();
-        emailDTO.setMemberCode(2);
+        emailDTO.setMemberCode((Integer) map.get("memberCode"));
         emailDTO.setMailContent((String) map.get("mailContent"));
         emailDTO.setMailTitle((String) map.get("mailTitle"));
         emailDTO.setMailDate(new Date());
@@ -151,16 +150,18 @@ public class MailService {
 
         for (int i = 0; i < member.size() ; i++) {
 
-            Contact contacts  = contactRepository.findByContactName(member.get(i));
-//            if(contacts.isPresent()){
+            Optional<Contact> contacts  = contactRepository.findByContactName(member.get(i));
+            if(contacts.isPresent()){
 
-//                Member memberEntity = memberRepository.findByMemberName(member.get(i));
-//
-//                emailDTO.setReceiverMail(memberEntity.getMemberEmail());
-//            }else
+                emailDTO.setReceiverMail(contacts.get().getContactEmail());
 
+            }else{
+                Member memberEntity = memberRepository.findByMemberName(member.get(i));
 
-            emailDTO.setReceiverMail(contacts.getContactEmail());
+                System.out.println("쉬발" + memberEntity.getMemberEmail());
+                emailDTO.setReceiverMail(memberEntity.getMemberEmail());
+            }
+
 
             Email emailEntity = modelMapper.map(emailDTO , Email.class);
 
@@ -192,7 +193,7 @@ public class MailService {
 
                 try {
 
-                    replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, mailFile.get(i));
+                    replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, mailFile.get(y));
 
                     photoFile.setFileModificationName(replaceFileName);
 
@@ -596,5 +597,45 @@ public class MailService {
 
 
 
+    }
+    @Transactional
+    public void updateTrash(Integer memberCode) {
+
+        List<Member> memberEntity = memberRepository.findAllById(Collections.singleton(memberCode));
+        List<Email> emailEntity = emailAndMemberRepository.findAll();
+
+
+        List<Optional<Member>> sendMemberName = new ArrayList<>();
+
+        for (Member member : memberEntity) {
+            for (Email email : emailEntity) {
+                if (member.getMemberEmail().equals(email.getReceiverMail())) {
+                    if (email.getTrash() != null) {
+                        System.out.println("faf" + email.getTrash());
+                        email.setTrash(null);
+
+//                        trashRepository.deleteByMailMailCode(email.getMailCode());
+//                        System.out.println("이거" + email);
+//                        email.setTrash(null);
+                    }
+                }
+            }
+        }
+    }
+
+    public List<PhotoFileDTO> selectMailFile(Integer mailCode) {
+
+        List<PhotoFile> fileEntity = photoFileRepository.findByMailMailCode(mailCode);
+
+
+        List<PhotoFileDTO> fileDTO = fileEntity.stream().map(item -> modelMapper.map(item, PhotoFileDTO.class)).collect(Collectors.toList());
+
+        for (int i = 0; i < fileDTO.size(); i++) {
+            fileDTO.get(i).setFileModificationName(IMAGE_URL + fileDTO.get(i).getFileModificationName());
+        }
+
+        System.out.println(fileDTO);
+
+        return  fileDTO;
     }
 }
