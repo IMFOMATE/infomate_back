@@ -132,7 +132,7 @@ public class DeptController {
 
 
   @PostMapping("/regist")
-  public ResponseEntity<ResponseDTO> saveByDepartment(@ModelAttribute DepartmentDTO departmentDTO){
+  public ResponseEntity<ResponseDTO> saveByDepartment(@RequestBody DepartmentDTO departmentDTO){
 
     return ResponseEntity.ok()
             .body(new ResponseDTO(HttpStatus.OK, "부서 입력 성공", departmentService.saveByDepartment(departmentDTO)));
@@ -156,6 +156,23 @@ public class DeptController {
                     .build());
 
   }
+
+
+//  @DeleteMapping("/delete/{deptCode}")
+//  public ResponseEntity<ResponseDTO> deleteDept(@PathVariable int deptCode){
+//
+//    log.info("[DepartmentController] ======> deptCode: {}" , deptCode);
+//
+//    departmentService.deletDept(deptCode);
+//
+//    return ResponseEntity.ok()
+//            .body(ResponseDTO.builder()
+//                    .status(HttpStatus.OK)
+//                    .message("삭제완료")
+//                    .build());
+//
+//
+//  }
 
 
 

@@ -45,6 +45,10 @@ jwt:
 logging:
   level:
     root: info
+    org:
+      hibernate:
+        SQL: debug
+        type: trace
 
 image:
   add-resource-locations: classpath:/static/productimgs/

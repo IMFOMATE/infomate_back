@@ -3,7 +3,7 @@ GET http://localhost:8989/department/treeview
 
 
 ### 회원조회
-GET http://localhost:8989/emp/info/8
+GET http://localhost:8989/emp/info/481
 
 
 #### 직원부서조회 ###
@@ -44,7 +44,7 @@ Accept: */*
 Content-Type: application/json
 
 {
-  "deptName": "데이터들어가는팀테스트"
+  "deptName": "확인용"
 }
 
 
@@ -64,7 +64,7 @@ Content-Type: application/json
 
 
 ### 부서 삭제
-DELETE http://localhost:8989/department/delete/{{de
+DELETE http://localhost:8989/department/delete/
 Accept: */*
 Content-Type: application/json
 

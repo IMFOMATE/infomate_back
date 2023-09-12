@@ -41,4 +41,12 @@ public class Department {
     if(departmentDTO.getDeptName() != null) this.deptName = departmentDTO.getDeptName();
   }
 
+  @Override
+  public String toString() {
+    return "Department{" +
+            "deptCode=" + deptCode +
+            ", deptName='" + deptName + '\'' +
+            ", deptOrder=" + deptOrder +
+            '}';
+  }
 }

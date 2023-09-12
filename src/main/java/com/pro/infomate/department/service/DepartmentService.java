@@ -72,7 +72,7 @@ public class DepartmentService {
   //부서 매핑
   private TreeViewResponse createDepartmentNode(Department dept) {
     return TreeViewResponse.builder()
-            .id(dept.getDeptCode())
+            .id(dept.getDeptOrder())
             .parent(0)
             .droppable(true)
             .text(dept.getDeptName())
@@ -86,7 +86,7 @@ public class DepartmentService {
     for (Member member : dept.getMembers()) {
       TreeViewResponse memberNode = TreeViewResponse.builder()
               .id(++count)
-              .parent(dept.getDeptCode())
+              .parent(dept.getDeptOrder())
               .droppable(false)
               .text(member.getMemberName())
               .data(TreeViewResponse.TreeDTO.builder()
@@ -250,10 +250,17 @@ public class DepartmentService {
 
     int result = 0;
 
+    Long maxCode = departmentRepository.findMaxId();
+    log.info("[DepartmentService] maxCode : {} ", maxCode);
+    int newCode = (int)(maxCode + 1) ;
+    log.info("[DepartmentService] newCode : {} ", newCode);
     try {
 
       Department saveDepartment = modelMapper.map(departmentDTO, Department.class);
 
+      saveDepartment.setDeptOrder(newCode);
+
+      log.info("[DepartmentService] saveDepartment : {} ", saveDepartment);
       departmentRepository.save(saveDepartment);
 
       calendarService.saveDepartmentCalendarRegist(saveDepartment.getDeptCode());
@@ -275,7 +282,7 @@ public class DepartmentService {
 
   // 부서명 수정
   @Transactional
-  public void updateDept(DepartmentDTO department){
+  public String updateDept(DepartmentDTO department){
     log.info("[DepartmentService] (updateDept) department : {}", department);
 
     Department entityDept = departmentRepository.findById(department.getDeptCode()).get();
@@ -283,6 +290,8 @@ public class DepartmentService {
     log.info("[DepartmentService] (updateById) entityDept : {}", entityDept);
 
     entityDept.update(department);
+
+    return null;
   }
 
 
@@ -298,6 +307,20 @@ public class DepartmentService {
   }
 
 
-
+//  @Transactional
+//  public void deletDept(int deptCode) {
+//
+//    Department department = departmentRepository.deleteById(deptCode);
+//
+//  }
 }
+
+
+
+
+
+
+
+
+
 
