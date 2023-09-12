@@ -94,6 +94,46 @@ public class MailController {
 
     }
 
+
+
+    @GetMapping("/miniMail/{memberCode}/{title}")
+    public ResponseEntity<ResponseDTO> selectAddressBookMini(@PathVariable Integer memberCode
+            , @RequestParam(name = "offset", defaultValue = "1" , required = false) String offset
+            , @PathVariable String title) {
+
+        System.out.println("memberCode " + memberCode);
+
+        System.out.println("title" + title);
+
+        int total = 0;
+
+        Criteria cri = new Criteria(Integer.valueOf(offset), 5);
+
+        Object mailList = null;
+
+        mailList = mailService.selectAllMail(memberCode,cri);
+        total = mailService.selectMailTotal(memberCode);
+
+
+        PagingResponseDTO pagingResponseDTO = new PagingResponseDTO();
+        /* 1. offset의 번호에 맞는 페이지에 뿌려줄 Product들 */
+        pagingResponseDTO.setData(mailList);
+        /* 2. PageDTO : 화면에서 페이징 처리에 필요한 정보들 */
+        pagingResponseDTO.setPageInfo(new PageDTO(cri, total));
+
+
+        return ResponseEntity.ok()
+                .body(ResponseDTO.builder()
+                        .status(HttpStatus.valueOf(HttpStatus.OK.value()))
+                        .message("success")
+                        .data(pagingResponseDTO)
+                        .build());
+
+    }
+
+
+
+
     @PostMapping("/postMail")
     public ResponseEntity<ResponseDTO> sendMail(@RequestParam Integer memberCode,
                                                 @RequestParam List receiverMail,
