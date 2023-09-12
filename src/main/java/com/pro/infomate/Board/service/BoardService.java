@@ -141,12 +141,12 @@ public class BoardService {
                 post.setBoardCode(postDTO.getBoard().getBoardCode());
 
                 postRepository.save(post);
-                return "게시글 수정 완료";
+                return "성공";
             } else {
                 return "게시글을 찾을 수 없습니다.";
             }
         } catch (Exception e) {
-            return "게시글 수정 실패: " + e.getMessage();
+            return "실패" + e.getMessage();
         }
     }
 

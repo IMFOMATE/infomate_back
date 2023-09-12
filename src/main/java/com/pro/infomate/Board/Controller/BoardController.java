@@ -91,14 +91,14 @@ class BoardController {
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
-                        .message("작성 완료")
+                        .message("작성완료")
                         .build());
     }
 
-    @PutMapping("board/{postCode}/update") // 게시글 수정
+    @PutMapping("board/update") // 게시글 수정
     public ResponseEntity<String> updatePost( @RequestBody PostDTO postDTO) {
         log.info("[PostController](updateByPost) postDTO: {} ", postDTO);
-        boardService.updatePost(postDTO);
+       // boardService.updatePost(postDTO);
 
         String resultMessage = boardService.updatePost(postDTO);
 
@@ -112,6 +112,8 @@ class BoardController {
 
     @DeleteMapping("board/delete/{postCode}")   // 게시글 삭제
     public ResponseEntity<ResponseDTO> deletePost(@PathVariable Integer postCode) {
+
+        log.info("[postCode] : " + postCode);
         try {
             boardService.deletePost(postCode);
             return ResponseEntity.ok()

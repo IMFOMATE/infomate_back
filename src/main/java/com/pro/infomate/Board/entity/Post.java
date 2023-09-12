@@ -51,7 +51,7 @@ public class Post {
     private Board board;
 
     @OneToMany
-    @JoinColumn(name = "BOARD_FILE")
+    @JoinColumn(name = "FILE_NO")
     private List<BoardFile> boardFile;
 
     @ManyToOne
