@@ -230,9 +230,9 @@ User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
 <> 2023-08-31T145456.404.json
-=======
+
 <> 2023-09-01T121808.500.json
->>>>>>> 27b3904af9e4c6be15acb3e4c3602ba8cfbe9f3b
+
 
 ###
 
@@ -466,9 +466,9 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 ###
 
 GET http://localhost:8989/emp/info/2
-=======
+
 {
-<<<<<<< HEAD
+
   "postCode": 0,
   "postTitle": "안뇽",
   "postDate": "2023-08-29",
@@ -519,15 +519,15 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<<<<<<< HEAD
+
 <> 2023-08-31T134357.200.json
 
 ###
 
 GET http://localhost:8989/emp/info/2
-=======
+
 {
-<<<<<<< HEAD
+
   "postCode": 0,
   "postTitle": "안뇽",
   "postDate": "2023-08-29",
@@ -662,13 +662,13 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<<<<<<< HEAD
+
 <> 2023-08-31T133621.200.json
 
 ###
 
 GET http://localhost:8989/emp/info/2
-=======
+
 {
 <<<<<<< HEAD
   "postCode": 0,
@@ -743,15 +743,15 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<<<<<<< HEAD
+
 <> 2023-08-31T131609.200.json
 
 ###
 
 GET http://localhost:8989/emp/info/2
-=======
+
 {
-<<<<<<< HEAD
+
   "postCode": 0,
   "postTitle": "안뇽",
   "postDate": "2023-08-29",
@@ -808,9 +808,9 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 ###
 
 GET http://localhost:8989/emp/info/2
-=======
+
 {
-<<<<<<< HEAD
+
   "postCode": 0,
   "postTitle": "안뇽",
   "postDate": "2023-08-29",
@@ -832,7 +832,7 @@ POST http://localhost:8989/board/posting
 Accept: */*
 Content-Type: application/json
 Content-Length: 223
-=======
+
   "memberPassword": "pass01",
   "memberName": "동덕",
   "memberId": "dbrs96",
@@ -867,9 +867,9 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 ###
 
 GET http://localhost:8989/emp/info/2
-=======
+
 {
-<<<<<<< HEAD
+
   "postCode": 0,
   "postTitle": "안뇽",
   "postDate": "2023-08-29",
@@ -921,15 +921,15 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<<<<<<< HEAD
+
 <> 2023-08-31T130106.200.json
 
 ###
 
 GET http://localhost:8989/emp/info/2
-=======
+
 {
-<<<<<<< HEAD
+
   "postCode": 0,
   "postTitle": "안뇽",
   "postDate": "2023-08-29",
@@ -952,7 +952,7 @@ Content-Type: multipart/form-data; boundary=WebAppBoundary
 Accept: */*
 Content-Type: application/json
 Content-Length: 223
-=======
+
   "memberPassword": "pass01",
   "memberName": "동덕",
   "memberId": "dbrs96",
@@ -981,15 +981,15 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
-<<<<<<< HEAD
+
 <> 2023-08-31T122820.200.json
 
 ###
 
 GET http://localhost:8989/emp/info/2
-=======
+
 {
-<<<<<<< HEAD
+
   "postCode": 0,
   "postTitle": "안뇽",
   "postDate": "2023-08-29",

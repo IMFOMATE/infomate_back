@@ -64,7 +64,7 @@ Content-Type: application/json
 
 
 ### 부서 삭제
-GET http://localhost:8989/department/delete/24
+DELETE http://localhost:8989/department/delete/{{de
 Accept: */*
 Content-Type: application/json
 
