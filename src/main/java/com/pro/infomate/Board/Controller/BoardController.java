@@ -2,13 +2,20 @@ package com.pro.infomate.Board.Controller;
 
 import com.pro.infomate.Board.dto.PagingResponseDTO;
 import com.pro.infomate.Board.dto.PostDTO;
+import com.pro.infomate.Board.entity.Post;
 import com.pro.infomate.Board.service.BoardService;
 import com.pro.infomate.common.Criteria;
 import com.pro.infomate.common.PageDTO;
 import com.pro.infomate.common.ResponseDTO;
+import com.pro.infomate.member.entity.Member;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +37,8 @@ class BoardController {
 
         log.info("[ProductController] selectPostListWithPaging Start ============ ");
         log.info("[ProductController] selectPostListWithPaging offset : {} ", offset);
+
+
 
         int total = boardService.totalPost();
 
