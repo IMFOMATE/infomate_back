@@ -25,7 +25,7 @@ public interface ContactRepository extends JpaRepository<Contact, Integer> {
     List<Contact> findByContactLikeTotal(Integer memberCode);
 
     @Query("SELECT c FROM Contact c WHERE c.contactName = :member")
-    Contact findByContactName(Object member);
+    Optional<Contact> findByContactName(Object member);
 
     @Query("SELECT c FROM Contact c WHERE c.contactLike = 'Y' AND c.member.memberCode = :memberCode")
     Page<Contact> findByContactLikeAndMemberMemberCode(Integer memberCode, Pageable paging);
