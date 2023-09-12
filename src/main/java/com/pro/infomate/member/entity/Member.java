@@ -76,6 +76,7 @@ public class Member {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DEPT_CODE")
+    @JsonIgnore
     private Department department;
 
     @Column(name = "HIRE_DATE")
@@ -90,7 +91,7 @@ public class Member {
     private String memberPic;
 
     @Column(name = "MEMBER_PIC_ORIGIN")
-    private String memberPicOrigin;
+    private String memberPicDefault;
 
     @Column(name = "MEMBER_OFF")
     private int memberOff;
@@ -108,6 +109,7 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Document> documentList = new ArrayList<>();
+
 
 
     @OneToMany(mappedBy = "member")

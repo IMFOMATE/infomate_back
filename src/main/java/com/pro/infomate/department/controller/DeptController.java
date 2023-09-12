@@ -32,19 +32,13 @@ public class DeptController {
 
   //////////////////////////* 직원 조회 *//////////////////////
   @GetMapping("/emp/list")
-  public ResponseEntity<ResponseDTO> deptList(){
+  public ResponseEntity<ResponseDTO> deptList() {
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder().status(HttpStatus.OK).message("조회성공").data(departmentService.selectDeptList()).build());
 
   }
 
-//  @GetMapping("/dept/part")
-//  public ResponseEntity<ResponseDTO> deptPartList(){
-//
-//    return ResponseEntity.ok()
-//            .body(new ResponseDTO(HttpStatus.OK,"조직도 조회 성공", departmentService.selectPartList()));
-//  }
 
 
   //////////////////* 직원 전체 조회 */
@@ -73,7 +67,7 @@ public class DeptController {
 
 
   @GetMapping("/treeview")
-  public ResponseEntity<ResponseDTO> deptTreeView(){
+  public ResponseEntity<ResponseDTO> deptTreeView() {
 
 
     return ResponseEntity.ok()
@@ -85,40 +79,9 @@ public class DeptController {
   }
 
 
-//  public ResponseEntity<ResponseDTO> selectSearchDeptList(
-//          @RequestParam(name = "s", defaultValue = "all") String search){
-//
-//    return ResponseEntity.ok()
-//            .body(new ResponseDTO(HttpStatus.OK, "검색 성공", departmentService.selectDept(search)));
-//  }
 
 
 
-
-
-  // 페이지
-
-//  @GetMapping("/dept")
-//  public ResponseEntity<ResponseDTO> selectDeptListWithPaging(
-//          @RequestParam(name = "offset", defaultValue = "1") String offset ){
-//
-//    log.info("[DeptController] selectDeptListWithPaging Start ========== ");
-//    log.info("[DeptController] selectDeptListWithPaging offset : {} ", offset);
-//
-//    int total = departmentService.selectDeptTotal();
-//
-//    Criteria cri = new Criteria(Integer.parseInt(offset), 10);
-//
-//    /* 페이지에 맞는 부서 */
-//    PagingResponseDTO pagingResponseDTO = new PagingResponseDTO();
-//
-//    pagingResponseDTO.setData(departmentService.selectDeptListWithPaging(cri));
-//
-//    pagingResponseDTO.setPageInfo(new PageDTO(cri, total));
-//    log.info("[DeptController] selectDeptListWithPaging End ========== ");
-//
-//    return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", pagingResponseDTO));
-//  }
 
 
   // 페이징
@@ -169,17 +132,18 @@ public class DeptController {
 
 
   @PostMapping("/regist")
-  public ResponseEntity<ResponseDTO> saveByDepartment(@ModelAttribute DepartmentDTO departmentDTO) {
+  public ResponseEntity<ResponseDTO> saveByDepartment(@ModelAttribute DepartmentDTO departmentDTO){
 
     return ResponseEntity.ok()
             .body(new ResponseDTO(HttpStatus.OK, "부서 입력 성공", departmentService.saveByDepartment(departmentDTO)));
+
+
   }
 
 
-
-
+  //   조직도 수정하기
   @PutMapping("/save")
-  public ResponseEntity<ResponseDTO> updateDept(@RequestBody DepartmentDTO departmentDTO) {
+  public ResponseEntity<ResponseDTO> updateDept(@RequestBody DepartmentDTO departmentDTO){
 
     log.info("[DeptController] (updateDept) departmentDTO : {}", departmentDTO);
 

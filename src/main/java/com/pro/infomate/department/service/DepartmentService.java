@@ -1,5 +1,6 @@
 package com.pro.infomate.department.service;
 
+import com.pro.infomate.calendar.service.CalendarService;
 import com.pro.infomate.common.Criteria;
 import com.pro.infomate.department.dto.*;
 import com.pro.infomate.department.entity.Department;
@@ -20,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,9 +30,13 @@ import java.util.stream.Collectors;
 @Slf4j
 public class DepartmentService {
 
+
+
   private final DepartmentRepository departmentRepository;
 
   private final MemberRepository memberRepository;
+
+  private final CalendarService calendarService;
 
   private final ModelMapper modelMapper;
 
@@ -60,18 +64,15 @@ public class DepartmentService {
     for (Department dept : allDept) {
       result.add(createDepartmentNode(dept));
       result.addAll(createMemberNodes(dept, count));
-      count += dept.getMembers().size();
+      count += dept.getMembers().size(); //
     }
-
-    result.sort(Comparator.comparing(TreeViewResponse::getId));
-
     return result;
   }
 
   //부서 매핑
   private TreeViewResponse createDepartmentNode(Department dept) {
     return TreeViewResponse.builder()
-            .id(dept.getDeptOrder())
+            .id(dept.getDeptCode())
             .parent(0)
             .droppable(true)
             .text(dept.getDeptName())
@@ -85,7 +86,7 @@ public class DepartmentService {
     for (Member member : dept.getMembers()) {
       TreeViewResponse memberNode = TreeViewResponse.builder()
               .id(++count)
-              .parent(dept.getDeptOrder())
+              .parent(dept.getDeptCode())
               .droppable(false)
               .text(member.getMemberName())
               .data(TreeViewResponse.TreeDTO.builder()
@@ -255,6 +256,8 @@ public class DepartmentService {
 
       departmentRepository.save(saveDepartment);
 
+      calendarService.saveDepartmentCalendarRegist(saveDepartment.getDeptCode());
+
     } catch (Exception e){
 
       log.info("확인");
@@ -282,43 +285,7 @@ public class DepartmentService {
     entityDept.update(department);
   }
 
-//  public void delete(int deptCode) {
-//
-//
-//    departmentRepository.deleteById(deptCode);
-//  }
 
-
-
-
-//  public void deleteById(int deptCode, DepartmentDTO department) {
-//
-//    log.info("[DepartmentService] (deleteDept) department : {}", department);
-//
-//    Department entityDept = departmentRepository.findById(department.getDeptCode()).get();
-//
-//    log.info("[DepartmentService] (deleteDept) entityDept : {}", entityDept);
-//
-//  }
-
-
-
-
-
-
-
-//    log.info("[DepartmentService] selectDeptList Start ======================");
-//
-//    List<Department> departmentListSearchValue = departmentRepository.findByDeptName(search);
-//
-//    List<DepartmentDTO> departmentDTOlist = departmentListSearchValue.stream()
-//            .map(department -> modelMapper.map(department, DepartmentDTO.class)).collect(Collectors.toList());
-//
-//    log.info("[DepartmentService] selectDeptList End ========================");
-//
-//    return departmentDTOlist;
-//  }
-//
 
 
 

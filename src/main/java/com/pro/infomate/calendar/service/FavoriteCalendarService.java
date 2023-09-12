@@ -44,16 +44,17 @@ public class FavoriteCalendarService {
                 .map(favoriteCalendarDTO -> {
 
                     CalendarDTO calendarDTO = favoriteCalendarDTO.getCalendar();
-                    calendarDTO.setMember(null);
                     calendarDTO.setFavoriteCalendar(null);
                     calendarDTO.setScheduleList(null);
-                    favoriteCalendarDTO.setCalendar(calendarDTO);
+
 
                     MemberDTO memberDTO = new MemberDTO();
                     memberDTO.setMemberName(favoriteCalendarDTO.getMember().getMemberName());
                     memberDTO.setMemberNo(favoriteCalendarDTO.getMember().getMemberNo());
-                    favoriteCalendarDTO.setMember(memberDTO);
+                    memberDTO.setRank(favoriteCalendarDTO.getCalendar().getMember().getRank());
+                    calendarDTO.setMember(memberDTO);
 
+                    favoriteCalendarDTO.setCalendar(calendarDTO);
                     return favoriteCalendarDTO;
                 });
 

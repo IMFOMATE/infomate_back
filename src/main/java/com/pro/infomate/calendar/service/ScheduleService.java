@@ -9,6 +9,7 @@ import com.pro.infomate.calendar.entity.Schedule;
 import com.pro.infomate.calendar.repository.CalendarRepository;
 import com.pro.infomate.calendar.repository.ParticipantRepository;
 import com.pro.infomate.calendar.repository.ScheduleRepository;
+import com.pro.infomate.department.dto.DepartmentDTO;
 import com.pro.infomate.exception.NotAuthenticationMember;
 import com.pro.infomate.exception.NotFindDataException;
 import com.pro.infomate.member.dto.MemberDTO;
@@ -50,6 +51,7 @@ public class ScheduleService {
                 .map(value -> modelMapper.map(value, ScheduleDTO.class))
                 .map(scheduleDTO -> {
                     CalendarDTO calendarDTO = scheduleDTO.getCalendar();
+
                     calendarDTO.setMember(null);
                     calendarDTO.setFavoriteCalendar(null);
                     calendarDTO.setScheduleList(null);
@@ -110,21 +112,28 @@ public class ScheduleService {
     }
 
     @Transactional
-    public void deleteById(int scheduleId, int memberCode) {
+    public void deleteById(int scheduleId, int memberCode, int deptCode) {
 
         Schedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(()-> new NotFindDataException("삭제할 일정을 찾을 수 없습니다."));
-        Member member = memberRepository.findById(memberCode)
-                .orElseThrow(()-> new NotFindDataException("계정을 찾을 수 없습니다."));
+//        Member member = memberRepository.findById(memberCode)
+//                .orElseThrow(()-> new NotFindDataException("계정을 찾을 수 없습니다."));
 
-        if (!schedule.getCalendar().getMemberCode().equals(memberCode)
-            && schedule.getCalendar().getDepartmentCode() != null
-            && !schedule.getCalendar().getDepartmentCode().equals(
-                    member.getDepartment().getDeptCode())){
+        log.info("[ScheduleService](deleteById) deptCode : {}",deptCode);
+        log.info("[ScheduleService](deleteById) schedule.getCalendar().getDepartmentCode() : {}", schedule.getCalendar().getDepartmentCode());
+
+        if(schedule.getCalendar().getMemberCode().equals(memberCode)){
+            if(schedule.getCalendar().getDepartmentCode() == null){
+                scheduleRepository.deleteById(scheduleId);
+            }
+        }else if(schedule.getCalendar().getDepartmentCode() != null
+                && schedule.getCalendar().getDepartmentCode().equals(deptCode)){
+            scheduleRepository.deleteById(scheduleId);
+        }else {
             throw new NotAuthenticationMember("삭제할 권한이 존재하지 않습니다.");
         }
 
-        scheduleRepository.deleteById(scheduleId);
+
 
     }
 

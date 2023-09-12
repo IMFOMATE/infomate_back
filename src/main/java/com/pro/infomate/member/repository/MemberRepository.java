@@ -21,6 +21,8 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
   List<Member> findByMemberCodeIn(List<Integer> ids);
 
   Member findByMemberCode(int memberCode);
+
+  Page<Member> findByMemberCode(int i, Pageable paging);
     @Query("SELECT MAX(a.memberCode) FROM Member a")
     int maxMemberCode();
 
