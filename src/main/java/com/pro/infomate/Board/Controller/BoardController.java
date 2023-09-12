@@ -1,5 +1,7 @@
 package com.pro.infomate.Board.Controller;
 
+import com.pro.infomate.Board.Repository.PostRepository;
+import com.pro.infomate.Board.dto.BoardDTO;
 import com.pro.infomate.Board.dto.PagingResponseDTO;
 import com.pro.infomate.Board.dto.PostDTO;
 import com.pro.infomate.Board.entity.Post;
@@ -7,16 +9,12 @@ import com.pro.infomate.Board.service.BoardService;
 import com.pro.infomate.common.Criteria;
 import com.pro.infomate.common.PageDTO;
 import com.pro.infomate.common.ResponseDTO;
-import com.pro.infomate.member.entity.Member;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -33,16 +31,30 @@ class BoardController {
 
     @GetMapping("/board")    // 전체글, 페이징
     public ResponseEntity<ResponseDTO> boardPaging(
-            @RequestParam(name = "offset", defaultValue = "1") String offset) {
+            @RequestParam(name = "offset", defaultValue = "1") String offset){
 
         log.info("[ProductController] selectPostListWithPaging Start ============ ");
         log.info("[ProductController] selectPostListWithPaging offset : {} ", offset);
 
-
-
         int total = boardService.totalPost();
 
         Criteria cri = new Criteria(Integer.valueOf(offset), 10);
+
+        PagingResponseDTO pagingResponseDTO = new PagingResponseDTO();
+        pagingResponseDTO.setData(boardService.postListPaging(cri));
+        pagingResponseDTO.setPageInfo(new PageDTO(cri, total));
+
+        log.info("[BoardController] boardPaging End =====================");
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", pagingResponseDTO));
+    }
+
+    @GetMapping("/miniboard")
+    public ResponseEntity<ResponseDTO> miniBoard(
+            @RequestParam(name = "offset", defaultValue = "1") String offset){
+
+        int total = boardService.totalPost();
+
+        Criteria cri = new Criteria(Integer.valueOf(offset), 5);
 
         PagingResponseDTO pagingResponseDTO = new PagingResponseDTO();
         pagingResponseDTO.setData(boardService.postListPaging(cri));
@@ -83,8 +95,8 @@ class BoardController {
                         .build());
     }
 
-    @PutMapping("board/update/{postCode}") // 게시글 수정
-    public ResponseEntity<String> updatePost(@RequestBody PostDTO postDTO) {
+    @PutMapping("board/update") // 게시글 수정
+    public ResponseEntity<String> updatePost( @RequestBody PostDTO postDTO) {
         log.info("[PostController](updateByPost) postDTO: {} ", postDTO);
         boardService.updatePost(postDTO);
 
@@ -116,6 +128,7 @@ class BoardController {
                             .build());
         }
     }
+
 
     @GetMapping("/common")      // 게시판 카테고리 나누기
     public ResponseEntity<List<PostDTO>> getCommon() {
