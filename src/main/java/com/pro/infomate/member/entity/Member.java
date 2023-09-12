@@ -14,10 +14,10 @@ import com.pro.infomate.email.entity.Email;
 import lombok.*;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.sql.Timestamp;
 
 @Entity
 @Table(name = "TBL_MEMBER")
@@ -80,7 +80,7 @@ public class Member {
     private Department department;
 
     @Column(name = "HIRE_DATE")
-    private Timestamp hireDate;
+    private Date hireDate;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "RANK_CODE")
