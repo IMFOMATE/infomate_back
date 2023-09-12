@@ -91,7 +91,7 @@ class BoardController {
         return ResponseEntity.ok()
                 .body(ResponseDTO.builder()
                         .status(HttpStatus.OK)
-                        .message("작성 완료")
+                        .message("작성완료")
                         .build());
     }
 
