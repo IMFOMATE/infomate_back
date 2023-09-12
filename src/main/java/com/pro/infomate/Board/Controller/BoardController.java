@@ -1,20 +1,15 @@
 package com.pro.infomate.Board.Controller;
 
-import com.pro.infomate.Board.Repository.PostRepository;
-import com.pro.infomate.Board.dto.BoardDTO;
 import com.pro.infomate.Board.dto.PagingResponseDTO;
 import com.pro.infomate.Board.dto.PostDTO;
-import com.pro.infomate.Board.entity.Post;
 import com.pro.infomate.Board.service.BoardService;
 import com.pro.infomate.common.Criteria;
 import com.pro.infomate.common.PageDTO;
 import com.pro.infomate.common.ResponseDTO;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -31,7 +26,7 @@ class BoardController {
 
     @GetMapping("/board")    // 전체글, 페이징
     public ResponseEntity<ResponseDTO> boardPaging(
-            @RequestParam(name = "offset", defaultValue = "1") String offset){
+            @RequestParam(name = "offset", defaultValue = "1") String offset) {
 
         log.info("[ProductController] selectPostListWithPaging Start ============ ");
         log.info("[ProductController] selectPostListWithPaging offset : {} ", offset);
@@ -53,8 +48,8 @@ class BoardController {
 
         PostDTO postDTO = boardService.postView(postCode);
 
-            return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", postDTO));
-        }
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", postDTO));
+    }
 
 //    @GetMapping("/board/newpost")    // 게시판 (게시글 목록)
 //    public ResponseEntity<ResponseDTO> getPost() {
@@ -79,8 +74,8 @@ class BoardController {
                         .build());
     }
 
-    @PutMapping("board/{postCode}/update") // 게시글 수정
-    public ResponseEntity<String> updatePost( @RequestBody PostDTO postDTO) {
+    @PutMapping("board/update/{postCode}") // 게시글 수정
+    public ResponseEntity<String> updatePost(@RequestBody PostDTO postDTO) {
         log.info("[PostController](updateByPost) postDTO: {} ", postDTO);
         boardService.updatePost(postDTO);
 
@@ -94,10 +89,10 @@ class BoardController {
 //        return  ResponseEntity.ok("resultMessage");
     }
 
-    @DeleteMapping("board/{postCode}/delete")   // 게시글 삭제
+    @DeleteMapping("board/delete/{postCode}")   // 게시글 삭제
     public ResponseEntity<ResponseDTO> deletePost(@PathVariable Integer postCode) {
         try {
-            boardService.deleteById(postCode);
+            boardService.deletePost(postCode);
             return ResponseEntity.ok()
                     .body(ResponseDTO.builder()
                             .status(HttpStatus.OK)
@@ -113,38 +108,9 @@ class BoardController {
         }
     }
 
-
-
-
-
-
-
-
-    @GetMapping("/board/notice")  // 공지사항
-        public ResponseEntity<ResponseDTO> boardNotice () {
-
-            return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지사항 조회 성공", boardService.boardNotice()));
-        }
-
-
-        @GetMapping("/board/common")  // 일반게시판
-        public ResponseEntity<ResponseDTO> boardCommon () {
-
-            return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일반게시판 조회 성공", boardService.boardCommon()));
-        }
-
-
-        @GetMapping("/board/anony")   // 익명게시판
-        public ResponseEntity<ResponseDTO> boardAnony () {
-
-            return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "익명게시판 조회 성공", boardService.boardAnony()));
-        }
-
-
-        @GetMapping("/board/dept")   // 부서게시판
-        public ResponseEntity<ResponseDTO> boardDept () {
-
-            return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "부서게시판 조회 성공", boardService.boardDept()));
-        }
-
+    @GetMapping("/common")      // 게시판 카테고리 나누기
+    public ResponseEntity<List<PostDTO>> getCommon() {
+        List<PostDTO> Common = boardService.getCommon();
+        return ResponseEntity.ok(Common);
     }
+}

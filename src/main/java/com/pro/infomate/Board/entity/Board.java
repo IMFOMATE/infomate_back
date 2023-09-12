@@ -26,17 +26,8 @@ public class Board {
     private int refBoard;
 
 
-    @OneToMany(mappedBy = "boardCode")
+    @OneToMany
     private List<Post> posts;
 
 
-//    public void addPost(Post post) {
-//        posts.add(post);
-//        post.setBoard(this);
-//    }
-//
-//    public void removePost(Post post) {
-//        posts.remove(post);
-//        post.setBoard(null);
-//    }
 }

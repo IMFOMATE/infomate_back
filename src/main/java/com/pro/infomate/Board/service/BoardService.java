@@ -157,126 +157,41 @@ public class BoardService {
 
 
     @Transactional
-    public void deleteById(Integer postCode) {
+    public String deletePost(Integer postCode) {   // 게시글 삭제
+        int result = 0;
 
-        log.info("[BoardService](deleteById) post : {}", postCode);
-       // postRepository.deleteAllByPost(postCode);
+        try {
+            // 게시글 코드를 사용하여 해당 게시글을 조회
+            Post post = postRepository.findById(postCode).orElse(null);
+
+            if (post != null) {
+                // 게시글 삭제
+                log.info("[PostService] deleteById start ====================");
+                postRepository.deleteById(postCode);
+
+                result = 1; // 성공 시 결과값을 1로 설정
+            } else {
+                log.error("게시글을 찾을 수 없습니다. postCode: {}", postCode);
+            }
+        } catch (Exception e) {
+            log.error("게시글 삭제 실패: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+        log.info("[PostService] deletePost End ====================");
+        return (result > 0) ? "게시글 삭제 성공" : "게시글 삭제 실패";
     }
 
 
 
-
-
-
-    public List<PostDTO> boardNotice() {    // 공지사항
-
-        List<Post> boardNotice = postRepository.findAllByBoardCode(101);
-//        List<Post> boardNotice = postRepository.findByBoardCode(101);
-
-//        for(int i = 0 ; i < boardNotice.size() ; i++) {
-//            boardNotice.get(i).setPostImageUrl(IMAGE_URL + boardNotice.get(i).getPostImageUrl());
-
-        return boardNotice.stream()
+    public List<PostDTO> getCommon() {        // 게시판 카테고리 나누기
+        List<Post> normalPosts = postRepository.findByBoardCategory("일반게시판");
+        return normalPosts.stream()
                 .map(post -> modelMapper.map(post, PostDTO.class))
-                .map(postDTO -> {
-
-                    MemberDTO memberDTO = new MemberDTO();
-                    memberDTO.setMemberId(postDTO.getMember().getMemberId());
-                    memberDTO.setMemberName(postDTO.getMember().getMemberName());
-                    memberDTO.setMemberNo(postDTO.getMember().getMemberNo());
-
-                    postDTO.setMember(memberDTO);
-
-                    return postDTO;
-
-                })
-                .collect(Collectors.toList());
-    }
-
-
-
-
-
-
-    public List<PostDTO> boardCommon() {    // 일반게시판
-
-//        List<Post> boardCommon = postRepository.findByBoardId(102);
-        List<Post> boardCommon = postRepository.findAllByBoardCode(102);
-
-//        for(int i = 0 ; i < boardCommon.size() ; i++) {
-//            boardCommon.get(i).setPostImageUrl(IMAGE_URL + boardCommon.get(i).getPostImageUrl());
-
-        return boardCommon.stream()
-                .map(post -> modelMapper.map(post, PostDTO.class))
-                .map(postDTO -> {
-
-                    MemberDTO memberDTO = new MemberDTO();
-                    memberDTO.setMemberId(postDTO.getMember().getMemberId());
-                    memberDTO.setMemberName(postDTO.getMember().getMemberName());
-                    memberDTO.setMemberNo(postDTO.getMember().getMemberNo());
-
-                    postDTO.setMember(memberDTO);
-
-                    return postDTO;
-
-                })
-                .collect(Collectors.toList());
-    }
-
-
-
-    public List<PostDTO> boardAnony() {    // 익명게시판
-
-//        List<Post> boardAnony = postRepository.findByBoardId(103);
-        List<Post> boardAnony = postRepository.findAllByBoardCode(103);
-
-//        for(int i = 0 ; i < boardAnony.size() ; i++) {
-//            boardAnony.get(i).setPostImageUrl(IMAGE_URL + boardAnony.get(i).getPostImageUrl());
-
-        return boardAnony.stream()
-                .map(post -> modelMapper.map(post, PostDTO.class))
-                .map(postDTO -> {
-
-                    MemberDTO memberDTO = new MemberDTO();
-                    memberDTO.setMemberId(postDTO.getMember().getMemberId());
-                    memberDTO.setMemberName(postDTO.getMember().getMemberName());
-                    memberDTO.setMemberNo(postDTO.getMember().getMemberNo());
-
-                    postDTO.setMember(memberDTO);
-
-                    return postDTO;
-
-                })
-                .collect(Collectors.toList());
-    }
-
-
-
-    public List<PostDTO> boardDept() {    // 부서게시판
-
-//        List<Post> boardDept = postRepository.findByBoardId(104);
-        List<Post> boardDept = postRepository.findAllByBoardCode(104);
-
-//        for(int i = 0 ; i < boardDept.size() ; i++) {
-//            boardDept.get(i).setPostImageUrl(IMAGE_URL + boardDept.get(i).getPostImageUrl());
-
-        return boardDept.stream()
-                .map(post -> modelMapper.map(post, PostDTO.class))
-                .map(postDTO -> {
-
-                    MemberDTO memberDTO = new MemberDTO();
-                    memberDTO.setMemberId(postDTO.getMember().getMemberId());
-                    memberDTO.setMemberName(postDTO.getMember().getMemberName());
-                    memberDTO.setMemberNo(postDTO.getMember().getMemberNo());
-
-                    postDTO.setMember(memberDTO);
-
-                    return postDTO;
-
-                })
                 .collect(Collectors.toList());
     }
 }
+
 
 
 //

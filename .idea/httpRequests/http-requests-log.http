@@ -1,3 +1,612 @@
+PUT http://localhost:8989/brd/board/update/91
+Accept: */*
+Content-Type: application/json
+Content-Length: 248
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "postCode": 91,
+  "postTitle": "안뇽하요",
+  "postDate": "2023-08-29 10:41:11",
+  "postContents": "안녕하세용가리",
+  "boardCategory": "부서게시판",
+  "board": {
+    "boardCode": 102
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-07T124745.500.txt
+
+###
+
+PUT http://localhost:8989/brd/board/update/91
+Accept: */*
+Content-Type: application/json
+Content-Length: 247
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "postCode": 0,
+  "postTitle": "안뇽하요",
+  "postDate": "2023-08-29 10:41:11",
+  "postContents": "안녕하세용가리",
+  "boardCategory": "부서게시판",
+  "board": {
+    "boardCode": 102
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-07T124652.500.txt
+
+###
+
+PUT http://localhost:8989/brd/board/update/91
+Accept: */*
+Content-Type: application/json
+Content-Length: 250
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "postCode": 0,
+  "postTitle": "안뇽하세요",
+  "postDate": "2023-08-29 10:41:11",
+  "postContents": "안녕하세용가리",
+  "boardCategory": "부서게시판",
+  "board": {
+    "boardCode": 102
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-07T124607.500.txt
+
+###
+
+POST http://localhost:8989/brd/board/posting
+Accept: */*
+Content-Type: application/json
+Content-Length: 238
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "postCode": 0,
+  "postTitle": "21312312dsa3",
+  "postDate": "2023-08-29 10:41:11",
+  "postContents": "안녕하세연",
+  "boardCategory": "공지사항",
+  "board": {
+    "boardCode": 101
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-07T104136.200.json
+
+###
+
+POST http://localhost:8989/brd/board/posting
+Accept: */*
+Content-Type: application/json
+Content-Length: 236
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "postCode": 0,
+  "postTitle": "2023-08-29 10:41:11",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세연",
+  "boardCategory": "공지사항",
+  "board": {
+    "boardCode": 101
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-07T104128.400.json
+
+###
+
+PUT http://localhost:8989/brd/board/update/91
+Accept: */*
+Content-Type: application/json
+Content-Length: 250
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "postCode": 0,
+  "postTitle": "안뇽하세요",
+  "postDate": "2023-08-29 10:41:11",
+  "postContents": "안녕하세용가리",
+  "boardCategory": "부서게시판",
+  "board": {
+    "boardCode": 102
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-07T104117.500.txt
+
+###
+
+POST http://localhost:8989/brd/board/posting
+Accept: */*
+Content-Type: application/json
+Content-Length: 229
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "postCode": 0,
+  "postTitle": "21312312dsa3",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세연",
+  "boardCategory": "공지사항",
+  "board": {
+    "boardCode": 101
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-07T103248.400.json
+
+###
+
+GET http://localhost:8989/brd/board/post/1118
+Accept: */*
+Content-Type: application/json
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-09-07T103242.200.json
+
+###
+
+PUT http://localhost:8989/brd/board/update/91
+Accept: */*
+Content-Type: application/json
+Content-Length: 241
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "postCode": 0,
+  "postTitle": "안뇽하세요",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세용가리",
+  "boardCategory": "부서게시판",
+  "board": {
+    "boardCode": 102
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-07T103236.400.json
+
+###
+
+PUT http://localhost:8989/brd/board/update/91
+Accept: */*
+Content-Type: application/json
+Content-Length: 241
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "postCode": 0,
+  "postTitle": "안뇽하세요",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세용가리",
+  "boardCategory": "부서게시판",
+  "board": {
+    "boardCode": 102
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-07T101307.400.json
+
+###
+
+PUT http://localhost:8989/brd/board/update/91
+Accept: */*
+Content-Type: application/json
+Content-Length: 241
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "postCode": 0,
+  "postTitle": "안뇽하세요",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세용가리",
+  "boardCategory": "부서게시판",
+  "board": {
+    "boardCode": 102
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-06T223322.400.json
+
+###
+
+PUT http://localhost:8989/brd/board/update/91
+Accept: */*
+Content-Type: application/json
+Content-Length: 241
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "postCode": 0,
+  "postTitle": "안뇽하세요",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세용가리",
+  "boardCategory": "부서게시판",
+  "board": {
+    "boardCode": 102
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-06T223216.404.json
+
+###
+
+PUT http://localhost:8989/brd/board/update/91
+Accept: */*
+Content-Type: application/json
+Content-Length: 242
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "postCode": 91,
+  "postTitle": "안뇽하세요",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세용가리",
+  "boardCategory": "부서게시판",
+  "board": {
+    "boardCode": 102
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-06T223037.404.json
+
+###
+
+PUT http://localhost:8989/brd/board/update/90
+Accept: */*
+Content-Type: application/json
+Content-Length: 242
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "postCode": 90,
+  "postTitle": "안뇽하세요",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세용가리",
+  "boardCategory": "부서게시판",
+  "board": {
+    "boardCode": 102
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-06T223028.404.json
+
+###
+
+PUT http://localhost:8989/brd/board/1118/update
+Accept: */*
+Content-Type: application/json
+Content-Length: 242
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "postCode": 90,
+  "postTitle": "안뇽하세요",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세용가리",
+  "boardCategory": "부서게시판",
+  "board": {
+    "boardCode": 102
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-06T222946.400.json
+
+###
+
+PUT http://localhost:8989/brd/board/1118/update
+Accept: */*
+Content-Type: application/json
+Content-Length: 244
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "postCode": 1115,
+  "postTitle": "안뇽하세요",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세용가리",
+  "boardCategory": "부서게시판",
+  "board": {
+    "boardCode": 102
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-06T222934.400.json
+
+###
+
+PUT http://localhost:8989/brd/board/update/1118
+Accept: */*
+Content-Type: application/json
+Content-Length: 235
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "postCode": 1115,
+  "postTitle": "안뇽하세요",
+  "postDate": "0",
+  "postContents": "안녕하세용가리",
+  "boardCategory": "부서게시판",
+  "board": {
+    "boardCode": 102
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-06T165150.400.json
+
+###
+
+PUT http://localhost:8989/brd/board/update/1118
+Accept: */*
+Content-Type: application/json
+Content-Length: 235
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "postCode": 1115,
+  "postTitle": "안뇽하세요",
+  "postDate": "0",
+  "postContents": "안녕하세용가리",
+  "boardCategory": "부서게시판",
+  "board": {
+    "boardCode": 102
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-06T164715.500.json
+
+###
+
+PUT http://localhost:8989/brd/board/update/1118
+Accept: */*
+Content-Type: application/json
+Content-Length: 235
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "postCode": 1115,
+  "postTitle": "안뇽하세요",
+  "postDate": "0",
+  "postContents": "안녕하세용가리",
+  "boardCategory": "부서게시판",
+  "board": {
+    "boardCode": 102
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-06T164604.400.json
+
+###
+
+PUT http://localhost:8989/brd/board/update/1118
+Accept: */*
+Content-Type: application/json
+Content-Length: 244
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "postCode": 1115,
+  "postTitle": "안뇽하세요",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세용가리",
+  "boardCategory": "부서게시판",
+  "board": {
+    "boardCode": 102
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-06T164551.400.json
+
+###
+
+PUT http://localhost:8989/brd/board/update/1118
+Accept: */*
+Content-Type: application/json
+Content-Length: 244
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "postCode": 1115,
+  "postTitle": "안뇽하세요",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세용가리",
+  "boardCategory": "부서게시판",
+  "board": {
+    "boardCode": 102
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-06T164432.400.json
+
+###
+
+PUT http://localhost:8989/brd/board/update/1118
+Accept: */*
+Content-Type: application/json
+Content-Length: 244
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "postCode": 1115,
+  "postTitle": "안뇽하세요",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세용가리",
+  "boardCategory": "부서게시판",
+  "board": {
+    "boardCode": 102
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-06T164310.404.json
+
+###
+
+PUT http://localhost:8989/brd/board/1118/update
+Accept: */*
+Content-Type: application/json
+Content-Length: 244
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "postCode": 1115,
+  "postTitle": "안뇽하세요",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세용가리",
+  "boardCategory": "부서게시판",
+  "board": {
+    "boardCode": 102
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-06T164301.400.json
+
+###
+
+PUT http://localhost:8989/brd/board/update/1118
+Accept: */*
+Content-Type: application/json
+Content-Length: 244
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "postCode": 1115,
+  "postTitle": "안뇽하세요",
+  "postDate": "2023-08-29",
+  "postContents": "안녕하세용가리",
+  "boardCategory": "부서게시판",
+  "board": {
+    "boardCode": 102
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-06T164226.404.json
+
+###
+
 GET http://localhost:8989/brd/board
 Accept: */*
 Content-Type: application/json
@@ -341,377 +950,4 @@ Content-Disposition: form-data;
 --WebAppBoundary--
 
 <> 2023-08-30T121456.415.json
-
-###
-
-POST http://localhost:8989/board/posting
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-Accept: */*
-Content-Type: application/json
-Content-Length: 155
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
---WebAppBoundary
-Content-Disposition: form-data; name="pName"
-
-
---WebAppBoundary--
-
-<> 2023-08-30T081124.415.json
-
-###
-
-POST http://localhost:8989/board/posting
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-Accept: */*
-Content-Type: application/json
-Content-Length: 378
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
---WebAppBoundary
-Content-Disposition: form-data; name="pName"
-
-{
-  "postCode": 0,
-  "postTitle": "안뇽",
-  "postDate": "2023-08-29",
-  "postContents": "안녕하세연",
-  "boardCategory": "공지사항",
-  "board": {
-    "boardCode": 101
-  },
-  "member": {
-    "memberCode": 22
-  }
-}
---WebAppBoundary--
-
-<> 2023-08-30T081005.415.json
-
-###
-
-POST http://localhost:8989/board/posting
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-Accept: */*
-Content-Type: application/json
-Content-Length: 223
-=======
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberId": "dbrs96",
-  "memberEmail": "dong@duckdin.com",
-  "memberPhone": "010-1234-5678",
-  "memberNo": "1996-10-27",
-  "memberStatus": "Y",
-  "memberAddress": "경기도 고양시 일산서구",
-  "hireDate": "2023-08-28T12:00:00Z",
-  "department": 1,
-  "rankCode": 1,
-  "memberOff": 10
-}
-
-<> 2023-08-28T193051.400.json
-
-###
-
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
-Accept: */*
-Content-Length: 352
->>>>>>> c9199d8e83bec2b26652b68fa92e51c1207da5e6
->>>>>>> 9b43f91e0443c7197b6c7438be37b47d19d65f14
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<<<<<<< HEAD
-<> 2023-08-31T133621.200.json
-
-###
-
-GET http://localhost:8989/emp/info/2
-
-}
-
-<> 2023-08-30T080309.415.json
-
-###
-
-GET http://localhost:8989/board
-Accept: */*
-Content-Type: application/json
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-29T231632.404.json
-
-###
-
-GET http://localhost:8989/board/board
-Accept: */*
-Content-Type: application/json
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-29T231559.200.json
-
-###
-
-POST http://localhost:8989/board/posting
-Accept: */*
-Content-Type: application/json
-Content-Length: 223
-=======
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberId": "dbrs96",
-  "memberEmail": "dong@duckdin.com",
-  "memberPhone": "010-1234-5678",
-  "memberNo": "1996-10-27",
-  "memberStatus": "Y",
-  "memberAddress": "경기도 고양시 일산서구",
-  "hireDate": "2023-08-28T12:00:00Z",
-  "department": 1,
-  "rankCode": 1,
-  "memberOff": 10
-}
-
-<> 2023-08-28T192917.500.json
-
-###
-
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
-Accept: */*
-Content-Length: 361
->>>>>>> c9199d8e83bec2b26652b68fa92e51c1207da5e6
->>>>>>> 9b43f91e0443c7197b6c7438be37b47d19d65f14
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<<<<<<< HEAD
-<> 2023-08-31T131609.200.json
-
-###
-
-GET http://localhost:8989/emp/info/2
-
-}
-
-<> 2023-08-29T220327.200.json
-
-###
-
-POST http://localhost:8989/board/posting
-Accept: */*
-Content-Type: application/json
-Content-Length: 223
-=======
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberId": "dbrs96",
-  "memberEmail": "dong@duckdin.com",
-  "memberPhone": "010-1234-5678",
-  "memberNo": "1996-10-27",
-  "memberStatus": "Y",
-  "memberAddress": "경기도 고양시 일산서구",
-  "hireDate": "2023-08-28T12:00:00Z",
-  "department.deptCode": 1,
-  "rankCode": 1,
-  "memberOff": 10
-}
-
-<> 2023-08-28T192626.500.json
-
-###
-
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
-Accept: */*
-Content-Length: 374
->>>>>>> c9199d8e83bec2b26652b68fa92e51c1207da5e6
->>>>>>> 9b43f91e0443c7197b6c7438be37b47d19d65f14
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<<<<<<< HEAD
-<> 2023-08-31T130842.200.json
-
-###
-
-GET http://localhost:8989/emp/info/2
-
-}
-
-<> 2023-08-29T215701.200.json
-
-###
-
-POST http://localhost:8989/board/posting
-Accept: */*
-Content-Type: application/json
-Content-Length: 223
-=======
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberId": "dbrs96",
-  "memberEmail": "dong@duckdin.com",
-  "memberPhone": "010-1234-5678",
-  "memberNo": "1996-10-27",
-  "memberStatus": "Y",
-  "memberAddress": "경기도 고양시 일산서구",
-  "hireDate": "2023-08-28T12:00:00Z",
-  "deptCode": "department{deptCode: 1}",
-  "rankCode": 1,
-  "memberOff": 10
-}
-
-<> 2023-08-28T192538.400.json
-
-###
-
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
-Accept: */*
-Content-Length: 350
->>>>>>> c9199d8e83bec2b26652b68fa92e51c1207da5e6
->>>>>>> 9b43f91e0443c7197b6c7438be37b47d19d65f14
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<<<<<<< HEAD
-<> 2023-08-31T130203.200.json
-
-###
-
-GET http://localhost:8989/emp/info/2
-
-}
-
-<> 2023-08-29T212924.200.json
-
-###
-
-POST http://localhost:8989/board/posting
-Content-Type: multipart/form-data;
-Accept: */*
-Content-Type: application/json
-Content-Length: 223
-=======
-  "memberPassword": "pass01",
-  "memberName": "동덕",
-  "memberId": "dbrs96",
-  "memberEmail": "dong@duckdin.com",
-  "memberPhone": "010-1234-5678",
-  "memberNo": "1996-10-27",
-  "memberStatus": "Y",
-  "memberAddress": "경기도 고양시 일산서구",
-  "hireDate": "2023-08-28T12:00:00Z",
-  "deptCode": 1,
-  "rankCode": 1,
-  "memberOff": 10
-}
-
-<> 2023-08-28T181138.500.json
-
-###
-
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
-Accept: */*
-Content-Length: 346
->>>>>>> c9199d8e83bec2b26652b68fa92e51c1207da5e6
->>>>>>> 9b43f91e0443c7197b6c7438be37b47d19d65f14
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<<<<<<< HEAD
-<> 2023-08-31T130106.200.json
-
-###
-
-GET http://localhost:8989/emp/info/2
-
-}
-
-<> 2023-08-29T212916.500.json
-
-###
-
-POST http://localhost:8989/board/posting
-Content-Type: multipart/form-data; boundary=WebAppBoundary
-Accept: */*
-Content-Type: application/json
-Content-Length: 223
-  "company": "좋은회사",
-  "department": "좋은부서",
-  "contactName": "아무나",
-  "contactPhone": "010-1234-5679",
-  "contactEmail": "qwe@naver.com",
-  "companyPhone": "회사전화",
-  "companyAddress": "회사 주소",
-  "memo": "ㅁㄷ홈ㅈㅁㅈㄹ",
-  "memberCode": 2,
-  "contactLike": "N"
-}
-
-<> 2023-08-29T190454.400.json
-
-###
-
-POST http://localhost:8989/auth/signup
-Content-Type: application/json
-Content-Length: 178
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-"mailContent": "무슨말",
-"mailDate": "2023-08-23 00:00:00",
-"memberCode": 2,
-"mailStatus": "Y",
-"mailTitle": "제에목",
-"mailLike": "Y",
-"receiverMail": "qwg2@naver.com"
-}
-
-<> 2023-08-29T190442.200.json
-
-###
-
-GET http://localhost:8989/mail/mailList/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-29T190439.500.json
-
-###
-
-GET http://localhost:8989/addressBook/contact/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-29T190114.500.json
-
-###
-
-GET http://localhost:8989/addressBook/contact/2
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-08-29T190113.500.json
 
