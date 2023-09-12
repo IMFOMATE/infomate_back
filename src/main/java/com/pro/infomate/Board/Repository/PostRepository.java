@@ -19,6 +19,8 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
     Optional<Post> findById(int postCode);
 
+    List<Post> findByBoardCategory(String 일반게시판);
+
 //    void deleteAllByPost(int item);
 
 

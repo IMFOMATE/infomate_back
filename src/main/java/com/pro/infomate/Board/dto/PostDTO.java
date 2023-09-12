@@ -1,5 +1,6 @@
 package com.pro.infomate.Board.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pro.infomate.Board.entity.BoardFile;
 import com.pro.infomate.member.dto.MemberDTO;
 import lombok.*;
@@ -22,6 +23,7 @@ public class PostDTO {
 
     private String postTitle;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private String postDate;
 
     private String postContents;
