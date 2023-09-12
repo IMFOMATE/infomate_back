@@ -36,7 +36,7 @@ public class WorkService {
   public void attend(Integer memberCode){
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
 
-    Optional<Work> existing = workRepository.findByYearMonth(LocalDate.now());
+    Optional<Work> existing = workRepository.findByYearMonthAndMember(LocalDate.now(), member);
 
     if (existing.isPresent())
       throw new WorkAlreadyExistsException("오늘 이미 출근하셨습니다.");
@@ -60,7 +60,7 @@ public class WorkService {
   public void finish(Integer memberCode) {
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
 
-    Work work = workRepository.findByYearMonth(LocalDate.now()).orElseThrow(() -> new NotFindDataException("출근정보가 없습니다"));
+    Work work = workRepository.findByYearMonthAndMember(LocalDate.now(), member).orElseThrow(() -> new NotFindDataException("출근정보가 없습니다"));
 
     LocalDateTime nowTime = LocalDateTime.now();
     LocalDateTime attendTime = work.getTimeStart();
@@ -81,7 +81,7 @@ public class WorkService {
 
   public WorkResponse findByDate(LocalDate date, Integer memberCode){
     Member member = memberRepository.findById(memberCode).orElseThrow(() -> new NotFindDataException("회원정보가 없습니다"));
-    Work work = workRepository.findByYearMonth(LocalDate.now()).orElseThrow(() -> new NotFindDataException("출근정보가 없습니다"));
+    Work work = workRepository.findByYearMonthAndMember(date, member).orElseThrow(() -> new NotFindDataException("출근정보가 없습니다"));
 
     return WorkResponse.builder()
             .startTime(work.getTimeStart())

@@ -108,6 +108,8 @@ public class DocumentController {
 
     Long id = documentCode.equals("null") ? null : Long.valueOf(documentCode);
 
+
+
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
                     .status(HttpStatus.OK)
@@ -115,7 +117,7 @@ public class DocumentController {
                     .build());
   }
 
-  @PostMapping("/temp/draft/{documentCode}")
+  @PatchMapping("/temp/draft/{documentCode}")
   public ResponseEntity<ResponseDTO> tempRegistDraft(
           @PathVariable(required = false) String documentCode,
           @ModelAttribute DraftRequest documentRequest,
@@ -124,7 +126,7 @@ public class DocumentController {
           @RequestParam(required = false) Boolean isSave
   ) {
     Long id = documentCode.equals("null") ? null : Long.valueOf(documentCode);
-
+    System.out.println("isSave = " + isSave);
     documentService.tempSave(id, memberDTO.getMemberCode(), documentRequest, Draft.class, fileList, isSave);
 
     return ResponseEntity.ok()
@@ -135,7 +137,7 @@ public class DocumentController {
   }
 
 
-  @PostMapping("/temp/vacation/{documentCode}")
+  @PatchMapping("/temp/vacation/{documentCode}")
   public ResponseEntity<ResponseDTO> tempRegistVacation(
           @PathVariable(required = false) String documentCode,
           @ModelAttribute VacationRequest documentRequest,
@@ -145,8 +147,7 @@ public class DocumentController {
   ) {
     Long id = documentCode.equals("null") ? null : Long.valueOf(documentCode);
 
-    documentService.tempSave(id, memberDTO.getMemberCode(), documentRequest, Draft.class, fileList, isSave);
-
+    documentService.tempSave(id, memberDTO.getMemberCode(), documentRequest, Vacation.class, fileList, isSave);
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
@@ -155,7 +156,7 @@ public class DocumentController {
                     .build());
   }
 
-  @PostMapping("/temp/payment/{documentCode}")
+  @PatchMapping("/temp/payment/{documentCode}")
   public ResponseEntity<ResponseDTO> tempRegistPayment(
           @PathVariable(required = false) String documentCode,
           @ModelAttribute PaymentRequest documentRequest,
@@ -165,7 +166,7 @@ public class DocumentController {
   ) {
     Long id = documentCode.equals("null") ? null : Long.valueOf(documentCode);
 
-    documentService.tempSave(id, memberDTO.getMemberCode(), documentRequest, Draft.class, fileList, isSave);
+    documentService.tempSave(id, memberDTO.getMemberCode(), documentRequest, Payment.class, fileList, isSave);
 
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()

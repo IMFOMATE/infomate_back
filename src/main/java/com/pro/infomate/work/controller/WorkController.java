@@ -59,6 +59,7 @@ public class WorkController {
   ){
     WorkResponse byDate = workService.findByDate(LocalDate.now(), memberDTO.getMemberCode());
 
+    System.out.println("byDate = " + byDate);
     return ResponseEntity.ok()
             .body(ResponseDTO.builder()
                     .status(HttpStatus.OK)
