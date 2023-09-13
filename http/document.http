@@ -54,7 +54,6 @@ Content-Type: application/json
   ]
 }
 
-<<<<<<< HEAD
 ### main
 GET http://localhost:8989/document/main
 Accept: */*
@@ -163,5 +162,3 @@ Content-Type: application/json
   ]
 }
 
-=======
->>>>>>> c9199d8e83bec2b26652b68fa92e51c1207da5e6

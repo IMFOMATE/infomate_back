@@ -188,6 +188,8 @@ public class BoardService {
                 .collect(Collectors.toList());
     }
 }
+
+
 //
 //        log.info("[ProductService] updatePost Start ===================================");
 //        log.info("[ProductService] postDTO : " + postDTO);

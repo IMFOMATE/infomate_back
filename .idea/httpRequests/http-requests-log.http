@@ -1,9 +1,37 @@
+<<<<<<< HEAD
+PUT http://localhost:8989/brd/board/update/91
+Accept: */*
+Content-Type: application/json
+Content-Length: 248
+=======
 GET http://localhost:8989/department/dept/list
 Accept: */*
+>>>>>>> 563f3ff2328322e03aa45e918ee8c10c89b7b0b9
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
+<<<<<<< HEAD
+{
+  "postCode": 91,
+  "postTitle": "안뇽하요",
+  "postDate": "2023-08-29 10:41:11",
+  "postContents": "안녕하세용가리",
+  "boardCategory": "부서게시판",
+  "board": {
+    "boardCode": 102
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+<> 2023-09-07T124745.500.txt
+
+###
+
+PUT http://localhost:8989/brd/board/update/91
+=======
 <> 2023-09-12T143612.200.json
 
 ###
@@ -126,12 +154,37 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 ###
 
 DELETE http://localhost:8989/board/82/delete
+>>>>>>> 563f3ff2328322e03aa45e918ee8c10c89b7b0b9
 Accept: */*
 Content-Type: application/json
+Content-Length: 247
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
+<<<<<<< HEAD
+{
+  "postCode": 0,
+  "postTitle": "안뇽하요",
+  "postDate": "2023-08-29 10:41:11",
+  "postContents": "안녕하세용가리",
+  "boardCategory": "부서게시판",
+  "board": {
+    "boardCode": 102
+  },
+  "member": {
+    "memberCode": 22
+  }
+}
+
+GET http://localhost:8989/department/treeview
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: JSESSIONID=BF4C19D603B5C215B19A631D4CD24DE2
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-09-11T153440.200.json
+=======
 <> 2023-09-12T044307.404.json
 
 ###
@@ -155,6 +208,7 @@ User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
 <> 2023-09-12T044221.500.json
+>>>>>>> 563f3ff2328322e03aa45e918ee8c10c89b7b0b9
 
 ###
 
@@ -390,8 +444,13 @@ User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
 <> 2023-08-31T145456.404.json
+<<<<<<< HEAD
+=======
+=======
 
+>>>>>>> 563f3ff2328322e03aa45e918ee8c10c89b7b0b9
 <> 2023-09-01T121808.500.json
+>>>>>>> 27b3904af9e4c6be15acb3e4c3602ba8cfbe9f3b
 
 
 ###
@@ -626,9 +685,15 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 ###
 
 GET http://localhost:8989/emp/info/2
+<<<<<<< HEAD
+=======
+{
+<<<<<<< HEAD
+=======
 
 {
 
+>>>>>>> 563f3ff2328322e03aa45e918ee8c10c89b7b0b9
   "postCode": 0,
   "postTitle": "안뇽",
   "postDate": "2023-08-29",
@@ -685,9 +750,15 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 ###
 
 GET http://localhost:8989/emp/info/2
+<<<<<<< HEAD
+=======
+{
+<<<<<<< HEAD
+=======
 
 {
 
+>>>>>>> 563f3ff2328322e03aa45e918ee8c10c89b7b0b9
   "postCode": 0,
   "postTitle": "안뇽",
   "postDate": "2023-08-29",
@@ -828,7 +899,11 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 ###
 
 GET http://localhost:8989/emp/info/2
+<<<<<<< HEAD
+=======
+=======
 
+>>>>>>> 563f3ff2328322e03aa45e918ee8c10c89b7b0b9
 {
 <<<<<<< HEAD
   "postCode": 0,
@@ -909,9 +984,15 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 ###
 
 GET http://localhost:8989/emp/info/2
+<<<<<<< HEAD
+=======
+{
+<<<<<<< HEAD
+=======
 
 {
 
+>>>>>>> 563f3ff2328322e03aa45e918ee8c10c89b7b0b9
   "postCode": 0,
   "postTitle": "안뇽",
   "postDate": "2023-08-29",
@@ -968,9 +1049,15 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 ###
 
 GET http://localhost:8989/emp/info/2
+<<<<<<< HEAD
+=======
+{
+<<<<<<< HEAD
+=======
 
 {
 
+>>>>>>> 563f3ff2328322e03aa45e918ee8c10c89b7b0b9
   "postCode": 0,
   "postTitle": "안뇽",
   "postDate": "2023-08-29",
@@ -1027,9 +1114,15 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 ###
 
 GET http://localhost:8989/emp/info/2
+<<<<<<< HEAD
+=======
+{
+<<<<<<< HEAD
+=======
 
 {
 
+>>>>>>> 563f3ff2328322e03aa45e918ee8c10c89b7b0b9
   "postCode": 0,
   "postTitle": "안뇽",
   "postDate": "2023-08-29",
@@ -1087,9 +1180,15 @@ Accept-Encoding: br,deflate,gzip,x-gzip
 ###
 
 GET http://localhost:8989/emp/info/2
+<<<<<<< HEAD
+=======
+{
+<<<<<<< HEAD
+=======
 
 {
 
+>>>>>>> 563f3ff2328322e03aa45e918ee8c10c89b7b0b9
   "postCode": 0,
   "postTitle": "안뇽",
   "postDate": "2023-08-29",
@@ -1112,7 +1211,11 @@ Content-Type: multipart/form-data; boundary=WebAppBoundary
 Accept: */*
 Content-Type: application/json
 Content-Length: 223
+<<<<<<< HEAD
+=======
+=======
 
+>>>>>>> 563f3ff2328322e03aa45e918ee8c10c89b7b0b9
   "memberPassword": "pass01",
   "memberName": "동덕",
   "memberId": "dbrs96",
@@ -1141,15 +1244,25 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.6)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
+>>>>>>> 563f3ff2328322e03aa45e918ee8c10c89b7b0b9
 <> 2023-08-31T122820.200.json
 
 ###
 
 GET http://localhost:8989/emp/info/2
+<<<<<<< HEAD
+=======
+{
+<<<<<<< HEAD
+=======
 
 {
 
+>>>>>>> 563f3ff2328322e03aa45e918ee8c10c89b7b0b9
   "postCode": 0,
   "postTitle": "안뇽",
   "postDate": "2023-08-29",

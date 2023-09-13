@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
@@ -32,7 +33,7 @@ public class Post {
     private String postTitle;
 
     @Column(name = "POST_DATE")
-    private String postDate;
+    private Date postDate;
 
     @Column(name = "POST_CONTENTS")
     private String postContents;
@@ -51,7 +52,7 @@ public class Post {
     private Board board;
 
     @OneToMany
-    @JoinColumn(name = "BOARD_FILE")
+    @JoinColumn(name = "FILE_NAME")
     private List<BoardFile> boardFile;
 
     @ManyToOne

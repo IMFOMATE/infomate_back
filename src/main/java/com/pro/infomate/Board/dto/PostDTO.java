@@ -7,9 +7,9 @@ import lombok.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
@@ -24,7 +24,7 @@ public class PostDTO {
     private String postTitle;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private String postDate;
+    private Date postDate;
 
     private String postContents;
 

@@ -69,8 +69,8 @@ class BoardController {
 
         PostDTO postDTO = boardService.postView(postCode);
 
-            return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", postDTO));
-        }
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", postDTO));
+    }
 
 //    @GetMapping("/board/newpost")    // 게시판 (게시글 목록)
 //    public ResponseEntity<ResponseDTO> getPost() {
@@ -95,7 +95,7 @@ class BoardController {
                         .build());
     }
 
-    @PutMapping("board/{postCode}/update") // 게시글 수정
+    @PutMapping("board/update") // 게시글 수정
     public ResponseEntity<String> updatePost( @RequestBody PostDTO postDTO) {
         log.info("[PostController](updateByPost) postDTO: {} ", postDTO);
         boardService.updatePost(postDTO);
