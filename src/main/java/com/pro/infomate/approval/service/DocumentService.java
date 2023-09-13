@@ -255,7 +255,7 @@ public class DocumentService {
     // 1. 임시저장 시 documentCode가 없으면 저장되고
     // 값들을 받아서 저장하는데 문서상태는 temporary, 결재리스트는 waiting인 상태로
 
-    if(documentCode == null && !isSave){
+    if(documentCode == null){
       System.out.println("documentRequest = " + documentRequest);
       E document = createDocument(member, documentRequest, entityClass);
       document.setDocumentStatus(DocumentStatus.TEMPORARY);
@@ -282,7 +282,7 @@ public class DocumentService {
       paymentListRepository.deleteByDocument(existingDocument);
     }
 
-    existingDocument = updateDocument(existingDocument, documentRequest, entityClass, isSave);
+    existingDocument = updateDocument(existingDocument, documentRequest, entityClass, isSave, memberCode);
     createRefer(documentRequest, existingDocument);
     createApprovals(documentRequest, member, existingDocument, memberCode, true);
     processFiles(multipartFiles, existingDocument);
@@ -364,7 +364,7 @@ public class DocumentService {
                       .paymentSort(paymentListRequest.getPaymentSort())
                       .paymentPrice(paymentListRequest.getPaymentPrice())
                       .paymentContent(paymentListRequest.getPaymentContent())
-                      .remarks(paymentListRequest.getRemarks())
+                      .remarks(paymentListRequest.getRemarks().equals("null")? "" : paymentListRequest.getRemarks())
                       .document(save)
                       .build();
               return payment;
@@ -391,12 +391,13 @@ public class DocumentService {
 
 
   // 문서 임시저장
-  private <T extends DocumentRequest> Document updateDocument(Document existingDocument, T documentRequest, Class<?> entityClass,Boolean isSave) {
+  private <T extends DocumentRequest> Document updateDocument(Document existingDocument, T documentRequest, Class<?> entityClass,Boolean isSave, int memberCode) {
 
-    if(isSave){
-      existingDocument.setDocumentStatus(DocumentStatus.WAITING);
-    }else{
-      existingDocument.setDocumentStatus(DocumentStatus.TEMPORARY);
+    if (isSave && existingDocument.getApprovalList().size() == 1
+            && existingDocument.getApprovalList().get(0).getMember().getMemberCode() == memberCode) {
+      existingDocument.setDocumentStatus(DocumentStatus.APPROVAL);
+    } else {
+      existingDocument.setDocumentStatus(isSave ? DocumentStatus.WAITING : DocumentStatus.TEMPORARY);
     }
 
     existingDocument.setCreatedDate(LocalDateTime.now());
@@ -434,7 +435,6 @@ public class DocumentService {
         payment.setTitle(paymentRequest.getTitle());
         payment.setContent(paymentRequest.getContent());
         payment.setEmergency(paymentRequest.getEmergency());
-
         break;
       default:
         throw new IllegalArgumentException("Invalid entityClass");
