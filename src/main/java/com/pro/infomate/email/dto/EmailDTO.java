@@ -1,5 +1,6 @@
 package com.pro.infomate.email.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.text.SimpleDateFormat;
@@ -16,6 +17,7 @@ public class EmailDTO {
 
     private String mailContent;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date mailDate;
 
     private Integer memberCode;
