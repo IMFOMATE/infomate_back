@@ -49,11 +49,11 @@ class DocumentServiceTest {
 //
 //  }
   
-  @Test
-  @DisplayName("세부내용")
-  void 세부내용() {
-    DocumentDetailResponse result = documentService.findById(28);
-  }
+//  @Test
+//  @DisplayName("세부내용")
+//  void 세부내용() {
+//    DocumentDetailResponse result = documentService.findById(28);
+//  }
 
   
   @Test
@@ -65,6 +65,15 @@ class DocumentServiceTest {
     Page<DocumentListResponse> temporary = documentService.approvalList("TEMPORARY", 43, PageRequest.of(0, 20));
     System.out.println("temporary.getContent() = " + temporary.getContent());
 
+  }
+
+
+  @Test
+  @DisplayName("부서문서왜안와")
+  void 부서문서(){
+
+    Page<DocumentListResponse> documentListResponses = documentService.deptList(521, PageRequest.of(0, 20));
+    System.out.println("documentListResponses.getContent() = " + documentListResponses.getContent());
 
   }
 }

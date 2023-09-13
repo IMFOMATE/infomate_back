@@ -74,7 +74,7 @@ public class DocRefRepositoryImpl implements DocRefRepositoryCustom {
 
   private BooleanExpression documentStatus(String status) {
     if ("null".equals(status) || !StringUtils.hasText(status)) {
-      return null;
+      return document.documentStatus.ne(DocumentStatus.TEMPORARY);
     } else {
       return document.documentStatus.ne(DocumentStatus.TEMPORARY)
               .and(document.documentStatus.eq(DocumentStatus.valueOf(status)));

@@ -56,7 +56,7 @@ public class AddressBookTest {
 //        System.out.println(contacts);
 
         //update
-        Contact addressBookList = contactRepository.findById(125L).get();
+        Contact addressBookList = contactRepository.findById(125).get();
 
         addressBookList.setContactLike('Y');
 
@@ -72,16 +72,16 @@ public class AddressBookTest {
 
 //        Member member = memberRepository.findById(2L).orElseThrow(() -> new NotFindDataException("회원없음"));
 
-        Email email = new Email();
-//        email.setMember(member);
-        email.setMailDate("2023-8-23");
-        email.setMailContent("아무말");
-        email.setMailStatus('Y');
-        email.setMailTitle("제에목");
-        email.setMailLike('Y');
+//        Email email = new Email();
+////        email.setMember(member);
+//        email.setMailDate("2023-8-23");
+//        email.setMailContent("아무말");
+//        email.setMailStatus('Y');
+//        email.setMailTitle("제에목");
+//        email.setMailLike('Y');
 
 
-        emailAndMemberRepository.save(email);
+//        emailAndMemberRepository.save(email);
 
 //        List<Email> emails = emailAndMemberRepository.findByMemberCode(member.getMemberCode());
 //

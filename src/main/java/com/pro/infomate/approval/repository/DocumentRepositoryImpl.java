@@ -8,6 +8,7 @@ import com.querydsl.core.types.SubQueryExpression;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -38,7 +39,11 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
             .select(department.deptCode)
             .from(member)
             .join(member.department, department)
-            .where(member.memberCode.eq(2));
+            .where(member.memberCode.eq(memberCode));
+
+    JPAQuery<Integer> where = queryFactory.select(member.department.deptCode)
+            .from(member)
+            .where(member.memberCode.eq(memberCode));
 
     List<DocumentListResponse> content = queryFactory.select(
                     new QDocumentListResponse(
@@ -55,7 +60,8 @@ public class DocumentRepositoryImpl implements DocumentRepositoryCustom {
             .join(member.department, department)
             .where(
                     document.documentStatus.eq(DocumentStatus.APPROVAL)
-                            .and(department.deptCode.in(subQueryDeptCodes)))
+                            .and(department.deptCode.in(subQueryDeptCodes))
+            )
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
