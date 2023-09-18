@@ -12,6 +12,7 @@ import com.pro.infomate.approval.service.DocRefService;
 import com.pro.infomate.approval.service.DocumentService;
 import com.pro.infomate.common.*;
 import com.pro.infomate.member.dto.MemberDTO;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -34,6 +35,7 @@ public class DocumentController {
 
 
   // 휴가 문서 등록
+  @Operation(summary = "휴가문서등록", description = "휴가문서를 등록합니다", tags = {"DocumentController"})
   @PostMapping("/regist/vacation")
   public ResponseEntity<ResponseDTO> vacationRegist(
           @ModelAttribute VacationRequest vacationRequest,
@@ -53,6 +55,7 @@ public class DocumentController {
   }
 
   // 기안 문서 등록
+  @Operation(summary = "기안문서 등록", description = "기안문서 등록합니다", tags = {"DocumentController"})
   @PostMapping("/regist/draft")
   public ResponseEntity<ResponseDTO> draftRegist(
           @ModelAttribute DraftRequest draftRequest,
@@ -76,6 +79,7 @@ public class DocumentController {
   }
 
   // 지출결의서 등록
+  @Operation(summary = "지출결의서 등록", description = "지출결의서 등록합니다", tags = {"DocumentController"})
   @PostMapping("/regist/payment")
   public ResponseEntity<ResponseDTO> paymentRegist(
           @ModelAttribute PaymentRequest paymentRequest,
@@ -97,6 +101,7 @@ public class DocumentController {
 
 
   //임시저장
+  @Operation(summary = "문서 임시저장", description = "문서입력 후 임시저장을 합니다", tags = {"DocumentController"})
   @PostMapping("/regist/temp/{type}/{documentCode}")
   public ResponseEntity<ResponseDTO> tempRegist(
           @PathVariable(required = false) String documentCode,
@@ -117,6 +122,8 @@ public class DocumentController {
                     .build());
   }
 
+
+  @Operation(summary = "기안문서 임시저장 및 임시저장문서 결재요청", description = "임시저장한 기안문서를 수정할 수 있고 결재상신할 수 있습니다", tags = {"DocumentController"})
   @PatchMapping("/temp/draft/{documentCode}")
   public ResponseEntity<ResponseDTO> tempRegistDraft(
           @PathVariable(required = false) String documentCode,
@@ -127,6 +134,7 @@ public class DocumentController {
   ) {
     Long id = documentCode.equals("null") ? null : Long.valueOf(documentCode);
     System.out.println("isSave = " + isSave);
+
     documentService.tempSave(id, memberDTO.getMemberCode(), documentRequest, Draft.class, fileList, isSave);
 
     return ResponseEntity.ok()
@@ -136,7 +144,7 @@ public class DocumentController {
                     .build());
   }
 
-
+  @Operation(summary = "휴가문서 임시저장 및 임시저장문서 결재요청", description = "임시저장한 휴가문서를 수정할 수 있고 결재상신할 수 있습니다", tags = {"DocumentController"})
   @PatchMapping("/temp/vacation/{documentCode}")
   public ResponseEntity<ResponseDTO> tempRegistVacation(
           @PathVariable(required = false) String documentCode,
@@ -157,6 +165,7 @@ public class DocumentController {
                     .build());
   }
 
+  @Operation(summary = "지출승인서 임시저장 및 임시저장문서 결재요청", description = "임시저장한 지출승인서를 수정할 수 있고 결재상신할 수 있습니다", tags = {"DocumentController"})
   @PatchMapping("/temp/payment/{documentCode}")
   public ResponseEntity<ResponseDTO> tempRegistPayment(
           @PathVariable(required = false) String documentCode,
@@ -178,6 +187,7 @@ public class DocumentController {
 
 
   // 문서 삭제
+  @Operation(summary = "문서 삭제", description = "결재 승인이 되지 않았거나 반려된 상태의 본인문서를 삭제할 수 있씁니다.", tags = {"DocumentController"})
   @DeleteMapping("/delete/{documentId}")
   public ResponseEntity<ResponseDTO> deleteDocument(@PathVariable long documentId){
 
@@ -193,6 +203,7 @@ public class DocumentController {
   }
 
   //취소
+  @Operation(summary = "문서 삭제", description = "결재 승인이 되지 않았거나 반려된 상태의 본인문서를 삭제할 수 있씁니다.", tags = {"DocumentController"})
   @PatchMapping("/cancel/{documentId}")
   public ResponseEntity<ResponseDTO> cancelDocument(
           @PathVariable long documentId,
@@ -213,6 +224,7 @@ public class DocumentController {
 
 
   //결재 메인
+  @Operation(summary = "결재 메인 화면", description = "결재 메인 화면에 보여지는 문서.", tags = {"DocumentController"})
   @GetMapping("/main")
   public ResponseEntity<ResponseDTO> documentMain(
           @AuthenticationPrincipal MemberDTO memberDTO
@@ -227,6 +239,7 @@ public class DocumentController {
   }
 
   // 상태별 리스트
+  @Operation(summary = "상태별 리스트 조회", description = "문서상태별 리스트를 조회합니다..", tags = {"DocumentController"})
   @GetMapping("/approval/{docStatus}")
   public ResponseEntity<PagingResponseDTO> approvalList(
           @PathVariable String docStatus,
@@ -277,6 +290,7 @@ public class DocumentController {
 
 
   // 문서세부내용
+  @Operation(summary = "문서 세부내용 조회", description = "문서 세부내용을 조회합니다.", tags = {"DocumentController"})
   @GetMapping("/{documentId}")
   public ResponseEntity<ResponseDTO> documentDetail(
           @PathVariable long documentId,
@@ -297,6 +311,7 @@ public class DocumentController {
 
 
   // 홈 화면용 리스트
+  @Operation(summary = "홈화면 결재문서조회", description = "홈화면에서 사용되는 결재문서 조회입니다", tags = {"DocumentController"})
   @GetMapping("/credit")
   public ResponseEntity<ResponseDTO> mainCredit(
           @AuthenticationPrincipal MemberDTO memberDTO){

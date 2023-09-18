@@ -51,7 +51,7 @@ logging:
         type: trace
 
 image:
-  add-resource-locations: classpath:/static/productimgs/
+  add-resource-locations: file:////productimgs/
   add-resource-handler: /productimgs/**
 
 
@@ -59,11 +59,11 @@ image:
 #  image-url: http://localhost:8989/productimgs/
 
   image-dir: C:/dev/02_subSources/img/
-  image-url: http://localhost:8989/imgs/
+  image-url: http://infomate.coffit.today:8989/imgs/
 
 
 files:
-  add-resource-locations: classpath:/static/files/
+  add-resource-locations: file:////files/
   add-resource-handler: /files/document/**
   files-dir: src/main/resources/static/files
-  files-url: http://localhost:8989/file/download/
+  files-url: http://infomate.coffit.today:8989/file/download/

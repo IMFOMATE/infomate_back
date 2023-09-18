@@ -1,6 +1,7 @@
 package com.pro.infomate.approval.controller;
 
 import com.pro.infomate.exception.FileDownloadException;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -29,6 +30,7 @@ public class DocFileController {
   @Value("${files.files-url}")
   private String FILES_URL;
 
+  @Operation(summary = "파일 다운로드", description = "결재시 등록한 파일다운로드가 진행됩니다.", tags = {"DocFileController"})
   @GetMapping("/download/{filename:.+}")
   public ResponseEntity<Resource> fileDownload(@PathVariable("filename") String filename) {
 

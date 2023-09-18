@@ -7,6 +7,7 @@ import com.pro.infomate.common.Criteria;
 import com.pro.infomate.common.PageDTO;
 import com.pro.infomate.common.PagingResponseDTO;
 import com.pro.infomate.common.ResponseDTO;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

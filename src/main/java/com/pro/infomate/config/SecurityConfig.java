@@ -55,13 +55,17 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         //  개발용 cors 허용
-        http.cors().configurationSource(request -> {
-            CorsConfiguration config = new CorsConfiguration();
-            config.addAllowedOrigin("*");
-            config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-            config.addAllowedHeader("*");
-            return config;
-        });
+//        http.cors().configurationSource(request -> {
+//            CorsConfiguration config = new CorsConfiguration();
+//            config.addAllowedOrigin("*");
+//            config.setAllowedOrigins(Arrays.asList("http://infomate.coffit.today"));
+//            config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+//            config.setAllowedHeaders(Arrays.asList("Access-Control-Allow-Origin", "Content-type"
+//                    , "Access-Control-Allow-Headers", "Authorization"
+//                    , "X-Requested-With"));
+////            config.addAllowedHeader("*");
+//            return config;
+//        });
 
 
         // 개발용 csrf 허용
@@ -85,6 +89,21 @@ public class SecurityConfig {
         return http.build();
     }
 
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource(){
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        configuration.setAllowedOrigins(Arrays.asList("http://infomate.coffit.today"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE"));
+        configuration.setAllowedHeaders(Arrays.asList("Access-Control-Allow-Origin", "Content-type"
+                , "Access-Control-Allow-Headers", "Authorization"
+                , "X-Requested-With"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
+    }
 }
 
 
